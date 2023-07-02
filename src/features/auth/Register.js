@@ -4,8 +4,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from '../../api/axios';
 import { Link } from "react-router-dom";
 
-const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
+// regex patterns
+const USER_REGEX = /^[a-zA-Z][a-zA-Z0-9-_]{3,23}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
+const NAMING_REGEX = /^[a-zA-Z]{3,13}$/;
+const PHONENO_REGEX = /^\+94\d{9}$/;
+
 const REGISTER_URL = '/register';
 
 const Register = () => {
@@ -15,6 +19,18 @@ const Register = () => {
     const [user, setUser] = useState('');
     const [validName, setValidName] = useState(false);
     const [userFocus, setUserFocus] = useState(false);
+
+    const [fName, setFName] = useState('');
+    const [validFName, setValidFName] = useState(false);
+    const [fNameFocus, setFNameFocus] = useState(false);
+
+    const [lName, setLName] = useState('');
+    const [validLName, setValidLName] = useState(false);
+    const [lNameFocus, setLNameFocus] = useState(false);
+
+    const [phoneNo, setPhoneNo] = useState('+94');
+    const [validPhoneNo, setValidPhoneNo] = useState(false);
+    const [phoneNoFocus, setPhoneNoFocus] = useState(false);
 
     const [pwd, setPwd] = useState('');
     const [validPwd, setValidPwd] = useState(false);
@@ -36,13 +52,25 @@ const Register = () => {
     }, [user])
 
     useEffect(() => {
+        setValidFName(NAMING_REGEX.test(fName));
+    }, [fName]);
+
+    useEffect(() => {
+        setValidLName(NAMING_REGEX.test(lName));
+    }, [lName]);
+
+    useEffect(() => {
+        setValidPhoneNo(PHONENO_REGEX.test(phoneNo));
+    }, [phoneNo]);
+
+    useEffect(() => {
         setValidPwd(PWD_REGEX.test(pwd));
         setValidMatch(pwd === matchPwd);
     }, [pwd, matchPwd])
 
     useEffect(() => {
         setErrMsg('');
-    }, [user, pwd, matchPwd])
+    }, [user, pwd, matchPwd, fName])
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -55,13 +83,12 @@ const Register = () => {
         }
         try {
             const response = await axios.post(REGISTER_URL,
-                JSON.stringify({ user, pwd, repeatPwd: matchPwd}),
+                JSON.stringify({ user, pwd, repeatPwd: matchPwd, fName, lName, phoneNo}),
                 {
                     headers: { 'Content-Type': 'application/json' },
                     withCredentials: true
                 }
             );
-            // TODO: remove console.logs before deployment
             console.log(JSON.stringify(response?.data));
             //console.log(JSON.stringify(response))
             setSuccess(true);
@@ -120,6 +147,71 @@ const Register = () => {
                             Letters, numbers, underscores, hyphens allowed.
                         </p>
 
+                        <label htmlFor="fName">
+                            First Name:
+                            <FontAwesomeIcon icon={faCheck} className={validFName ? "valid" : "hide"} />
+                            <FontAwesomeIcon icon={faTimes} className={validFName || !fName ? "hide" : "invalid"} />
+                        </label>
+                        <input
+                            type="text"
+                            id="fName"
+                            autoComplete="off"
+                            onChange={(e) => setFName(e.target.value)}
+                            value={fName}
+                            required
+                            aria-invalid={validFName ? "false" : "true"}
+                            aria-describedby="namingnote"
+                            onFocus={() => setFNameFocus(true)}
+                            onBlur={() => setFNameFocus(false)}
+                        />
+                        <p id="namingnote" className={fNameFocus && fName && !validFName ? "instructions" : "offscreen"}>
+                            <FontAwesomeIcon icon={faInfoCircle} />
+                            4 to 24 characters.
+                        </p>
+
+                        <label htmlFor="lName">
+                            Last Name:
+                            <FontAwesomeIcon icon={faCheck} className={validLName ? "valid" : "hide"} />
+                            <FontAwesomeIcon icon={faTimes} className={validLName || !lName ? "hide" : "invalid"} />
+                        </label>
+                        <input
+                            type="text"
+                            id="lName"
+                            autoComplete="off"
+                            onChange={(e) => setLName(e.target.value)}
+                            value={lName}
+                            required
+                            aria-invalid={validLName ? "false" : "true"}
+                            aria-describedby="namingnote"
+                            onFocus={() => setLNameFocus(true)}
+                            onBlur={() => setLNameFocus(false)}
+                        />
+                        <p id="namingnote" className={lNameFocus && lName && !validLName ? "instructions" : "offscreen"}>
+                            <FontAwesomeIcon icon={faInfoCircle} />
+                            4 to 24 characters.
+                        </p>
+
+                        <label htmlFor="phoneNo">
+                            Contact Number:
+                            <FontAwesomeIcon icon={faCheck} className={validPhoneNo ? "valid" : "hide"} />
+                            <FontAwesomeIcon icon={faTimes} className={validPhoneNo || !phoneNo ? "hide" : "invalid"} />
+                        </label>
+                        <input
+                            type="text"
+                            id="phoneNo"
+                            autoComplete="off"
+                            onChange={(e) => setPhoneNo(e.target.value)}
+                            value={phoneNo}
+                            required
+                            aria-invalid={validPhoneNo ? "false" : "true"}
+                            aria-describedby="contactnote"
+                            onFocus={() => setPhoneNoFocus(true)}
+                            onBlur={() => setPhoneNoFocus(false)}
+                        />
+                        <p id="contactnote" className={phoneNoFocus && phoneNo && !validPhoneNo ? "instructions" : "offscreen"}>
+                            <FontAwesomeIcon icon={faInfoCircle} />
+                            Please enter valid phone no in Sri Lanka.
+                        </p>
 
                         <label htmlFor="password">
                             Password:
