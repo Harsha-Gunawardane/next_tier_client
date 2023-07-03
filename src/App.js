@@ -12,6 +12,9 @@ import RequireAuth from './features/auth/RequireAuth';
 import PersistLogin from './features/auth/PersistLogin';
 import { Routes, Route } from 'react-router-dom';
 
+//my added components
+import Dasboard from './components/Dashboard';
+
 const ROLES = {
   'User': 2001,
   'Editor': 1984,
@@ -34,6 +37,7 @@ function App() {
         <Route element={<PersistLogin />}>
           <Route element={<RequireAuth allowedRoles={[ROLES.User]} />}>
             <Route path="/" element={<Home />} />
+            <Route path="dashboard" element={<Dasboard />} />
           </Route>
 
           <Route element={<RequireAuth allowedRoles={[ROLES.Editor]} />}>
