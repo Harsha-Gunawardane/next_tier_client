@@ -12,6 +12,9 @@ import RequireAuth from './features/auth/RequireAuth';
 import PersistLogin from './features/auth/PersistLogin';
 import { Routes, Route } from 'react-router-dom';
 
+//imort chakra ui
+// import { ChakraProvider } from "@chakra-ui/react";
+
 //my added components
 import Dasboard from './components/Dashboard';
 
@@ -37,7 +40,7 @@ function App() {
         <Route element={<PersistLogin />}>
           <Route element={<RequireAuth allowedRoles={[ROLES.User]} />}>
             <Route path="/" element={<Home />} />
-            <Route path="dashboard" element={<Dasboard />} />
+            <Route path="Dashboard" element={<Dasboard />} />
           </Route>
 
           <Route element={<RequireAuth allowedRoles={[ROLES.Editor]} />}>
