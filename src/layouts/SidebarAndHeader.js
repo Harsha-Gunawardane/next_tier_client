@@ -3,7 +3,7 @@ import Header from "../components/Header";
 import Layout from "../components/Layout";  
 import Sidebar from "../components/Sidebar";
 
-import { Flex } from "@chakra-ui/react";
+import { Container, Flex, Grid } from "@chakra-ui/react";
 
 import GridViewRoundedIcon from '@mui/icons-material/GridViewRounded';
 import {TiDocumentText} from 'react-icons/ti';
@@ -19,10 +19,11 @@ const SidebarAndHeader = ({}) => {
 
         <Flex w="100vw">
             <Sidebar Options={Options} minimized={false}/>
-            {/* take the rest width */}
             <Flex direction={'column'} w={'full'} h={'100vh'} overflow={'hidden'}>
                 <Header/>
-                <Outlet/>
+                <Grid>
+                    <Outlet/>
+                </Grid>
             </Flex>
         </Flex>
     )

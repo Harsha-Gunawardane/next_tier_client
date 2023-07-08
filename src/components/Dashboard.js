@@ -1,14 +1,13 @@
-import { Container} from "@chakra-ui/react";
+import { Box, Container} from "@chakra-ui/react";
 
 
 
 const Dashboard = () => {
 
-    return (
-        
-            <Container m='0' p='0' bg={'gray.100'} w={'full'}>
-                Dashboard
-            </Container>
+    return (  
+        <Box m='0' p='0' bg={'gray.100'} w={'100%'} h={'100%'}>
+            Dashboard
+        </Box>
     )
 }
 

@@ -9,7 +9,7 @@ import { useState } from 'react';
 
 const Option = ({icon:iconComponent, name, href, active, minimizeStatus}) => {
     return (
-        <NavLink href={href} _hover={'none'}>
+        <Link to={href} _hover={'none'}>
             <Flex 
                 p="10px" 
                 borderRadius={'10px'} 
@@ -54,7 +54,7 @@ const Option = ({icon:iconComponent, name, href, active, minimizeStatus}) => {
                     <Text fontSize={'14px'}>{name}</Text> 
                 </Flex>
             </Flex>
-        </NavLink>
+        </Link>
     )
 }
 
