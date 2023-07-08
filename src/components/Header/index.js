@@ -1,4 +1,4 @@
-import { Box, Flex,Text, Image, Avatar, IconButton,Button, FormControl,InputGroup,InputLeftElement,Input } from "@chakra-ui/react";
+import { Box, Flex,Text, Image, Avatar, IconButton,Button, FormControl,InputGroup,InputLeftElement,Input, Spacer } from "@chakra-ui/react";
 //icons
 import { HiSearch } from 'react-icons/hi';
 
@@ -8,12 +8,22 @@ import NotificationsNoneOutlinedIcon from '@mui/icons-material/NotificationsNone
 // import ToggleColorMode from "../ToggleColorMode";
 
 
-const Header = () => {
+const Header = ({full=false}) => {
     return (
         
-        <Flex as={'header'} h='64px' bg="white" w="100vw" justifyContent={"space-between"} alignItems={"center"} borderBottom="1px" borderColor="gray.100" pos={'sticky'}>
+        <Flex as={'header'} h='64px' bg="white" w="full" justifyContent={"space-between"} alignItems={"center"} borderBottom="1px" borderColor="gray.100" pos={'sticky'}>
             <Flex h='100%' justifyContent={'space-between'}>
-                <Flex p={'4px'} h={"100%"} w={"260px"} alignItems={'center'} justifyContent={'space-between'} px="24px" gap='10px'>
+                <Flex 
+                    p={'4px'} 
+                    h={"100%"} w={"260px"} 
+                    alignItems={'center'} 
+                    justifyContent={'space-between'} 
+                    px="24px" 
+                    gap='10px'
+
+                    //if full is true, then set display to none
+                    display={!full && 'none'}
+                >
                     <Image h="36px" src="/logo.png" alt="logo" />
                     <IconButton variant="ghost" margin={0} h='40px' p='10px' px='0'>
                         <FontAwesomeIcon icon={faBars} />   
