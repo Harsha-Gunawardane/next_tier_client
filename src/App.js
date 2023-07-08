@@ -1,31 +1,29 @@
-import Register from './features/auth/Register';
-import Login from './features/auth/Login';
-import Home from './components/Home';
-import Layout from './components/Layout';
-import Editor from './components/Editor';
-import Admin from './components/Admin';
-import Missing from './components/Missing';
-import Unauthorized from './components/Unauthorized';
-import Lounge from './components/Lounge';
-import LinkPage from './components/LinkPage';
-import RequireAuth from './features/auth/RequireAuth';
-import PersistLogin from './features/auth/PersistLogin';
-import UserLayout from './features/users/UserLayout';
-import UserProfile from './features/users/components/UserProfile';
-import { Routes, Route } from 'react-router-dom';
+import Register from "./features/auth/Register";
+import Login from "./features/auth/Login";
+import Home from "./components/Home";
+import Layout from "./components/Layout";
+import Editor from "./components/Editor";
+import Admin from "./components/Admin";
+import Missing from "./components/Missing";
+import Unauthorized from "./components/Unauthorized";
+import Lounge from "./components/Lounge";
+import LinkPage from "./components/LinkPage";
+import RequireAuth from "./features/auth/RequireAuth";
+import PersistLogin from "./features/auth/PersistLogin";
+import UserLayout from "./features/users/UserLayout";
+import UserProfile from "./features/users/components/UserProfile";
+import { Routes, Route } from "react-router-dom";
 
 const ROLES = {
-  'User': 2001,
-  'Editor': 1984,
-  'Admin': 5150
-}
+  User: 2001,
+  Editor: 1984,
+  Admin: 5150,
+};
 
 function App() {
-
   return (
     <Routes>
-      <Route path="/" element={<Layout />}> 
-      
+      <Route path="/" element={<Layout />}>
         {/* public routes */}
         <Route path="unauthorized" element={<Unauthorized />} />
         <Route path="linkpage" element={<LinkPage />} />
@@ -42,18 +40,30 @@ function App() {
             <Route path="editor" element={<Editor />} />
           </Route>
 
-
           <Route element={<RequireAuth allowedRoles={[ROLES.Admin]} />}>
             <Route path="admin" element={<Admin />} />
           </Route>
 
-          <Route element={<RequireAuth allowedRoles={[ROLES.Editor, ROLES.Admin]} />}>
+          <Route
+            element={<RequireAuth allowedRoles={[ROLES.Editor, ROLES.Admin]} />}
+          >
             <Route path="lounge" element={<Lounge />} />
           </Route>
 
+          {/* <Route
+            element={<RequireAuth allowedRoles={[ROLES.Editor, ROLES.Admin]} />}
+          >
+            <Route path="tutor" element={<TutorLayout />}>
+              <Route path="courses" element={<CourseLayout/>} >
+                <Route index element={<Course />} />
+                <Route path="packages" element={<Package />} />
+              </Route>
+            </Route>
+          </Route> */}
+
           <Route element={<RequireAuth allowedRoles={[ROLES.User]} />}>
-            <Route path='user' element={<UserLayout />}>
-              <Route path='profile' element={<UserProfile />} />
+            <Route path="user" element={<UserLayout />}>
+              <Route path="profile" element={<UserProfile />} />
             </Route>
           </Route>
         </Route>
