@@ -1,17 +1,22 @@
-import { Box, ChakraProvider, ColorModeScript, Container, Flex, HStack, Heading, Image } from "@chakra-ui/react";
-import theme from "../theme";
+import { Container} from "@chakra-ui/react";
 import Header from "./Header";
-import ToggleColorMode from "./ToggleColorMode";
+import Sidebar from "./Sidebar";
+import GridViewRoundedIcon from '@mui/icons-material/GridViewRounded';
+import {TiDocumentText} from 'react-icons/ti';
 
 
 const Dashboard = () => {
+
+    const Options = [
+        { icon: GridViewRoundedIcon, name: 'Dashboard', href: '/dashboard'},
+        { icon: TiDocumentText, name: 'Courses', href: '/courses'},
+    ]
+
     return (
-        <ChakraProvider theme={theme}>
-            <ColorModeScript initialColorMode={theme.config.initialColorMode} />
             <Container maxW="container.xl" m='0' p='0'>
-                <Header />  
+                <Header /> 
+                <Sidebar Options={Options} /> 
             </Container>
-        </ChakraProvider>
     )
 }
 

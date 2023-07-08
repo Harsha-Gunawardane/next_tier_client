@@ -16,7 +16,7 @@ import { Routes, Route } from 'react-router-dom';
 // import { ChakraProvider } from "@chakra-ui/react";
 
 //my added components
-import Dasboard from './components/Dashboard';
+import Dashboard from './components/Dashboard';
 
 const ROLES = {
   'User': 2001,
@@ -40,7 +40,7 @@ function App() {
         <Route element={<PersistLogin />}>
           <Route element={<RequireAuth allowedRoles={[ROLES.User]} />}>
             <Route path="/" element={<Home />} />
-            <Route path="Dashboard" element={<Dasboard />} />
+            <Route path="Dashboard" element={<Dashboard />} />
           </Route>
 
           <Route element={<RequireAuth allowedRoles={[ROLES.Editor]} />}>
