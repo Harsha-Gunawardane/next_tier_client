@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars } from '@fortawesome/free-solid-svg-icons'
 import {MdSettings} from 'react-icons/md';
 import {TbLogout} from 'react-icons/tb';
+import { useState } from 'react';
 
 const Option = ({icon:iconComponent, name, href, active, minimizeStatus}) => {
     return (
@@ -29,7 +30,6 @@ const Option = ({icon:iconComponent, name, href, active, minimizeStatus}) => {
                 bg={active && 'accent'}
                 color={active? 'primary' : '#7F7F7F'}
 
-                //if minimized is true, then set flexDirection to column
 
             >
                 
@@ -64,11 +64,13 @@ const Sidebar = ({Options, minimized=false,full=true}) => {
     const settings = { icon: MdSettings, name: 'Settings', href: '/settings'}
     const logout = { icon: TbLogout, name: 'Logout', href: '/logout'}
 
+    const [minimizedStatus, setMinimizedStatus] = useState(minimized);
+
     return (
         <Flex 
             as="Sidebar" 
             h={full ? '100vh' : 'calc(100% - 64px)'} 
-            w={minimized ? 'max-content' : '260px'} 
+            w={minimizedStatus ? 'max-content' : '260px'} 
             bg='primary' 
             flexDirection={'column'} 
             alignItems={'center'}
@@ -77,6 +79,7 @@ const Sidebar = ({Options, minimized=false,full=true}) => {
             position={'sticky'}
             borderRight={'1px'}
             borderColor={'gray.100'}
+            transition={'all 0.5s'}
             >
  
             <Flex 
@@ -94,7 +97,7 @@ const Sidebar = ({Options, minimized=false,full=true}) => {
                     <Image 
                         h="36px" src="/logo.png" alt="logo" 
                         //if minimized is true, then set display to none
-                        display={minimized ? 'none' : 'block'}
+                        display={minimizedStatus ? 'none' : 'block'}
                     />
                     <IconButton
                         variant={'ghost'}  
@@ -102,39 +105,43 @@ const Sidebar = ({Options, minimized=false,full=true}) => {
                         h='40px'
                         minWidth='max-content' 
                         p='10px' 
+
+                        onClick={() => setMinimizedStatus(!minimizedStatus)}
                     >
                         <FontAwesomeIcon icon={faBars} />   
                     </IconButton>
             </Flex>
             
-            <Flex direction={'column'}>
+            <Flex direction={'column'} w={'max-content'}>
                 <Flex 
                     direction={'column'} 
-                    w={'100%'} 
+                    w={'max-content'} 
                     alignItems={'center'} 
-                    p={!minimized ? "30px" : "10px"}
+                    px={!minimizedStatus ? "30px" : "10px"}
+                    py={'30px'}
                     gap='10px'
                 >
 
                     {Options.map((option) => (
                         <Option 
                             {...option}
-                            minimizeStatus ={minimized ? true : false}
+                            minimizeStatus ={minimizedStatus ? true : false}
                         />
                     ))}
                 </Flex>
 
                 <Flex 
                     direction={'column'} 
-                    w={'100%'} 
+                    w={'max-content'} 
                     alignItems={'center'} 
-                    p={!minimized ? "30px" : "10px"} 
+                    px={!minimizedStatus ? "30px" : "10px"}
+                    py={'30px'} 
                     gap='10px' 
                     borderTop={'1px'} 
                     borderTopColor={`gray.100`} 
                 >
-                    <Option {...settings} minimizeStatus={minimized}/>
-                    <Option {...logout} minimizeStatus={minimized}/>
+                    <Option {...settings} minimizeStatus={minimizedStatus}/>
+                    <Option {...logout} minimizeStatus={minimizedStatus}/>
                 </Flex>
             </Flex>
 

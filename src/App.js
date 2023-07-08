@@ -17,6 +17,7 @@ import { Routes, Route } from 'react-router-dom';
 
 //my added components
 import Dashboard from './components/Dashboard';
+import Courses from './components/Courses';
 import SidebarAndHeader from './layouts/SidebarAndHeader';
 
 const ROLES = {
@@ -43,6 +44,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route element={<SidebarAndHeader />}>
               <Route path="dashboard" element={<Dashboard />} />
+              <Route path="courses" element={<Courses />} />
             </Route>
           </Route>
 

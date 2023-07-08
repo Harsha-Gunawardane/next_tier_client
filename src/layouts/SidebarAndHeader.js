@@ -17,10 +17,10 @@ const SidebarAndHeader = ({}) => {
     //chakra ui layout for sidebar from components folder and header with an outlet for the children
     return (
 
-        <Flex>
-            <Sidebar Options={Options} minimized={true}/>
+        <Flex w="100vw">
+            <Sidebar Options={Options} minimized={false}/>
             {/* take the rest width */}
-            <Flex direction={'column'} w={'calc(100vw - 260px)'} h={'100vh'} overflow={'hidden'}>
+            <Flex direction={'column'} w={'full'} h={'100vh'} overflow={'hidden'}>
                 <Header/>
                 <Outlet/>
             </Flex>
