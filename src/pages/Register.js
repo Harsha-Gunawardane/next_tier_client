@@ -1,16 +1,14 @@
 import { useRef, useState, useEffect } from "react";
 import { faCheck, faTimes, faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import axios from '../../api/axios';
 import { Link } from "react-router-dom";
+import { useRegisterMutation } from "../features/auth/authApiSlice";
 
 // regex patterns
 const USER_REGEX = /^[a-zA-Z][a-zA-Z0-9-_]{3,23}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 const NAMING_REGEX = /^[a-zA-Z]{3,13}$/;
 const PHONENO_REGEX = /^\+94\d{9}$/;
-
-const REGISTER_URL = '/register';
 
 const Register = () => {
     const userRef = useRef();
@@ -42,6 +40,8 @@ const Register = () => {
 
     const [errMsg, setErrMsg] = useState('');
     const [success, setSuccess] = useState(false);
+
+    const [register] = useRegisterMutation();
 
     useEffect(() => {
         userRef.current.focus();
@@ -82,13 +82,15 @@ const Register = () => {
             return;
         }
         try {
-            const response = await axios.post(REGISTER_URL,
-                JSON.stringify({ user, pwd, repeatPwd: matchPwd, fName, lName, phoneNo}),
-                {
-                    headers: { 'Content-Type': 'application/json' },
-                    withCredentials: true
-                }
-            );
+          const response = await register({
+            user,
+            pwd,
+            repeatPwd: matchPwd,
+            fName,
+            lName,
+            phoneNo
+          }).unwrap();
+
             console.log(JSON.stringify(response?.data));
             //console.log(JSON.stringify(response))
             setSuccess(true);
@@ -114,7 +116,7 @@ const Register = () => {
                 <section>
                     <h1>Success!</h1>
                     <p>
-                        <a href="#">Sign In</a>
+                        <Link to='/login'>Sign in</Link>
                     </p>
                 </section>
             ) : (
@@ -263,7 +265,7 @@ const Register = () => {
                     <p>
                         Already registered?<br />
                         <span className="line">
-                            <Link to="/">Sign In</Link>
+                            <Link to="/login">Sign In</Link>
                         </span>
                     </p>
                 </section>

@@ -1,19 +1,16 @@
-import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit"
-import { apiSlice } from "./api/apiSlice"
+import { configureStore } from "@reduxjs/toolkit"
+import { apiSlice } from './api/apiSlice'
+import { setupListeners } from "@reduxjs/toolkit/query"
 import authReducer from '../features/auth/authSlice'
-import refreshTokenMiddleware from './authMiddleware';
 
 export const store = configureStore({
     reducer: {
         [apiSlice.reducerPath]: apiSlice.reducer,
-        auth: authReducer
+        auth: authReducer,
     },
-    middleware: [
-        ...getDefaultMiddleware({
-          serializableCheck: false,
-        }),
-        apiSlice.middleware,
-        refreshTokenMiddleware, // Add the refreshTokenMiddleware
-      ],
+    middleware: getDefaultMiddleware =>
+        getDefaultMiddleware().concat(apiSlice.middleware),
     devTools: true
 })
+
+setupListeners(store.dispatch)

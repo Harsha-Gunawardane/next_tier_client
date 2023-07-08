@@ -15,6 +15,9 @@ html {
 body {
     min-height: 100vh;
     background-color: dodgerblue;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .App {
