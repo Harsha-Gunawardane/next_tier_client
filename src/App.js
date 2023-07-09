@@ -18,6 +18,7 @@ import { Routes, Route } from 'react-router-dom';
 //my added components
 import Dashboard from './components/Dashboard';
 import Courses from './components/Courses';
+import Content from './components/Content';
 import SidebarAndHeader from './layouts/SidebarAndHeader';
 
 const ROLES = {
@@ -42,9 +43,10 @@ function App() {
         <Route element={<PersistLogin />}>
           <Route element={<RequireAuth allowedRoles={[ROLES.User]} />}>
             <Route path="/" element={<Home />} />
-            <Route element={<SidebarAndHeader />}>
+            <Route element={<SidebarAndHeader userRole={'student'} />}>
               <Route path="dashboard" element={<Dashboard />} />
               <Route path="courses" element={<Courses />} />
+              <Route path="content" element={<Content />} />
             </Route>
           </Route>
 

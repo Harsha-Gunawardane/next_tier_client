@@ -1,11 +1,11 @@
-import { Box, Flex, Icon, Link, Text, background, Image, IconButton, Center } from '@chakra-ui/react';
-import { IconContext } from 'react-icons';
-import { NavLink } from 'react-router-dom';
+import { Flex, Icon, Text, Image, IconButton, Center } from '@chakra-ui/react';
+import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars } from '@fortawesome/free-solid-svg-icons'
 import {MdSettings} from 'react-icons/md';
 import {TbLogout} from 'react-icons/tb';
-import { useState } from 'react';
+import { useState, useContext} from 'react';
+import { SidebarContext } from '../../context/SidebarContext';
 
 const Option = ({icon:iconComponent, name, href, active, minimizeStatus}) => {
     return (
@@ -29,7 +29,6 @@ const Option = ({icon:iconComponent, name, href, active, minimizeStatus}) => {
                 //if active is true, then set background to gray.100
                 bg={active && 'accent'}
                 color={active? 'primary' : '#7F7F7F'}
-
 
             >
                 
@@ -61,10 +60,13 @@ const Option = ({icon:iconComponent, name, href, active, minimizeStatus}) => {
 
 const Sidebar = ({Options, minimized=false,full=true}) => {
 
+    const {activeTab, handleTabClick} = useContext(SidebarContext);
+
     const settings = { icon: MdSettings, name: 'Settings', href: '/settings'}
     const logout = { icon: TbLogout, name: 'Logout', href: '/logout'}
 
     const [minimizedStatus, setMinimizedStatus] = useState(minimized);
+    // console.log(activeTab)
 
     return (
         <Flex 
@@ -126,6 +128,9 @@ const Sidebar = ({Options, minimized=false,full=true}) => {
                         <Option 
                             {...option}
                             minimizeStatus ={minimizedStatus ? true : false}
+
+                            onClick={() => handleTabClick(option.value)}
+                            active={activeTab == option.value ? true : false}
                         />
                     ))}
                 </Flex>
