@@ -1,8 +1,27 @@
 import { useRef, useState, useEffect } from "react";
 import useAuth from "../../hooks/useAuth";
 import { Link, useNavigate, useLocation } from "react-router-dom";
+import {
+  FormControl,
+  FormLabel,
+  FormErrorMessage,
+  FormHelperText,
+  Input,
+  Flex,
+  Image,
+  Box,
+  Text,
+  textDecoration,
+  Button,
+  Checkbox,
+  Alert,
+  AlertIcon,
+  AlertTitle,
+  AlertDescription,
+} from "@chakra-ui/react";
 
 import AuthHeader from "../../components/auth/AuthHeader";
+import Girl from "../../assests/images/girl2.png";
 
 import axios from "../../api/axios";
 const LOGIN_URL = "/auth";
@@ -73,55 +92,145 @@ const Login = () => {
 
   return (
     <>
-      <AuthHeader message={"Do you haven't registered yet?"} action={'Sign Up'} url={'/register'} />
-      <section>
-        <p
-          ref={errRef}
-          className={errMsg ? "errmsg" : "offscreen"}
-          aria-live="assertive"
-        >
-          {errMsg}
-        </p>
-        <h1>Sign In</h1>
-        <form onSubmit={handleSubmit}>
-          <label htmlFor="username">Username:</label>
-          <input
-            type="text"
-            id="username"
-            ref={userRef}
-            autoComplete="off"
-            onChange={(e) => setUser(e.target.value)}
-            value={user}
-            required
-          />
+      <AuthHeader
+        message={"Do you haven't registered yet?"}
+        action={"Sign Up"}
+        url={"/register"}
+      />
 
-          <label htmlFor="password">Password:</label>
-          <input
-            type="password"
-            id="password"
-            onChange={(e) => setPwd(e.target.value)}
-            value={pwd}
-            required
-          />
-          <button>Sign In</button>
-          <div className="persistCheck">
-            <input
-              type="checkbox"
-              id="persist"
-              onChange={togglePersist}
-              checked={persist}
-            />
-            <label htmlFor="persist">Remember me</label>
-          </div>
-        </form>
-        <p>
-          Need an Account?
-          <br />
-          <span className="line">
-            <Link to="/register">Sign Up</Link>
-          </span>
-        </p>
-      </section>
+      <Flex mt={5} gap={40} minW="max-content" justifyContent="center">
+        <Image
+          w="40%"
+          src={Girl}
+          display={{
+            base: "none",
+            sm: "none",
+            md: "none",
+            lg: "none",
+            xl: "block",
+          }}
+        />
+        <Box
+          w={500}
+          mr={{ base: "0px", sm: "0px", md: "0px", lg: "0px", xl: "20px" }}
+          mt={10}
+        >
+          <Text
+            textAlign="center"
+            fontWeight="semibold"
+            fontStyle="Roboto"
+            color="#333333"
+            fontSize={45}
+            mb={10}
+          >
+            Login
+          </Text>
+          <Box>
+            <Alert borderRadius={8} mb={5} status="error" ref={errRef} display={errMsg ? 'flex' : 'none'}>
+              <AlertIcon />
+              <AlertTitle>Login failed</AlertTitle>
+              <AlertDescription>{errMsg}</AlertDescription>
+            </Alert>
+            <form onSubmit={handleSubmit}>
+              <FormControl>
+                <FormLabel
+                  fontSize={22}
+                  color="#555555"
+                  fontWeight="regular"
+                  fontStyle="Roboto"
+                  htmlFor="username"
+                >
+                  Username or Register ID :
+                </FormLabel>
+                <Input
+                  type="text"
+                  id="username"
+                  ref={userRef}
+                  autoComplete="off"
+                  onChange={(e) => setUser(e.target.value)}
+                  value={user}
+                  mb={6}
+                  h={12}
+                  bg="#eeeeee"
+                  border="none"
+                  placeholder="Enter username or register ID"
+                />
+                {/* <FormHelperText>We'll never share your email.</FormHelperText> */}
+                <FormLabel
+                  htmlFor="password"
+                  color="#555555"
+                  fontSize={22}
+                  fontWeight="regular"
+                  fontStyle="Roboto"
+                >
+                  Password :
+                </FormLabel>
+                <Input
+                  mb={6}
+                  h={12}
+                  bg="#eeeeee"
+                  border="none"
+                  placeholder="Enter password"
+                  type="password"
+                  id="password"
+                  onChange={(e) => setPwd(e.target.value)}
+                  value={pwd}
+                  
+                />
+                <Box display="flex" ml={2}>
+                  <Checkbox
+                    mr={2}
+                    mb={1}
+                    type="checkbox"
+                    id="persist"
+                    onChange={togglePersist}
+                    checked={persist}
+                    defaultChecked
+                  />
+                  <FormLabel
+                    color="#555555"
+                    fontSize={22}
+                    fontWeight="regular"
+                    fontStyle="Roboto"
+                    htmlFor="persist"
+                  >
+                    Trust device
+                  </FormLabel>
+                </Box>
+                <Text
+                  textAlign="right"
+                  color="#032068"
+                  cursor="pointer"
+                  _hover={{ textDecoration: "underline" }}
+                  fontWeight="medium"
+                >
+                  Forgotten Password?
+                </Text>
+
+                <Flex justifyContent="center" mt={10}>
+                  <Button
+                    w={250}
+                    h={12}
+                    bg="#0074D9"
+                    color="#ffffff"
+                    _hover={{
+                      color: "#0074D9",
+                      bg: "white",
+                      border: "0.5px solid #0074D9",
+                    }}
+                    fontSize={24}
+                    borderRadius={6}
+                    fontWeight={"medium"}
+                    type="submit"
+                  >
+                    Login
+                  </Button>
+                </Flex>
+              </FormControl>
+            </form>
+          </Box>
+        </Box>
+      </Flex>
     </>
   );
 };
