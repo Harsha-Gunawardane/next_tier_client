@@ -20,6 +20,7 @@ function App() {
     <Routes>
       <Route path="/" element={<Layout />}>
         {/* public routes */}
+        <Route path="/" element={<Landing/>} />
         <Route path="unauthorized" element={<Unauthorized />} />
         <Route path="linkpage" element={<LinkPage />} />
 
@@ -31,6 +32,11 @@ function App() {
         <Route element={<PersistLogin />}>
           <Route element={<RequireAuth allowedRoles={[ROLES.User]} />}>
             <Route path="/" element={<Home />} />
+            <Route element={<SidebarAndHeader userRole={'student'} />}>
+              <Route path="dashboard" element={<Dashboard />} />
+              <Route path="courses" element={<Courses />} />
+              <Route path="content" element={<Content />} />
+            </Route>
           </Route>
 
           <Route element={<RequireAuth allowedRoles={[ROLES.Editor]} />}>
