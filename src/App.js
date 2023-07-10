@@ -14,6 +14,15 @@ import UserLayout from "./features/users/UserLayout";
 import UserProfile from "./features/users/components/UserProfile";
 import { Routes, Route } from "react-router-dom";
 
+//imort chakra ui
+// import { ChakraProvider } from "@chakra-ui/react";
+
+//my added components
+import Dashboard from './components/Dashboard';
+import Courses from './components/Courses';
+import Content from './components/Content';
+import SidebarAndHeader from './layouts/SidebarAndHeader';
+
 const ROLES = {
   User: 2001,
   Editor: 1984,
@@ -34,6 +43,11 @@ function App() {
         <Route element={<PersistLogin />}>
           <Route element={<RequireAuth allowedRoles={[ROLES.User]} />}>
             <Route path="/" element={<Home />} />
+            <Route element={<SidebarAndHeader userRole={'student'} />}>
+              <Route path="dashboard" element={<Dashboard />} />
+              <Route path="courses" element={<Courses />} />
+              <Route path="content" element={<Content />} />
+            </Route>
           </Route>
 
           <Route element={<RequireAuth allowedRoles={[ROLES.Editor]} />}>
