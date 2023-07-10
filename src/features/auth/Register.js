@@ -29,7 +29,7 @@ import {
   AlertDescription,
   InputGroup,
   InputLeftAddon,
-  SimpleGrid
+  SimpleGrid,
 } from "@chakra-ui/react";
 
 import AuthHeader from "../../components/auth/AuthHeader";
@@ -125,7 +125,7 @@ const Register = () => {
           repeatPwd: matchPwd,
           fName,
           lName,
-          phoneNo : '+94'+phoneNo,
+          phoneNo: "+94" + phoneNo,
         }),
         {
           headers: { "Content-Type": "application/json" },
@@ -140,8 +140,7 @@ const Register = () => {
       setPwd("");
       setMatchPwd("");
 
-      navigate('/login');
-
+      navigate("/login");
     } catch (err) {
       if (!err?.response) {
         setErrMsg("No Server Response");
@@ -164,19 +163,20 @@ const Register = () => {
 
       <Flex mt={5} gap={10} minW="max-content" justifyContent="center">
         <Image
-          w="35%"
+          w="32%"
           src={Girl}
           display={{
             base: "none",
             sm: "none",
             md: "none",
-            lg: "none",
+            lg: "block",
             xl: "block",
           }}
+          mr={14}
         />
         <Box
-          w={900}
-          //   mr={{ base: "0px", sm: "0px", md: "0px", lg: "0px", xl: "5px" }}
+          w={700}
+          mr={{ base: "0px", sm: "0px", md: "0px", lg: "15px", xl: "15px" }}
           mt={10}
         >
           <Text
@@ -184,23 +184,29 @@ const Register = () => {
             fontWeight="semibold"
             fontStyle="Roboto"
             color="#333333"
-            fontSize={45}
-            mb={10}
+            fontSize={32}
+            mb={7}
           >
             Register
           </Text>
           <Box>
-            <Alert borderRadius={8} mb={5} status="error" ref={errRef} display={errMsg ? 'flex' : 'none'}>
+            <Alert
+              borderRadius={8}
+              mb={3}
+              status="error"
+              ref={errRef}
+              display={errMsg ? "flex" : "none"}
+            >
               <AlertIcon />
-              <AlertTitle>Registration failed</AlertTitle>
-              <AlertDescription>{errMsg}</AlertDescription>
+              <AlertTitle fontSize={16}>Registration failed</AlertTitle>
+              <AlertDescription fontSize={15}>{errMsg}</AlertDescription>
             </Alert>
             <form onSubmit={handleSubmit}>
               <FormControl>
                 <Flex minW="max-content" gap={10}>
                   <Box w="50%">
                     <FormLabel
-                      fontSize={22}
+                      fontSize={16}
                       color="#555555"
                       fontWeight="regular"
                       fontStyle="Roboto"
@@ -231,24 +237,23 @@ const Register = () => {
                       onBlur={() => setFNameFocus(false)}
                       aria-invalid={validFName ? "false" : "true"}
                       aria-describedby="namingnote"
-                      h={12}
-                      mb={!fName || validFName ? 7 : 0}
+                      h={9}
+                      mb={!fName || validFName ? 6 : 0}
                       bg="#eeeeee"
                       border="none"
                       placeholder="Enter first name"
+                      fontSize={14}
                     />
                     <FormHelperText
-                      mb={1}
-                      display={
-                        fName && !validFName ? "block" : "none"
-                      }
+                      display={fName && !validFName ? "block" : "none"}
+                      fontSize={13}
                     >
                       First name require 3 to 24 characters.
                     </FormHelperText>
                     <FormLabel
                       htmlFor="username"
                       color="#555555"
-                      fontSize={22}
+                      fontSize={16}
                       fontWeight="regular"
                       fontStyle="Roboto"
                     >
@@ -267,8 +272,8 @@ const Register = () => {
                       </Flex>
                     </FormLabel>
                     <Input
-                      h={12}
-                      mb={!user || validName ? 7 : 0}
+                      h={9}
+                      mb={!user || validName ? 6 : 0}
                       bg="#eeeeee"
                       border="none"
                       placeholder="Enter username"
@@ -281,12 +286,11 @@ const Register = () => {
                       aria-describedby="uidnote"
                       onFocus={() => setUserFocus(true)}
                       onBlur={() => setUserFocus(false)}
+                      fontSize={14}
                     />
                     <FormHelperText
-                      mb={1}
-                      display={
-                        user && !validName ? "block" : "none"
-                      }
+                      display={user && !validName ? "block" : "none"}
+                      fontSize={13}
                     >
                       username not allowed numbers, underscores, hyphens.
                     </FormHelperText>
@@ -294,7 +298,7 @@ const Register = () => {
                     <FormLabel
                       htmlFor="password"
                       color="#555555"
-                      fontSize={22}
+                      fontSize={16}
                       fontWeight="regular"
                       fontStyle="Roboto"
                     >
@@ -313,8 +317,8 @@ const Register = () => {
                       </Flex>
                     </FormLabel>
                     <Input
-                      mb={!pwd || validPwd ? 7 : 0}
-                      h={12}
+                      mb={!pwd || validPwd ? 6 : 0}
+                      h={9}
                       bg="#eeeeee"
                       border="none"
                       placeholder="Enter password"
@@ -326,19 +330,18 @@ const Register = () => {
                       aria-describedby="pwdnote"
                       onFocus={() => setPwdFocus(true)}
                       onBlur={() => setPwdFocus(false)}
+                      fontSize={14}
                     />
                     <FormHelperText
-                      mb={1}
-                      display={
-                        pwd && !validPwd ? "block" : "none"
-                      }
+                      display={pwd && !validPwd ? "block" : "none"}
+                      fontSize={13}
                     >
                       Ex : Passwd@123
                     </FormHelperText>
                   </Box>
                   <Box w="50%">
                     <FormLabel
-                      fontSize={22}
+                      fontSize={16}
                       color="#555555"
                       fontWeight="regular"
                       fontStyle="Roboto"
@@ -362,8 +365,8 @@ const Register = () => {
                       type="text"
                       id="lName"
                       autoComplete="off"
-                      mb={!lName || validLName ? 7 : 0}
-                      h={12}
+                      mb={!lName || validLName ? 6 : 0}
+                      h={9}
                       bg="#eeeeee"
                       border="none"
                       placeholder="Enter last name"
@@ -373,12 +376,11 @@ const Register = () => {
                       aria-describedby="namingnote"
                       onFocus={() => setLNameFocus(true)}
                       onBlur={() => setLNameFocus(false)}
+                      fontSize={14}
                     />
                     <FormHelperText
-                      mb={1}
-                      display={
-                        lName && !validLName ? "block" : "none"
-                      }
+                      display={lName && !validLName ? "block" : "none"}
+                      fontSize={13}
                     >
                       Last name require 3 to 24 characters.
                     </FormHelperText>
@@ -386,7 +388,7 @@ const Register = () => {
                     <FormLabel
                       htmlFor="phoneNo"
                       color="#555555"
-                      fontSize={22}
+                      fontSize={16}
                       fontWeight="regular"
                       fontStyle="Roboto"
                     >
@@ -405,12 +407,13 @@ const Register = () => {
                       </Flex>
                     </FormLabel>
                     <InputGroup>
-                      <InputLeftAddon h={12} children="+94" />
+                      <InputLeftAddon h={9} children="+94" />
                       <Input
-                        h={12}
-                        mb={!phoneNo || validPhoneNo ? 7 : 0}
+                        h={9}
+                        mb={!phoneNo || validPhoneNo ? 6 : 0}
                         type="tel"
                         placeholder="Enter phone number"
+                        fontSize={14}
                         autoComplete="off"
                         value={phoneNo}
                         onChange={(e) => {
@@ -423,10 +426,8 @@ const Register = () => {
                       />
                     </InputGroup>
                     <FormHelperText
-                      mb={1}
-                      display={
-                        phoneNo && !validPhoneNo ? "block" : "none"
-                      }
+                      fontSize={13}
+                      display={phoneNo && !validPhoneNo ? "block" : "none"}
                     >
                       Please enter valid phone no in Sri Lanka.
                     </FormHelperText>
@@ -434,7 +435,7 @@ const Register = () => {
                     <FormLabel
                       htmlFor="confirm_pwd"
                       color="#555555"
-                      fontSize={22}
+                      fontSize={16}
                       fontWeight="regular"
                       fontStyle="Roboto"
                     >
@@ -453,8 +454,8 @@ const Register = () => {
                       </Flex>
                     </FormLabel>
                     <Input
-                      mb={!matchPwd || validMatch ? 7 : 0}
-                      h={12}
+                      mb={!matchPwd || validMatch ? 6 : 0}
+                      h={9}
                       bg="#eeeeee"
                       border="none"
                       placeholder="Repeat password"
@@ -466,12 +467,11 @@ const Register = () => {
                       aria-describedby="confirmnote"
                       onFocus={() => setMatchFocus(true)}
                       onBlur={() => setMatchFocus(false)}
+                      fontSize={14}
                     />
                     <FormHelperText
-                      mb={1}
-                      display={
-                        matchPwd && !validMatch ? "block" : "none"
-                      }
+                      fontSize={13}
+                      display={matchPwd && !validMatch ? "block" : "none"}
                     >
                       Must match the first password input field.
                     </FormHelperText>
@@ -483,8 +483,8 @@ const Register = () => {
                     disabled={
                       !validName || !validPwd || !validMatch ? true : false
                     }
-                    w={250}
-                    h={12}
+                    w={200}
+                    h={10}
                     bg="#0074D9"
                     color="#ffffff"
                     _hover={{
@@ -492,7 +492,7 @@ const Register = () => {
                       bg: "white",
                       border: "0.5px solid #0074D9",
                     }}
-                    fontSize={24}
+                    fontSize={19}
                     borderRadius={6}
                     fontWeight={"medium"}
                     type="submit"
@@ -506,7 +506,6 @@ const Register = () => {
         </Box>
       </Flex>
     </>
-
   );
 };
 

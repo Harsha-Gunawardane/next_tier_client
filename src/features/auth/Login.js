@@ -1,6 +1,7 @@
 import { useRef, useState, useEffect } from "react";
 import useAuth from "../../hooks/useAuth";
 import { Link, useNavigate, useLocation } from "react-router-dom";
+import jwtDecode from "jwt-decode";
 import {
   FormControl,
   FormLabel,
@@ -67,7 +68,20 @@ const Login = () => {
       setAuth({ user, accessToken });
       setUser("");
       setPwd("");
-      navigate(from, { replace: true });
+
+      if (from == "/") {
+        // navigate based on the role
+        const decoded = jwtDecode(accessToken);
+        const roles = decoded.UserInfo.roles;
+
+        console.log(roles);
+
+        if (roles.includes(1942)) {
+          navigate("/stu/dashboard");
+        }
+      } else {
+        navigate(from, { replace: true });
+      }
     } catch (err) {
       if (!err?.response) {
         setErrMsg("No Server Response");
@@ -98,21 +112,22 @@ const Login = () => {
         url={"/register"}
       />
 
-      <Flex mt={5} gap={40} minW="max-content" justifyContent="center">
+      <Flex gap={25} mt={5} minW="max-content" justifyContent="center">
         <Image
-          w="40%"
+          w="35%"
           src={Girl}
           display={{
             base: "none",
             sm: "none",
             md: "none",
-            lg: "none",
+            lg: "block",
             xl: "block",
           }}
+          mr={32}
         />
         <Box
-          w={500}
-          mr={{ base: "0px", sm: "0px", md: "0px", lg: "0px", xl: "20px" }}
+          w={350}
+          mr={{ base: "0px", sm: "0px", md: "0px", lg: "50px", xl: "20px" }}
           mt={10}
         >
           <Text
@@ -120,21 +135,27 @@ const Login = () => {
             fontWeight="semibold"
             fontStyle="Roboto"
             color="#333333"
-            fontSize={45}
-            mb={10}
+            fontSize={32}
+            mb={7}
           >
             Login
           </Text>
           <Box>
-            <Alert borderRadius={8} mb={5} status="error" ref={errRef} display={errMsg ? 'flex' : 'none'}>
+            <Alert
+              borderRadius={8}
+              mb={3}
+              status="error"
+              ref={errRef}
+              display={errMsg ? "flex" : "none"}
+            >
               <AlertIcon />
-              <AlertTitle>Login failed</AlertTitle>
-              <AlertDescription>{errMsg}</AlertDescription>
+              <AlertTitle fontSize={16}>Login failed</AlertTitle>
+              <AlertDescription fontSize={15}>{errMsg}</AlertDescription>
             </Alert>
             <form onSubmit={handleSubmit}>
               <FormControl>
                 <FormLabel
-                  fontSize={22}
+                  fontSize={16}
                   color="#555555"
                   fontWeight="regular"
                   fontStyle="Roboto"
@@ -149,25 +170,26 @@ const Login = () => {
                   autoComplete="off"
                   onChange={(e) => setUser(e.target.value)}
                   value={user}
-                  mb={6}
-                  h={12}
+                  mb={4}
+                  h={9}
                   bg="#eeeeee"
                   border="none"
                   placeholder="Enter username or register ID"
+                  fontSize={14}
                 />
                 {/* <FormHelperText>We'll never share your email.</FormHelperText> */}
                 <FormLabel
                   htmlFor="password"
                   color="#555555"
-                  fontSize={22}
+                  fontSize={16}
                   fontWeight="regular"
                   fontStyle="Roboto"
                 >
                   Password :
                 </FormLabel>
                 <Input
-                  mb={6}
-                  h={12}
+                  mb={4}
+                  h={9}
                   bg="#eeeeee"
                   border="none"
                   placeholder="Enter password"
@@ -175,7 +197,7 @@ const Login = () => {
                   id="password"
                   onChange={(e) => setPwd(e.target.value)}
                   value={pwd}
-                  
+                  fontSize={14}
                 />
                 <Box display="flex" ml={2}>
                   <Checkbox
@@ -189,7 +211,7 @@ const Login = () => {
                   />
                   <FormLabel
                     color="#555555"
-                    fontSize={22}
+                    fontSize={16}
                     fontWeight="regular"
                     fontStyle="Roboto"
                     htmlFor="persist"
@@ -203,14 +225,15 @@ const Login = () => {
                   cursor="pointer"
                   _hover={{ textDecoration: "underline" }}
                   fontWeight="medium"
+                  fontSize={14}
                 >
                   Forgotten Password?
                 </Text>
 
                 <Flex justifyContent="center" mt={10}>
                   <Button
-                    w={250}
-                    h={12}
+                    w={200}
+                    h={10}
                     bg="#0074D9"
                     color="#ffffff"
                     _hover={{
@@ -218,13 +241,37 @@ const Login = () => {
                       bg: "white",
                       border: "0.5px solid #0074D9",
                     }}
-                    fontSize={24}
+                    fontSize={19}
                     borderRadius={6}
                     fontWeight={"medium"}
                     type="submit"
                   >
                     Login
                   </Button>
+                </Flex>
+                <Flex
+                  gap={2}
+                  mt={5}
+                  justifyContent="center"
+                  display={{
+                    base: "flex",
+                    sm: "none",
+                    md: "none",
+                    lg: "none",
+                    xl: "none",
+                  }}
+                >
+                  <Text fontSize={14}>Do you haven't register yet?</Text>
+                  <Link to="/register">
+                    <Text
+                      color="032068"
+                      fontSize={14}
+                      fontWeight="semibold"
+                      _hover={{ textDecoration: "underline" }}
+                    >
+                      Sign Up
+                    </Text>
+                  </Link>
                 </Flex>
               </FormControl>
             </form>
