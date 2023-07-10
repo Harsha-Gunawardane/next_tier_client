@@ -4,8 +4,8 @@ import Home from "./components/Home";
 import Layout from "./components/Layout";
 import Editor from "./components/Editor";
 import Admin from "./components/Admin";
-import Missing from "./components/Missing";
-import Unauthorized from "./components/Unauthorized";
+import Missing from "./pages/Missing";
+import Unauthorized from "./pages/Unauthorized";
 import Lounge from "./components/Lounge";
 import LinkPage from "./components/LinkPage";
 import RequireAuth from "./features/auth/RequireAuth";
@@ -13,12 +13,7 @@ import PersistLogin from "./features/auth/PersistLogin";
 import UserLayout from "./features/users/UserLayout";
 import UserProfile from "./features/users/components/UserProfile";
 import { Routes, Route } from "react-router-dom";
-
-const ROLES = {
-  User: 2001,
-  Editor: 1984,
-  Admin: 5150,
-};
+import { ROLES } from "./config/roles";
 
 function App() {
   return (
@@ -27,6 +22,8 @@ function App() {
         {/* public routes */}
         <Route path="unauthorized" element={<Unauthorized />} />
         <Route path="linkpage" element={<LinkPage />} />
+
+
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />
 
