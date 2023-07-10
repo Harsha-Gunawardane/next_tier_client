@@ -50,7 +50,10 @@ const SidebarAndHeader = ({userRole}) => {
             </SidebarProvider>
             <Flex direction={'column'} w={'full'} h={'100vh'} overflow={'hidden'}>
                 <Header/>
-                <Outlet/>
+                <div>
+                    <Outlet/>
+                </div>
+                
             </Flex>
         </Grid>
     )
