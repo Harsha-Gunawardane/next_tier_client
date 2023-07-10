@@ -32,10 +32,11 @@ function App() {
 		<Routes>
 			<Route path="/" element={<Layout />}>
 				{/* public routes */}
+				<Route path="/" element={<Landing />} />
+				<Route path="unauthorized" element={<Unauthorized />} />
+				<Route path="linkpage" element={<LinkPage />} />
 				<Route path="login" element={<Login />} />
 				<Route path="register" element={<Register />} />
-				<Route path="linkpage" element={<LinkPage />} />
-				<Route path="unauthorized" element={<Unauthorized />} />
 
 				{/* we want to protect these routes */}
 				<Route element={<PersistLogin />}>
