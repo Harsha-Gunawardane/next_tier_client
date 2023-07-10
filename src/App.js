@@ -13,6 +13,7 @@ import PersistLogin from "./features/auth/PersistLogin";
 import UserLayout from "./features/users/UserLayout";
 import UserProfile from "./features/users/components/UserProfile";
 import { Routes, Route } from "react-router-dom";
+import Landing from './pages/LandingPage/Landing.js';
 
 //imort chakra ui
 // import { ChakraProvider } from "@chakra-ui/react";
@@ -34,6 +35,7 @@ function App() {
     <Routes>
       <Route path="/" element={<Layout />}>
         {/* public routes */}
+        <Route path="/" element={<Landing/>} />
         <Route path="unauthorized" element={<Unauthorized />} />
         <Route path="linkpage" element={<LinkPage />} />
         <Route path="login" element={<Login />} />
