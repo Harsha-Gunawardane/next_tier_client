@@ -20,6 +20,7 @@ import Dashboard from "./components/Dashboard";
 import Courses from "./components/Courses";
 import Content from "./components/Content";
 import SidebarAndHeader from "./layouts/SidebarAndHeader";
+import Landing from "./pages/LandingPage/Landing";
 
 const ROLES = {
 	User: 2001,
