@@ -7,7 +7,7 @@ import { AuthProvider } from './context/AuthProvider';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { disableReactDevTools } from '@fvilers/disable-react-devtools';
 import { ChakraProvider } from "@chakra-ui/react";
-import theme from "./theme";
+import theme from "./theme/theme";
 import store from './redux/store'
 import { Provider } from 'react-redux'
 
