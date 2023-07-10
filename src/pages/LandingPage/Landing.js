@@ -23,6 +23,8 @@ import contact_us from './Assets/contact_us.png';
 import location from './Assets/location.png';
 import phone from './Assets/phone.png';
 import email from './Assets/e-mail.png';
+import Footer from './Footer';
+import studentCom from './Assets/studentCom.png';
 
 
 
@@ -33,9 +35,17 @@ function LandingPage() {
       element.scrollIntoView({ behavior: 'smooth' });
     }
   };
+
+  const contactCard = {
+    width: '270px',
+    height: '240px',
+    marginBottom: '20px',
+  };
   return (
+    
     <div>
       {/**1.Navigation bar */}
+      <section id='home'>
       <Navbar />
       {/**2.Hero-section */}
       <div className='hero-section'>
@@ -92,6 +102,7 @@ function LandingPage() {
         </div>
 
       </div>
+      </section>
 
       {/**3.About Us */}
 
@@ -222,7 +233,7 @@ function LandingPage() {
 
       <div className="feature1">
         <div className="image">
-          <img className='image1' style={{ 'margin-left': '120px' }} src={mcq} alt="" />
+          <img className='image1' style={{ 'margin-left': '120px', 'height': '390px' }} src={mcq} alt="" />
         </div>
         <div className="feature_text">
           <h1 className="first_feature_title"  >Randomly Generated MCQ’s</h1>
@@ -240,12 +251,12 @@ function LandingPage() {
           </div>
         </div>
         <div className="image">
-          <img className='image1' style={{ 'width': '570px' }} src={stu_recommend} alt="" />
+          <img className='image1' style={{ 'width': '570px','height':'350px' }} src={studentCom} alt="" />
         </div>
       </div>
-        {/**Fifth Feature */}
+      {/**Fifth Feature */}
 
-        <div className="feature1">
+      <div className="feature1">
         <div className="image">
           <img className='image1' style={{ 'margin-left': '120px' }} src={mcq} alt="" />
         </div>
@@ -261,48 +272,49 @@ function LandingPage() {
       {/**Conact page */}
       <section id="contact">
 
-        {/**fourth feature -Student Community*/}
-      <div className="feature1">
-        <div className="feature_text">
-          <h1 className="first_feature_title" style={{ 'margin-left': '180px' }}>We would love to hear from you!</h1>
-          <div className="text">
-            <p className="feature_text_point1" style={{ 'margin-left': '180px', 'margin-right': '60px','justify-content': 'center' }}>We would love to hear from you! Get in touch with us at NextTier for any inquiries, feedback, or support</p>
+        {/**Conatct Us*/}
+        <div className="feature1">
+          <div className="feature_text">
+            <h1 className="first_feature_title" style={{ 'margin-left': '180px', 'font-size': '30px' }}>We would love to <span style={{ 'color': '#F48C06' }}>hear from you!</span></h1>
+            <div className="text">
+              <p className="feature_text_point1" style={{ 'margin-left': '180px', 'margin-right': '60px', 'justify-content': 'center' }}>We value your input and are eager to connect with you! Weather you have inquiries, feedback, or require support, the NextTier team is here to assist you. Additionally, teachers interested in joining our platform are encouraged to reach out to us. We look forward to hearing from you and working together to shape the future of education.</p>
+            </div>
+          </div>
+          <div className="image">
+            <img className='image1' style={{ 'width': '570px' }} src={contact_us} alt="" />
           </div>
         </div>
-        <div className="image">
-          <img className='image1' style={{ 'width': '570px' }} src={contact_us} alt="" />
+
+
+        <div className="cards" style={{'margin-top':'50px'}}>
+
+          <div className="card-items" style={contactCard}>
+            <div className="card-img"><img style={{ 'width': '70px', 'height': '70px' }} className="card1-img" src={location} alt="" /></div>
+            <div className="card-text-title" style={{ 'margin-top': '10px' }}>Address</div>
+
+            <div className="card-text-des1" style={{ 'margin-top': '40px', 'font-size': '17px' }}>No. 123, Main Street, Nugegoda, Colombo, Sri Lanka</div>
+          </div>
+
+          <div className="card-items" style={contactCard}>
+            <div className="card-img"><img style={{ 'width': '70px', 'height': '70px' }} className="card1-img" src={phone} alt="" /></div>
+            <div className="card-text-title" style={{ 'margin-top': '10px' }}>Phone Number</div>
+
+            <div className="card-text-des2" style={{ 'margin-top': '40px', 'font-size': '17px' }}>+94 77 123 4567</div>
+          </div>
+
+          <div className="card-items" style={contactCard}>
+            <div className="card-img"><img style={{ 'width': '70px', 'height': '70px' }} className="card1-img" src={email} alt="" /></div>
+
+            <div className="card-text-title" style={{ 'margin-top': '10px' }}>E-mail </div>
+            <div className="card-text-des3" style={{ 'margin-top': '40px', 'font-size': '17px' }}>info@nexttier.lk</div>
+          </div>
+
+
+
+
         </div>
-      </div>
-        
-
-      <div className="cards">
-
-<div className="card-items" >
-  <div className="card-img"><img className="card1-img" src={location} alt="" /></div>
-  <div className="card-text-title">Address</div>
- 
-  <div className="card-text-des1"></div>
-</div>
-
-<div className="card-items">
-  <div className="card-img"><img className="card1-img" src={phone} alt="" /></div>
-  <div className="card-text-title">Phone Number</div>
-
-  <div className="card-text-des2"></div>
-</div>
-
-<div className="card-items">
-  <div className="card-img"><img className="card1-img" src={email} alt="" /></div>
- 
-  <div className="card-text-title">E-mail </div>
-  <div className="card-text-des3"></div>
-</div>
-
-
-
-
-</div>
       </section>
+      <Footer />
 
     </div>
   );
