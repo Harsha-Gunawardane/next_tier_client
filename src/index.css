@@ -19,13 +19,13 @@ body {
 
 .App {
   display: flex;
-  /* flex-direction: column;
+  flex-direction: column;
   justify-content: center;
-  align-items: center; */
+  align-items: center;
   min-height: 100vh;
   min-width: 100vw; 
   width: 100vw;
-  /* padding: 1rem 0.5rem; */
+  padding: 1rem 0.5rem;
 }
 
 section {
