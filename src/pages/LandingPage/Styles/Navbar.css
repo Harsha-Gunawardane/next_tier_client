@@ -3,11 +3,22 @@
     margin: 0;
     padding: 0;
   }
+
+    #myElement,
+    #myElement::before,
+    #myElement::after {
+      border-width: initial;
+      border-style: initial;
+      box-sizing: content-box;
+      word-wrap: normal;
+    }
   html {
     font-family: 'Nunito', sans-serif;
     font-size: 15px;
   
 }
+
+
 .navbar {
     background-color: #E2F5FF;
     height: 80px;
