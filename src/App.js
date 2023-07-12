@@ -18,7 +18,7 @@ import CreateMcq from "./pages/mcq/mcqCreate";
 import { Routes, Route } from "react-router-dom";
 import { ROLES } from "./config/roles";
 import { Dashboard, Home } from "@mui/icons-material";
-import Landing from "./pages/Landing";
+import Landing from "./pages/LandingPage/Landing";
 import Content from "./components/Content";
 import Courses from "./components/Courses";
 
