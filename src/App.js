@@ -14,9 +14,18 @@ import Courses from "./components/Courses";
 import Content from "./components/Content";
 import Landing from "./pages/LandingPage/Landing";
 import UserVerify from "./pages/UserVerify";
+import StaffList from "./pages/staff/staffList";
+import StaffAdd from "./pages/staff/staffAdd";
+import McqCategoryPool from "./pages/mcq/mcqCategoryPool";
+import McqPool from "./pages/mcq/mcqPool";
+import CreateMcq from "./pages/mcq/mcqCreate";
 
 import { Routes, Route } from "react-router-dom";
 import { ROLES } from "./config/roles";
+import { Dashboard, Home } from "@mui/icons-material";
+import Landing from "./pages/LandingPage/Landing";
+import Content from "./components/Content";
+import Courses from "./components/Courses";
 
 function App() {
   return (
@@ -24,7 +33,7 @@ function App() {
       <Route path="/" element={<Layout />}>
 
         {/* public routes */}
-        <Route index element={<Landing />} />
+        <Route path="/" element={<Landing />} />
         <Route path="unauthorized" element={<Unauthorized />} />
 
         <Route path="login" element={<Login />} />
@@ -33,18 +42,20 @@ function App() {
         <Route path="verify" element={<UserVerify />} />
 
         {/* we want to protect these routes */}
-        <Route element={<PersistLogin />}>          
-
-          <Route element={<RequireAuth allowedRoles={[ROLES.Student]} />}>
-            {/* <Route path="/" element={<Home />} /> */}
-
-            <Route path="stu" element={<SidebarAndHeader userRole={'student'} />}>
+        <Route element={<PersistLogin />}>
+          {/* <Route element={<RequireAuth allowedRoles={[ROLES.User]} />}> */}
+            <Route path="/" element={<Home />} />
+            <Route element={<SidebarAndHeader userRole={"student"} />}>
               <Route path="dashboard" element={<Dashboard />} />
               <Route path="courses" element={<Courses />} />
               <Route path="content" element={<Content />} />
-              <Route path="settings" element={<Settings />} />
+              <Route path="staff" element={<StaffList />} />
+              <Route path="staff/add" element={<StaffAdd />} />
+              <Route path="mcq" element={<McqCategoryPool />} />
+              <Route path="mcq/view" element={<McqPool />} />
+              <Route path="mcq/add" element={<CreateMcq />} />
             </Route>
-          </Route>
+          {/* </Route> */}
 
           <Route element={<RequireAuth allowedRoles={[ROLES.User]} />}>
             <Route path="user" element={<UserLayout />}>

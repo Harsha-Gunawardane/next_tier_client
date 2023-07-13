@@ -43,7 +43,7 @@ function LandingPage() {
   };
   return (
     
-    <div>
+    <div className="LandingPage">
       {/**1.Navigation bar */}
       <section id='home'>
       <Navbar />
@@ -52,9 +52,9 @@ function LandingPage() {
         {/**Left part */}
         <div className='left'>
           <div className="text">
-            <div className="text1"><h1>Welcome to Next Tier!</h1></div>
-            <div className="text2"><h1>Empowering educataion</h1></div>
-            <p>The Future of Learning! Discover engaging courses, expert instructors, and powerful learning tools all in one place.
+            <div className="text1" ><h1>Welcome to Next Tier!</h1></div>
+            <div className="text2" ><h1>Empowering education</h1></div>
+            <p className="hero_des" style={{'width':'400px'}}>The Future of Learning! Discover engaging courses, expert instructors, and powerful learning tools all in one place.
               Elevate your education, track your progress, and embrace endless possibilities. Join NextTier today and unleash your brilliance!</p>
             <button className="stu-signup-btn"><Link to="/register" className="join">Join the community</Link></button>
           </div>
@@ -63,14 +63,14 @@ function LandingPage() {
         <div className='right'>
           <div className="hero-boxes">
             <div className="hero-box1">
-              <div className="hero-box-img"><img src={hero} alt="" /></div>
+              <div className="hero-box-img" ><img className="hero-box-image"  src={hero} alt="" /></div>
               <div className="hero-box-text">
                 <p className="count">200+</p>
                 <p className="description-one">Active Students</p>
               </div>
             </div>
             <div className="hero-box2">
-              <div className="hero-box-img"><img src={hero_2} alt="" /></div>
+              <div className="hero-box-img"><img className="hero-box-image" src={hero_2} alt="" /></div>
               <div className="hero-box-text">
 
                 <p className="description">Physical Classrom</p>
@@ -78,21 +78,21 @@ function LandingPage() {
               </div>
             </div>
             <div className="hero-box3">
-              <div className="hero-box-img"><img src={hero_3} alt="" /></div>
+              <div className="hero-box-img"><img className="hero-box-image" src={hero_3} alt="" /></div>
               <div className="hero-box-text">
                 <p className="description">Individual Student </p>
                 <p className="des-des">Monitoring</p>
               </div>
             </div>
             <div className="hero-box4">
-              <div className="hero-box-img"><img src={hero_4} alt="" /></div>
+              <div className="hero-box-img"><img className="hero-box-image"   src={hero_4} alt="" /></div>
               <div className="hero-box-text">
-                <p className="description"> <span className="count">20+</span> Teachers  </p>
-                <p className="des-des">and Supporting Staff</p>
+                <p className="description_herobox4"> <span className="count">20+</span> Teachers  </p>
+                <p className="des-des_herobox4">and Supporting Staff</p>
               </div>
             </div>
             <div className="hero-box5">
-              <div className="hero-box-img"><img src={hero_5} alt="" /></div>
+              <div className="hero-box-img"><img  className="hero-box-image"  src={hero_5} alt="" /></div>
               <div className="hero-box-text">
                 <p className="des_lastbox">Enagagement of</p>
                 <p className="des-des_lastbox">parents</p>
@@ -184,7 +184,7 @@ function LandingPage() {
       {/**Services */}
 
       <section id="services">
-        <h1 className="main_heading">Our <span>Features</span></h1>
+        <h1 className="main_heading_title">Our <span className="main_heading_title_span">Features</span></h1>
         <p className="main_heading_para">Discover the power of our comprehensive features designed to enhance your experience and drive success.</p>
 
       </section>
@@ -224,7 +224,7 @@ function LandingPage() {
 
         </div>
         <div className="image">
-          <img className='image1' style={{ 'width': '570px' }} src={stu_recommend} alt="" />
+          <img className='image1' style={{ 'width': '570px','margin-right':'600px','padding-right':'20px' }} src={stu_recommend} alt="" />
         </div>
 
       </div>
@@ -233,12 +233,12 @@ function LandingPage() {
 
       <div className="feature1">
         <div className="image">
-          <img className='image1' style={{ 'margin-left': '120px', 'height': '390px' }} src={mcq} alt="" />
+          <img className='image1' style={{ 'margin-left': '120px', 'height': '390px' ,'width': '950px'}} src={mcq} alt="" />
         </div>
         <div className="feature_text">
-          <h1 className="first_feature_title"  >Randomly Generated MCQ’s</h1>
+          <h1 className="first_feature_title" style={{'margin-left': '300px'}} >Randomly Generated MCQ’s</h1>
           <div className="text">
-            <p className="feature_text_point1" style={{ 'margin-right': '180px' }}>An MCQ section offers an MCQ paper based on the subject the student chooses. Additionally, the system generates MCQ papers with that focus when it identifies the student's weak areas, until the student masters those subjects.</p>
+            <p className="feature_text_point1" style={{ 'margin-right': '180px','margin-left':'300px' }}>An MCQ section offers an MCQ paper based on the subject the student chooses. Additionally, the system generates MCQ papers with that focus when it identifies the student's weak areas, until the student masters those subjects.</p>
           </div>
         </div>
       </div>
@@ -247,11 +247,11 @@ function LandingPage() {
         <div className="feature_text">
           <h1 className="first_feature_title" style={{ 'margin-left': '180px' }}>Student Community</h1>
           <div className="text">
-            <p className="feature_text_point1" style={{ 'margin-left': '180px', 'margin-right': '60px' }}>Students can publish, respond to posts, and report information that is improper. Students may also file complaints about classes or course materials.</p>
+            <p className="feature_text_point1" style={{ 'margin-left': '180px', 'margin-right': '240px' }}>Students can publish, respond to posts, and report information that is improper. Students may also file complaints about classes or course materials.</p>
           </div>
         </div>
         <div className="image">
-          <img className='image1' style={{ 'width': '570px','height':'350px' }} src={studentCom} alt="" />
+          <img className='image1' style={{ 'width': '1150px','height':'350px','padding-right':'120px' }} src={studentCom} alt="" />
         </div>
       </div>
       {/**Fifth Feature */}
@@ -261,9 +261,9 @@ function LandingPage() {
           <img className='image1' style={{ 'margin-left': '120px' }} src={mcq} alt="" />
         </div>
         <div className="feature_text">
-          <h1 className="first_feature_title"  >Parent Engagement</h1>
+          <h1 className="first_feature_title" style={{'margin-left': '260px'}} >Parent Engagement</h1>
           <div className="text">
-            <p className="feature_text_point1" style={{ 'margin-right': '180px' }}>Parents of students also can engage with this system for monitoring their children. A parent's portal will also allow them to pay for their child's education.</p>
+            <p className="feature_text_point1" style={{ 'margin-right': '280px','margin-left':'260px' }}>Parents of students also can engage with this system for monitoring their children. A parent's portal will also allow them to pay for their child's education.</p>
           </div>
         </div>
       </div>
@@ -281,7 +281,7 @@ function LandingPage() {
             </div>
           </div>
           <div className="image">
-            <img className='image1' style={{ 'width': '570px' }} src={contact_us} alt="" />
+            <img className='image1' style={{ 'width': '570px','margin-right':'600px','padding-right':'20px' }} src={contact_us} alt="" />
           </div>
         </div>
 
@@ -289,24 +289,24 @@ function LandingPage() {
         <div className="cards" style={{'margin-top':'50px'}}>
 
           <div className="card-items" style={contactCard}>
-            <div className="card-img"><img style={{ 'width': '70px', 'height': '70px' }} className="card1-img" src={location} alt="" /></div>
+            <div className="card-img"><img style={{ 'width': '70px', 'height': '70px','margin-top':'-37px','margin-left':'100px' }} className="card1-img" src={location} alt="" /></div>
             <div className="card-text-title" style={{ 'margin-top': '10px' }}>Address</div>
 
             <div className="card-text-des1" style={{ 'margin-top': '40px', 'font-size': '17px' }}>No. 123, Main Street, Nugegoda, Colombo, Sri Lanka</div>
           </div>
 
           <div className="card-items" style={contactCard}>
-            <div className="card-img"><img style={{ 'width': '70px', 'height': '70px' }} className="card1-img" src={phone} alt="" /></div>
+            <div className="card-img"><img style={{ 'width': '70px', 'height': '70px','margin-top':'-37px','margin-left':'100px' }} className="card1-img" src={phone} alt="" /></div>
             <div className="card-text-title" style={{ 'margin-top': '10px' }}>Phone Number</div>
 
             <div className="card-text-des2" style={{ 'margin-top': '40px', 'font-size': '17px' }}>+94 77 123 4567</div>
           </div>
 
           <div className="card-items" style={contactCard}>
-            <div className="card-img"><img style={{ 'width': '70px', 'height': '70px' }} className="card1-img" src={email} alt="" /></div>
+            <div className="card-img"><img style={{ 'width': '70px', 'height': '70px','margin-top':'-37px','margin-left':'100px' }} className="card1-img" src={email} alt="" /></div>
 
             <div className="card-text-title" style={{ 'margin-top': '10px' }}>E-mail </div>
-            <div className="card-text-des3" style={{ 'margin-top': '40px', 'font-size': '17px' }}>info@nexttier.lk</div>
+            <div className="card-text-des3" style={{ 'margin-top': '40px', 'font-size': '17px','margin-left':'10px' }}>info@nexttier.lk</div>
           </div>
 
 

@@ -11,7 +11,16 @@
  p{
 font-size: 17px;
 }
-
+.main_heading_title{
+    font-size: 32px;
+    color: #2F327D;
+    text-align: center;
+    font-weight: bold;
+    margin-top: 13px;
+}
+.main_heading_title_span{
+    color: #F48C06;
+}
 .main_heading_para{
     text-align: center;
     margin-top: 12px;
@@ -70,4 +79,6 @@ font-size: 17px;
     color: #2F327D;
     margin-left: 30px;
     margin-top: 50px;
+    font-size: 28px;
+    font-weight: bold;
 }
