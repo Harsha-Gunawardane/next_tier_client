@@ -6,7 +6,7 @@ import { ChakraProvider } from '@chakra-ui/react'
 
 
 const Course = (props) => {
-  const {  imgUrl, carName} = props.item;
+  const {  imgUrl,name, email} = props.item;
   return (
      
 
@@ -17,12 +17,12 @@ const Course = (props) => {
 <Card maxW='lg'>
   <CardBody>
     <Image
-      src={imgUrl}
-    
+      
+    src={imgUrl}
       borderRadius='lg'
     />
     <Stack mt='6' spacing='3'>
-      <Heading color='black' fontSize='xl' mb='10px'>{carName}</Heading>
+      <Heading color='black' fontSize='xl' mb='10px'>{name}</Heading>
 
 <HStack spacing='24px' mt='-15px'>
   <Box w='30%' h='40px' bg='white'>

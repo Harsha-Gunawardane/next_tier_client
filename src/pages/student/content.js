@@ -5,36 +5,37 @@ import { ChakraProvider,SimpleGrid,Box,Heading ,HStack,Center,Flex,Text,Image,Av
 
 } from '@chakra-ui/react'
 import Contentmain from "../../components/student/Contentmain";
-import course from "../../assets/data/course.js";
 import Content from "../../components/student/content";
+import { useEffect,useState } from "react";
+import CourseContent from "../../components/student/courseContent";
 
 
 
 
-  const Setting= () => {
+  const Videocontent= () => {
+
+    const[videodata,videodatachange]=useState(null);
+
+   
+    useEffect(() => {
+      fetch("http://localhost:8000/videocontents").then((res) => {
+          return res.json();
+      }).then((resp) => {
+          videodatachange(resp);
+      }).catch((err) => {
+          console.log(err.message);
+      })
+  }, [])
   // 2. Wrap ChakraProvider at the root of your app
   return (
  
   <Box overflow='scroll'>
-<SimpleGrid spacing={20} minChildWidth='250px'>
-
-<Box bg='white' w='100%' height={{base:250,lg:50,xl:400}} p={10} color='black' >
-<Image
-      src="https://www.ufs.ac.za/images/librariesprovider22/default-album/shutterstock_1140894395.jpg?sfvrsn=554a8521_0"
-      alt='Green double couch with wooden legs'
-      borderRadius='lg'
-      
-    />
-  
-</Box>
 <Contentmain></Contentmain>
-
-</SimpleGrid>
 
 
 <SimpleGrid minChildWidth='250px' spacing='40px' p={5}>
     
-    {course?.map((item) => (
+{videodata?.map((item) => (
       <Content item={item} key={item.id} />
     ))}
 
@@ -45,4 +46,4 @@ import Content from "../../components/student/content";
  
   )
 }
-export default Setting;
+export default Videocontent;

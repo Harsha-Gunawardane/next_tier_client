@@ -33,7 +33,7 @@ const quiz = () => {
 <SimpleGrid spacing={20} minChildWidth='250px'>
 
 <Box bg='white' w='100%' height='60px' p={4} color='black'>
-<Heading color='green' fontSize={30}>120 Days more for your Exam </Heading>
+<Heading color='green' fontSize={25}>120 Days more for your Exam </Heading>
   
 </Box>
 </SimpleGrid>
@@ -43,7 +43,7 @@ const quiz = () => {
 <Box bg='white' width={{base:350,lg:500,xl:800}} height='400px' p={4} color='black'>
 
 <HStack spacing='24px' mt='30px'>
-<Box bg='#eee' w='70%' height='110px' p={2} color='black' borderRadius={'10px'} boxShadow='0 3px 10px rgb(0 0 0 / 0.2)'>
+<Box bg='#eee' w='65%' height='100px' p={2} color='black' borderRadius={'10px'} boxShadow='0 3px 10px rgb(0 0 0 / 0.2)'>
   <Text fontSize='15px'>Average Mark</Text>
 
   <HStack spacing='24px' mt='20px'>
@@ -57,7 +57,8 @@ const quiz = () => {
 </HStack>
   
 </Box>
-<Box bg='#eee' w='70%' height='110px' p={2} color='black' borderRadius={'10px'} boxShadow='0 3px 10px rgb(0 0 0 / 0.2)'>
+
+<Box bg='#eee' w='65%' height='100px' p={2} color='black' borderRadius={'10px'} boxShadow='0 3px 10px rgb(0 0 0 / 0.2)'>
 <Text fontSize='15px'>Average Mark</Text>
 
 <HStack spacing='24px' mt='20px'>
@@ -71,7 +72,7 @@ const quiz = () => {
  
 </HStack>
 </Box>
-<Box bg='#eee' w='70%' height='110px' p={2} color='black' borderRadius={'10px'} boxShadow='0 3px 10px rgb(0 0 0 / 0.2)'>
+<Box bg='#eee' w='65%' height='100px' p={2} color='black' borderRadius={'10px'} boxShadow='0 3px 10px rgb(0 0 0 / 0.2)'>
 <Text fontSize='15px'>Average Mark</Text>
 
 <HStack spacing='24px' mt='20px'>
@@ -87,15 +88,15 @@ const quiz = () => {
 </Box>
 </HStack>
 
-<Flex bg='#eee'  width={{base:400,lg:500,xl:700}} height='100px' p={5} color='black' mt='60px' ml='50px' borderRadius={'10px'} boxShadow='0 3px 10px rgb(0 0 0 / 0.2)'>
+<Flex bg='#eee'  width={{base:400,lg:500,xl:700}} height='90px' p={5} color='black' mt='60px' ml='50px' borderRadius={'10px'} boxShadow='0 3px 10px rgb(0 0 0 / 0.2)'>
   
 
   <HStack spacing='24px'>
   <Box w='80%' h='40px' bg='#eee'>
-    <Heading p={0} ml='20px' fontSize={{base:10,lg:15,xl:25}}>Let Examine Your Knowledge</Heading>
+    <Heading p={0} ml='20px' fontSize={{base:10,lg:15,xl:20}}>Let Examine Your Knowledge</Heading>
   </Box>
   <Box w='20%' h='40px' bg='#eee'>
- <Button width='100%' height='50px' ml='15px' mt='-15px'p={2}><Text fontSize='15px'>Generate Quiz</Text></Button>
+ <Button width='120%' height='25px' ml='15px' mt='-15px'p={4} bg='lightblue'><Text fontSize='15px'>Generate Quiz</Text></Button>
   </Box>
  
 </HStack>
@@ -158,9 +159,9 @@ const quiz = () => {
 
 <SimpleGrid spacing={20} minChildWidth='250px'>
 
-<Box bg='white' width={{base:350,lg:500,xl:800}} height='500px' p={4} color='black'>
+<Box bg='white' width={{base:350,lg:500,xl:800}} height='500px' p={4} color='black' mt='-80px'>
 
-<Heading color='black' fontSize={30}>Previous Quizes </Heading>
+<Heading color='black' fontSize={25}>Previous Quizes </Heading>
 <Progressbar></Progressbar>
 <Progressbar></Progressbar>
 <Progressbar></Progressbar>
@@ -168,8 +169,8 @@ const quiz = () => {
   
 </Box>
 
-<Box bg='white' width={{base:200,lg:200,xl:450}} height='450px' p={10} color='black' ml={{base:0,lg:200,xl:100}}>
-  <Heading fontSize={30}>Your Progress</Heading>
+<Box bg='white' width={{base:200,lg:200,xl:450}} height='450px' p={10} color='black' ml={{base:0,lg:200,xl:100}} mt='-25px'>
+  <Heading fontSize={25}>Your Progress</Heading>
 
   
 </Box>

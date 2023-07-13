@@ -7,7 +7,7 @@ import { Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react'
 
 
 const Course = (props) => {
-  const { category, type, rentPrice, imgUrl, carName, groupSize,Box,Avatar } = props.item;
+  const { name,imgUrl } = props.item;
   return (
     
     
@@ -33,14 +33,14 @@ const Course = (props) => {
 
     <HStack spacing='2px' mt='-20px'>
     <Image
-      src={imgUrl}
+      
       alt='Green double couch with wooden legs'
      height='40px'
       width='40px'
       borderRadius='50%'
     />
     
-     <Heading color='black' fontSize='l' ml='10px'>{carName}
+     <Heading color='black' fontSize='l' ml='10px'>{name}
      </Heading>
     
    

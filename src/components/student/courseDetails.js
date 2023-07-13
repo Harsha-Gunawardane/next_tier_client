@@ -12,19 +12,19 @@ const courseDetails = (props) => {
 
     <UnorderedList p={2}>
     <ListItem>
-    <Text fontSize='18px'>Mobile access is possible</Text>
+    <Text fontSize='15px'>Mobile access is possible</Text>
   
     </ListItem>
     <ListItem>
       
-    <Text fontSize='18px'>Mobile access is possible</Text>
+    <Text fontSize='15px'>Mobile access is possible</Text>
     </ListItem>
     <ListItem>
-    <Text fontSize='18px'>Mobile access is possible</Text>
+    <Text fontSize='15px'>Mobile access is possible</Text>
   
     </ListItem>
     <ListItem>
-    <Text fontSize='18px'>Mobile access is possible</Text>
+    <Text fontSize='15px'>Mobile access is possible</Text>
    
     </ListItem>
   </UnorderedList>

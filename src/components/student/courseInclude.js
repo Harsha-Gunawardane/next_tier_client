@@ -21,9 +21,9 @@ const courseInclude = (props) => {
     <Accordion allowToggle>
 <AccordionItem>
 <h2>
-<AccordionButton bg='#eee'>
+<AccordionButton bg='#eee' height='40px'>
   <Box as="span" flex='1' textAlign='left'>
-    <Heading fontSize='16px'>Week 1</Heading>
+    <Heading fontSize='15px'>Week 1</Heading>
   </Box>
   <AccordionIcon />
 </AccordionButton>
@@ -38,7 +38,7 @@ commodo consequat.
 
 <AccordionItem>
 <h2>
-<AccordionButton bg='#eee'>
+<AccordionButton bg='#eee'  height='40px'>
   <Box as="span" flex='1' textAlign='left'>
     <Heading fontSize='16px'>Week 2</Heading>
   </Box>

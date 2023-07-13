@@ -17,22 +17,49 @@ import {
 
 import CourseInclude from "../../components/student/courseInclude";
 import CourseDetails from "../../components/student/courseDetails";
+import { useEffect,useState } from "react";
+import { useParams } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
-const Dashboard = () => {
+const Course = () => {
+
+
+
+  const { courseid } = useParams();
+
+  const [coursedata, coursedatachange] = useState({});
+
+  useEffect(() => {
+      fetch("http://localhost:8000/courses/" + courseid).then((res) => {
+          return res.json();
+      }).then((resp) => {
+          coursedatachange(resp);
+      }).catch((err) => {
+          console.log(err.message);
+      })
+  }, []);
+
+
+  const navigate = useNavigate();
+  const LoadDetail = (id) => {
+    navigate("/studentcourses/detail/payment/" + id);
+}
+
+
   return (
    <Box overflowY='scroll'>
 
 
   
 
-
+{coursedata &&
       <SimpleGrid spacing={20} minChildWidth="250px">
 
         <Box w="120%" bg="white" p={10} borderRadius="10px" ml="10px">
           <Image
             boxSize="60%"
             width="100%"
-            height='400px'
+            height='350px'
             objectFit="cover"
             src="   https://th.bing.com/th/id/OIP.VJQzsb88_Ogu1MFyxA6HxQHaEj?pid=ImgDet&rs=1"
             alt="Dan Abramov"
@@ -40,7 +67,7 @@ const Dashboard = () => {
           <br></br>
         
 
-        <Heading fontSize='30px'>Physics 2024 Theory</Heading>
+        <Heading fontSize='25px'>{coursedata.name}</Heading>
          
     <HStack spacing='24px' mt='20px'>
   <Box w='50%' h='30px' bg='white'>
@@ -53,9 +80,9 @@ const Dashboard = () => {
 </HStack>
         
           <br></br>
-          <Heading fontSize='25px'>Description</Heading>
+          <Heading fontSize='22px'>Description</Heading>
           <br></br>
-          <Text fontSize='20px'>Find Physics stock images in HD
+          <Text fontSize='15px'>Find Physics stock images in HD
              and millions of other royalty-free stock photos, illustrations
                  and vectors in the Shutterstock collection. Thousands of new,
                   high-quality pictures added every day.</Text>
@@ -98,16 +125,16 @@ const Dashboard = () => {
           <br></br>
           <HStack spacing='24px' mt='-15px'>
   <Box w='50%' h='40px' bg='white'>
-  <Heading ml='20px' fontSize='20px'>Rs.2500</Heading>
+  <Heading ml='20px' fontSize='15px'>Rs.2500</Heading>
   </Box>
   <Box w='50%' h='40px' bg='white'>
-  <Heading ml='20px' fontSize='20px'>Rs.2500</Heading>
+  <Heading ml='20px' fontSize='15px'>Rs.2500</Heading>
   </Box>
  
 </HStack>
-<Button width='80%' height='40px' mt='-5px' mb='20px' ml='20px'  colorScheme='blue'>Buy Now</Button>
+<Button width='70%' height='30px' mt='-5px' mb='20px' ml='20px' fontSize='15px'  colorScheme='blue' onClick={() => { LoadDetail(coursedata.id) }}>Buy Now</Button>
  
-          <Heading fontSize='20px'>Course Details</Heading>
+          <Heading fontSize='20px' >Course Details</Heading>
      <CourseDetails></CourseDetails>
 <br></br>
           <Heading fontSize='20px'>Course Includes</Heading>
@@ -116,10 +143,10 @@ const Dashboard = () => {
 
         </Box>
       </SimpleGrid>
-
+     }
      
       </Box>
   );
 };
 
-export default Dashboard;
+export default Course;

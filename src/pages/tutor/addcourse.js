@@ -55,10 +55,10 @@ const Form1 = () => {
       </Heading>
       
         <FormControl mr="5%" ml='20%'>
-          <FormLabel htmlFor="first-name" fontWeight={'normal'} fontSize='20px'>
-            First name
+          <FormLabel htmlFor="first-name" fontWeight={'normal'} fontSize='18px'>
+            Stream
           </FormLabel>
-          <Input id="firstname" placeholder="First name" width='70%' p={2} />
+          <Input id="firstname" placeholder="First name" fontSize='18px' width='70%' p={2} />
         </FormControl>
 
         <FormControl mr="5%" ml='20%' mt='5%'>
@@ -80,16 +80,33 @@ const Form1 = () => {
 const Form2 = () => {
   return (
     <>
-      <Heading w="100%" textAlign={'center'} fontWeight="normal" mb="2%">
-        User Details
-      </Heading>
+    
+ 
       <FormControl mr="5%" ml='20%' mt='5%'>
         <FormLabel htmlFor="email" fontWeight={'normal'}>
-          Email address
+          Course Title
         </FormLabel>
-        <Input id="email" type="email" width='70%' height='80%' p={10}  />
-        <FormHelperText>We'll never share your email.</FormHelperText>
+        <Input id="email" type="email" width='70%' height='20%' p={2}  />
+        
       </FormControl>
+
+      <FormControl mr="5%" ml='20%' mt='5%'>
+        <FormLabel htmlFor="email" fontWeight={'normal'}>
+          Course Description
+        </FormLabel>
+        <Input id="email" type="email" width='70%' height='80%' p={2}  />
+        
+      </FormControl>
+
+      <FormControl mr="5%" ml='20%' mt='5%'>
+        <FormLabel htmlFor="email" fontWeight={'normal'}>
+          Course Details
+        </FormLabel>
+        <Input id="email" type="email" width='70%' height='80%' p={2}  />
+        
+      </FormControl>
+
+
 
    
 
@@ -194,9 +211,9 @@ export default function Multistep() {
 
 
 
-    <Heading mb='20px' fontSize='30px' mt='-100px'>Course Registration</Heading>
+    <Heading mb='10px' fontSize='20px' mt='-100px'>Course Registration</Heading>
           
-          <Box bg='white' width='100%' mt='-100px'><Stepp></Stepp> </Box>
+          
           <br></br>
          
         {step === 1 ? <Form1 /> : step === 2 ? <Form2 /> : <Form3 />}
@@ -222,8 +239,11 @@ export default function Multistep() {
                
               {step === 1 || step===2 ? (
               <Button
-                w="8rem"
+                w="6rem"
                 bg='blue'
+                fontSize='15px'
+                height='40px'
+
                 
                 isDisabled={step === 3}
                 onClick={() => {
@@ -245,7 +265,7 @@ export default function Multistep() {
               <Button
                 w="8rem"
                 mr='70%'
-                color="red"
+                color="white"
                 bg='blue'
                 variant="solid"
                 onClick={() => {
