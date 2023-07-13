@@ -69,7 +69,7 @@ const Login = () => {
       setUser("");
       setPwd("");
 
-      if (from == "/") {
+      if (from === "/") {
         // navigate based on the role
         const decoded = jwtDecode(accessToken);
         const roles = decoded.UserInfo.roles;
@@ -89,10 +89,13 @@ const Login = () => {
         setErrMsg("Missing Username or Password");
       } else if (err.response?.status === 401) {
         setErrMsg("Unauthorized");
+      } else if (err.response?.status === 410) {
+        setErrMsg("User is not verified");
       } else {
         setErrMsg("Login Failed");
       }
       errRef.current.focus();
+      if(err.response?.status === 410) navigate('/verify');
     }
   };
 
