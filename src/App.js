@@ -13,6 +13,7 @@ import Dashboard from './components/Dashboard'
 import Courses from "./components/Courses";
 import Content from "./components/Content";
 import Landing from "./pages/LandingPage/Landing";
+import UserVerify from "./pages/UserVerify";
 
 import { Routes, Route } from "react-router-dom";
 import { ROLES } from "./config/roles";
@@ -28,6 +29,8 @@ function App() {
 
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />
+
+        <Route path="verify" element={<UserVerify />} />
 
         {/* we want to protect these routes */}
         <Route element={<PersistLogin />}>          
