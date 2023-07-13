@@ -14,13 +14,13 @@ import {FaCompass} from 'react-icons/fa';
 const SidebarAndHeader = ({userRole}) => {
     var Options = []
     const StuOptions = [
-        { icon: GridViewRoundedIcon, name: 'Dashboard',value: 'dashboard' , href: '/dashboard'},
+        { icon: GridViewRoundedIcon, name: 'Dashboard',value: 'dashboard' , href: '/stu/dashboard'},
         { icon: TiDocumentText, name: 'Courses',value: 'courses', href: '/courses'},
         { icon: FaCompass, name: 'Content',value: 'content', href: '/content'},
     ]
 
     const TeacherOptions = [
-        { icon: GridViewRoundedIcon, name: 'Dashboard',value: 'dashboard' , href: '/dashboard'},
+        { icon: GridViewRoundedIcon, name: 'Dashboard',value: 'dashboard' , href: '/tutor/dashboard'},
         { icon: TiDocumentText, name: 'Courses',value: 'courses', href: '/courses'},
     ]
 
