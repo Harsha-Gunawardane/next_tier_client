@@ -95,7 +95,7 @@ const Login = () => {
         setErrMsg("Login Failed");
       }
       errRef.current.focus();
-      if(err.response?.status === 410) navigate('/verify');
+      if (err.response?.status === 410) navigate("/verify");
     }
   };
 
@@ -222,16 +222,18 @@ const Login = () => {
                     Trust device
                   </FormLabel>
                 </Box>
-                <Text
-                  textAlign="right"
-                  color="#032068"
-                  cursor="pointer"
-                  _hover={{ textDecoration: "underline" }}
-                  fontWeight="medium"
-                  fontSize={14}
-                >
-                  Forgotten Password?
-                </Text>
+                <Link to="/forgot-password">
+                  <Text
+                    textAlign="right"
+                    color="#032068"
+                    cursor="pointer"
+                    _hover={{ textDecoration: "underline" }}
+                    fontWeight="medium"
+                    fontSize={14}
+                  >
+                    Forgotten Password?
+                  </Text>
+                </Link>
 
                 <Flex justifyContent="center" mt={10}>
                   <Button
