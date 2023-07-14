@@ -9,7 +9,7 @@ import React from "react";
 export default function Default(props) {
 	const { startContent, endContent, name, growth, value } = props;
 	const textColor = useColorModeValue("secondaryGray.900", "white");
-	const textColorSecondary = "secondaryGray.600";
+	const textColorSecondary = "gray.600";
 
 	return (
 		<Card py="15px">
@@ -21,8 +21,9 @@ export default function Default(props) {
 						lineHeight="100%"
 						color={textColorSecondary}
 						fontSize={{
-							base: "0.6rem",
-						}}>
+							base: "0.7rem",
+						}}
+						fontWeight={"600"}>
 						{name}
 					</StatLabel>
 					<StatNumber

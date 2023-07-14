@@ -83,7 +83,7 @@ const Sidebar = ({ Options, minimized = false, full = true, setSidebarWidth, ...
 				w={"max-content"}
 				alignItems={"center"}
 				justifyContent={"space-between"}
-				gap="10px"
+				gap="60px"
 				//if not full is true, then set display to none
 				display={full ? "flex" : "none"}>
 				<Image

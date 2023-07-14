@@ -7,10 +7,9 @@ import React from "react";
 import { IoCheckmarkCircle } from "react-icons/io5";
 import { MdBarChart, MdOutlineCalendarToday } from "react-icons/md";
 // Assets
-import { RiArrowUpSFill } from "react-icons/ri";
 import { lineChartDataGrades, lineChartOptionsGrades } from "./data";
 
-const ContinueWatching = (props) => {
+export default function ContinueWatching(props) {
 	const { ...rest } = props;
 
 	// Chakra Color Mode
@@ -39,6 +38,4 @@ const ContinueWatching = (props) => {
 			</Flex>
 		</Card>
 	);
-};
-
-export default ContinueWatching;
+}
