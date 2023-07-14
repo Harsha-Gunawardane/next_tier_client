@@ -13,7 +13,7 @@ import { ActionIcon } from "@mantine/core";
 import { IconPencil, IconTrash } from "@tabler/icons-react";
 
 
-export default function McqView({ mcqs }) {
+export default function McqsView({ mcqs , handleDeleteMcq }) {
   return (
     <Accordion defaultIndex={[0]} allowMultiple margin="10px">
       {mcqs.map((mcq) => (
@@ -26,7 +26,7 @@ export default function McqView({ mcqs }) {
               <ActionIcon>
                 <IconPencil size="1.2rem" stroke={1.3} />
               </ActionIcon>
-              <ActionIcon style={{ color: "red" }}>
+              <ActionIcon style={{ color: "red" }} onClick={() =>handleDeleteMcq(mcq.id)}>
                 <IconTrash size="1.2rem" stroke={1.3} />
               </ActionIcon>
               <AccordionIcon size="1.2rem" stroke={1.3} />

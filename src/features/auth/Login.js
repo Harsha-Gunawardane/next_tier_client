@@ -78,6 +78,8 @@ const Login = () => {
 
         if (roles.includes(1942)) {
           navigate("/stu/dashboard");
+        } else if (roles.includes(1932)) {
+          navigate("")
         }
       } else {
         navigate(from, { replace: true });

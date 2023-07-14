@@ -16,7 +16,7 @@ export default function McqCategories({ categories }) {
   return (
     <SimpleGrid spacing={6} minChildWidth="200px" maxChildWidth="150px" margin="20px">
       {categories.map((category) => (
-        <NavLink to="">
+        <NavLink to={`${category.id}`}>
           <Card
             key={category.id}
             borderTop="8px"
