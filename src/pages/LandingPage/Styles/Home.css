@@ -19,6 +19,10 @@
 
 }
 
+.hero-section p {
+    width: 300px;
+}
+
 .left {
     width: 50%;
     height: 100%;
@@ -39,10 +43,16 @@
 .left .text .text2 {
     color: #F48C06;
     margin-bottom: 15px;
+    width: 400px;
+    font-size: 24px;
+    font-weight: bold;
 }
 
 .left .text .text1 {
     color: #0074D9;
+    width: 400px;
+    font-size: 32px;
+    font-weight: bold;
 }
 
 .left .text p {
@@ -146,50 +156,117 @@
     transition: transform 0.6s ease;
 }
 
-.hero-box-img {
+.right .hero-box1 .hero-box-img {
     margin-right: 20px;
     height: 50px;
-
-
 }
 
-.hero-box-img img {
-    width: 40px;
-    height: 40px;
+.right .hero-box1 .hero-box-image {
+    width: 47px;
+    height: 47px;
     padding-left: 4px;
     padding-top: 4.3px;
+    margin-right: 80px;
 }
+
+.right .hero-box2 .hero-box-img {
+    margin-right: 20px;
+    height: 50px;
+}
+
+.right .hero-box2 .hero-box-image {
+    width: 47px;
+    height: 47px;
+    padding-left: 4px;
+    padding-top: 4.3px;
+    margin-right: 80px;
+}
+
+.right .hero-box3 .hero-box-img {
+    margin-right: 20px;
+    height: 50px;
+}
+
+.right .hero-box3 .hero-box-image {
+    width: 47px;
+    height: 47px;
+    padding-left: 4px;
+    padding-top: 4.3px;
+    margin-right: 80px;
+}
+
+.right .hero-box4 .hero-box-img {
+    margin-right: 20px;
+    height: 50px;
+}
+
+.right .hero-box4 .hero-box-image {
+    width: 47px;
+    height: 47px;
+    padding-left: 4px;
+    padding-top: 4.3px;
+    margin-right: 80px;
+}
+
+.right .hero-box5 .hero-box-img {
+    margin-right: 20px;
+    height: 50px;
+}
+
+.right .hero-box5 .hero-box-image {
+    width: 47px;
+    height: 47px;
+    padding-left: 4px;
+    padding-top: 4.3px;
+    margin-right: 80px;
+}
+
 
 .count {
     font-weight: bold;
     margin-top: 4px;
     font-size: 15px;
+    margin-left: -50px;
 }
 
 .hero-box1 .hero-box-text .description-one {
     font-size: 13px;
+    margin-left: -50px;
 }
 
 .description {
     font-size: 13px;
     margin-top: 7px;
+    margin-left: -45px;
+}
+
+.description_herobox4 {
+    margin-left: 2px;
+    font-size: 13px;
+    margin-top: 7px;
+}
+
+.des-des_herobox4 {
+    margin-left: -44px;
+    font-size: 13px;
 }
 
 .des-des {
     text-align: center;
     font-size: 13px;
+    margin-left: -162px;
 
 }
 
 .des_lastbox {
-    margin-left: 8px;
+    margin-left: -150px;
     font-size: 13px;
     text-align: center;
     margin-top: 7px;
 }
 
 .des-des_lastbox {
-    margin-left: 8px;
+    margin-left: -175px;
     font-size: 13px;
     text-align: center;
 }

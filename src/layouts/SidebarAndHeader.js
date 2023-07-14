@@ -36,8 +36,6 @@ const SidebarAndHeader = ({ userRole }) => {
 		{ icon: TiDocumentText, name: "Courses", value: "courses", href: "/courses" },
 	];
 
-	const StaffOptions = [{ icon: GridViewRoundedIcon, name: "Dashboard", value: "dashboard", href: "/dashboard" }];
-
 	switch (userRole) {
 		case "student":
 			Options = StuOptions;

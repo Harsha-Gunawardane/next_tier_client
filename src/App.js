@@ -13,6 +13,13 @@ import Dashboard from "./pages/student/Dashboard";
 import Courses from "./components/Courses";
 import Content from "./components/Content";
 import Landing from "./pages/LandingPage/Landing";
+import UserVerify from "./pages/UserVerify";
+import ForgottenPassword from "./pages/ForgottenPassword";
+import StaffList from "./pages/staff/staffList";
+import StaffAdd from "./pages/staff/staffAdd";
+import McqCategoryPool from "./pages/mcq/mcqCategoryPool";
+import McqPool from "./pages/mcq/mcqPool";
+import CreateMcq from "./pages/mcq/mcqCreate";
 
 import { Routes, Route } from "react-router-dom";
 import { ROLES } from "./config/roles";
@@ -30,6 +37,8 @@ function App() {
 
 				<Route path="login" element={<Login />} />
 				<Route path="register" element={<Register />} />
+
+				<Route path="verify" element={<UserVerify />} />
 
 				{/* we want to protect these routes */}
 				<Route element={<PersistLogin />}>

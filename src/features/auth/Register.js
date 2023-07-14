@@ -140,7 +140,7 @@ const Register = () => {
       setPwd("");
       setMatchPwd("");
 
-      navigate("/login");
+      navigate("/verify");
     } catch (err) {
       if (!err?.response) {
         setErrMsg("No Server Response");
