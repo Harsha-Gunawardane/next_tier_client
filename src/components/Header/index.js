@@ -7,9 +7,9 @@ import { faBars } from "@fortawesome/free-solid-svg-icons";
 import NotificationsNoneOutlinedIcon from "@mui/icons-material/NotificationsNoneOutlined";
 // import ToggleColorMode from "../ToggleColorMode";
 
-const Header = ({ full = false }) => {
+const Header = ({ full = false, ...rest }) => {
 	return (
-		<Flex as={"header"} w="100%" h="64px" bg="white" justifyContent={"space-between"} alignItems={"center"} borderBottom="1px" borderColor="gray.100" pos={"sticky"}>
+		<Flex as={"header"} h="64px" bg="white" justifyContent={"space-between"} alignItems={"center"} borderBottom="1px" borderColor="gray.100" pos={"fixed"} zIndex={"999"} {...rest}>
 			<Flex h="100%" justifyContent={"space-between"}>
 				<Flex
 					p={"4px"}

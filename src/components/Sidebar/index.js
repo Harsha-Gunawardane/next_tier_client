@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
 import { MdSettings } from "react-icons/md";
 import { TbLogout } from "react-icons/tb";
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { SidebarContext } from "../../context/SidebarContext";
 
 const Option = ({ icon: iconComponent, name, href, active, minimizeStatus }) => {
@@ -44,18 +44,24 @@ const Option = ({ icon: iconComponent, name, href, active, minimizeStatus }) => 
 	);
 };
 
-const Sidebar = ({ Options, minimized = false, full = true }) => {
-	const { activeTab, handleTabClick } = useContext(SidebarContext);
+const Sidebar = ({ Options, minimized = false, full = true, setSidebarWidth, ...rest }) => {
+	useEffect(() => {
+		const width = window.getComputedStyle(document.getElementById("Sidebar")).width;
+		setSidebarWidth(width);
+	}, [setSidebarWidth]);
+
+	const { activeTab, handleTabClick, handleSidebarToggle } = useContext(SidebarContext);
+	const [minimizedStatus, setMinimizedStatus] = useState(minimized);
 
 	const settings = { icon: MdSettings, name: "Settings", href: "/settings" };
 	const logout = { icon: TbLogout, name: "Logout", href: "/logout" };
 
-	const [minimizedStatus, setMinimizedStatus] = useState(minimized);
 	// console.log(activeTab)
 
 	return (
 		<Flex
 			as="Sidebar"
+			id="Sidebar"
 			h={full ? "100vh" : "calc(100% - 64px)"}
 			w={minimizedStatus ? "max-content" : "260px"}
 			bg="primary"
@@ -66,7 +72,11 @@ const Sidebar = ({ Options, minimized = false, full = true }) => {
 			position={"sticky"}
 			borderRight={"1px"}
 			borderColor={"gray.100"}
-			transition={"all 0.5s"}>
+			transition={"all 0.5s"}
+			pos={"fixed"}
+			zIndex={"1000"}
+			onChange={setSidebarWidth()}
+			{...rest}>
 			<Flex
 				p={"4px"}
 				h={"64px"}
@@ -83,7 +93,15 @@ const Sidebar = ({ Options, minimized = false, full = true }) => {
 					//if minimized is true, then set display to none
 					display={minimizedStatus ? "none" : "block"}
 				/>
-				<IconButton variant={"ghost"} margin={0} h="40px" minWidth="max-content" p="10px" onClick={() => setMinimizedStatus(!minimizedStatus)}>
+				<IconButton
+					variant={"ghost"}
+					margin={0}
+					h="40px"
+					minWidth="max-content"
+					p="10px"
+					onClick={() => {
+						setMinimizedStatus(!minimizedStatus);
+					}}>
 					<FontAwesomeIcon icon={faBars} />
 				</IconButton>
 			</Flex>

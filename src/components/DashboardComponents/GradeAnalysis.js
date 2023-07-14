@@ -8,7 +8,7 @@ import { IoCheckmarkCircle } from "react-icons/io5";
 import { MdBarChart, MdOutlineCalendarToday } from "react-icons/md";
 // Assets
 import { RiArrowUpSFill } from "react-icons/ri";
-import { lineChartDataTotalSpent, lineChartOptionsTotalSpent } from "./data";
+import { lineChartDataGrades, lineChartOptionsGrades } from "./data";
 
 export default function GradeAnalysis(props) {
 	const { ...rest } = props;
@@ -34,7 +34,7 @@ export default function GradeAnalysis(props) {
 			</Flex>
 			<Flex w="100%" flexDirection={{ base: "column", lg: "row" }}>
 				<Box minH="260px" minW="100%" mt="auto">
-					<LineChart chartData={lineChartDataTotalSpent} chartOptions={lineChartOptionsTotalSpent} />
+					<LineChart chartData={lineChartDataGrades} chartOptions={lineChartOptionsGrades} />
 				</Box>
 			</Flex>
 		</Card>

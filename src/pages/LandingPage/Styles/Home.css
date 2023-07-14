@@ -29,69 +29,71 @@
     height: 100%;
 }
 
-.left .text{
+.left .text {
     padding: 150px 200px;
     font-size: 17px;
     width: 50%;
-   
+
 }
 
-.left .text .text2{
+.left .text .text2 {
     color: #F48C06;
     margin-bottom: 15px;
 }
 
-.left .text .text1{
+.left .text .text1 {
     color: #0074D9;
 }
 
-.left .text p{
+.left .text p {
     margin-bottom: 15px;
 }
-.stu-signup-btn{
+
+.stu-signup-btn {
     background-color: #F48C06;
     border: none;
     height: 40px;
     font-size: 17px;
-   
+
     font-family: 'Nunito', sans-serif;
     width: 200px;
     border-radius: 100px;
-    
+
 }
 
-.join{
+.join {
     text-decoration: none;
     color: #ffff;
 }
 
-.stu-signup-btn:hover{
+.stu-signup-btn:hover {
     background-color: #0074D9;
 }
 
-.hero-boxes{
+.hero-boxes {
     display: flex;
     flex-direction: column;
-   
+
 }
 
-.hero-box1{
+.hero-box1 {
     display: flex;
     flex-direction: row;
- margin-bottom: 4px;
+    margin-bottom: 4px;
     width: 220px;
     border-radius: 15px;
     backdrop-filter: blur(5px);
-    background-color: rgba(255, 255, 255, 0.8);  
+    background-color: rgba(255, 255, 255, 0.8);
     margin-top: 40px;
     margin-left: 370px;
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
     transition: transform 0.6s ease;
 }
-.hero-box2{
+
+.hero-box2 {
     display: flex;
     flex-direction: row;
-    background-color: rgba(255, 255, 255, 0.8);   
+    background-color: rgba(255, 255, 255, 0.8);
     width: 220px;
     border-radius: 15px;
     backdrop-filter: blur(5px);
@@ -101,10 +103,11 @@
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
     transition: transform 0.6s ease;
 }
-.hero-box3{
+
+.hero-box3 {
     display: flex;
     flex-direction: row;
-    background-color: rgba(255, 255, 255, 0.8);   
+    background-color: rgba(255, 255, 255, 0.8);
     width: 220px;
     border-radius: 15px;
     backdrop-filter: blur(5px);
@@ -114,10 +117,11 @@
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
     transition: transform 0.6s ease;
 }
-.hero-box4{
+
+.hero-box4 {
     display: flex;
     flex-direction: row;
-    background-color: rgba(255, 255, 255, 0.8);  
+    background-color: rgba(255, 255, 255, 0.8);
     width: 220px;
     border-radius: 15px;
     backdrop-filter: blur(5px);
@@ -128,10 +132,10 @@
     transition: transform 0.6s ease;
 }
 
-.hero-box5{
+.hero-box5 {
     display: flex;
     flex-direction: row;
-    background-color: rgba(255, 255, 255, 0.8);  
+    background-color: rgba(255, 255, 255, 0.8);
     width: 220px;
     border-radius: 15px;
     backdrop-filter: blur(5px);
@@ -142,78 +146,85 @@
     transition: transform 0.6s ease;
 }
 
-.hero-box-img{
-margin-right: 20px;
-height: 50px;
+.hero-box-img {
+    margin-right: 20px;
+    height: 50px;
 
 
 }
-.hero-box-img img{
+
+.hero-box-img img {
     width: 40px;
     height: 40px;
     padding-left: 4px;
     padding-top: 4.3px;
 }
 
- .count{
+.count {
     font-weight: bold;
     margin-top: 4px;
     font-size: 15px;
 }
 
-.hero-box1 .hero-box-text .description-one{
+.hero-box1 .hero-box-text .description-one {
     font-size: 13px;
 }
-.description{
+
+.description {
     font-size: 13px;
     margin-top: 7px;
 }
 
-.des-des{
+.des-des {
     text-align: center;
     font-size: 13px;
-   
+
 }
 
-.des_lastbox{
-   margin-left: 8px;
+.des_lastbox {
+    margin-left: 8px;
     font-size: 13px;
     text-align: center;
     margin-top: 7px;
 }
 
-.des-des_lastbox{
+.des-des_lastbox {
     margin-left: 8px;
     font-size: 13px;
     text-align: center;
 }
 
 .hero-box1:hover {
-    
-    transform: translateY(-5px) scale(1.10);
-    transition: transform 0.3s ease; /* Hover translation and zoom effect */
-  }
-  .hero-box2:hover {
-  
-    transform: translateY(-5px) scale(1.10);
-    transition: transform 0.3s ease; /* Hover translation and zoom effect */
-  }
-  .hero-box3:hover {
-  
-    transform: translateY(-5px) scale(1.10);
-    transition: transform 0.3s ease; /* Hover translation and zoom effect */
-  }
-  .hero-box4:hover {
-  
-    transform: translateY(-5px) scale(1.10);
-    transition: transform 0.3s ease; /* Hover translation and zoom effect */
-  }
 
-  .hero-box5:hover {
-  
     transform: translateY(-5px) scale(1.10);
-    transition: transform 0.3s ease; /* Hover translation and zoom effect */
-  }
-  
+    transition: transform 0.3s ease;
+    /* Hover translation and zoom effect */
+}
 
+.hero-box2:hover {
 
+    transform: translateY(-5px) scale(1.10);
+    transition: transform 0.3s ease;
+    /* Hover translation and zoom effect */
+}
+
+.hero-box3:hover {
+
+    transform: translateY(-5px) scale(1.10);
+    transition: transform 0.3s ease;
+    /* Hover translation and zoom effect */
+}
+
+.hero-box4:hover {
+
+    transform: translateY(-5px) scale(1.10);
+    transition: transform 0.3s ease;
+    /* Hover translation and zoom effect */
+}
+
+.hero-box5:hover {
+
+    transform: translateY(-5px) scale(1.10);
+    transition: transform 0.3s ease;
+    /* Hover translation and zoom effect */
+}

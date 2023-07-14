@@ -30,13 +30,22 @@ const theme = {
 
 	styles: {
 		global: {
-			body: {
-				overflowX: "hidden",
-				overflowY: "auto",
-				fontFamily: "Roboto",
-			},
 			html: {
-				fontFamily: "Roboto",
+				fontFamily: "'Roboto'",
+			},
+			body: {
+				margin: 0,
+				fontFamily: "'Roboto',sans-serif",
+				"-webkit-font-smoothing": "antialiased",
+				"-moz-osx-font-smoothing": "grayscale",
+			},
+
+			heading: {
+				fontFamily: "'Roboto',sans-serif",
+			},
+
+			code: {
+				fontFamily: "'Roboto',sans-serif",
 			},
 		},
 	},
