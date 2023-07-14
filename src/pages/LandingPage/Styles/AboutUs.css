@@ -2,91 +2,84 @@
   width: 300px;
   height: 300px;
   background-color: #ffff;
-  margin-right: 20px;
-  border-radius: 15px;
+margin-right: 20px;
+ border-radius: 15px;
   justify-content: center;
   box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.3);
   text-align: center;
   transition: transform 0.4s ease;
 }
-
-.card-items:hover {
-  transform: translateY(-5px) scale(1.10);
+.card-items:hover{
+transform: translateY(-5px) scale(1.10);
 }
-
-.cards {
+.cards{
   display: flex;
   flex-direction: row;
   justify-content: center;
   margin-top: 140px;
 }
 
-.about-text {
+.about-text{
   text-align: center;
-  justify-content: center;
-  align-items: center;
+  justify-content: center; 
+  align-items: center; 
 }
 
-.about-text p {
-  width: 800px;
+.about-text p{
+ width:800px;
   margin-left: 350px;
   font-size: 17px;
   margin-top: 16px;
 
 }
 
-.about-text-span {
+.about-text-span{
   color: #F48C06;
-
+ 
 }
-
-.about-text-title1 {
+.about-text-title1{
   color: #2F327D;
   font-size: 34px;
-  font-weight: bold;
+ font-weight: bold;
 }
 
-.card1-img {
+.card1-img{
   width: 90px;
   height: 90px;
   margin-top: -45px;
   margin-left: 106px;
 }
 
-.card-text-title {
+.card-text-title{
   font-weight: bold;
   font-size: 20px;
 
 }
-
-.card-text-des1 {
+.card-text-des1{
   padding: 7px;
   margin-top: 20px;
 }
-
-.card-text-des2 {
+.card-text-des2{
   padding: 7px;
   margin-top: 45px;
 }
-
-.card-text-des3 {
+.card-text-des3{
   padding: 7px;
   margin-top: 20px;
 }
-
-.card-text-des4 {
+.card-text-des4{
   padding: 7px;
   margin-top: 45px;
 }
 
 /*What is NextTier*/
 
-.more_des {
+.more_des{
   display: flex;
   flex-direction: row;
 }
 
-.tuition_img {
+.tuition_img{
   width: 500px;
   height: 300px;
   margin-right: 500px;
@@ -95,32 +88,32 @@
   padding-right: 40px;
 }
 
-.tuition_img:hover {
-
+.tuition_img:hover{
+ 
   transform: translateY(-5px) scale(1.05);
 }
 
-.more_des_text_title {
+.more_des_text_title{
   color: #2F327D;
-  margin-top: 80px;
-  font-size: 32px;
-  font-weight: bold;
+  margin-top: 80px ;
+ font-size: 32px;
+ font-weight: bold;
 }
 
-.more_des_title_span {
+.more_des_title_span{
   color: #F48C06;
 }
 
-.more_des_text {
+.more_des_text{
   justify-content: center;
   text-align: center;
-}
+} 
 
-.more_des_text p {
+.more_des_text p{
   padding-left: 180px;
   padding-right: 180px;
   margin-top: 40px;
-
+ 
 }
 
 .hr_first {
@@ -129,10 +122,9 @@
   margin-left: auto;
   margin-right: auto;
 }
-
 .get_started {
   display: flex;
-
+  
 }
 
 .getstarted_image_stu {
@@ -156,7 +148,7 @@
   transition: transform 0.4s ease;
 }
 
-.getstarted_image_teacher p {
+.getstarted_image_teacher p{
   font-weight: bold;
   color: #2F327D;
   font-size: 20px;
@@ -164,60 +156,60 @@
   margin-left: 98px;
 }
 
-.getstarted_image_stu p {
+.getstarted_image_stu p{
   font-weight: bold;
   color: #ffff;
   font-size: 20px;
   text-align: center;
   align-items: center;
   margin-top: 88px;
-
+ 
 }
 
-.getstarted_image_stu button {
+.getstarted_image_stu button{
   width: 140px;
   height: 37px;
-  margin-left: 115px;
-  margin-top: 28px;
-  border-radius: 100px;
-  border: none;
-  background-color: #23BDEE;
-  color: #ffff;
-  font-family: 'Nunito', sans-serif;
-  font-size: 17px;
-  transition: transform 0.2s ease;
+ margin-left: 115px;
+ margin-top: 28px;
+ border-radius: 100px;
+ border: none;
+ background-color: #23BDEE;
+ color: #ffff;
+ font-family:  'Nunito', sans-serif;
+ font-size: 17px;
+ transition: transform 0.2s ease;
 }
 
-.getstarted_image_stu button:hover {
+.getstarted_image_stu button:hover{
   background-color: #F48C06;
   cursor: pointer;
   transform: translateY(-5px) scale(1.05);
 }
 
-.getstarted_image_stu:hover {
+.getstarted_image_stu:hover{
   transform: translateY(-5px) scale(1.05);
 }
 
-.getstarted_image_teacher:hover {
+.getstarted_image_teacher:hover{
   transform: translateY(-5px) scale(1.05);
 }
 
-.getstarted_image_teacher button {
+.getstarted_image_teacher button{
   width: 200px;
   height: 37px;
-  margin-left: 70px;
-  margin-top: 18px;
-  border-radius: 100px;
-  border: none;
-  background: none;
-  border: 2px #ffff solid;
-  color: #ffff;
-  font-family: 'Nunito', sans-serif;
-  font-size: 17px;
-  transition: transform 0.2s ease;
+ margin-left: 70px;
+ margin-top: 18px;
+ border-radius: 100px;
+ border: none;
+ background: none;
+ border: 2px #ffff solid;
+ color: #ffff;
+ font-family:  'Nunito', sans-serif;
+ font-size: 17px;
+ transition: transform 0.2s ease;
 }
 
-.getstarted_image_teacher button:hover {
+.getstarted_image_teacher button:hover{
   background-color: #F48C06;
   border: none;
   cursor: pointer;
@@ -225,10 +217,13 @@
   color: #2F327D;
 }
 
-.getstarted_image_teacher_text2 {
+.getstarted_image_teacher_text2{
   color: #2F327D;
   margin-left: 107px;
   font-weight: bold;
   font-size: 17px;
   margin-top: 4px;
 }
+
+
+

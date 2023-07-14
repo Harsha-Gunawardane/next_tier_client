@@ -1,18 +1,16 @@
+
 * {
   margin: 0;
   padding: 0;
 }
-
 html {
   font-family: "Roboto", sans-serif;
   font-size: 15px;
 
 }
-
-.LandingPage {
-  font-family: "Roboto", sans-serif;
+.LandingPage{
+font-family: "Roboto", sans-serif;
 }
-
 .navbar {
   background-color: #E2F5FF;
   height: 80px;
@@ -72,16 +70,16 @@ html {
 .navbar-items li:first-child {
   margin-left: 0;
 }
-
 .navbar-items li:nth-child(5) {
   margin-right: 5px;
 }
 
 
-.navLink:hover {
-  color: #F48C06;
+.navLink:hover{
+color: #F48C06;
 }
 
-.navbar-items :hover {
+.navbar-items :hover{
   transform: translateY(-5px) scale(1.05);
 }
+
