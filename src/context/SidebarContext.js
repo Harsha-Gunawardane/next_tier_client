@@ -13,6 +13,11 @@ const determineDefaultTab = (pathname) => {
 
 const SidebarProvider = ({ children }) => {
 	const [activeTab, setActiveTab] = useState("");
+	const [sidebarMinimized, setSidebarMinimized] = useState(false);
+	//get width of sidebar component and set to state
+
+	// console.log(width);
+
 	const location = useLocation();
 
 	useEffect(() => {
@@ -25,7 +30,13 @@ const SidebarProvider = ({ children }) => {
 		setActiveTab(tab);
 	};
 
-	return <SidebarContext.Provider value={{ activeTab, handleTabClick }}>{children}</SidebarContext.Provider>;
+	const handleSidebarToggle = () => {
+		setSidebarMinimized(!sidebarMinimized);
+	};
+
+	console.log(document.getElementById("Sidebar"));
+
+	return <SidebarContext.Provider value={{ activeTab, handleTabClick, handleSidebarToggle, sidebarMinimized }}>{children}</SidebarContext.Provider>;
 };
 
 export { SidebarContext, SidebarProvider };

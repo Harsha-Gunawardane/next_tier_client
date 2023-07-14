@@ -9,20 +9,23 @@ import PersistLogin from "./features/auth/PersistLogin";
 import UserLayout from "./features/users/UserLayout";
 import UserProfile from "./features/users/components/UserProfile";
 import SidebarAndHeader from "./layouts/SidebarAndHeader";
-import Dashboard from "./components/Dashboard";
+import Dashboard from "./pages/student/Dashboard";
 import Courses from "./components/Courses";
 import Content from "./components/Content";
 import Landing from "./pages/LandingPage/Landing";
 
 import { Routes, Route } from "react-router-dom";
 import { ROLES } from "./config/roles";
+import { ChakraProvider } from "@chakra-ui/react";
 
 function App() {
 	return (
 		<Routes>
 			<Route path="/" element={<Layout />}>
 				{/* public routes */}
-				{/* <Route index element={<Landing />} /> */}
+				{/* <ChakraProvider resetCSS> */}
+				<Route index element={<Landing />} />
+				{/* </ChakraProvider> */}
 				<Route path="unauthorized" element={<Unauthorized />} />
 
 				<Route path="login" element={<Login />} />
