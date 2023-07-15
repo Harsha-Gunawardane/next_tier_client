@@ -3,11 +3,13 @@ import Card from "../Card/Card";
 import Calender from "./Calender.";
 import EventList from "./EventList";
 
-const UpcommingClasses = () => {
+const UpcommingClasses = (props) => {
+	const { ...rest } = props;
+
 	return (
-		<Card h="calc(100% - 30px)" p="5px">
-			<Flex h={"max-content"}>
-				<Flex p="0" borderRight="solid 1px" borderColor="gray.100" w="full" h="full" direction="column" alignItems="center" justifyContent="center">
+		<Card h="340px" p="5px" {...rest}>
+			<Flex h={"100%"}>
+				<Flex p="0" borderRight="solid 1px" borderColor="gray.100" w="full" h="full" direction="column" alignItems="" justifyContent="flex-start">
 					<Calender size={"xs"} />
 				</Flex>
 				<Flex w="full">
