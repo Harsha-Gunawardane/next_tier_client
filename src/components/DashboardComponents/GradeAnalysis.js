@@ -8,7 +8,7 @@ import { IoCheckmarkCircle } from "react-icons/io5";
 import { MdBarChart, MdOutlineCalendarToday } from "react-icons/md";
 // Assets
 import { RiArrowUpSFill } from "react-icons/ri";
-import { lineChartDataTotalSpent, lineChartOptionsTotalSpent } from "./data";
+import { lineChartDataGrades, lineChartOptionsGrades } from "./data";
 
 export default function GradeAnalysis(props) {
 	const { ...rest } = props;
@@ -22,7 +22,7 @@ export default function GradeAnalysis(props) {
 	const bgHover = useColorModeValue({ bg: "accent", color: "white" }, { bg: "whiteAlpha.50", color: "black" });
 	const bgFocus = useColorModeValue({ bg: "white" }, { bg: "whiteAlpha.100" });
 	return (
-		<Card justifyContent="center" align="center" direction="column" w="100%" mb="0px" {...rest}>
+		<Card justifyContent="center" align="center" direction="column" w="100%" mb="0px" {...rest} p="10px">
 			<Flex justifyContent="space-between" w="100%">
 				<Button bg={boxBg} fontSize="sm" fontWeight="500" color={textColorSecondary} borderRadius="7px" size={"xs"} mt={0} variant={"ghost"}>
 					<Icon as={MdOutlineCalendarToday} color={textColorSecondary} />
@@ -34,7 +34,7 @@ export default function GradeAnalysis(props) {
 			</Flex>
 			<Flex w="100%" flexDirection={{ base: "column", lg: "row" }}>
 				<Box minH="260px" minW="100%" mt="auto">
-					<LineChart chartData={lineChartDataTotalSpent} chartOptions={lineChartOptionsTotalSpent} />
+					<LineChart chartData={lineChartDataGrades} chartOptions={lineChartOptionsGrades} />
 				</Box>
 			</Flex>
 		</Card>

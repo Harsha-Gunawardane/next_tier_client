@@ -1,19 +1,26 @@
 import { Button } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useParams } from "react-router-dom";
 
 import api from "../../api/axios";
 
 
-import McqView from "../../components/mcq/McqView";
 import McqsSearchBar from "../../components/mcq/McqsSearchBar";
+import McqsView from "../../components/mcq/McqsView";
 
-export default function McqPool() {
+export default function Mcqs() {
+
+  const { id } = useParams();
+
+  const handleDeleteMcq = (id) =>{
+
+  }
 
   const [mcqs, setMcqs] = useState([]);
   const [search, setSearch] = useState("");
 
    useEffect(() => {
+
      const getMcqs = async () => {
        try {
          const response = await api.get("/mcqs");
@@ -29,7 +36,7 @@ export default function McqPool() {
   
   return (
     <div>
-      <NavLink to="mcq/add">
+      <NavLink to="addnew">
         <Button
           colorScheme="whatsapp"
           variant="solid"
@@ -46,10 +53,11 @@ export default function McqPool() {
 
       <McqsSearchBar search={search} setSearch={setSearch} />
 
-      <McqView
+      <McqsView
         mcqs={mcqs.filter((mcq) =>
           mcq.question.toLowerCase().includes(search.toLowerCase())
         )}
+        handleDeleteMcq={handleDeleteMcq}
       />
     </div>
   );

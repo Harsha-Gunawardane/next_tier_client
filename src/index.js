@@ -8,6 +8,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { disableReactDevTools } from "@fvilers/disable-react-devtools";
 import { ChakraProvider } from "@chakra-ui/react";
 import theme from "./theme/theme";
+import { SidebarProvider } from "./context/SidebarContext";
 
 if (process.env.NODE_ENV !== "production") {
   disableReactDevTools();

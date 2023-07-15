@@ -1,6 +1,6 @@
 // Total Spent Default
 
-export const lineChartDataTotalSpent = [
+export const lineChartDataGrades = [
 	{
 		name: "Physics",
 		data: [50, 64, 48, 66, 49, 68, 60, 70, 80],
@@ -11,7 +11,7 @@ export const lineChartDataTotalSpent = [
 	},
 ];
 
-export const lineChartOptionsTotalSpent = {
+export const lineChartOptionsGrades = {
 	chart: {
 		toolbar: {
 			show: false,
@@ -24,6 +24,19 @@ export const lineChartOptionsTotalSpent = {
 			opacity: 0.1,
 			color: "#4318FF",
 		},
+		// animations: {
+		// 	enabled: true,
+		// 	easing: "easeinout",
+		// 	speed: 800,
+		// 	animateGradually: {
+		// 		enabled: true,
+		// 		delay: 150,
+		// 	},
+		// 	dynamicAnimation: {
+		// 		enabled: true,
+		// 		speed: 350,
+		// 	},
+		// },
 	},
 	colors: ["#4318FF", "#39B8FF"],
 	markers: {

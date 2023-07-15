@@ -1,13 +1,15 @@
 import React, { useState } from "react";
 import { CSSReset, Flex } from "@chakra-ui/react";
-import { Calendar } from "react-calendar";
+import "react-date-range/dist/styles.css"; // main style file
+import "react-date-range/dist/theme/default.css"; // theme css file
+import { Calendar } from "react-date-range";
 
 const Calender = ({ ...rest }) => {
-	return (
-		<Flex>
-			<Calendar fontSize="0.5rem"></Calendar>
-		</Flex>
-	);
+	const handleSelect = (date) => {
+		console.log(date); // native Date object
+	};
+
+	return <Calendar date={new Date()} onChange={handleSelect} />;
 };
 
 export default Calender;
