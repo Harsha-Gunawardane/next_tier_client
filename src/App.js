@@ -46,6 +46,7 @@ function App() {
           <Route element={<RequireAuth allowedRoles={[ROLES.Student]} />}>
             <Route path="stu" element={<SidebarAndHeader userRole={"student"} />}>
               <Route path="dashboard" element={<Dashboard />} />
+              <Route path='settings' element={<Settings/>} />
             </Route>
           </Route>
 
