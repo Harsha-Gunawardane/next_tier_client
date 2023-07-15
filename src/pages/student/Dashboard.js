@@ -55,7 +55,7 @@ const Dashboard = () => {
 						<Text fontSize={"0.8rem"} fontWeight={"600"}>
 							Continue Watching
 						</Text>
-						{/* <ContinueWatching /> */}
+						<ContinueWatching />
 					</GridItem>
 					<GridItem colSpan={{ base: 1, md: 1, lg: 1 }}>
 						<Text fontSize={"0.8rem"} fontWeight={"600"}>
