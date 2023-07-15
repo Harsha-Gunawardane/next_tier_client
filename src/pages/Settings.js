@@ -278,7 +278,7 @@ function Settings() {
                       borderRadius={2}
                       disabled={isEditable ? false : true}
                     />
-                    {/* <Flex align="center">
+                    <Flex align="center">
                       <FormLabel
                         w={200}
                         fontWeight="regular"
@@ -296,7 +296,7 @@ function Settings() {
                         borderRadius={2}
                         disabled={isEditable ? false : true}
                       />
-                    </Flex> */}
+                    </Flex>
                   </Flex>
                 </FormControl>
               </form>
