@@ -69,7 +69,7 @@ const Login = () => {
       setUser("");
       setPwd("");
 
-      if (from == "/") {
+      if (from === "/") {
         // navigate based on the role
         const decoded = jwtDecode(accessToken);
         const roles = decoded.UserInfo.roles;
@@ -78,6 +78,8 @@ const Login = () => {
 
         if (roles.includes(1942)) {
           navigate("/stu/dashboard");
+        } else if (roles.includes(1932)) {
+          navigate("")
         }
       } else {
         navigate(from, { replace: true });
@@ -89,10 +91,13 @@ const Login = () => {
         setErrMsg("Missing Username or Password");
       } else if (err.response?.status === 401) {
         setErrMsg("Unauthorized");
+      } else if (err.response?.status === 410) {
+        setErrMsg("User is not verified");
       } else {
         setErrMsg("Login Failed");
       }
       errRef.current.focus();
+      if (err.response?.status === 410) navigate("/verify");
     }
   };
 
@@ -219,16 +224,18 @@ const Login = () => {
                     Trust device
                   </FormLabel>
                 </Box>
-                <Text
-                  textAlign="right"
-                  color="#032068"
-                  cursor="pointer"
-                  _hover={{ textDecoration: "underline" }}
-                  fontWeight="medium"
-                  fontSize={14}
-                >
-                  Forgotten Password?
-                </Text>
+                <Link to="/forgot-password">
+                  <Text
+                    textAlign="right"
+                    color="#032068"
+                    cursor="pointer"
+                    _hover={{ textDecoration: "underline" }}
+                    fontWeight="medium"
+                    fontSize={14}
+                  >
+                    Forgotten Password?
+                  </Text>
+                </Link>
 
                 <Flex justifyContent="center" mt={10}>
                   <Button

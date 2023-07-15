@@ -18,44 +18,86 @@ import { Routes, Route } from "react-router-dom";
 import { ROLES } from "./config/roles";
 import { ChakraProvider } from "@chakra-ui/react";
 
+
+//Tutor Components
+import TutorDashboard from "./pages/tutor/TutorDashboard";
+import StaffList from "./pages/staff/staffList";
+import StaffAdd from "./pages/staff/staffAdd";
+import McqCategoryPool from "./pages/mcq/mcqCategoryPool";
+import Mcqs from "./pages/mcq/mcqs";
+import CreateMcq from "./pages/mcq/mcqCreate";
+
 function App() {
-	return (
-		<Routes>
-			<Route path="/" element={<Layout />}>
-				{/* public routes */}
-				{/* <ChakraProvider resetCSS> */}
-				<Route index element={<Landing />} />
-				{/* </ChakraProvider> */}
-				<Route path="unauthorized" element={<Unauthorized />} />
+  return (
+    <Routes>
+      <Route path="/" element={<Layout />}>
+        {/* public routes */}
+        {/* <ChakraProvider resetCSS> */}
+        <Route index element={<Landing />} />
+        {/* </ChakraProvider> */}
+        <Route path="unauthorized" element={<Unauthorized />} />
 
-				<Route path="login" element={<Login />} />
-				<Route path="register" element={<Register />} />
+        <Route path="login" element={<Login />} />
+        <Route path="register" element={<Register />} />
 
-				{/* we want to protect these routes */}
-				<Route element={<PersistLogin />}>
-					<Route element={<RequireAuth allowedRoles={[ROLES.Student]} />}>
-						{/* <Route path="/" element={<Home />} /> */}
+        {/* we want to protect these routes */}
+        <Route element={<PersistLogin />}>
+          <Route element={<RequireAuth allowedRoles={[ROLES.Student]} />}>
+            {/* <Route path="/" element={<Home />} /> */}
 
-						<Route path="stu" element={<SidebarAndHeader userRole={"student"} />}>
-							<Route path="dashboard" element={<Dashboard />} />
-							<Route path="courses" element={<Courses />} />
-							<Route path="content" element={<Content />} />
-							<Route path="settings" element={<Settings />} />
-						</Route>
-					</Route>
+            <Route
+              path="stu"
+              element={<SidebarAndHeader userRole={"student"} />}
+            >
+              <Route path="dashboard" element={<Dashboard />} />
+              <Route path="courses" element={<Courses />} />
+              <Route path="content" element={<Content />} />
+              <Route path="settings" element={<Settings />} />
+            </Route>
+          </Route>
 
-					<Route element={<RequireAuth allowedRoles={[ROLES.User]} />}>
-						<Route path="user" element={<UserLayout />}>
-							<Route path="profile" element={<UserProfile />} />
-						</Route>
-					</Route>
-				</Route>
+          <Route element={<RequireAuth allowedRoles={[ROLES.User]} />}>
+            <Route path="user" element={<UserLayout />}>
+              <Route path="profile" element={<UserProfile />} />
+            </Route>
+          </Route>
 
-				{/* catch all */}
-				<Route path="*" element={<Missing />} />
-			</Route>
-		</Routes>
-	);
+          {/* <Route element={<RequireAuth allowedRoles={[ROLES.Tutor]} />}> */}
+          <Route
+            path="tutor"
+            element={<SidebarAndHeader userRole={"teacher"} />}
+          >
+            <Route path="dashboard" element={<TutorDashboard />} />
+            <Route path="courses" element={<Courses />} />
+            <Route path="content" element={<Content />} />
+
+            <Route path="staff">
+              <Route index element={<StaffList />} />
+              <Route path="add" element={<StaffAdd />} />
+            </Route>
+
+            <Route path="mcqpool">
+              <Route index element={<McqCategoryPool />} />
+              <Route path=":id" element={<Mcqs />}>
+                <Route path="add" element={<CreateMcq />} />
+              </Route>
+            </Route>
+          </Route>
+
+          {/* </Route> */}
+
+          <Route element={<RequireAuth allowedRoles={[ROLES.User]} />}>
+            <Route path="user" element={<UserLayout />}>
+              <Route path="profile" element={<UserProfile />} />
+            </Route>
+          </Route>
+        </Route>
+
+        {/* catch all */}
+        <Route path="*" element={<Missing />} />
+      </Route>
+    </Routes>
+  );
 }
 
 export default App;
