@@ -16,10 +16,12 @@ import {
 } from "@chakra-ui/react";
 
 import { EditIcon } from "@chakra-ui/icons";
+import { useState } from "react";
 
 
 const StaffAdd = () => {
 
+  const [newItem , setNewItem] = useState('');
 
 
   const handleSubmit = (e) =>{
