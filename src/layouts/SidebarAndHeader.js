@@ -12,6 +12,8 @@ import GridViewRoundedIcon from "@mui/icons-material/GridViewRounded";
 import {TiDocumentText} from "react-icons/ti";
 import {FaCompass} from "react-icons/fa";
 import {TbChevronsUpLeft} from "react-icons/tb";
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import ReportProblemIcon from '@mui/icons-material/ReportProblem';
 
 const SidebarAndHeader = ({userRole}) => {
 	//get width of sidebar component and set to state
@@ -37,6 +39,13 @@ const SidebarAndHeader = ({userRole}) => {
 	];
 
 	const StaffOptions = [{icon: GridViewRoundedIcon, name: "Dashboard", value: "dashboard", href: "/dashboard"}];
+	const InstStaffOptions = [
+        { icon: GridViewRoundedIcon, name: 'Dashboard',value: 'dashboard' , href: '/staff/dashboard'},
+        { icon: AccountCircleIcon, name: 'Profile',value: 'profile', href: '/staff/Profile'},
+        {icon: ReportProblemIcon, name: 'Complaints',value: 'complaints' , href: '/staff/complaints'}
+    ]
+	
+
 
 	switch (userRole) {
 		case "student":
@@ -45,6 +54,9 @@ const SidebarAndHeader = ({userRole}) => {
 		case "teacher":
 			Options = TeacherOptions;
 			break;
+		case('InstituteStaff'):
+            Options = InstStaffOptions
+            break;
 		default:
 			Options = StuOptions;
 	}
