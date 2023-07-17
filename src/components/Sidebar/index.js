@@ -9,7 +9,7 @@ import { SidebarContext } from "../../context/SidebarContext";
 
 const Option = ({ icon: iconComponent, name, href, active, minimizeStatus }) => {
 	return (
-		<Link to={href} _hover={"none"}>
+		<Link to={href} _hover={"none"} >
 			<Flex
 				p="10px"
 				borderRadius={"10px"}
@@ -40,7 +40,7 @@ const Option = ({ icon: iconComponent, name, href, active, minimizeStatus }) => 
 					<Text fontSize={"14px"}>{name}</Text>
 				</Flex>
 			</Flex>
-		</Link>
+		</Link >
 	);
 };
 
@@ -86,13 +86,15 @@ const Sidebar = ({ Options, minimized = false, full = true, setSidebarWidth, ...
 				gap="60px"
 				//if not full is true, then set display to none
 				display={full ? "flex" : "none"}>
-				<Image
-					h="36px"
-					src="/logo.png"
-					alt="logo"
-					//if minimized is true, then set display to none
-					display={minimizedStatus ? "none" : "block"}
-				/>
+				<Flex justifyContent="center" alignItems={"center"} h="64px">
+					<Image
+						h="36px"
+						src="/logo.png"
+						alt="logo"
+						//if minimized is true, then set display to none
+						display={minimizedStatus ? "none" : "block"}
+					/>
+				</Flex>
 				<IconButton
 					variant={"ghost"}
 					margin={0}

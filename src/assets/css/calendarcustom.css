@@ -1,0 +1,61 @@
+/* .rdrDay {
+    background-color: transparent;
+    border-radius: 50% !important;
+    padding: 1px !important;
+} */
+
+
+/* .rdrDay.rdrToday {
+    background-color: #0074D9 !important;
+    color: white !important;
+    border-radius: 50% !important;
+} */
+
+/* middle */
+/* .rdrSelected {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 36px !important;
+    height: 36px !important;
+    background-color: #0074D9 !important;
+    color: white !important;
+    border-radius: 50% !important;
+    aspect-ratio: 1/1 !important;
+} */
+
+/* .rdrDayHovered {
+    color: white !important;
+    border-radius: 50% !important;
+    aspect-ratio: 1/1 !important;
+} */
+
+/*
+.rdrDay.rdrToday:hover {
+    border-radius: 50% !important;
+    border-color: red !important;
+}
+
+.rdrDays {
+    width: 252px !important;
+}
+
+.rdrWeekDay {
+    height: 32px !important;
+    width: 36px !important;
+}
+
+.rdrWeekDays {
+    width: max-content !important;
+} */
+
+.rdrMonth {
+    width: 100% !important;
+}
+
+
+.rdrCalendarWrapper {
+    width: 100% !important;
+    /* height: 80% !important; */
+}

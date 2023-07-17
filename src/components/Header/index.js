@@ -5,6 +5,9 @@ import { HiSearch } from "react-icons/hi";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
 import NotificationsNoneOutlinedIcon from "@mui/icons-material/NotificationsNoneOutlined";
+import { PiBell, PiBellFill } from "react-icons/pi";
+import { BiMenuAltLeft } from "react-icons/bi";
+import { icon } from "@fortawesome/fontawesome-svg-core";
 // import ToggleColorMode from "../ToggleColorMode";
 
 const Header = ({ full = false, ...rest }) => {
@@ -17,13 +20,24 @@ const Header = ({ full = false, ...rest }) => {
 					w={"260px"}
 					alignItems={"center"}
 					justifyContent={"space-between"}
-					px="24px"
+					px="10px"
 					gap="10px"
-					//if full is true, then set display to none
-					display={!full && "none"}>
-					<Image h="36px" src="/logo.png" alt="logo" />
-					<IconButton variant="ghost" margin={0} h="40px" p="10px" px="0">
-						<FontAwesomeIcon icon={faBars} />
+				//if full is true, then set display to none
+				// display={!full && "none"}
+				>
+					{/* <Image h="36px" src="/logo.png" alt="logo" /> */}
+					<IconButton
+						variant={"ghost"}
+						margin={0}
+						h="40px"
+						minWidth="max-content"
+						p="10px"
+						display={{ base: "flex", lg: "none" }}
+					// onClick={() => {
+					// 	setMinimizedStatus(!minimizedStatus);
+					// }}
+					>
+						<BiMenuAltLeft size={"24px"} />
 					</IconButton>
 				</Flex>
 				<Flex alignItems={"Center"}>
@@ -40,18 +54,14 @@ const Header = ({ full = false, ...rest }) => {
                     <ToggleColorMode />
                 </Flex> */}
 				<Flex>
-					<Button variant="ghost" size="sm" margin={0}>
-						<NotificationsNoneOutlinedIcon fontSize="small" />
-					</Button>
+					<BellIcon />
 				</Flex>
-				<Flex p={"4px"} pr={"10px"} h={"100%"} alignContent={"center"} alignItems={"center"} gap={"16px"}>
-					<Box h={"40px"} textAlign={"right"}>
+				<Flex p={"4px"} pr={"10px"} h={"100%"} alignContent={"center"} alignItems={"center"} gap={"10px"}>
+					<Box h={"40px"} textAlign={"right"} display={{ base: "none", lg: "block" }} >
 						<Text fontSize={"16px"} fontWeight={"bold"}>
-							{" "}
 							Nipuna Rahal
 						</Text>
-						<Text fontSize={"10px"} fontWeight={500} color={"gray.400"}>
-							{" "}
+						<Text fontSize={"10px"} fontWeight={"semibold"} color={"gray.400"}>
 							Student
 						</Text>
 					</Box>
@@ -61,5 +71,30 @@ const Header = ({ full = false, ...rest }) => {
 		</Flex>
 	);
 };
+
+
+const BellIcon = () => {
+	return (
+
+		<Flex pos="relative" h="40px" w="40px" justifyContent="center" alignItems="center" >
+			<IconButton
+				icon={< PiBell size="24px" />}
+				size="sm"
+				margin={0}
+				bg="transparent"
+				_hover={{
+					bg: "transparent",
+					// icon: <PiBellFill size="24px" />
+				}}
+				_active={{
+					bg: "transparent",
+					// icon: <PiBellFill size="24px" />
+				}}
+			/>
+			<Flex as="indicator" position="absolute" top="2" right="2" h="10px" w="10px" bg="red" borderRadius="50%" />
+
+		</Flex>
+	);
+}
 
 export default Header;
