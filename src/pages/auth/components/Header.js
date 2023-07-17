@@ -3,15 +3,13 @@ import {
   Flex,
   Spacer,
   Box,
-  Heading,
   Button,
-  ButtonGroup,
   Text,
   Image,
 } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 
-import Logo from "../../assests/images/logo.png";
+import Logo from "../../../assests/images/logo.png";
 
 function AuthHeader({ message, url, action }) {
   return (

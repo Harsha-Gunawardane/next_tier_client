@@ -1,18 +1,14 @@
 import { useRef, useState, useEffect } from "react";
-import useAuth from "../../hooks/useAuth";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import jwtDecode from "jwt-decode";
 import {
   FormControl,
   FormLabel,
-  FormErrorMessage,
-  FormHelperText,
   Input,
   Flex,
   Image,
   Box,
   Text,
-  textDecoration,
   Button,
   Checkbox,
   Alert,
@@ -21,25 +17,31 @@ import {
   AlertDescription,
 } from "@chakra-ui/react";
 
-import AuthHeader from "../../components/auth/AuthHeader";
+import Header from "./components/Header";
 import Girl from "../../assests/images/girl2.png";
 
+import useAuth from "../../hooks/useAuth";
+import useInput from "../../hooks/useInput";
+import useToggle from "../../hooks/useToggle";
 import axios from "../../api/axios";
+import { ROLES } from "../../config/roles";
+
 const LOGIN_URL = "/auth";
 
 const Login = () => {
-  const { setAuth, persist, setPersist } = useAuth();
-
+  const { setAuth } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
+
   const from = location.state?.from?.pathname || "/";
 
   const userRef = useRef();
   const errRef = useRef();
 
-  const [user, setUser] = useState("");
+  const [user, resetUser, userAttribs] = useInput("user", "");
   const [pwd, setPwd] = useState("");
   const [errMsg, setErrMsg] = useState("");
+  const [check, toggleCheck] = useToggle("persist", false);
 
   useEffect(() => {
     userRef.current.focus();
@@ -62,11 +64,11 @@ const Login = () => {
         }
       );
       console.log(JSON.stringify(response?.data));
-      //console.log(JSON.stringify(response));
       const accessToken = response?.data?.accessToken;
 
       setAuth({ user, accessToken });
-      setUser("");
+
+      // resetUser();
       setPwd("");
 
       if (from === "/") {
@@ -76,9 +78,9 @@ const Login = () => {
 
         console.log(roles);
 
-        if (roles.includes(1942)) {
+        if (roles.includes(ROLES.Student)) {
           navigate("/stu/dashboard");
-        } else if (roles.includes(1932)) {
+        } else if (roles.includes(ROLES.Tutor)) {
           navigate("")
         }
       } else {
@@ -101,17 +103,9 @@ const Login = () => {
     }
   };
 
-  const togglePersist = () => {
-    setPersist((prev) => !prev);
-  };
-
-  useEffect(() => {
-    localStorage.setItem("persist", persist);
-  }, [persist]);
-
   return (
     <>
-      <AuthHeader
+      <Header
         message={"Do you haven't registered yet?"}
         action={"Sign Up"}
         url={"/register"}
@@ -173,8 +167,9 @@ const Login = () => {
                   id="username"
                   ref={userRef}
                   autoComplete="off"
-                  onChange={(e) => setUser(e.target.value)}
-                  value={user}
+                  // onChange={(e) => setUser(e.target.value)}
+                  // value={user}
+                  {...userAttribs}
                   mb={4}
                   h={9}
                   bg="#eeeeee"
@@ -210,9 +205,8 @@ const Login = () => {
                     mb={1}
                     type="checkbox"
                     id="persist"
-                    onChange={togglePersist}
-                    checked={persist}
-                    defaultChecked
+                    onChange={toggleCheck}
+                    checked={check}
                   />
                   <FormLabel
                     color="#555555"

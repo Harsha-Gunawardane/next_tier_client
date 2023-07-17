@@ -1,4 +1,4 @@
-import { Button } from "@chakra-ui/react";
+import { Box, Button } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import CategoriesSearchBar from "../../components/mcq/CategoriesSearchBar";
@@ -38,7 +38,7 @@ export default function McqCategoryPool() {
 
 
   return (
-    <div>
+    <Box w="100%">
       <NavLink to="add">
         <Button
           colorScheme="whatsapp"
@@ -61,6 +61,6 @@ export default function McqCategoryPool() {
           category.title.toLowerCase().includes(search.toLowerCase())
         )}
       />
-    </div>
+    </Box>
   );
 }

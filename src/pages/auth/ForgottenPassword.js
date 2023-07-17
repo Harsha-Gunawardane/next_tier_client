@@ -2,7 +2,6 @@ import ReactDOM from "react-dom";
 import { useRef, useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
-// import ToastNotification from "../components/ToastNotification";
 import {
   FormControl,
   FormLabel,
@@ -24,9 +23,9 @@ import {
 } from "@chakra-ui/react";
 import { CheckIcon, CloseIcon } from "@chakra-ui/icons";
 
-import AuthHeader from "../components/auth/AuthHeader";
-import Girl from "../assests/images/girl2.png";
-import axios from "../api/axios";
+import Header from "./components/Header";
+import Girl from "../../assests/images/girl2.png";
+import axios from "../../api/axios";
 
 const SEND_OTP_URL = "/forgot-password/send-otp";
 const VERIFY_OTP_URL = "/forgot-password/verify-otp";
@@ -232,7 +231,7 @@ function ForgottenPassword() {
 
   return (
     <>
-      <AuthHeader
+      <Header
         message={"Did you remember the password?"}
         action={"Login"}
         url={"/login"}

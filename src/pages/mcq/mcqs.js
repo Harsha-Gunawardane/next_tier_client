@@ -36,7 +36,7 @@ export default function Mcqs() {
   
   return (
     <div>
-      <NavLink to="addnew">
+      <NavLink to="add">
         <Button
           colorScheme="whatsapp"
           variant="solid"

@@ -2,7 +2,6 @@ import ReactDOM from "react-dom";
 import { useRef, useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
-// import ToastNotification from "../components/ToastNotification";
 import {
   FormControl,
   FormLabel,
@@ -22,9 +21,9 @@ import {
   HStack,
 } from "@chakra-ui/react";
 
-import AuthHeader from "../components/auth/AuthHeader";
-import Girl from "../assests/images/girl2.png";
-import axios from "../api/axios";
+import Header from "./components/Header";
+import Girl from "../../assests/images/girl2.png";
+import axios from "../../api/axios";
 
 const SEND_OTP_URL = "/send-otp";
 const VERIFY_OTP_URL = "/verify-otp";
@@ -206,7 +205,7 @@ function UserVerify() {
 
   return (
     <>
-      <AuthHeader
+      <Header
         message={"Did you already verified?"}
         action={"Login"}
         url={"/login"}

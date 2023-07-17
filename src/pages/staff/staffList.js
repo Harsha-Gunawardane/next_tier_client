@@ -19,6 +19,9 @@ const StaffList = () => {
     const getStaffs = async () => {
       try {
         const response = await api.get("/staffs");
+        if(!response){
+          setStaffs([]);
+        }
         setStaffs(response.data)
       } catch (error) {
         console.log(error.response.data);

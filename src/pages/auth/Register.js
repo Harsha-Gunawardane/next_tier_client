@@ -1,39 +1,28 @@
 import { useRef, useState, useEffect } from "react";
-import {
-  faCheck,
-  faTimes,
-  faInfoCircle,
-} from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import axios from "../../api/axios";
-import { Link } from "react-router-dom";
 import { CheckIcon, CloseIcon } from "@chakra-ui/icons";
 import { useNavigate } from "react-router-dom";
 
 import {
   FormControl,
   FormLabel,
-  FormErrorMessage,
   FormHelperText,
   Input,
   Flex,
   Image,
   Box,
   Text,
-  textDecoration,
   Button,
-  Checkbox,
   Alert,
   AlertIcon,
   AlertTitle,
   AlertDescription,
   InputGroup,
   InputLeftAddon,
-  SimpleGrid,
 } from "@chakra-ui/react";
 
-import AuthHeader from "../../components/auth/AuthHeader";
+import Header from "./components/Header";
 import Girl from "../../assests/images/girl2.png";
+import axios from "../../api/axios";
 
 // regex patterns
 const USER_REGEX = /^[a-zA-Z][a-zA-Z0-9-_]{3,23}$/;
@@ -133,8 +122,8 @@ const Register = () => {
         }
       );
       console.log(JSON.stringify(response?.data));
-      //console.log(JSON.stringify(response))
       setSuccess(true);
+
       //clear state and controlled inputs
       setUser("");
       setPwd("");
@@ -155,7 +144,7 @@ const Register = () => {
 
   return (
     <>
-      <AuthHeader
+      <Header
         message={"Already registered?"}
         action={"Login"}
         url={"/login"}
