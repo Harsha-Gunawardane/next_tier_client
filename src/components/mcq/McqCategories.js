@@ -14,7 +14,7 @@ import { NavLink } from "react-router-dom";
 
 export default function McqCategories({ categories }) {
   return (
-    <SimpleGrid spacing={6} minChildWidth="200px" maxChildWidth="150px" margin="20px">
+    <SimpleGrid spacing={6} minChildWidth="250px" maxChildWidth="170px" margin="20px">
       {categories.map((category) => (
         <NavLink to={`${category.id}`}>
           <Card

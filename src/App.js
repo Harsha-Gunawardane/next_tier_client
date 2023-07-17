@@ -3,11 +3,11 @@ import Register from "./pages/auth/Register";
 import Login from "./pages/auth/Login";
 import Missing from "./pages/auth/Missing";
 import Unauthorized from "./pages/auth/Unauthorized";
-import UserVerify from './pages/auth/UserVerify';
+import UserVerify from "./pages/auth/UserVerify";
 import Landing from "./pages/LandingPage/Landing";
-import ForgottenPassword from './pages/auth/ForgottenPassword';
+import ForgottenPassword from "./pages/auth/ForgottenPassword";
 
-// import auth features 
+// import auth features
 import PersistLogin from "./features/auth/PersistLogin";
 import RequireAuth from "./features/auth/RequireAuth";
 
@@ -27,41 +27,63 @@ import Content from "./components/Content";
 // import UserLayout from "./features/users/UserLayout";
 // import UserProfile from "./features/users/components/UserProfile";
 
-import {Routes, Route} from "react-router-dom";
-import {ROLES} from "./config/roles";
+import { Routes, Route } from "react-router-dom";
+import { ROLES } from "./config/roles";
 
 function App() {
-	return (
-		<Routes>
-			<Route path="/" element={<Layout />}>
-				{/* public routes */}
-				
-				<Route index element={<Landing />} />
-				<Route path="unauthorized" element={<Unauthorized />} />
-				<Route path="login" element={<Login />} />
-				<Route path="register" element={<Register />} />
-				<Route path="verify" element={<UserVerify />} />
-				<Route path="forgot-password" element={<ForgottenPassword />} />
+  return (
+    <Routes>
+      <Route path="/" element={<Layout />}>
+        {/* public routes */}
 
-				{/* we want to protect these routes */}
-				<Route element={<PersistLogin />}>
-					<Route element={<RequireAuth allowedRoles={[ROLES.Student]} />}>
+        <Route index element={<Landing />} />
+        <Route path="unauthorized" element={<Unauthorized />} />
+        <Route path="login" element={<Login />} />
+        <Route path="register" element={<Register />} />
+        <Route path="verify" element={<UserVerify />} />
+        <Route path="forgot-password" element={<ForgottenPassword />} />
 
-						<Route path="stu" element={<SidebarAndHeader userRole={"student"} />}>
-							<Route path="dashboard" element={<Dashboard />} />
-							<Route path="courses" element={<Courses />} />
-							<Route path="content" element={<Content />} />
-							<Route path="settings" element={<Settings />} />
-						</Route>
-					</Route>
+        {/* we want to protect these routes */}
+        <Route element={<PersistLogin />}>
+          <Route element={<RequireAuth allowedRoles={[ROLES.Student]} />}>
+            <Route
+              path="stu"
+              element={<SidebarAndHeader userRole={"student"} />}
+            >
+              <Route path="dashboard" element={<Dashboard />} />
+              <Route path="courses" element={<Courses />} />
+              <Route path="content" element={<Content />} />
+              <Route path="settings" element={<Settings />} />
+            </Route>
+          </Route>
+        </Route>
 
-				</Route>
+        {/* <Route element={<RequireAuth allowedRoles={[ROLES.Tutor]} />}> */}
+        <Route path="tutor" element={<SidebarAndHeader userRole={"teacher"} />}>
+          <Route path="dashboard" element={<TutorDashboard />} />
+          <Route path="courses" element={<Courses />} />
+          <Route path="content" element={<Content />} />
 
-				{/* catch all */}
-				<Route path="*" element={<Missing />} />
-			</Route>
-		</Routes>
-	);
+          <Route path="staff">
+            <Route index element={<StaffList />} />
+            <Route path="add" element={<StaffAdd />} />
+          </Route>
+
+          <Route path="mcqpool">
+            <Route index element={<McqCategoryPool />} />
+            <Route path=":id" element={<Mcqs />}>
+              <Route path="add" element={<CreateMcq />} />
+            </Route>
+          </Route>
+        </Route>
+
+        {/* </Route> */}
+
+        {/* catch all */}
+        <Route path="*" element={<Missing />} />
+      </Route>
+    </Routes>
+  );
 }
 
 export default App;
