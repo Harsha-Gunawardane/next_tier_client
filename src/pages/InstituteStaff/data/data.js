@@ -78,21 +78,21 @@ const approvedData = [
       fullName: 'Nimal Perera',
       subject: 'Chemistry',
       email: 'nimal@gmail.com',
-      profileImage: './Assets/profile.png',
+      profileImage: '/InstituteStaffAssets/avtr5.jpg',
     },
     {
       id: 'S102',
       fullName: 'Sujith Liyanage',
       subject: 'Physics',
       email: 'sujithliyanage@gmail.com',
-      profileImage: './Assets/profile.png',
+      profileImage: '/InstituteStaffAssets/avtr3.jpg',
     },
     {
       id: 'S103',
       fullName: 'Chithra Kuruppu',
       subject: 'ICT',
       email: 'chithra94@gmail.com',
-      profileImage: './Assets/profile.png',
+      profileImage: '/InstituteStaffAssets/avtr2.jpg',
     },
   ];
   
