@@ -7,6 +7,8 @@ import UserVerify from "./pages/auth/UserVerify";
 import Landing from "./pages/LandingPage/Landing";
 import ForgottenPassword from "./pages/auth/ForgottenPassword";
 import InstStaffDashboard from './pages/InstituteStaff/Dashboard';
+import ViewTeacher from "./pages/InstituteStaff/ViewTeacher";
+import AddTeacher from "./pages/InstituteStaff/AddTeacher";
 import InstStaffProfile from './pages/InstituteStaff/Profile';
 import InstStaffComplaintsList from './pages/InstituteStaff/Complaints/ComplaintsListView';
 
@@ -63,6 +65,8 @@ function App() {
 
         <Route path='staff' element={<SidebarAndHeader userRole={"InstituteStaff"} />}>
           <Route path="dashboard" element={<InstStaffDashboard />} />
+          <Route path="teacher" element={<ViewTeacher/>} />
+          <Route path="teacher/add" element={< AddTeacher />} />
           <Route path="profile" element={<InstStaffProfile />} />
           <Route path="complaints" element={<InstStaffComplaintsList />} />
         </Route>

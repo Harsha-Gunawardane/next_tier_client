@@ -41,8 +41,9 @@ const SidebarAndHeader = ({userRole}) => {
 	const StaffOptions = [{icon: GridViewRoundedIcon, name: "Dashboard", value: "dashboard", href: "/dashboard"}];
 	const InstStaffOptions = [
         { icon: GridViewRoundedIcon, name: 'Dashboard',value: 'dashboard' , href: '/staff/dashboard'},
+		{icon: FaCompass, name: "View Teacher", value: "viewTeacher", href: "/staff/teacher"},
         { icon: AccountCircleIcon, name: 'Profile',value: 'profile', href: '/staff/Profile'},
-        {icon: ReportProblemIcon, name: 'Complaints',value: 'complaints' , href: '/staff/complaints'}
+        {icon: ReportProblemIcon, name: 'Complaints',value: 'complaints' , href: '/staff/complaints'},
     ]
 	
 
