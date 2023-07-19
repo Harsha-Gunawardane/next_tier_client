@@ -69,38 +69,32 @@ export default function Carousel() {
   ];
 
   return (
-    <Box
+    <Flex
       as="carousel"
-      height={'max-content'}
+      height={'100%'}
       width={'100%'}
-      overflow={'hidden'}>
+      overflow={'hidden'}
+      justifyContent={"center"}
+      alignItems={"center"}
+    >
 
       {/* Left Icon */}
-      <IconButton
-        w={"max-content"}
-        aria-label="left-arrow"
-        variant="outline"
-        position="absolute"
-        left={side}
-        top={top}
-        transform={'translate(0%, -50%)'}
-        zIndex={2}
-        onClick={() => slider?.slickPrev()}>
-        <MdOutlineKeyboardArrowLeft size="20px" />
-      </IconButton>
+      <Flex h="full" justifyContent="center" alignItems="center" w="10%">
+        <IconButton
+          w={"20px"}
+          aria-label="left-arrow"
+          variant="outline"
+          // position="absolute"
+          // left={side}
+          // top={top}
+          // transform={'translate(0%, -50%)'}
+          zIndex={2}
+          onClick={() => slider?.slickPrev()}>
+          <MdOutlineKeyboardArrowLeft size="20px" />
+        </IconButton>
+      </Flex>
 
-      {/* Right Icon */}
-      <IconButton
-        aria-label="right-arrow"
-        variant="outline"
-        position="absolute"
-        right={side}
-        top={top}
-        transform={'translate(0%, -50%)'}
-        zIndex={2}
-        onClick={() => slider?.slickNext()}>
-        <MdOutlineKeyboardArrowRight size="20px" />
-      </IconButton>
+
 
 
       {/* Slider */}
@@ -109,14 +103,14 @@ export default function Carousel() {
           {cards.map((card, index) => (
             <Box
               key={index}
-              height={'200px'}
+              height={'100%'}
             >
               {/* This is the block you need to change, to customize the caption */}
-              <Flex as="slide" height="100%" w="100%" flexDirection={"column"} justifyContent={"center"} alignItems={"center"} gap="10px">
-                <AspectRatio minW="100%" ration={4 / 3} overflow={"hidden"} borderRadius={"10px"}>
+              <Flex as="slide" h="100%" w="100%" flexDirection={"column"} justifyContent={"center"} alignItems={"center"} gap="10px">
+                <AspectRatio minW="100%" ratio={16 / 9} overflow={"hidden"} borderRadius={"10px"}>
                   <Image src={card.image} alt="image" objectFit={"cover"} />
                 </AspectRatio>
-                <Heading fontSize={{ base: '0.8rem', md: '0.8rem', lg: '1rem' }} fontFamily={"Roboto"}>
+                <Heading fontSize={{ base: '0.8rem', md: '0.8rem', lg: '1rem' }} fontStyle={"Roboto"}>
                   {card.title}
                 </Heading>
               </Flex>
@@ -125,6 +119,22 @@ export default function Carousel() {
           }
         </Slider >
       </Box >
-    </Box >
+
+      {/* Right Icon */}
+      <Flex h="100%" justifyContent="center" alignItems="center" w="10%">
+
+        <IconButton
+          aria-label="right-arrow"
+          variant="outline"
+          // position="absolute"
+          // right={side}
+          // top={top}
+          // transform={'translate(0%, -50%)'}
+          zIndex={2}
+          onClick={() => slider?.slickNext()}>
+          <MdOutlineKeyboardArrowRight size="20px" />
+        </IconButton>
+      </Flex>
+    </Flex >
   );
 }

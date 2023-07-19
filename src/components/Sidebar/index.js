@@ -86,13 +86,11 @@ const Sidebar = ({ Options, minimized = false, full = true, setSidebarWidth, ...
 				gap="60px"
 				//if not full is true, then set display to none
 				display={full ? "flex" : "none"}>
-				<Flex justifyContent="center" alignItems={"center"} h="64px">
+				<Flex justifyContent="center" alignItems={"center"} h="64px" display={minimizedStatus ? "none" : "flex"}>
 					<Image
 						h="36px"
 						src="/logo.png"
 						alt="logo"
-						//if minimized is true, then set display to none
-						display={minimizedStatus ? "none" : "block"}
 					/>
 				</Flex>
 				<IconButton

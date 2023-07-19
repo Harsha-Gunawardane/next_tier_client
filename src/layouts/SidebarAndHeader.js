@@ -11,7 +11,6 @@ import { Box, Container, Flex, Grid, GridItem } from "@chakra-ui/react";
 import GridViewRoundedIcon from "@mui/icons-material/GridViewRounded";
 import { TiDocumentText } from "react-icons/ti";
 import { FaCompass } from "react-icons/fa";
-import { TbChevronsUpLeft } from "react-icons/tb";
 
 const SidebarAndHeader = ({ userRole }) => {
 	//get width of sidebar component and set to state
@@ -53,6 +52,7 @@ const SidebarAndHeader = ({ userRole }) => {
 	//chakra ui layout for sidebar from components folder and header with an outlet for the children
 
 	return (
+		// <SidebarProvider>
 		<Box
 			sx={{
 				"&::-webkit-scrollbar": {
@@ -66,11 +66,8 @@ const SidebarAndHeader = ({ userRole }) => {
 			}}
 			h="100vh"
 			w="100vw"
-			overflowX={"hidden"}
 		>
-			<SidebarProvider>
-				<Sidebar Options={Options} minimized={false} setSidebarWidth={setSidebarWidth} display={{ base: "none", lg: "flex" }} />
-			</SidebarProvider>
+			<Sidebar Options={Options} minimized={false} setSidebarWidth={setSidebarWidth} display={{ base: "none", lg: "flex" }} />
 			<Box ml={{ base: "0", lg: sidebarWidth }} w={{ base: "100vw", lg: "calc(100vw - " + sidebarWidth + ")" }} h={"100vh"}>
 				<Header w={{ base: "100%", lg: "calc(100% - " + sidebarWidth + ")" }} />
 				<Flex as="Middle" pt={"64px"}>
@@ -78,6 +75,8 @@ const SidebarAndHeader = ({ userRole }) => {
 				</Flex>
 			</Box>
 		</Box>
+		// </SidebarProvider>
+
 	);
 };
 

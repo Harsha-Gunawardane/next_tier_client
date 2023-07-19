@@ -6,6 +6,8 @@ import MiniStat from "../../components/Card/MiniStat";
 import { MdAddTask, MdAttachMoney, MdBarChart, MdFileCopy } from "react-icons/md";
 
 import IconBox from "../../components/icons/IconBox";
+import { SidebarContext } from "../../context/SidebarContext";
+import { useContext } from "react";
 
 //icons
 import { BiBook } from "react-icons/bi";
@@ -17,10 +19,25 @@ import UpcommingClasses from "../../components/DashboardComponents/UpcommingClas
 import ContinueWatching from "../../components/DashboardComponents/ContinueWatching";
 import RecommendedVideos from "../../components/DashboardComponents/RecommendedVidoes";
 import MiniStatCardIcon from "../../components/icons/MiniStatCardIcon";
+import { useEffect, useState } from "react";
 
 const Dashboard = () => {
 	const brandColor = useColorModeValue("accent", "white");
 	const sectionTitleFontSize = "16px"
+
+	const [continueWatchingHeight, setContinueWatchingHeight] = useState("0");
+
+	useEffect(() => {
+		const height = window.getComputedStyle(document.getElementById("continueWatching")).height
+		setContinueWatchingHeight(height)
+	})
+
+	const { activeTab, handleTabClick, handleSidebarToggle, setSidebarOption } = useContext(SidebarContext);
+
+	useEffect(() => {
+		setSidebarOption("dashboard")
+	});
+
 
 	return (
 		<Box m="0" p="0" w={"100%"} h={"max-content"} bg={"gray.50"}>
@@ -72,7 +89,7 @@ const Dashboard = () => {
 						<Text fontSize={sectionTitleFontSize} fontWeight={"600"} mb="10px">
 							Recommended Videos
 						</Text>
-						<RecommendedVideos />
+						<RecommendedVideos height={continueWatchingHeight} />
 					</GridItem>
 				</SimpleGrid>
 			</Flex>

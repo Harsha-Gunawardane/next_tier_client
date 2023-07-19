@@ -20,14 +20,21 @@ const SidebarProvider = ({ children }) => {
 
 	const location = useLocation();
 
-	useEffect(() => {
-		const defaultTab = determineDefaultTab(location.pathname);
+	// useEffect(() => {
+	// 	const defaultTab = determineDefaultTab(location.pathname);
+	// 	// const defaultTab = "dashboard";
 
-		setActiveTab(defaultTab);
-	}, [location]);
+	// 	setActiveTab(defaultTab);
+	// }, [location]);
 
 	const handleTabClick = (tab) => {
 		setActiveTab(tab);
+		console.log(activeTab);
+	};
+
+	const setSidebarOption = (activeOption) => {
+		setActiveTab(activeOption);
+		console.log(activeTab);
 	};
 
 	const handleSidebarToggle = () => {
@@ -36,7 +43,7 @@ const SidebarProvider = ({ children }) => {
 
 	console.log(document.getElementById("Sidebar"));
 
-	return <SidebarContext.Provider value={{ activeTab, handleTabClick, handleSidebarToggle, sidebarMinimized }}>{children}</SidebarContext.Provider>;
+	return <SidebarContext.Provider value={{ activeTab, handleTabClick, handleSidebarToggle, sidebarMinimized, setSidebarOption }}>{children}</SidebarContext.Provider>;
 };
 
 export { SidebarContext, SidebarProvider };

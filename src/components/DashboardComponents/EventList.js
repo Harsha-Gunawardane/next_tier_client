@@ -9,7 +9,7 @@ import Event from "./Event.js";
 export default function EventList(props) {
 	const { events } = props;
 
-	const colorList = ["red", "orange", "yellow", "green", "blue", "cyan", "purple"];
+	const colorList = ["red", "orange", "green", "blue", "purple"];
 
 	useEffect(() => {
 		console.log(events);
@@ -26,7 +26,7 @@ export default function EventList(props) {
 				? events.map((event, index) => {
 					console.log(colorList);
 					// colorList.map((color) => {
-					return <Event time={event.time} link={event.link} title={event.title} location={event.location} color={colorList[index]} />
+					return <Event key={index} startTime={event.startTime} endTime={event.endTime} date={event.date} title={event.title} location={event.location} color={colorList[index % (colorList.length - 1)]} />
 					// })
 
 				})

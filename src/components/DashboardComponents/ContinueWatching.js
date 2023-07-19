@@ -32,7 +32,7 @@ export default function ContinueWatching(props) {
 	const bgHover = useColorModeValue({ bg: "accent", color: "white" }, { bg: "whiteAlpha.50", color: "black" });
 	const bgFocus = useColorModeValue({ bg: "white" }, { bg: "whiteAlpha.100" });
 	return (
-		<Card justifyContent="center" align="center" alignItems="center" direction="column" w="100%" mb="0px" px="5px" h="300px" {...rest}>
+		<Card id="continueWatching" justifyContent="center" align="center" alignItems="center" direction="column" w="100%" mb="0px" px="5px" h="max-content" {...rest}>
 			<Flex as="top" w="100%" flexDirection={{ base: "column", lg: "row" }} alignItems={"center"} justifyContent={"center"}>
 				<Carousel />
 			</Flex>

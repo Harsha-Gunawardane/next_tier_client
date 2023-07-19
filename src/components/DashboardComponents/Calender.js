@@ -49,9 +49,9 @@ function customDayContent(day) {
 const Calender = ({ ...rest }) => {
 	const [date, setDate] = useState(null);
 
-	useEffect(() => {
-		setDate(moment().toDate());
-	}, []);
+	// useEffect(() => {
+	// 	setDate(moment().toDate());
+	// }, []);
 
 
 	const handleSelect = (date) => {
@@ -63,7 +63,7 @@ const Calender = ({ ...rest }) => {
 		<Calendar
 			minDate={new Date()}
 			date={date}
-			onChange={item => setDate(item)}
+			onChange={item => handleSelect(item)}
 			dayContentRenderer={customDayContent}
 			{...rest}
 		/>

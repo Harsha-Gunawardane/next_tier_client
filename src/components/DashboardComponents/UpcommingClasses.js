@@ -1,4 +1,4 @@
-import { Box, Flex, GridItem, SimpleGrid } from "@chakra-ui/react";
+import { Box, Flex, GridItem, Heading, SimpleGrid, Text } from "@chakra-ui/react";
 import Card from "../Card/Card";
 import EventList from "./EventList";
 import Calender from "./Calender";
@@ -9,10 +9,12 @@ const UpcommingClasses = (props) => {
 	// <Event time={event.time} link={event.link} title={event.title} location={event.location}
 
 	const eventList = [
-		{ time: "08:00 AM - 10:00 AM", link: "#", title: "Physics Theory", location: "Hall1" },
-		{ time: "08:00 AM - 10:00 AM", link: "#", title: "chemistry", location: "Hall1" },
-		{ time: "08:00 AM - 10:00 AM", link: "#", title: "Physics Paper Class", location: "Hall1" },
-		{ time: "08:00 AM - 10:00 AM", link: "#", title: "Physics Theory", location: "Hall1" },
+		{ startTime: "08:00 AM", endTime: "10:00 AM", date: "12/12/2021", title: "Physics Theory", location: "Hall1" },
+		{ startTime: "08:00 AM", endTime: "10:00 AM", date: "12/12/2021", title: "Physics Theory", location: "Hall1" },
+		{ startTime: "08:00 AM", endTime: "10:00 AM", date: "12/12/2021", title: "Physics Theory", location: "Hall1" },
+		{ startTime: "08:00 AM", endTime: "10:00 AM", date: "12/12/2021", title: "Physics Theory", location: "Hall1" },
+		{ startTime: "08:00 AM", endTime: "10:00 AM", date: "12/12/2021", title: "Physics Theory", location: "Hall1" },
+		{ startTime: "08:00 AM", endTime: "10:00 AM", date: "12/12/2021", title: "Physics Theory", location: "Hall1" },
 	];
 
 	return (
@@ -21,7 +23,11 @@ const UpcommingClasses = (props) => {
 				<Flex p="0" borderRight={{ base: "none", lg: "solid 1px" }} borderBottom={{ base: "solid 1px", lg: "none" }} borderColor={{ base: "gray.100", lg: "gray.100" }} w={{ base: "100%", lg: "50%" }} h="full" direction={"column"} alignItems="center" justifyContent="center">
 					<Calender />
 				</Flex>
-				<Flex w={{ base: "100%", lg: "50%" }} overflow={"hidden"}>
+				<Flex w={{ base: "100%", lg: "50%" }} overflow={"hidden"} direction={"column"}>
+					<Flex mx="10px" my="5px" justifyContent={"space-between"} alignItems={"center"}>
+						<Text fontSize="sm" fontWeight={"bold"} fontStyle={"Roboto"} color={"gray.600"}>Upcoming</Text>
+						<Text fontSize="sm" fontWeight={"bold"} fontStyle={"Roboto"} color={"gray.500"}>All</Text>
+					</Flex>
 					<EventList events={eventList} />
 				</Flex>
 			</Flex>
