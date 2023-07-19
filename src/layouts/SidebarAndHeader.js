@@ -1,6 +1,6 @@
 import { Outlet } from "react-router-dom";
 import Header from "../components/Header";
-import Layout from "../components/Layout";
+import Layout from "./Layout";
 import Sidebar from "../components/Sidebar";
 import { SidebarProvider, SidebarContext } from "../context/SidebarContext";
 import { useContext, useEffect, useState } from "react";
@@ -11,6 +11,7 @@ import { Box, Container, Flex, Grid, GridItem } from "@chakra-ui/react";
 import GridViewRoundedIcon from "@mui/icons-material/GridViewRounded";
 import { TiDocumentText } from "react-icons/ti";
 import { FaCompass } from "react-icons/fa";
+import { TbChevronsUpLeft } from "react-icons/tb";
 
 const SidebarAndHeader = ({ userRole }) => {
 	//get width of sidebar component and set to state
@@ -43,6 +44,9 @@ const SidebarAndHeader = ({ userRole }) => {
 			break;
 		case "teacher":
 			Options = TeacherOptions;
+			break;
+		case ('InstituteStaff'):
+			Options = InstStaffOptions
 			break;
 		default:
 			Options = StuOptions;

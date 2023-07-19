@@ -53,7 +53,7 @@ const Sidebar = ({ Options, minimized = false, full = true, setSidebarWidth, ...
 	const { activeTab, handleTabClick, handleSidebarToggle } = useContext(SidebarContext);
 	const [minimizedStatus, setMinimizedStatus] = useState(minimized);
 
-	const settings = { icon: MdSettings, name: "Settings", href: "/settings" };
+	const settings = { icon: MdSettings, name: "Settings", href: "/stu/settings" };
 	const logout = { icon: TbLogout, name: "Logout", href: "/logout" };
 
 	// console.log(activeTab)

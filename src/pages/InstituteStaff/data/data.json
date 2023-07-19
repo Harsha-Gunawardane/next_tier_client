@@ -1,0 +1,121 @@
+{
+    "complaints": [
+      {
+        "id": 1,
+        "title": "All Complaints",
+        "img": "/InstituteStaffAssets/pendingComplaints.png",
+        "count" : "15"
+      },
+      {
+        "id": 2,
+        "title": "Pending Complaints",
+        "img": "/InstituteStaffAssets/Allcomplaints.png",
+        "count" : "2"
+      },
+      {
+        "id": 3,
+        "title": "Resolved Complaints",
+        "img": "/InstituteStaffAssets/completedComplaints.png",
+        "count" : "12"
+      },
+      {
+        "id": 4,
+        "title": "Removed Complaints",
+        "img": "/InstituteStaffAssets/removedComplaints.png",
+        "count" : "1"
+      }
+      
+      
+    ],
+    "complaintstable" :[
+      {
+          "id": 1,
+          "date": "12/07/2023",
+          "profileName": "/InstituteStaffAssets/avtr1.png",
+          "status" : "Pending",
+          "name":"Anura",
+          "email": "henryJ123@gmail.com",
+          "action":"",
+          "description":"The timetable for the Science class keeps changing without prior notice. It's causing confusion and making it difficult for me to manage my other commitments. Please provide a fixed schedule that we can rely on"
+        },
+        {
+          "id": 2,
+          "date": "14/07/2023",
+          "profileName": "/InstituteStaffAssets/avtr5.jpg",
+          "status" : "Resolved",
+          "name":"Chamara",
+          "email": "Chamara123@gmail.com",
+          "action":"Addressed the issue with students and reminded them to maintain discipline during Physics lectures",
+          "description":"The classroom environment during the Physics lectures is very noisy and distracting. Students often talk amongst themselves, and it's affecting my ability to concentrate and grasp the concepts being taught"
+        },
+        {
+          "id": 3,
+          "date": "16/07/2023",
+          "profileName": "/InstituteStaffAssets/avtr3.jpg",
+          "status" : "Ignored",
+          "name":"Dinesh",
+          "email": "dineshSK123@gmail.com",
+          "description":"I don't like the color of the classroom walls."
+        },
+        {
+          "id": 4,
+          "date": "18/07/2023",
+          "profileName": "/InstituteStaffAssets/avtr4.jpg",
+          "status" : "Pending",
+          "name":"Henry",
+          "email": "Henry@gmail.com",
+          "action":"",
+          "description":"The classroom environment during the Physics lectures is very noisy and distracting. Students often talk amongst themselves, and it's affecting my ability to concentrate and grasp the concepts being taught"
+        },
+        {
+          "id": 5,
+          "date": "20/07/2023",
+          "profileName": "/InstituteStaffAssets/avtr2.jpg",
+          "status" : "Resolved",
+          "name":"Amaya",
+          "email": "AmayasH@gmail.com",
+          "action":"Created a revised and fixed schedule for the Science class, ensuring prior notice and consistency to accommodate students' other commitments",
+          "description":"The timetable for the Science class keeps changing without prior notice. It's causing confusion and making it difficult for me to manage my other commitments. Please provide a fixed schedule that we can rely on"
+        },
+      
+        {
+          "id": 6,
+          "date": "14/07/2023",
+          "profileName": "/InstituteStaffAssets/avtr8.jpg",
+          "status" : "Resolved",
+          "name":"Jorden",
+          "email": "Jorden123@gmail.com",
+          "action":"Addressed the issue with students and reminded them to maintain discipline during Physics lectures",
+          "description":"The classroom environment during the Physics lectures is very noisy and distracting. Students often talk amongst themselves, and it's affecting my ability to concentrate and grasp the concepts being taught"
+        },
+        {
+          "id": 7,
+          "date": "16/07/2023",
+          "profileName": "/InstituteStaffAssets/avtr9.jpg",
+          "status" : "Ignored",
+          "name":"Aaysha",
+          "email": "AAyshammf3@gmail.com",
+          "description":"I don't like the color of the classroom walls."
+        },
+        {
+          "id": 8,
+          "date": "18/07/2023",
+          "profileName": "/InstituteStaffAssets/avtr5.jpg",
+          "status" : "Pending",
+          "name":"Kamal",
+          "email": "Kamal45@gmail.com",
+          "action":"",
+          "description":"The classroom environment during the Physics lectures is very noisy and distracting. Students often talk amongst themselves, and it's affecting my ability to concentrate and grasp the concepts being taught"
+        },
+        {
+          "id": 9,
+          "date": "20/07/2023",
+          "profileName": "/InstituteStaffAssets/avtr9.jpg",
+          "status" : "Resolved",
+          "name":"Saara",
+          "email": "SAraasH@gmail.com",
+          "action":"Created a revised and fixed schedule for the Science class, ensuring prior notice and consistency to accommodate students' other commitments",
+          "description":"The timetable for the Science class keeps changing without prior notice. It's causing confusion and making it difficult for me to manage my other commitments. Please provide a fixed schedule that we can rely on"
+        }
+    ]
+  }
