@@ -6,6 +6,11 @@ import Unauthorized from "./pages/auth/Unauthorized";
 import UserVerify from "./pages/auth/UserVerify";
 import Landing from "./pages/LandingPage/Landing";
 import ForgottenPassword from "./pages/auth/ForgottenPassword";
+import InstStaffDashboard from './pages/InstituteStaff/Dashboard';
+import ViewTeacher from "./pages/InstituteStaff/ViewTeacher";
+import AddTeacher from "./pages/InstituteStaff/AddTeacher";
+import InstStaffProfile from './pages/InstituteStaff/Profile';
+import InstStaffComplaintsList from './pages/InstituteStaff/Complaints/ComplaintsListView';
 
 // import auth features
 import PersistLogin from "./features/auth/PersistLogin";
@@ -58,10 +63,18 @@ function App() {
           </Route>
         </Route>
 
+        <Route path='staff' element={<SidebarAndHeader userRole={"InstituteStaff"} />}>
+          <Route path="dashboard" element={<InstStaffDashboard />} />
+          <Route path="teacher" element={<ViewTeacher/>} />
+          <Route path="teacher/add" element={< AddTeacher />} />
+          <Route path="profile" element={<InstStaffProfile />} />
+          <Route path="complaints" element={<InstStaffComplaintsList />} />
+        </Route>
+
         {/* <Route element={<RequireAuth allowedRoles={[ROLES.Tutor]} />}> */}
-        <Route path="tutor" element={<SidebarAndHeader userRole={"teacher"} />}>
-          <Route path="dashboard" element={<TutorDashboard />} />
-          <Route path="courses" element={<Courses />} />
+        {/* <Route path="tutor" element={<SidebarAndHeader userRole={"teacher"} />}> */}
+          {/* <Route path="dashboard" element={<TutorDashboard />} /> */}
+          {/* <Route path="courses" element={<Courses />} />
           <Route path="content" element={<Content />} />
 
           <Route path="staff">
@@ -75,7 +88,7 @@ function App() {
               <Route path="add" element={<CreateMcq />} />
             </Route>
           </Route>
-        </Route>
+        </Route> */}
 
         {/* </Route> */}
 
