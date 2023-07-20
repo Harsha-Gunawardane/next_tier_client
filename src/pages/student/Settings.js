@@ -279,7 +279,6 @@ function Settings() {
             </Button>
           </Flex>
         </Box>
-<<<<<<< Updated upstream
         {focusedTab === "Personal Info" ? (
           <PersonalInfo />
         ) : focusedTab === "Guardian Info" ? (
@@ -287,14 +286,6 @@ function Settings() {
         ) : (
           <SecurityInfo />
         )}
-=======
-        {
-          focusedTab === "Personal Info"
-            ? <PersonalInfo />
-            : null
-        }
-
->>>>>>> Stashed changes
       </Box>
 
       <ModalLayout
