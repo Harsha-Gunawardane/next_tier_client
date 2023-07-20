@@ -14,29 +14,32 @@ const determineDefaultTab = (pathname) => {
 const SidebarProvider = ({ children }) => {
 	const [activeTab, setActiveTab] = useState("");
 	const [sidebarMinimized, setSidebarMinimized] = useState(false);
-	//get width of sidebar component and set to state
+	const [hidden, setHidden] = useState(false);
 
-	// console.log(width);
+	// const location = useLocation();
 
-	const location = useLocation();
+	// useEffect(() => {
+	// 	const defaultTab = determineDefaultTab(location.pathname);
+	// 	const defaultTab = "dashboard";
 
-	useEffect(() => {
-		const defaultTab = determineDefaultTab(location.pathname);
-
-		setActiveTab(defaultTab);
-	}, [location]);
+	// 	setActiveTab(defaultTab);
+	// }, [location]);
 
 	const handleTabClick = (tab) => {
 		setActiveTab(tab);
+		console.log(activeTab);
+	};
+
+	const setSidebarOption = (activeOption) => {
+		setActiveTab(activeOption);
+		console.log(activeTab);
 	};
 
 	const handleSidebarToggle = () => {
 		setSidebarMinimized(!sidebarMinimized);
 	};
 
-	console.log(document.getElementById("Sidebar"));
-
-	return <SidebarContext.Provider value={{ activeTab, handleTabClick, handleSidebarToggle, sidebarMinimized }}>{children}</SidebarContext.Provider>;
+	return <SidebarContext.Provider value={{ activeTab, handleTabClick, handleSidebarToggle, sidebarMinimized, setSidebarOption, hidden, setHidden }}>{children}</SidebarContext.Provider>;
 };
 
 export { SidebarContext, SidebarProvider };

@@ -16,16 +16,18 @@ if (process.env.NODE_ENV !== "production") {
 
 ReactDOM.render(
   <React.StrictMode>
-      <ChakraProvider theme={theme}>
+    <ChakraProvider theme={theme}>
       <ColorModeScript initialColorMode={theme.config.initialColorMode} />
       <BrowserRouter>
         <AuthProvider>
-          <Routes>
-            <Route path="/*" element={<App />} />
-          </Routes>
+          <SidebarProvider>
+            <Routes>
+              <Route path="/*" element={<App />} />
+            </Routes>
+          </SidebarProvider>
         </AuthProvider>
       </BrowserRouter>
-      </ChakraProvider>
-  </React.StrictMode>,
+    </ChakraProvider>
+  </React.StrictMode >,
   document.getElementById("root")
 );
