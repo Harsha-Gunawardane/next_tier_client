@@ -19,6 +19,7 @@ import { useStudentInfo } from "../../../store/student/useStudentInfo";
 
 const NAMING_REGEX = /^[a-zA-Z]{3,20}$/;
 const PHONENO_REGEX = /^\+94\d{9}$/;
+const NIC_REGEX = /^(?:\d{9}[Vv]|\d{11}(?![Vv]))$/
 
 const STUDENT_INFO_URL = "/stu/info";
 
@@ -36,6 +37,7 @@ const PersonalInfo = () => {
     stream,
     medium,
     dob,
+    NIC,
     setFName,
     setLName,
     setPhoneNo,
@@ -44,6 +46,7 @@ const PersonalInfo = () => {
     setStream,
     setMedium,
     setDob,
+    setNIC
   } = useStudentInfo();
 
   const inputStyle = {
@@ -82,11 +85,12 @@ const PersonalInfo = () => {
   const [localMedium, setLocalMedium] = useState(medium);
   const [localDob, setLocalDob] = useState(dob);
   const [localAddress, setLocalAddress] = useState(address);
+  const [localNIC, setLocalNIC] = useState(NIC);
 
   const [validFName, setValidFName] = useState(true);
   const [validLName, setValidLName] = useState(true);
   const [validPhoneNo, setValidPhoneNo] = useState(true);
-  const [validDob, setValidDob] = useState(true);
+  const [validNIC, setValidNIC] = useState(true);
 
   useEffect(() => {
     setValidFName(NAMING_REGEX.test(localFName));
@@ -100,6 +104,10 @@ const PersonalInfo = () => {
     setValidPhoneNo(PHONENO_REGEX.test(localPhoneNo));
   }, [localPhoneNo]);
 
+  useEffect(() => {
+    setValidNIC(NIC_REGEX.test(localNIC));
+  }, [localNIC]);
+
   const onCancel = () => {
     setIsEditable(false);
 
@@ -111,13 +119,13 @@ const PersonalInfo = () => {
     setLocalAddress(address);
     setLocalCollege(college);
     setLocalMedium(medium);
+    setLocalNIC(NIC);
   };
 
   const onSave = async (e) => {
     e.preventDefault();
 
-    if (validFName && validFName && validPhoneNo) {
-      console.log(fName, lName, phoneNo, stream, medium, college, dob);
+    if (validFName && validLName && validPhoneNo) {
 
       try {
         const response = await axiosPrivate.put(STUDENT_INFO_URL, {
@@ -129,6 +137,7 @@ const PersonalInfo = () => {
           stream: localStream,
           college: localCollege,
           medium: localMedium,
+          nic: localNIC
         });
 
         console.log("Request successful:", response.data);
@@ -142,6 +151,15 @@ const PersonalInfo = () => {
         setMedium(updatedStudentInfo.medium);
         setStream(updatedStudentInfo.stream);
         setDob(updatedStudentInfo.dob);
+        setNIC(updatedStudentInfo.nic)
+
+        toast({
+          title: "Personal info updated successfully",
+          status: "success",
+          isClosable: true,
+          position: "top-right",
+        });
+
       } catch (error) {
         let errorMessage = "An error occurred";
 
@@ -342,6 +360,27 @@ const PersonalInfo = () => {
                 onChange={(e) => setLocalDob(e.target.value)}
                 disabled={!isEditable}
                 style={inputStyle}
+              />
+            </Flex>
+            <Flex align="center">
+              <FormLabel style={labelStyle}>NIC</FormLabel>
+              <Input
+                value={localNIC}
+                onChange={(e) => setLocalNIC(e.target.value)}
+                disabled={!isEditable}
+                style={inputStyle}
+              />
+              <CheckIcon
+                color="#15BD66"
+                ml={2}
+                bottom={1}
+                display={isEditable && validNIC ? "block" : "none"}
+              />
+              <CloseIcon
+                color="#D93400"
+                ml={2}
+                bottom={1}
+                display={isEditable && !validNIC ? "block" : "none"}
               />
             </Flex>
             <Flex align="center">

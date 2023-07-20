@@ -19,6 +19,10 @@ import RequireAuth from "./features/auth/RequireAuth";
 // student components
 import Settings from "./pages/student/Settings";
 import Dashboard from "./pages/student/Dashboard";
+import Quizzes from "./pages/student/Quizzes";
+
+// tutor components
+// import TutorDashboard from "./pages/student/TutorDashboard";
 
 // import layouts
 import Layout from "./layouts/Layout";
@@ -28,9 +32,6 @@ import SidebarAndHeader from "./layouts/SidebarAndHeader";
 import Courses from "./components/Courses";
 import Content from "./components/Content";
 
-// testing components
-// import UserLayout from "./features/users/UserLayout";
-// import UserProfile from "./features/users/components/UserProfile";
 
 import { Routes, Route } from "react-router-dom";
 import { ROLES } from "./config/roles";
@@ -58,6 +59,7 @@ function App() {
               <Route path="dashboard" element={<Dashboard />} />
               <Route path="courses" element={<Courses />} />
               <Route path="content" element={<Content />} />
+              <Route path="quizzes" element={<Quizzes />} />
               <Route path="settings" element={<Settings />} />
             </Route>
           </Route>
@@ -72,9 +74,9 @@ function App() {
         </Route>
 
         {/* <Route element={<RequireAuth allowedRoles={[ROLES.Tutor]} />}> */}
-        {/* <Route path="tutor" element={<SidebarAndHeader userRole={"teacher"} />}> */}
-          {/* <Route path="dashboard" element={<TutorDashboard />} /> */}
-          {/* <Route path="courses" element={<Courses />} />
+        {/* <Route path="tutor" element={<SidebarAndHeader userRole={"teacher"} />}>
+          <Route path="dashboard" element={<TutorDashboard />} />
+          <Route path="courses" element={<Courses />} />
           <Route path="content" element={<Content />} />
 
           <Route path="staff">
