@@ -70,7 +70,6 @@ export default function Carousel() {
 
   return (
     <Flex
-      as="carousel"
       height={'100%'}
       width={'100%'}
       overflow={'hidden'}
@@ -106,7 +105,7 @@ export default function Carousel() {
               height={'100%'}
             >
               {/* This is the block you need to change, to customize the caption */}
-              <Flex as="slide" h="100%" w="100%" flexDirection={"column"} justifyContent={"center"} alignItems={"center"} gap="10px">
+              <Flex h="100%" w="100%" flexDirection={"column"} justifyContent={"center"} alignItems={"center"} gap="10px">
                 <AspectRatio minW="100%" ratio={16 / 9} overflow={"hidden"} borderRadius={"10px"}>
                   <Image src={card.image} alt="image" objectFit={"cover"} />
                 </AspectRatio>

@@ -1,7 +1,7 @@
 import { Outlet } from "react-router-dom";
-import Header from "../components/Header";
+import Header from "../components/Header/Header";
 import Layout from "./Layout";
-import Sidebar from "../components/Sidebar";
+import Sidebar from "../components/Sidebar/Sidebar";
 import { SidebarProvider, SidebarContext } from "../context/SidebarContext";
 import { useContext, useEffect, useState } from "react";
 
@@ -12,10 +12,13 @@ import GridViewRoundedIcon from "@mui/icons-material/GridViewRounded";
 import { TiDocumentText } from "react-icons/ti";
 import { FaCompass } from "react-icons/fa";
 import { TbChevronsUpLeft } from "react-icons/tb";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import ReportProblemIcon from "@mui/icons-material/ReportProblem";
 
 const SidebarAndHeader = ({ userRole }) => {
 	//get width of sidebar component and set to state
 	const [sidebarWidth, setSidebarWidth] = useState("");
+	const [hidden, setHidden] = useState(false);
 
 	useEffect(() => {
 		const width = window.getComputedStyle(document.getElementById("Sidebar")).width;
@@ -36,7 +39,12 @@ const SidebarAndHeader = ({ userRole }) => {
 		{ icon: TiDocumentText, name: "Courses", value: "courses", href: "/courses" },
 	];
 
-	const StaffOptions = [{ icon: GridViewRoundedIcon, name: "Dashboard", value: "dashboard", href: "/dashboard" }];
+	const InstStaffOptions = [
+		{ icon: GridViewRoundedIcon, name: 'Dashboard', value: 'dashboard', href: '/staff/dashboard' },
+		{ icon: FaCompass, name: "View Teacher", value: "viewTeacher", href: "/staff/teacher" },
+		{ icon: AccountCircleIcon, name: 'Profile', value: 'profile', href: '/staff/Profile' },
+		{ icon: ReportProblemIcon, name: 'Complaints', value: 'complaints', href: '/staff/complaints' },
+	]
 
 	switch (userRole) {
 		case "student":
@@ -71,10 +79,10 @@ const SidebarAndHeader = ({ userRole }) => {
 			h="100vh"
 			w="100vw"
 		>
-			<Sidebar Options={Options} minimized={false} setSidebarWidth={setSidebarWidth} display={{ base: "none", lg: "flex" }} />
+			<Sidebar Options={Options} minimized={false} setSidebarWidth={setSidebarWidth} hidden={hidden} setHidden={setHidden} />
 			<Box ml={{ base: "0", lg: sidebarWidth }} w={{ base: "100vw", lg: "calc(100vw - " + sidebarWidth + ")" }} h={"100vh"}>
-				<Header w={{ base: "100%", lg: "calc(100% - " + sidebarWidth + ")" }} />
-				<Flex as="Middle" pt={"64px"}>
+				<Header w={{ base: "100%", lg: "calc(100% - " + sidebarWidth + ")" }} hidden={hidden} setHidden={setHidden} />
+				<Flex pt={"64px"}>
 					<Outlet />
 				</Flex>
 			</Box>

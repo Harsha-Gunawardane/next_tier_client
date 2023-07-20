@@ -1,13 +1,13 @@
-import { SidebarContext } from "../context/SidebarContext";
 import { useContext, useEffect } from "react";
+import useSidebar from "../hooks/useSidebar";
 
 export default function Courses() {
 
-    const { activeTab, handleTabClick, handleSidebarToggle, setSidebarOption } = useContext(SidebarContext);
+    const { setSidebarOptionHandler } = useSidebar();
 
-    useEffect(() => {
-        setSidebarOption("courses")
-    });
+    // useEffect(() => {
+    setSidebarOptionHandler("courses")
+    // });
 
     return (
         <div>

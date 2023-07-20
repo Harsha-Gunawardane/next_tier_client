@@ -10,9 +10,15 @@ import { BiMenuAltLeft } from "react-icons/bi";
 import { icon } from "@fortawesome/fontawesome-svg-core";
 // import ToggleColorMode from "../ToggleColorMode";
 
-const Header = ({ full = false, ...rest }) => {
+// import { SidebarContext } from "../../context/SidebarContext";
+import { useContext } from "react";
+
+const Header = ({ full = false, hidden, setHidden, ...rest }) => {
+
+
+
 	return (
-		<Flex as={"header"} h="64px" bg="white" justifyContent={"space-between"} alignItems={"center"} borderBottom="1px" borderColor="gray.100" pos={"fixed"} zIndex={"999"} {...rest}>
+		<Flex h="64px" bg="white" justifyContent={"space-between"} alignItems={"center"} borderBottom="1px" borderColor="gray.100" pos={"fixed"} zIndex={"999"} {...rest}>
 			<Flex h="100%" justifyContent={"space-between"}>
 				<Flex
 					p={"4px"}
@@ -33,9 +39,9 @@ const Header = ({ full = false, ...rest }) => {
 						minWidth="max-content"
 						p="10px"
 						display={{ base: "flex", lg: "none" }}
-					// onClick={() => {
-					// 	setMinimizedStatus(!minimizedStatus);
-					// }}
+						onClick={() => {
+							setHidden(!hidden);
+						}}
 					>
 						<BiMenuAltLeft size={"24px"} />
 					</IconButton>
@@ -91,7 +97,7 @@ const BellIcon = () => {
 					// icon: <PiBellFill size="24px" />
 				}}
 			/>
-			<Flex as="indicator" position="absolute" top="2" right="2" h="10px" w="10px" bg="red" borderRadius="50%" />
+			<Flex position="absolute" top="2" right="2" h="10px" w="10px" bg="red" borderRadius="50%" />
 
 		</Flex>
 	);

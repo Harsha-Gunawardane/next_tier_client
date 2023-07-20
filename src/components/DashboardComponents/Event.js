@@ -15,7 +15,7 @@ export default function Event(props) {
 	const bg = useColorModeValue(color + ".100", "navy.700");
 	const bgLine = useColorModeValue(color + ".400", "gray.700");
 	return (
-		<Card bgColor={bg} {...rest} bgOpacity="50%" w="100%" p="5px">
+		<Card bgColor={bg} w="100%" p="5px" {...rest} >
 			<Flex gap="8px">
 				<Flex mb={{ base: "0px", "2xl": "20px" }} borderRadius={"10px"} w="5px" bg={bgLine} h={"100%"} ></Flex>
 				<Flex align="center" direction={{ base: "column", md: "row" }} width={"full"}>
@@ -25,7 +25,6 @@ export default function Event(props) {
 								{startTime + " - " + endTime}
 							</Text>
 							<Text fontWeight="500" color={textColorSecondary} fontSize="12px" >
-								{/* make the date in the format 12/3/2023 into MAR 12 format */}
 								{dateText(date)}
 							</Text>
 						</Flex>

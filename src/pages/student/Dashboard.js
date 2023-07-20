@@ -1,29 +1,32 @@
-import { Box, Container, Grid, GridItem, Heading, Text } from "@chakra-ui/react";
-import { Avatar, Flex, FormLabel, Icon, Select, SimpleGrid, useColorModeValue } from "@chakra-ui/react";
+import { Box, GridItem, Text, Flex, SimpleGrid, useColorModeValue } from "@chakra-ui/react";
+import { useEffect, useState } from "react";
+// import { SidebarContext } from "../../context/SidebarContext";
+import useSidebar from "../../hooks/useSidebar";
 
+//components
 import MiniStat from "../../components/Card/MiniStat";
-
-import { MdAddTask, MdAttachMoney, MdBarChart, MdFileCopy } from "react-icons/md";
-
-import IconBox from "../../components/icons/IconBox";
-import { SidebarContext } from "../../context/SidebarContext";
-import { useContext } from "react";
+import GradeAnalysis from "../../components/DashboardComponents/GradeAnalysis";
+import UpcommingClasses from "../../components/DashboardComponents/UpcommingClasses";
+import ContinueWatching from "../../components/DashboardComponents/ContinueWatching";
+import RecommendedVideos from "../../components/DashboardComponents/RecommendedVidoes";
+import MiniStatCardIcon from "../../components/icons/MiniStatCardIcon";
 
 //icons
 import { BiBook } from "react-icons/bi";
 import { TbPackages } from "react-icons/tb";
 import { MdOutlineVideoLibrary } from "react-icons/md";
 import { AiOutlineFileDone } from "react-icons/ai";
-import GradeAnalysis from "../../components/DashboardComponents/GradeAnalysis";
-import UpcommingClasses from "../../components/DashboardComponents/UpcommingClasses";
-import ContinueWatching from "../../components/DashboardComponents/ContinueWatching";
-import RecommendedVideos from "../../components/DashboardComponents/RecommendedVidoes";
-import MiniStatCardIcon from "../../components/icons/MiniStatCardIcon";
-import { useEffect, useState } from "react";
 
 const Dashboard = () => {
 	const brandColor = useColorModeValue("accent", "white");
 	const sectionTitleFontSize = "16px"
+
+	const { setSidebarOptionHandler } = useSidebar();
+
+	useEffect(() => {
+		setSidebarOptionHandler("dashboard");
+	}, [setSidebarOptionHandler]);
+
 
 	const [continueWatchingHeight, setContinueWatchingHeight] = useState("0");
 
@@ -31,13 +34,6 @@ const Dashboard = () => {
 		const height = window.getComputedStyle(document.getElementById("continueWatching")).height
 		setContinueWatchingHeight(height)
 	})
-
-	const { activeTab, handleTabClick, handleSidebarToggle, setSidebarOption } = useContext(SidebarContext);
-
-	useEffect(() => {
-		setSidebarOption("dashboard")
-	});
-
 
 	return (
 		<Box m="0" p="0" w={"100%"} h={"max-content"} bg={"gray.50"}>
