@@ -16,7 +16,9 @@ import {
 } from "@chakra-ui/react";
 
 
-import CourseContent from "../../components/student/courseContent";
+import CourseContent from "../../components/student/CourseContentPage/courseContent";
+import Payment from "../../components/student/CourseContentPage/payment";
+import Announcement from "../../components/student/CourseContentPage/announcement";
 
 const Coursecontent = () => {
 
@@ -45,6 +47,7 @@ const Coursecontent = () => {
 
  <SimpleGrid spacing={2} minChildWidth="250px">
   <Box bg='white' height='150px'>
+    <Heading fontSize='20px' mb='20px'>Current Lesson</Heading>
   <Image
       src="https://www.ufs.ac.za/images/librariesprovider22/default-album/shutterstock_1140894395.jpg?sfvrsn=554a8521_0"
       alt='Green double couch with wooden legs'
@@ -54,11 +57,16 @@ const Coursecontent = () => {
     />
   </Box>
   <Box bg='white' height='100px' p={5}>
-    <Heading fontSize='20px' ml='-100px'>My first UI design case Study</Heading>
+    <Heading fontSize='20px' ml='-100px' mt='50px' mb='10px'>My first UI design case Study</Heading>
+    <HStack>
+    <Text fontSize='12px' color='grey' ml='-98px'>2023 JUNE</Text>
+    <Text  fontSize='12px' color='grey'>WEEK 3</Text>
+    </HStack>
+  
   </Box>
  </SimpleGrid>
 
-  <Heading fontSize='20px' mt='40px'>Course Content</Heading>
+  <Heading fontSize='20px' mt='80px'>Course Content</Heading>
 
  {coursecontentdata?.map((item) => (
       <CourseContent item={item} key={item.id} />
@@ -89,45 +97,18 @@ const Coursecontent = () => {
 </HStack>
           <br></br>
 
-      <Box bg='white' height='250px' p={5}>
-        <Heading fontSize='20px' mt='-20px' mb='10px'>Announcement</Heading>
-      <Box bg='white' height='70px' mt='5px' boxShadow='0 3px 10px rgb(0 0 0 / 0.2)'></Box>
-      <br></br>
-      <Box bg='white' height='70px' boxShadow='0 3px 10px rgb(0 0 0 / 0.2)'></Box>
-      </Box>
+<Announcement></Announcement>
 
-<Button width='60%' height='35px' mb='20px' ml='120px' mt='-10px' fontSize='12px' colorScheme='blue'>See all Announcement</Button>
 
-<Box bg='white' height='120px'  boxShadow='0 3px 10px rgb(0 0 0 / 0.2)'>
-<Heading fontSize='20px'>Payment</Heading>
-<HStack spacing='10px' mt='20px'>
-  <Box w='50%' h='40px' bg='white'>
-    <Text fontSize='15px' ml='40px'>Rs.3500</Text>
 
-  </Box>
-  <Box w='50%' h='40px' bg='white' >
-  <Text fontSize='15px'>2023 June</Text>
-  </Box>
- 
-</HStack>
-<Button width='50%' height='25px' mb='10px' ml='100px' mt='-15px' fontSize='12px'  colorScheme='blue'>Pay Online</Button>
-</Box>
+
+<Payment></Payment>
 <br></br>
 
-<Heading fontSize='20px' mb='10px'>Class Forum</Heading>
-<Box bg='white' height='250px' boxShadow='0 3px 10px rgb(0 0 0 / 0.2)'>
+
+{/*class forum*/}
 
 
-<HStack spacing='10px'>
- <Box w='50%' h='80px' bg='white'>
-
- </Box>
- <Box w='50%' h='80px' bg='white' >
-
- </Box>
-
-</HStack>
-</Box>
  
 
 

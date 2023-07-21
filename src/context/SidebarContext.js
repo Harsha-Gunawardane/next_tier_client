@@ -1,35 +1,45 @@
-import React, { createContext, useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import React, { createContext, useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 
 const SidebarContext = createContext();
 
 const determineDefaultTab = (pathname) => {
-    // Determine the default active tab based on the current route or other criteria
-    const defaultTab = pathname.split('/')[1];
-    console.log(defaultTab);
+	// Determine the default active tab based on the current route or other criteria
+	const defaultTab = pathname.split("/")[2];
+	console.log(defaultTab);
 
-    return defaultTab;
+	return defaultTab;
 };
 
 const SidebarProvider = ({ children }) => {
-  const [activeTab, setActiveTab] = useState('');
-  const location = useLocation();
+	const [activeTab, setActiveTab] = useState("");
+	const [sidebarMinimized, setSidebarMinimized] = useState(false);
+	const [hidden, setHidden] = useState(false);
 
-  useEffect(() => {
-    const defaultTab = determineDefaultTab(location.pathname);
+	// const location = useLocation();
 
-    setActiveTab(defaultTab);
-  }, [location]);
+	// useEffect(() => {
+	// 	const defaultTab = determineDefaultTab(location.pathname);
+	// 	const defaultTab = "dashboard";
 
-  const handleTabClick = (tab) => {
-    setActiveTab(tab);
-  };
+	// 	setActiveTab(defaultTab);
+	// }, [location]);
 
-  return (
-    <SidebarContext.Provider value={{ activeTab, handleTabClick }}>
-      {children}
-    </SidebarContext.Provider>
-  );
+	const handleTabClick = (tab) => {
+		setActiveTab(tab);
+		console.log(activeTab);
+	};
+
+	const setSidebarOption = (activeOption) => {
+		setActiveTab(activeOption);
+		console.log(activeTab);
+	};
+
+	const handleSidebarToggle = () => {
+		setSidebarMinimized(!sidebarMinimized);
+	};
+
+	return <SidebarContext.Provider value={{ activeTab, handleTabClick, handleSidebarToggle, sidebarMinimized, setSidebarOption, hidden, setHidden }}>{children}</SidebarContext.Provider>;
 };
 
 export { SidebarContext, SidebarProvider };

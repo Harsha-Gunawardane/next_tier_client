@@ -7,7 +7,7 @@ import { ChakraProvider,SimpleGrid,Box,Heading ,HStack,Center,Flex,Text,Image,Av
 import Contentmain from "../../components/student/Contentmain";
 import Content from "../../components/student/content";
 import { useEffect,useState } from "react";
-import CourseContent from "../../components/student/courseContent";
+
 
 
 

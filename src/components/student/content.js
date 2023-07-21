@@ -9,13 +9,6 @@ import { Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react'
 const Course = (props) => {
   const { name,imgUrl } = props.item;
   return (
-    
-    
-    
-
-    
-
-
 
 <ChakraProvider>
 
@@ -33,14 +26,14 @@ const Course = (props) => {
 
     <HStack spacing='2px' mt='-20px'>
     <Image
-      
+      src={imgUrl}
       alt='Green double couch with wooden legs'
      height='40px'
       width='40px'
       borderRadius='50%'
     />
     
-     <Heading color='black' fontSize='l' ml='10px'>{name}
+     <Heading color='black' fontSize='15px' ml='10px'>{name}
      </Heading>
     
    
@@ -48,8 +41,8 @@ const Course = (props) => {
  
 </HStack>
 
-<Text ml='50px' mt='-10px' fontSize='12px' color='grey'>Nilantha Jayasooriya</Text>
-<HStack spacing='20px' mt='-18px'>
+<Text ml='50px' mt='-25px' fontSize='12px' color='grey'>Nilantha Jayasooriya</Text>
+<HStack spacing='20px' mt='-15px'>
 <Text ml='50px' fontSize='10px' color='grey'>4.8k views</Text>
 <Text fontSize='10px' color='grey'>1 year ago</Text>
     

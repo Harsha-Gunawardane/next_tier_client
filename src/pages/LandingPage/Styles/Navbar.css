@@ -1,83 +1,85 @@
-@import url('https://fonts.googleapis.com/css2?family=Nunito&display=swap');
+
 * {
-    margin: 0;
-    padding: 0;
-  }
-  html {
-    font-family: 'Nunito', sans-serif;
-    font-size: 15px;
-  
+  margin: 0;
+  padding: 0;
+}
+html {
+  font-family: "Roboto", sans-serif;
+  font-size: 15px;
+
+}
+.LandingPage{
+font-family: "Roboto", sans-serif;
 }
 .navbar {
-    background-color: #E2F5FF;
-    height: 80px;
-  }
-  
-  .navbar-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px;
-  }
-  
-  .logo-container {
-    margin-right: 20px;
-  }
-  
-  .logoNav img {
-    width: 140px;
-    height: 33px;
-    margin-top: 30px;
-    margin-left: 30px;
-  }
-  
-  .navbar-items {
-    list-style-type: none;
-    display: flex;
-    margin-top: 30px;
-  }
-  
-  .navbar-items li {
-    margin-left: 10px;
-    margin-right: 50px;
-    cursor: pointer;
-    transition: transform 0.6s ease;
-  }
-  
-  .navLink {
-    text-decoration: none;
-    color: #000000;
-    padding: 10px;
-  }
-  
-  .navButton {
-    background-color: #0074D9;
-    color: white;
-    padding: 10px 16px;
-    border-radius: 100px;
-    text-decoration: none;
-    margin-left: 10px;
-  }
-  
-  .navButton:hover {
-    background-color: #F48C06;
-    color: #E2F5FF;
-  }
-  
-  .navbar-items li:first-child {
-    margin-left: 0;
-  }
-  .navbar-items li:nth-child(5) {
-    margin-right: 5px;
-  }
-  
+  background-color: #E2F5FF;
+  height: 80px;
+}
 
-  .navLink:hover{
+.navbar-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+}
+
+.logo-container {
+  margin-right: 20px;
+}
+
+.logoNav img {
+  width: 140px;
+  height: 33px;
+  margin-top: 30px;
+  margin-left: 30px;
+}
+
+.navbar-items {
+  list-style-type: none;
+  display: flex;
+  margin-top: 30px;
+}
+
+.navbar-items li {
+  margin-left: 10px;
+  margin-right: 50px;
+  cursor: pointer;
+  transition: transform 0.6s ease;
+}
+
+.navLink {
+  text-decoration: none;
+  color: #000000;
+  padding: 10px;
+}
+
+.navButton {
+  background-color: #0074D9;
+  color: white;
+  padding: 10px 16px;
+  border-radius: 100px;
+  text-decoration: none;
+  margin-left: 10px;
+}
+
+.navButton:hover {
+  background-color: #F48C06;
+  color: #E2F5FF;
+}
+
+.navbar-items li:first-child {
+  margin-left: 0;
+}
+.navbar-items li:nth-child(5) {
+  margin-right: 5px;
+}
+
+
+.navLink:hover{
 color: #F48C06;
-  }
+}
 
-  .navbar-items :hover{
-    transform: translateY(-5px) scale(1.05);
-  }
-  
-  
+.navbar-items :hover{
+  transform: translateY(-5px) scale(1.05);
+}
+

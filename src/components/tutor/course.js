@@ -1,48 +1,49 @@
 import React from "react";
-import { Card, CardHeader, CardBody, CardFooter,Button,Text,ButtonGroup,Image,Stack,StackDivider,Heading,Divider,SimpleGrid } from '@chakra-ui/react'
-import { CalendarIcon, TimeIcon,AddIcon, WarningIcon } from '@chakra-ui/icons'
-import { ChakraProvider } from '@chakra-ui/react'
+import Coursecomp from "../../components/tutor/course";
+import Coursepackage from "../../components/tutor/coursepackage.js";
+import { Tabs, TabList, TabPanels, Tab, TabPanel , SimpleGrid,Box,Button} from '@chakra-ui/react'
+import { Link } from 'react-router-dom';
 
 
 
-const Course = (props) => {
-  const { category, type, rentPrice, imgUrl, carName, groupSize,Box,Avatar } = props.item;
+const Courses = () => {
+
+ 
+
   return (
-     
-
-     <div>
 
 
-<ChakraProvider>
-<Card maxW='lg'>
-  <CardBody>
-    <Image
-      src={imgUrl}
+
+<Box width='100%'>
+        <Tabs isFitted variant='enclosed' >
+  <TabList mb='1em'>
+    <Tab fontSize='15px'>Course</Tab>
+    <Tab fontSize='15px'>Course Package</Tab>
+  </TabList>
+  <TabPanels>
+    <TabPanel>
+
+    <Link to="/tutor/courses/add">
+    <Button ml='1100px' mb='30px' width='100px' colorScheme="blue">Add New</Button>  </Link>
+    <SimpleGrid minChildWidth='300px' spacing='40px'>
+   
     
-      borderRadius='lg'
-    />
-    <Stack mt='6' spacing='3'>
-      <Heading color='blue.600' fontSize='xl'>{carName}</Heading>
-      <Text color='black' fontSize='15px' >
-      <CalendarIcon></CalendarIcon>  Monday
-      </Text>
-   
-      <Text color='black'  fontSize='15px' >
-      <TimeIcon></TimeIcon>  8-00 a.m - 5.00 p.m.
-      </Text>
-   
-    </Stack>
-  </CardBody>
-  <Divider />
-      
-  <Button variant='solid' colorScheme='blue' width='100%' height='40px'>
-        View
-      </Button>
+        <Coursecomp></Coursecomp>
+     
+     </SimpleGrid>
 
-</Card>
-</ChakraProvider>
-    </div>
+    </TabPanel>
+    <TabPanel>
+    <SimpleGrid minChildWidth='400px' spacing='40px'>
+      <Coursepackage></Coursepackage>
+        </SimpleGrid>
+    </TabPanel>
+  </TabPanels>
+</Tabs>
+
+  </Box>
+   
   );
 };
 
-export default Course;
+export default Courses;

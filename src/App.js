@@ -1,92 +1,103 @@
-import Register from "./features/auth/Register";
-import Login from "./features/auth/Login";
-import Home from "./components/Home";
-import Layout from "./components/Layout";
-import Editor from "./components/Editor";
-import Admin from "./components/Admin";
-import Missing from "./components/Missing";
-import Unauthorized from "./components/Unauthorized";
-import Lounge from "./components/Lounge";
-import LinkPage from "./components/LinkPage";
-import RequireAuth from "./features/auth/RequireAuth";
+// auth components
+import Register from "./pages/auth/Register";
+import Login from "./pages/auth/Login";
+import Missing from "./pages/auth/Missing";
+import Unauthorized from "./pages/auth/Unauthorized";
+import UserVerify from "./pages/auth/UserVerify";
+import Landing from "./pages/LandingPage/Landing";
+import ForgottenPassword from "./pages/auth/ForgottenPassword";
+import InstStaffDashboard from './pages/InstituteStaff/Dashboard';
+import ViewTeacher from "./pages/InstituteStaff/ViewTeacher";
+import AddTeacher from "./pages/InstituteStaff/AddTeacher";
+import InstStaffProfile from './pages/InstituteStaff/Profile';
+import InstStaffComplaintsList from './pages/InstituteStaff/Complaints/ComplaintsListView';
+import ApproveClass from "./pages/InstituteStaff/ApproveClass";
+import HallList from "./pages/InstituteStaff/HallList";
+
+// import auth features
 import PersistLogin from "./features/auth/PersistLogin";
-import UserLayout from "./features/users/UserLayout";
-import UserProfile from "./features/users/components/UserProfile";
+import RequireAuth from "./features/auth/RequireAuth";
+
+// student components
+import Settings from "./pages/student/Settings";
+import Dashboard from "./pages/student/Dashboard";
+import Quizzes from "./pages/student/Quizzes";
+
+// tutor components
+// import TutorDashboard from "./pages/student/TutorDashboard";
+
+// import layouts
+import Layout from "./layouts/Layout";
+import SidebarAndHeader from "./layouts/SidebarAndHeader";
+
+// incorrect structure
+import Courses from "./components/Courses";
+import Content from "./components/Content";
+
+
 import { Routes, Route } from "react-router-dom";
-import Landing from './pages/LandingPage/Landing.js';
+import { ROLES } from "./config/roles";
 
-//imort chakra ui
-// import { ChakraProvider } from "@chakra-ui/react";
-
-//my added components
-import Dashboard from './components/Dashboard';
-import Course from './pages/student/course';
-import StuCourses from './pages/student/courses';
-import Courses from './components/Courses';
-import Content from './components/Content';
-import SidebarAndHeader from './layouts/SidebarAndHeader';
-
-const ROLES = {
-  User: 2001,
-  Editor: 1984,
-  Admin: 5150,
-};
 
 function App() {
   return (
     <Routes>
       <Route path="/" element={<Layout />}>
         {/* public routes */}
-        <Route path="/" element={<Landing/>} />
+
+        <Route index element={<Landing />} />
         <Route path="unauthorized" element={<Unauthorized />} />
-        <Route path="linkpage" element={<LinkPage />} />
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />
-
-
+        <Route path="verify" element={<UserVerify />} />
+        <Route path="forgot-password" element={<ForgottenPassword />} />
 
         {/* we want to protect these routes */}
         <Route element={<PersistLogin />}>
-          <Route element={<RequireAuth allowedRoles={[ROLES.User]} />}>
-            <Route path="/" element={<Home />} />
-            <Route element={<SidebarAndHeader userRole={'student'} />}>
+          <Route element={<RequireAuth allowedRoles={[ROLES.Student]} />}>
+            <Route
+              path="stu"
+              element={<SidebarAndHeader userRole={"student"} />}
+            >
               <Route path="dashboard" element={<Dashboard />} />
               <Route path="courses" element={<Courses />} />
               <Route path="content" element={<Content />} />
-            </Route>
-          </Route>
-
-          <Route element={<RequireAuth allowedRoles={[ROLES.Editor]} />}>
-            <Route path="editor" element={<Editor />} />
-          </Route>
-
-          <Route element={<RequireAuth allowedRoles={[ROLES.Admin]} />}>
-            <Route path="admin" element={<Admin />} />
-          </Route>
-
-          <Route
-            element={<RequireAuth allowedRoles={[ROLES.Editor, ROLES.Admin]} />}
-          >
-            <Route path="lounge" element={<Lounge />} />
-          </Route>
-
-          {/* <Route
-            element={<RequireAuth allowedRoles={[ROLES.Editor, ROLES.Admin]} />}
-          >
-            <Route path="tutor" element={<TutorLayout />}>
-              <Route path="courses" element={<CourseLayout/>} >
-                <Route index element={<Course />} />
-                <Route path="packages" element={<Package />} />
-              </Route>
-            </Route>
-          </Route> */}
-
-          <Route element={<RequireAuth allowedRoles={[ROLES.User]} />}>
-            <Route path="user" element={<UserLayout />}>
-              <Route path="profile" element={<UserProfile />} />
+              <Route path="quizzes" element={<Quizzes />} />
+              <Route path="settings" element={<Settings />} />
             </Route>
           </Route>
         </Route>
+
+        <Route path='staff' element={<SidebarAndHeader userRole={"InstituteStaff"} />}>
+          <Route path="dashboard" element={<InstStaffDashboard />} />
+          <Route path="teacher" element={<ViewTeacher/>} />
+          <Route path="teacher/add" element={< AddTeacher />} />
+          <Route path="class" element={<ApproveClass/>} />
+          <Route path="profile" element={<InstStaffProfile />} />
+          <Route path="complaints" element={<InstStaffComplaintsList />} />
+          <Route path="hall" element={<HallList/>} />
+        </Route>
+
+        {/* <Route element={<RequireAuth allowedRoles={[ROLES.Tutor]} />}> */}
+        {/* <Route path="tutor" element={<SidebarAndHeader userRole={"teacher"} />}>
+          <Route path="dashboard" element={<TutorDashboard />} />
+          <Route path="courses" element={<Courses />} />
+          <Route path="content" element={<Content />} />
+
+          <Route path="staff">
+            <Route index element={<StaffList />} />
+            <Route path="add" element={<StaffAdd />} />
+          </Route>
+
+          <Route path="mcqpool">
+            <Route index element={<McqCategoryPool />} />
+            <Route path=":id" element={<Mcqs />}>
+              <Route path="add" element={<CreateMcq />} />
+            </Route>
+          </Route>
+        </Route> */}
+
+        {/* </Route> */}
 
         {/* catch all */}
         <Route path="*" element={<Missing />} />

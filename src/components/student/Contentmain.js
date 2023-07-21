@@ -26,15 +26,15 @@ const Contentmain = (props) => {
 
 
 <Box bg='white' w='100%' height='200px' p={4} color='black' mt={{base:0,lg:10,xl:10}}>
-<Heading mt={{base:0,lg:40,xl:10}} fontSize='30px'>My First UI design Case Study</Heading>
+<Heading mt={{base:0,lg:40,xl:10}} fontSize='25px'>My First UI design Case Study</Heading>
 
 <HStack spacing='2px' mt='10px'>
   <Box w='10%' h='40px' bg='white'>
   <Avatar name='Dan Abrahmov' src='https://bit.ly/dan-abramov' />
   </Box>
   <Box w='80%' h='40px' bg='white'>
-  <Text ml='15px' fontSize='20px'>Nilantha Jayasooriya</Text>
-<Text ml='15px' fontSize='15px'>BSC.Eng University of Moratuwa</Text>
+  <Text ml='15px' fontSize='16px' >Nilantha Jayasooriya</Text>
+<Text ml='15px' fontSize='13px' color='grey'>BSC.Eng University of Moratuwa</Text>
   </Box>
  
 </HStack>

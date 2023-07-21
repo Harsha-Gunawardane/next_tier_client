@@ -1,28 +1,51 @@
 import React from "react";
-import { Card, CardHeader, CardBody, CardFooter,Button,Text,ButtonGroup,Avatar,Image,Stack,Box,HStack,Heading,Divider,SimpleGrid } from '@chakra-ui/react'
-import { CalendarIcon, TimeIcon } from '@chakra-ui/icons'
-import { ChakraProvider } from '@chakra-ui/react'
+import { ChakraProvider,Box } from '@chakra-ui/react'
+import { useEffect,useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { Card, CardBody, CardFooter,Button,Text,ButtonGroup,Avatar,Image,Stack,HStack,Heading,Divider,SimpleGrid } from '@chakra-ui/react'
+import { CalendarIcon } from '@chakra-ui/icons'
 
 
+const Course = () => {
+  const[coursesdata,coursesdatachange]=useState(null);
+  const navigate = useNavigate();
 
-const Course = (props) => {
-  const {  imgUrl,name, email} = props.item;
+  const LoadDetail = (id) => {
+    navigate("/studentcourses/detail/" + id);
+}
+ 
+  useEffect(() => {
+    fetch("http://localhost:8000/courses").then((res) => {
+        return res.json();
+    }).then((resp) => {
+        coursesdatachange(resp);
+    }).catch((err) => {
+        console.log(err.message);
+    })
+}, [])
+  
   return (
-     
 
-     <div>
+ 
 
 
-<ChakraProvider>
-<Card maxW='lg'>
+
+
+
+
+    <SimpleGrid minChildWidth='300px' spacing='40px' p={5}>
+  
+    {coursesdata && coursesdata.map(item => (
+
+    <Card maxW='lg'>
   <CardBody>
     <Image
       
-    src={imgUrl}
+    src={item.imgUrl}
       borderRadius='lg'
     />
     <Stack mt='6' spacing='3'>
-      <Heading color='black' fontSize='xl' mb='10px'>{name}</Heading>
+      <Heading color='black' fontSize='20px' mb='10px'>{item.name}</Heading>
 
 <HStack spacing='24px' mt='-15px'>
   <Box w='30%' h='40px' bg='white'>
@@ -42,18 +65,34 @@ const Course = (props) => {
  
 </HStack>
       <Text color='black' fontSize='15px' >
-      <CalendarIcon></CalendarIcon>  Rs 3500/month
+        <HStack>
+        <CalendarIcon></CalendarIcon> <Text>Rs 3500/</Text> <Text fontSize='12px' color='grey' ml='-10px'>month</Text>
+        </HStack>
+   
       </Text>
    
      
-      <Button variant='solid' colorScheme='blue' width='100%' height='50px' mt='-5px'>
-        <Heading color='white' fontSize='18px'>Enroll</Heading>
+      <Button variant='solid' colorScheme='blue' width='100%' height='40px' mt='-5px' onClick={() => { LoadDetail(item.id) }} >
+        <Heading color='white' fontSize='16px'>Enroll</Heading>
       </Button>
     </Stack>
   </CardBody>
 </Card>
-</ChakraProvider>
-    </div>
+    
+      
+          ))}
+     
+
+    
+                            
+     </SimpleGrid>
+
+ 
+ 
+
+
+
+   
   );
 };
 

@@ -1,20 +1,10 @@
 import React from "react";
-
-
 import { Box } from "@chakra-ui/react";
 import { Image, Heading, Text } from "@chakra-ui/react";
-
-import {
-  Avatar,
-
-} from "@chakra-ui/react";
+import { Avatar,} from "@chakra-ui/react";
 import {  HStack} from "@chakra-ui/react";
-import {
-
-  SimpleGrid,
-  Button,
+import {SimpleGrid,Button,
 } from "@chakra-ui/react";
-
 import CourseInclude from "../../components/student/courseInclude";
 import CourseDetails from "../../components/student/courseDetails";
 import { useEffect,useState } from "react";
@@ -94,7 +84,7 @@ const Course = () => {
 
       
 
-        <Box width="80%" ml="10%" bg="white " p={10} borderRadius="10px">
+        <Box width="80%" ml="15%" bg="white " p={10} borderRadius="10px">
             <Heading fontSize='20px' mb='30px'>About the Tutor</Heading>
         <HStack spacing='10px' mt='-15px'>
   <Box w='30%' h='40px' bg='white'>
@@ -123,12 +113,12 @@ const Course = () => {
 
           <Heading mt={30} fontSize='20px'>Purchase Course</Heading>
           <br></br>
-          <HStack spacing='24px' mt='-15px'>
+          <HStack spacing='10px' mt='-15px'>
   <Box w='50%' h='40px' bg='white'>
   <Heading ml='20px' fontSize='15px'>Rs.2500</Heading>
   </Box>
   <Box w='50%' h='40px' bg='white'>
-  <Heading ml='20px' fontSize='15px'>Rs.2500</Heading>
+  <Heading ml='-20px' fontSize='15px' color='grey'>Rs.3500</Heading>
   </Box>
  
 </HStack>
