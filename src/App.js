@@ -18,14 +18,16 @@ import { Routes, Route } from "react-router-dom";
 import { ROLES } from "./config/roles";
 import { ChakraProvider } from "@chakra-ui/react";
 
-
 //Tutor Components
-import TutorDashboard from "./pages/tutor/TutorDashboard";
-import StaffList from "./pages/staff/staffList";
-import StaffAdd from "./pages/staff/staffAdd";
-import McqCategoryPool from "./pages/mcq/mcqCategoryPool";
-import Mcqs from "./pages/mcq/mcqs";
-import CreateMcq from "./pages/mcq/mcqCreate";
+import TutorDashboard from "./pages/Tutor/TutorDashboard";
+import StaffList from "./pages/TutorStaff/staffList";
+import StaffAdd from "./pages/TutorStaff/staffAdd";
+import McqCategoryPool from "./pages/Mcq/mcqCategoryPool";
+import Mcqs from "./pages/Mcq/mcqs";
+import CreateMcq from "./pages/Mcq/mcqCreate";
+import EditMcq from "./pages/Mcq/mcqEdit";
+import StudentList from "./pages/TutorStaff/paperMarking";
+import PaperMarking from "./pages/TutorStaff/paperMarking";
 
 function App() {
   return (
@@ -74,16 +76,22 @@ function App() {
             <Route path="staff">
               <Route index element={<StaffList />} />
               <Route path="add" element={<StaffAdd />} />
+              <Route path="edit" element={<StaffAdd />} />
+            </Route>
+
+            <Route path="paper">
+              <Route path="marking" element={<PaperMarking />} />
             </Route>
 
             <Route path="mcqpool">
               <Route index element={<McqCategoryPool />} />
               <Route path=":id" element={<Mcqs />}>
-                <Route path="add" element={<CreateMcq />} />
+                {/* <Route path="add" element={<CreateMcq />} /> */}
               </Route>
+              <Route path=":id/add" element={<CreateMcq />} />
+              <Route path=":id/:id/edit" element={<EditMcq />} />
             </Route>
           </Route>
-
           {/* </Route> */}
 
           <Route element={<RequireAuth allowedRoles={[ROLES.User]} />}>

@@ -1,12 +1,12 @@
-import { Button } from "@chakra-ui/react";
+import { Box, Button } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { NavLink, useParams } from "react-router-dom";
 
 import api from "../../api/axios";
 
 
-import McqsSearchBar from "../../components/mcq/McqsSearchBar";
 import McqsView from "../../components/mcq/McqsView";
+import McqsHeaderBar from "../../components/mcq/McqsHeaderBar";
 
 export default function Mcqs() {
 
@@ -35,23 +35,9 @@ export default function Mcqs() {
 
   
   return (
-    <div>
-      <NavLink to="add">
-        <Button
-          colorScheme="whatsapp"
-          variant="solid"
-          position="relative"
-          size="md"
-          top="47px"
-          width="160px"
-          left={{ base: "120px", md: "250px", lg: "500px", xl: "1050px" }}
-        >
-          {/* <AddIcon boxSize={5} pr="8px" color="white" /> */}
-          Add New Question
-        </Button>
-      </NavLink>
-
-      <McqsSearchBar search={search} setSearch={setSearch} />
+    <Box width="100%">
+      
+      <McqsHeaderBar search={search} setSearch={setSearch} />
 
       <McqsView
         mcqs={mcqs.filter((mcq) =>
@@ -59,6 +45,6 @@ export default function Mcqs() {
         )}
         handleDeleteMcq={handleDeleteMcq}
       />
-    </div>
+    </Box>
   );
 }

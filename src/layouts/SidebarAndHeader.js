@@ -9,8 +9,8 @@ import {Box, Container, Flex, Grid, GridItem} from "@chakra-ui/react";
 
 //icons
 import GridViewRoundedIcon from "@mui/icons-material/GridViewRounded";
-import {TiDocumentText} from "react-icons/ti";
-import {FaCompass} from "react-icons/fa";
+import { TiDocumentText, TfiLayoutListThumbAlt } from "react-icons/ti";
+import { FaCompass, FaUserFriends, FaListAlt, FaQuestionCircle } from "react-icons/fa";
 import {TbChevronsUpLeft} from "react-icons/tb";
 
 const SidebarAndHeader = ({userRole}) => {
@@ -32,9 +32,44 @@ const SidebarAndHeader = ({userRole}) => {
 	];
 
 	const TeacherOptions = [
-		{icon: GridViewRoundedIcon, name: "Dashboard", value: "dashboard", href: "/dashboard"},
-		{icon: TiDocumentText, name: "Courses", value: "courses", href: "/courses"},
-	];
+    {
+      icon: GridViewRoundedIcon,
+      name: "Dashboard",
+      value: "dashboard",
+      href: "/tutor/dashboard",
+    },
+    {
+      icon: TiDocumentText,
+      name: "Courses",
+      value: "courses",
+      href: "/tutor/courses",
+    },
+    {
+      icon: FaCompass,
+      name: "Contents",
+      value: "contents",
+      href: "/tutor/contents",
+    },
+    {
+      icon: FaUserFriends,
+      name: "Staffs",
+      value: "staffs",
+      href: "/tutor/staff",
+    },
+    {
+      icon: FaListAlt,
+      FaQuestionCircle,
+      name: "MCQs",
+      value: "MCQs",
+      href: "/tutor/mcqpool",
+    },
+    {
+      icon: FaQuestionCircle,
+      name: "Complaints",
+      value: "Complaints",
+      href: "/tutor/complaints",
+    },
+  ];
 
 	const StaffOptions = [{icon: GridViewRoundedIcon, name: "Dashboard", value: "dashboard", href: "/dashboard"}];
 

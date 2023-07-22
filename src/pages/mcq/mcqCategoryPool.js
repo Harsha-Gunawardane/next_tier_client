@@ -1,10 +1,11 @@
 import { Box, Button } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
-import CategoriesSearchBar from "../../components/mcq/CategoriesSearchBar";
 import McqCategories from "../../components/mcq/McqCategories";
 
 import api from "../../api/axios";
+import CategoriesHeaderhBar from "../../components/mcq/CategoriesHeaderBar";
+import { StatsGroup } from "../../components/mcq/StatsGroup";
 
 export default function McqCategoryPool() {
   // const API_URL = "http://localhost:3500/categories";
@@ -13,15 +14,7 @@ export default function McqCategoryPool() {
   const [categories, setCategories] = useState([]);
   const [search, setSearch] = useState("");
 
-  // useEffect(() => {
-  //   const fetchCategories = async () => {
-  //     const response = await fetch(API_URL);
-  //     const listCategories = await response.json();
-  //     setCategories(listCategories);
-  //   };
 
-  //   fetchCategories();
-  // }, []);
 
   useEffect(() => {
     const getCategories = async () => {
@@ -36,25 +29,13 @@ export default function McqCategoryPool() {
     getCategories();
   }, []);
 
+  
 
   return (
     <Box w="100%">
-      <NavLink to="add">
-        <Button
-          colorScheme="whatsapp"
-          variant="solid"
-          position="relative"
-          size="md"
-          width="160px"
-          top="47px"
-          left={{ base: "120px", md: "250px", lg: "500px", xl: "1050px" }}
-        >
-          {/* <AddIcon boxSize={5} pr="8px" color="white" /> */}
-          Add New Category
-        </Button>
-      </NavLink>
+      <StatsGroup />
 
-      <CategoriesSearchBar search={search} setSearch={setSearch} />
+      <CategoriesHeaderhBar search={search} setSearch={setSearch} />
 
       <McqCategories
         categories={categories.filter((category) =>
