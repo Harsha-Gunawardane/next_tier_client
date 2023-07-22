@@ -6,11 +6,11 @@ import Unauthorized from "./pages/auth/Unauthorized";
 import UserVerify from "./pages/auth/UserVerify";
 import Landing from "./pages/LandingPage/Landing";
 import ForgottenPassword from "./pages/auth/ForgottenPassword";
-import InstStaffDashboard from './pages/InstituteStaff/Dashboard';
+import InstStaffDashboard from "./pages/InstituteStaff/Dashboard";
 import ViewTeacher from "./pages/InstituteStaff/ViewTeacher";
 import AddTeacher from "./pages/InstituteStaff/AddTeacher";
-import InstStaffProfile from './pages/InstituteStaff/Profile';
-import InstStaffComplaintsList from './pages/InstituteStaff/Complaints/ComplaintsListView';
+import InstStaffProfile from "./pages/InstituteStaff/Profile";
+import InstStaffComplaintsList from "./pages/InstituteStaff/Complaints/ComplaintsListView";
 
 // import auth features
 import PersistLogin from "./features/auth/PersistLogin";
@@ -20,6 +20,8 @@ import RequireAuth from "./features/auth/RequireAuth";
 import Settings from "./pages/student/Settings";
 import Dashboard from "./pages/student/Dashboard";
 import Quizzes from "./pages/student/Quizzes";
+import Quiz from "./pages/student/Quiz";
+import ReviewQuiz from "./pages/student/ReviewQuiz";
 
 // tutor components
 // import TutorDashboard from "./pages/student/TutorDashboard";
@@ -31,7 +33,6 @@ import SidebarAndHeader from "./layouts/SidebarAndHeader";
 // incorrect structure
 import Courses from "./components/Courses";
 import Content from "./components/Content";
-
 
 import { Routes, Route } from "react-router-dom";
 import { ROLES } from "./config/roles";
@@ -60,15 +61,21 @@ function App() {
               <Route path="courses" element={<Courses />} />
               <Route path="content" element={<Content />} />
               <Route path="quizzes" element={<Quizzes />} />
+              <Route path="quizzes/review" element={<ReviewQuiz />} />
+              <Route path="quizzes/1" element={<Quiz />} />
+
               <Route path="settings" element={<Settings />} />
             </Route>
           </Route>
         </Route>
 
-        <Route path='staff' element={<SidebarAndHeader userRole={"InstituteStaff"} />}>
+        <Route
+          path="staff"
+          element={<SidebarAndHeader userRole={"InstituteStaff"} />}
+        >
           <Route path="dashboard" element={<InstStaffDashboard />} />
-          <Route path="teacher" element={<ViewTeacher/>} />
-          <Route path="teacher/add" element={< AddTeacher />} />
+          <Route path="teacher" element={<ViewTeacher />} />
+          <Route path="teacher/add" element={<AddTeacher />} />
           <Route path="profile" element={<InstStaffProfile />} />
           <Route path="complaints" element={<InstStaffComplaintsList />} />
         </Route>
