@@ -9,7 +9,7 @@ import { SidebarContext } from "../../context/SidebarContext";
 
 const Option = ({ icon: iconComponent, name, href, active, minimizeStatus }) => {
 	return (
-		<Link to={href} _hover={"none"}>
+		<Link to={href} _hover={"none"} >
 			<Flex
 				p="10px"
 				borderRadius={"10px"}
@@ -40,27 +40,26 @@ const Option = ({ icon: iconComponent, name, href, active, minimizeStatus }) => 
 					<Text fontSize={"14px"}>{name}</Text>
 				</Flex>
 			</Flex>
-		</Link>
+		</Link >
 	);
 };
 
-const Sidebar = ({ Options, minimized = false, full = true, setSidebarWidth, ...rest }) => {
+const Sidebar = ({ Options, minimized = false, full = true, setSidebarWidth, hidden, setHidden, ...rest }) => {
 	useEffect(() => {
 		const width = window.getComputedStyle(document.getElementById("Sidebar")).width;
 		setSidebarWidth(width);
 	}, [setSidebarWidth]);
 
-	const { activeTab, handleTabClick, handleSidebarToggle } = useContext(SidebarContext);
+	const { activeTab, handleTabClick } = useContext(SidebarContext);
 	const [minimizedStatus, setMinimizedStatus] = useState(minimized);
 
-	const settings = { icon: MdSettings, name: "Settings", href: "/stu/settings" };
+	const settings = { icon: MdSettings, name: "Settings", value: "settings", href: "/stu/settings" };
 	const logout = { icon: TbLogout, name: "Logout", href: "/logout" };
 
 	// console.log(activeTab)
 
 	return (
 		<Flex
-			as="Sidebar"
 			id="Sidebar"
 			h={full ? "100vh" : "calc(100% - 64px)"}
 			w={minimizedStatus ? "max-content" : "260px"}
@@ -76,6 +75,7 @@ const Sidebar = ({ Options, minimized = false, full = true, setSidebarWidth, ...
 			pos={"fixed"}
 			zIndex={"1000"}
 			onChange={setSidebarWidth()}
+			display={hidden ? { base: "flex", lg: "flex" } : { base: "none", lg: "flex" }}
 			{...rest}>
 			<Flex
 				p={"4px"}
@@ -86,13 +86,13 @@ const Sidebar = ({ Options, minimized = false, full = true, setSidebarWidth, ...
 				gap="60px"
 				//if not full is true, then set display to none
 				display={full ? "flex" : "none"}>
-				<Image
-					h="36px"
-					src="/logo.png"
-					alt="logo"
-					//if minimized is true, then set display to none
-					display={minimizedStatus ? "none" : "block"}
-				/>
+				<Flex justifyContent="center" alignItems={"center"} h="64px" display={minimizedStatus ? "none" : "flex"}>
+					<Image
+						h="36px"
+						src="/logo.png"
+						alt="logo"
+					/>
+				</Flex>
 				<IconButton
 					variant={"ghost"}
 					margin={0}
@@ -100,7 +100,7 @@ const Sidebar = ({ Options, minimized = false, full = true, setSidebarWidth, ...
 					minWidth="max-content"
 					p="10px"
 					onClick={() => {
-						setMinimizedStatus(!minimizedStatus);
+						hidden ? setHidden(!hidden) : setMinimizedStatus(!minimizedStatus);
 					}}>
 					<FontAwesomeIcon icon={faBars} />
 				</IconButton>
@@ -109,7 +109,7 @@ const Sidebar = ({ Options, minimized = false, full = true, setSidebarWidth, ...
 			<Flex direction={"column"} w={"max-content"}>
 				<Flex direction={"column"} w={"max-content"} alignItems={"center"} px={!minimizedStatus ? "30px" : "10px"} py={"30px"} gap="10px">
 					{Options.map((option) => (
-						<Option {...option} minimizeStatus={minimizedStatus ? true : false} onClick={() => handleTabClick(option.value)} active={activeTab == option.value ? true : false} />
+						<Option {...option} minimizeStatus={minimizedStatus ? true : false} active={activeTab == option.value ? true : false} />
 					))}
 				</Flex>
 

@@ -3,11 +3,11 @@ import { Flex } from "@chakra-ui/react";
 import { Icon } from "@chakra-ui/react";
 
 export default function IconBox(props) {
-	const { icon: iconComponent, ...rest } = props;
+	const { children, ...rest } = props;
 
 	return (
-		<Flex alignItems={"center"} justifyContent={"center"} borderRadius={"50%"} {...rest}>
-			<Icon fontSize="24" as={iconComponent} />
+		<Flex alignItems={"center"} justifyContent={"center"} {...rest}>
+			{children}
 		</Flex>
 	);
 }

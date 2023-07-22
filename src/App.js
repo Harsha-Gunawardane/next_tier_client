@@ -9,8 +9,10 @@ import ForgottenPassword from "./pages/auth/ForgottenPassword";
 import InstStaffDashboard from "./pages/InstituteStaff/Dashboard";
 import ViewTeacher from "./pages/InstituteStaff/ViewTeacher";
 import AddTeacher from "./pages/InstituteStaff/AddTeacher";
-import InstStaffProfile from "./pages/InstituteStaff/Profile";
-import InstStaffComplaintsList from "./pages/InstituteStaff/Complaints/ComplaintsListView";
+import InstStaffProfile from './pages/InstituteStaff/Profile';
+import InstStaffComplaintsList from './pages/InstituteStaff/Complaints/ComplaintsListView';
+import ApproveClass from "./pages/InstituteStaff/ApproveClass";
+import HallList from "./pages/InstituteStaff/HallList";
 
 // import auth features
 import PersistLogin from "./features/auth/PersistLogin";
@@ -36,6 +38,7 @@ import Content from "./components/Content";
 
 import { Routes, Route } from "react-router-dom";
 import { ROLES } from "./config/roles";
+
 
 function App() {
   return (
@@ -74,10 +77,12 @@ function App() {
           element={<SidebarAndHeader userRole={"InstituteStaff"} />}
         >
           <Route path="dashboard" element={<InstStaffDashboard />} />
-          <Route path="teacher" element={<ViewTeacher />} />
-          <Route path="teacher/add" element={<AddTeacher />} />
+          <Route path="teacher" element={<ViewTeacher/>} />
+          <Route path="teacher/add" element={< AddTeacher />} />
+          <Route path="class" element={<ApproveClass/>} />
           <Route path="profile" element={<InstStaffProfile />} />
           <Route path="complaints" element={<InstStaffComplaintsList />} />
+          <Route path="hall" element={<HallList/>} />
         </Route>
 
         {/* <Route element={<RequireAuth allowedRoles={[ROLES.Tutor]} />}> */}

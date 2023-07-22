@@ -18,6 +18,7 @@ import Profile from "../../assests/images/profile.jpg";
 import ModalLayout from "../../components/ModalLayout";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import { useStudentInfo } from "../../store/student/useStudentInfo";
+import useSidebar from "../../hooks/useSidebar";
 
 const STUDENT_INFO_URL = "/stu/info";
 const PROFILE_UPLOAD_URL = "/user/profile-image";
@@ -25,6 +26,12 @@ const PROFILE_UPLOAD_URL = "/user/profile-image";
 function Settings() {
   const toast = useToast();
   const axiosPrivate = useAxiosPrivate();
+  const { setSidebarOptionHandler } = useSidebar();
+
+  useEffect(() => {
+    setSidebarOptionHandler("settings");
+  }, [setSidebarOptionHandler]);
+
 
   const [isOpen, setIsOpen] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
