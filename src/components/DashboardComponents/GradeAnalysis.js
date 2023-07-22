@@ -1,5 +1,5 @@
 // Chakra imports
-import { Box, Button, Flex, Icon, Text, useColorModeValue } from "@chakra-ui/react";
+import { Box, Button, Flex, Icon, Text, useColorModeValue, Select } from "@chakra-ui/react";
 // Custom components
 import Card from "../Card/Card";
 import LineChart from "../charts/LineChart";
@@ -9,6 +9,7 @@ import { MdBarChart, MdOutlineCalendarToday } from "react-icons/md";
 // Assets
 import { RiArrowUpSFill } from "react-icons/ri";
 import { lineChartDataGrades, lineChartOptionsGrades } from "./data";
+import { FiCalendar } from "react-icons/fi";
 
 export default function GradeAnalysis(props) {
 	const { ...rest } = props;
@@ -22,12 +23,12 @@ export default function GradeAnalysis(props) {
 	const bgHover = useColorModeValue({ bg: "accent", color: "white" }, { bg: "whiteAlpha.50", color: "black" });
 	const bgFocus = useColorModeValue({ bg: "white" }, { bg: "whiteAlpha.100" });
 	return (
-		<Card justifyContent="center" align="center" direction="column" w="100%" mb="0px" {...rest} p="10px">
-			<Flex justifyContent="space-between" w="100%">
-				<Button bg={boxBg} fontSize="sm" fontWeight="500" color={textColorSecondary} borderRadius="7px" size={"xs"} mt={0} variant={"ghost"}>
-					<Icon as={MdOutlineCalendarToday} color={textColorSecondary} />
-					This month
-				</Button>
+		<Card justifyContent="center" align="center" direction="column" w="100%" mb="0px" {...rest} p="10px" h="340px">
+			<Flex justifyContent="space-between" w="100%" px={"10px"}>
+				<Select variant={"outline"} icon={<FiCalendar />} w={"max-content"}>
+					<option value='option2'>Monthly</option>
+					<option value='option1'>Weekly</option>
+				</Select>
 				<Button align="center" justifyContent="center" color={iconColor} bg={bgButton} _hover={bgHover} w="37px" h="37px" lineHeight="100%" borderRadius="10px" size={"xs"} mt={0}>
 					<Icon as={MdBarChart} w="24px" h="24px" />
 				</Button>

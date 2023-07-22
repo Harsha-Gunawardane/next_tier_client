@@ -26,6 +26,8 @@ const theme = {
 
 		purple: "#800080",
 		purpleFaded: "#c080c0",
+
+
 	},
 
 	styles: {
