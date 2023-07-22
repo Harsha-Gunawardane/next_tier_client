@@ -97,7 +97,7 @@ function App() {
         </Route>
 
         {/* <Route element={<RequireAuth allowedRoles={[ROLES.Tutor]} />}> */}
-        {/* <Route path="tutor" element={<SidebarAndHeader userRole={"teacher"} />}>
+        <Route path="tutor" element={<SidebarAndHeader userRole={"teacher"} />}>
           <Route path="dashboard" element={<TutorDashboard />} />
           <Route path="courses" element={<Courses />} />
           <Route path="content" element={<Content />} />
@@ -115,7 +115,7 @@ function App() {
             <Route path="mcqpool">
               <Route index element={<McqCategoryPool />} />
               <Route path=":id" element={<Mcqs />}>
-                {/* <Route path="add" element={<CreateMcq />} /> */}
+                <Route path="add" element={<CreateMcq />} />
               </Route>
               <Route path=":id/add" element={<CreateMcq />} />
               <Route path=":id/:id/edit" element={<EditMcq />} />
@@ -123,16 +123,16 @@ function App() {
           </Route>
           {/* </Route> */}
 
-          <Route element={<RequireAuth allowedRoles={[ROLES.User]} />}>
+          {/* <Route element={<RequireAuth allowedRoles={[ROLES.User]} />}>
             <Route path="user" element={<UserLayout />}>
               <Route path="profile" element={<UserProfile />} />
             </Route>
-          </Route>
+          </Route> */}
         </Route>
 
         {/* catch all */}
         <Route path="*" element={<Missing />} />
-      </Route>
+      {/* </Route> */}
     </Routes>
   );
 }
