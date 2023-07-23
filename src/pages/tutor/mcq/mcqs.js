@@ -2,11 +2,11 @@ import { Box, Button } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { NavLink, useParams } from "react-router-dom";
 
-import api from "../../api/axios";
+import api from "../../../api/axios";
 
 
-import McqsView from "../../components/mcq/McqsView";
-import McqsHeaderBar from "../../components/mcq/McqsHeaderBar";
+import McqsView from "../../../components/mcq/McqsView";
+import McqsHeaderBar from "../../../components/mcq/McqsHeaderBar";
 
 export default function Mcqs() {
 

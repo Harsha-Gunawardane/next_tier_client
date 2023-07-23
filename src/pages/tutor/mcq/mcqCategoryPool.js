@@ -1,11 +1,11 @@
 import { Box, Button } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
-import McqCategories from "../../components/mcq/McqCategories";
+import McqCategories from "../../../components/mcq/McqCategories";
 
-import api from "../../api/axios";
-import CategoriesHeaderhBar from "../../components/mcq/CategoriesHeaderBar";
-import { StatsGroup } from "../../components/mcq/StatsGroup";
+import api from "../../../api/axios";
+import CategoriesHeaderhBar from "../../../components/mcq/CategoriesHeaderBar";
+import { StatsGroup } from "../../../components/mcq/StatsGroup";
 
 export default function McqCategoryPool() {
   // const API_URL = "http://localhost:3500/categories";

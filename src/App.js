@@ -39,18 +39,16 @@ import Content from "./components/Content";
 
 import { Routes, Route } from "react-router-dom";
 import { ROLES } from "./config/roles";
-import { ChakraProvider } from "@chakra-ui/react";
 
 //Tutor Components
-import TutorDashboard from "./pages/Tutor/TutorDashboard";
-import StaffList from "./pages/TutorStaff/staffList";
-import StaffAdd from "./pages/TutorStaff/staffAdd";
-import McqCategoryPool from "./pages/Mcq/mcqCategoryPool";
-import Mcqs from "./pages/Mcq/mcqs";
-import CreateMcq from "./pages/Mcq/mcqCreate";
-import EditMcq from "./pages/Mcq/mcqEdit";
-import StudentList from "./pages/TutorStaff/paperMarking";
-import PaperMarking from "./pages/TutorStaff/paperMarking";
+import TutorDashboard from "./pages/tutor/TutorDashboard";
+import StaffList from "./pages/tutorStaff/staffList";
+import StaffAdd from "./pages/tutorStaff/staffAdd";
+import McqCategoryPool from "./pages/tutor/mcq/mcqCategoryPool";
+import Mcqs from "./pages/tutor/mcq/mcqs";
+import CreateMcq from "./pages/tutor/mcq/mcqCreate";
+import EditMcq from "./pages/tutor/mcq/mcqEdit";
+import PaperMarking from "./pages/tutorStaff/paperMarking";
 
 function App() {
   return (
