@@ -4,65 +4,71 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
 import { faChalkboardUser } from "@fortawesome/free-solid-svg-icons";
 import { faBuildingColumns } from "@fortawesome/free-solid-svg-icons";
+import {faChalkboard} from "@fortawesome/free-solid-svg-icons";
 import Complain from "../../components/instituteStaff/Complain";
 import BarChart from "../../components/instituteStaff/BarChart";
 import LineChart from "../../components/instituteStaff/LineChart";
 
-
 function Dashboard() {
- 
-
   return (
-    <Box pl={30}>
+    <Box pl={[0, 5, 30]}>
       <Heading as="h1" size="lg" mb="2" mt="2">Dashboard</Heading>
       
-      <SimpleGrid spacing={20} templateColumns="repeat(auto-fill, minmax(200px, 1fr))" pl={20} mb="3" >
-      <Card>
-        <CardHeader>
-          <Flex alignItems="center">
-            <FontAwesomeIcon icon={faUser} />
-            <Heading size="md" ml={5}> Students<br />550 </Heading>
-          </Flex>
-        </CardHeader>
-      </Card>
-      <Card>
-        <CardHeader>
-          <Flex alignItems="center">
-            <FontAwesomeIcon icon={faChalkboardUser} />
-            <Heading size="md" ml={5}> Teachers<br /> 25</Heading>
-          </Flex>
-        </CardHeader>
-      </Card>
-      <Card>
-        <CardHeader>
-          <Flex alignItems="center">
-            <FontAwesomeIcon icon={faBuildingColumns} />
-            <Heading size="md" ml={5}> Staff<br />10</Heading>
-          </Flex>
-        </CardHeader>
-      </Card>
-    </SimpleGrid>
+      <SimpleGrid spacing={20} templateColumns="repeat(auto-fill, minmax(200px, 1fr))" pl={[0, 10, 20]} mb="3">
+        <Card>
+          <CardHeader>
+            <Flex alignItems="center">
+              <FontAwesomeIcon icon={faUser} />
+              <Heading size="md" ml={5}> Students<br />550 </Heading>
+            </Flex>
+          </CardHeader>
+        </Card>
+        <Card>
+          <CardHeader>
+            <Flex alignItems="center">
+              <FontAwesomeIcon icon={faChalkboardUser} />
+              <Heading size="md" ml={5}> Teachers<br /> 25</Heading>
+            </Flex>
+          </CardHeader>
+        </Card>
+        <Card>
+          <CardHeader>
+            <Flex alignItems="center">
+              <FontAwesomeIcon icon={faBuildingColumns} />
+              <Heading size="md" ml={5}> Staff<br />10</Heading>
+            </Flex>
+          </CardHeader>
+        </Card>
+        <Card>
+          <CardHeader>
+            <Flex alignItems="center">
+              <FontAwesomeIcon icon={faChalkboard} />
+              <Heading size="md" ml={5}> Classes<br />50 </Heading>
+            </Flex>
+          </CardHeader>
+        </Card>
+      </SimpleGrid>
       
-      <SimpleGrid columns={2} spacing={3} pl={30} width={1100}>
+      <SimpleGrid columns={[1, 1, 2]} spacing={3} pl={[0, 10, 30]} width={[null, null, 1100]}>
 
-      <Box bg="white" height="280px" border="1px" borderColor="gray.200" borderRadius="md">
-        <Heading as="h1" size="md" mb="1" mt="5" ml="5">Income Report</Heading>
-       <BarChart />
+        <Box bg="white" height="280px" border="1px" borderColor="gray.200" borderRadius="md">
+          <Heading as="h1" size="md" mb="1" mt="5" ml="5">Income Report</Heading>
+          <BarChart />
         </Box>
 
         <Box bg="white" height="280px" border="1px" borderColor="gray.200" borderRadius="md">
-        <Heading as="h1" size="md" mb="1" mt="5" ml="5">Today Classes</Heading>
-        <Classes />
+          <Heading as="h1" size="md" mb="1" mt="5" ml="5">Today Classes</Heading>
+          <Classes />
         </Box>
 
         <Box bg="white" height="230px" border="1px" borderColor="gray.200" borderRadius="md">
-        <Heading as="h1" size="md" mb="1" mt="5" ml="5">Attendence Overview</Heading>
-        <LineChart />
+          <Heading as="h1" size="md" mb="1" mt="5" ml="5">Attendance Overview</Heading>
+          <LineChart />
         </Box>
-       
+
         <Box bg="white" height="230px" border="1px" borderColor="gray.200" borderRadius="md">
-        <Heading as="h1" size="md" mb="5" mt="5" ml="5">Complain Status</Heading>
-        <Complain />
+          <Heading as="h1" size="md" mb="5" mt="5" ml="5">Complain Status</Heading>
+          <Complain />
         </Box>
 
       </SimpleGrid>

@@ -42,8 +42,10 @@ const SidebarAndHeader = ({ userRole }) => {
 	const InstStaffOptions = [
 		{ icon: GridViewRoundedIcon, name: 'Dashboard', value: 'dashboard', href: '/staff/dashboard' },
 		{ icon: FaCompass, name: "View Teacher", value: "viewTeacher", href: "/staff/teacher" },
+		{icon: TiDocumentText, name: "Approve Class", value: "approveClass", href: "/staff/class"},
 		{ icon: AccountCircleIcon, name: 'Profile', value: 'profile', href: '/staff/Profile' },
 		{ icon: ReportProblemIcon, name: 'Complaints', value: 'complaints', href: '/staff/complaints' },
+		{icon: TiDocumentText, name: "Hall Management", value: "hallList", href: "/staff/hall"},
 	]
 
 	switch (userRole) {

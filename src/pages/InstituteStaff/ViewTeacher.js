@@ -27,7 +27,7 @@ function ViewTeacher() {
   }
 
   return (
-    <TableContainer width="1500px" height="500px" px="120px" py="60px">
+    <TableContainer width="1500px" height="500px" px="120px" py="60px" >
       <Flex justify="space-between" align="center" mb="4">
         <Heading as="h1" size="lg" mb="10">Registered Teachers</Heading>
         <NavLink to="add">
@@ -35,7 +35,7 @@ function ViewTeacher() {
         </NavLink>
       </Flex>
 
-      <Table variant='striped'>
+      <Table >
         <Thead>
           <Tr>
             <Th fontSize='md' fontWeight='bold'>ID</Th>
@@ -64,7 +64,7 @@ function ViewTeacher() {
           <ModalContent  padding="20px" border="2px solid" borderColor="gray.300">
             <ModalHeader>Teacher Details</ModalHeader>
             <ModalCloseButton />
-            <ModalBody sx={{ background: 'gray.100', padding: '20px' }}>
+            <ModalBody sx={{ background: 'gray.100', padding: '20px', borderRadius:'15' }}>
             <Flex alignItems="center" mb="4">
                 <Image src={selectedTeacher.profileImage} alt="Profile Image" boxSize="100px" objectFit="cover" mr="4" />
                 <div>
@@ -77,7 +77,7 @@ function ViewTeacher() {
 
             </ModalBody>
             <ModalFooter>
-            <Button ml="2" onClick={closeModal}> Cancel </Button>
+            <Button ml="2" sx={ButtonStyles} onClick={closeModal}> Cancel </Button>
           </ModalFooter>
           </ModalContent>
         </Modal>

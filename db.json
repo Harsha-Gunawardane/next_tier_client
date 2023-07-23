@@ -1,0 +1,229 @@
+{
+  "courses": [
+    {
+      "id": 1,
+      "name": "Physics 2023 - Theory",
+      "description": "Find Physics stock images in HD and millions of other royalty-free stock photos, illustrations and vectors in the Shutterstock collection. Thousands of new, high-quality pictures added every day",
+      "price": "35028",
+      "day": "Monday",
+      "time": "8.00 a.m. - 5.00 p.m.",
+      "imgUrl": "https://www.ufs.ac.za/images/librariesprovider22/default-album/shutterstock_1140894395.jpg?sfvrsn=554a8521_0"
+    },
+    {
+      "name": "Physics 2023 - Theory",
+      "description": "Find Physics stock images in HD and millions of other royalty-free stock photos, illustrations and vectors in the Shutterstock collection. Thousands of new, high-quality pictures added every day",
+      "email": "rp@in.com",
+      "phone": "98899090",
+      "time": "8.00 a.m. - 5.00 p.m.",
+      "day": "Monday",
+      "price": "3500",
+      "active": true,
+      "id": 2,
+      "imgUrl": "https://www.ufs.ac.za/images/librariesprovider22/default-album/shutterstock_1140894395.jpg?sfvrsn=554a8521_0"
+    },
+    {
+      "id": 3,
+      "description": "Find Physics stock images in HD and millions of other royalty-free stock photos, illustrations and vectors in the Shutterstock collection. Thousands of new, high-quality pictures added every day",
+      "name": "Physics 2024 - Theory",
+      "email": "robert@in.com",
+      "time": "8.00 a.m. - 5.00 p.m.",
+      "day": "Monday",
+      "price": "3500",
+      "phone": "908908767",
+      "imgUrl": "https://www.ufs.ac.za/images/librariesprovider22/default-album/shutterstock_1140894395.jpg?sfvrsn=554a8521_0"
+    },
+    {
+      "id": 4,
+      "name": "Physics 2024 - Theory",
+      "description": "Find Physics stock images in HD and millions of other royalty-free stock photos, illustrations and vectors in the Shutterstock collection. Thousands of new, high-quality pictures added every day",
+      "email": "kw@in.com",
+      "phone": "908908767",
+      "time": "8.00 a.m. - 5.00 p.m.",
+      "day": "Monday",
+      "price": "3500",
+      "imgUrl": "https://www.ufs.ac.za/images/librariesprovider22/default-album/shutterstock_1140894395.jpg?sfvrsn=554a8521_0"
+    },
+    {
+      "id": 5,
+      "name": "Physics 2024 - Theory",
+      "description": "Find Physics stock images in HD and millions of other royalty-free stock photos, illustrations and vectors in the Shutterstock collection. Thousands of new, high-quality pictures added every day",
+      "email": "vikram@in.com",
+      "phone": "908908767",
+      "time": "8.00 a.m. - 5.00 p.m.",
+      "day": "Monday",
+      "price": "3500",
+      "imgUrl": "https://www.ufs.ac.za/images/librariesprovider22/default-album/shutterstock_1140894395.jpg?sfvrsn=554a8521_0"
+    },
+    {
+      "year": "a",
+      "subject": "react",
+      "coursetype": "Revision",
+      "language": "English",
+      "title": "a",
+      "description": "a",
+      "day": "aa",
+      "time": "a",
+      "monthlyfee": "a",
+      "id": 6
+    }
+  ],
+  "coursepackage": [
+    {
+      "name": "Physics 2024 - Theory",
+      "description": "Find Physics stock images in HD and millions of other royalty-free stock photos, illustrations and vectors in the Shutterstock collection. Thousands of new, high-quality pictures added every day",
+      "time": "8.00 a.m. - 5.00 p.m.",
+      "day": "Monday",
+      "price": "3500",
+      "active": true,
+      "announcement": [
+        {
+          "id": 1,
+          "msg": "no classes today",
+          "date": "2023-23-21"
+        }
+      ],
+      "id": 1,
+      "imgUrl": "https://www.ufs.ac.za/images/librariesprovider22/default-album/shutterstock_1140894395.jpg?sfvrsn=554a8521_0"
+    },
+    {
+      "name": "Physics 2023 - Theory",
+      "description": "Find Physics stock images in HD and millions of other royalty-free stock photos, illustrations and vectors in the Shutterstock collection. Thousands of new, high-quality pictures added every day",
+      "email": "rp@in.com",
+      "phone": "98899090",
+      "time": "8.00 a.m. - 5.00 p.m.",
+      "day": "Monday",
+      "price": "3500",
+      "active": true,
+      "id": 2,
+      "imgUrl": "https://www.ufs.ac.za/images/librariesprovider22/default-album/shutterstock_1140894395.jpg?sfvrsn=554a8521_0"
+    }
+  ],
+  "content": [
+    {
+      "month": "2023 July",
+      "week1": {
+        "video": "video",
+        "doc": "document",
+        "quiz": "quiz"
+      },
+      "week2": "week2",
+      "week3": "week3",
+      "week4": "week4",
+      "id": 1
+    },
+    {
+      "month": "2023 July",
+      "week1": "week1",
+      "week2": "week2",
+      "week3": "week3",
+      "week4": "week4",
+      "id": 2
+    },
+    {
+      "id": 3,
+      "month": "2023 July",
+      "week1": "week1",
+      "week2": "week2",
+      "week3": "week3",
+      "week4": "week4"
+    },
+    {
+      "id": 4,
+      "month": "2023 July",
+      "week1": "week1",
+      "week2": "week2",
+      "week3": "week3",
+      "week4": "week4"
+    },
+    {
+      "id": 5,
+      "month": "2023 July",
+      "week1": "week1",
+      "week2": "week2",
+      "week3": "week3",
+      "week4": "week4"
+    },
+    {
+      "month": "2027 July",
+      "week1": "week1",
+      "id": 6
+    }
+  ],
+  "videocontents": [
+    {
+      "name": "Physics 2024 - Theory",
+      "time": "dddd",
+      "price": "3500",
+      "active": true,
+      "id": 1,
+      "imgUrl": "https://www.ufs.ac.za/images/librariesprovider22/default-album/shutterstock_1140894395.jpg?sfvrsn=554a8521_0"
+    },
+    {
+      "name": "Physics 2023 - Theory",
+      "email": "rp@in.com",
+      "phone": "98899090",
+      "active": true,
+      "id": 2,
+      "imgUrl": "https://www.ufs.ac.za/images/librariesprovider22/default-album/shutterstock_1140894395.jpg?sfvrsn=554a8521_0"
+    },
+    {
+      "id": 3,
+      "name": "Physics 2024 - Theory",
+      "email": "robert@in.com",
+      "phone": "908908767",
+      "imgUrl": "https://www.ufs.ac.za/images/librariesprovider22/default-album/shutterstock_1140894395.jpg?sfvrsn=554a8521_0"
+    },
+    {
+      "id": 4,
+      "name": "Physics 2024 - Theory",
+      "email": "kw@in.com",
+      "phone": "908908767",
+      "imgUrl": "https://www.ufs.ac.za/images/librariesprovider22/default-album/shutterstock_1140894395.jpg?sfvrsn=554a8521_0"
+    },
+    {
+      "id": 5,
+      "name": "Physics 2024 - Theory",
+      "email": "vikram@in.com",
+      "phone": "908908767",
+      "imgUrl": "https://www.ufs.ac.za/images/librariesprovider22/default-album/shutterstock_1140894395.jpg?sfvrsn=554a8521_0"
+    }
+  ],
+  "videocontent": [
+    {
+      "name": "Physics 2024 - Theory",
+      "price": "3500",
+      "active": true,
+      "id": 1,
+      "imgUrl": "https://www.ufs.ac.za/images/librariesprovider22/default-album/shutterstock_1140894395.jpg?sfvrsn=554a8521_0"
+    },
+    {
+      "name": "Physics 2023 - Theory",
+      "email": "rp@in.com",
+      "phone": "98899090",
+      "active": true,
+      "id": 2,
+      "imgUrl": "https://www.ufs.ac.za/images/librariesprovider22/default-album/shutterstock_1140894395.jpg?sfvrsn=554a8521_0"
+    },
+    {
+      "id": 3,
+      "name": "Physics 2024 - Revision",
+      "email": "robert@in.com",
+      "phone": "908908767",
+      "imgUrl": "https://www.ufs.ac.za/images/librariesprovider22/default-album/shutterstock_1140894395.jpg?sfvrsn=554a8521_0"
+    },
+    {
+      "id": 4,
+      "name": "Physics 2024 - Paper",
+      "email": "kw@in.com",
+      "phone": "908908767",
+      "imgUrl": "https://www.ufs.ac.za/images/librariesprovider22/default-album/shutterstock_1140894395.jpg?sfvrsn=554a8521_0"
+    },
+    {
+      "id": 5,
+      "name": "Physics 2024 - Theory",
+      "email": "vikram@in.com",
+      "phone": "908908767",
+      "imgUrl": "https://www.ufs.ac.za/images/librariesprovider22/default-album/shutterstock_1140894395.jpg?sfvrsn=554a8521_0"
+    }
+  ]
+}
