@@ -5,9 +5,9 @@ export default function Courses() {
 
     const { setSidebarOptionHandler } = useSidebar();
 
-    // useEffect(() => {
-    setSidebarOptionHandler("courses")
-    // });
+    useEffect(() => {
+        setSidebarOptionHandler("courses")
+    });
 
     return (
         <div>

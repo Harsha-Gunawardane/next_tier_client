@@ -3,10 +3,7 @@ import {
   Box,
   IconButton,
   useBreakpointValue,
-  Stack,
   Heading,
-  Text,
-  Container,
   Image,
   Flex,
   AspectRatio,
@@ -18,7 +15,7 @@ import { MdOutlineKeyboardArrowLeft, MdOutlineKeyboardArrowRight } from 'react-i
 import Slider from 'react-slick';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import "../../assets/css/carousel.css"
+import "../../assests/css/carousel.css"
 
 // Settings for the slider
 const settings = {

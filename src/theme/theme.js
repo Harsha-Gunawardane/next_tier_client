@@ -24,10 +24,6 @@ const theme = {
 		warning: "#ffbb55",
 		warningFaded: "#ffd699",
 
-		purple: "#800080",
-		purpleFaded: "#c080c0",
-
-
 	},
 
 	styles: {

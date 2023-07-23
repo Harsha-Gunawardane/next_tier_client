@@ -5,7 +5,7 @@ import Sidebar from "../components/Sidebar/Sidebar";
 import { SidebarProvider, SidebarContext } from "../context/SidebarContext";
 import { useContext, useEffect, useState } from "react";
 
-import { Box, Container, Flex, Grid, GridItem } from "@chakra-ui/react";
+import { Box, Flex } from "@chakra-ui/react";
 
 //icons
 import GridViewRoundedIcon from "@mui/icons-material/GridViewRounded";
@@ -79,7 +79,7 @@ const SidebarAndHeader = ({ userRole }) => {
 			h="100vh"
 			w="100vw"
 		>
-			<Sidebar Options={Options} minimized={false} setSidebarWidth={setSidebarWidth} hidden={hidden} setHidden={setHidden} />
+			<Sidebar Options={Options} minimized={{ base: false, md: true, lg: false }} setSidebarWidth={setSidebarWidth} hidden={hidden} setHidden={setHidden} />
 			<Box ml={{ base: "0", lg: sidebarWidth }} w={{ base: "100vw", lg: "calc(100vw - " + sidebarWidth + ")" }} h={"100vh"}>
 				<Header w={{ base: "100%", lg: "calc(100% - " + sidebarWidth + ")" }} hidden={hidden} setHidden={setHidden} />
 				<Flex pt={"64px"}>
@@ -87,7 +87,6 @@ const SidebarAndHeader = ({ userRole }) => {
 				</Flex>
 			</Box>
 		</Box>
-		// </SidebarProvider>
 
 	);
 };

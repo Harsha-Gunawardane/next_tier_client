@@ -1,4 +1,4 @@
-import { Flex, Icon, Text, Image, IconButton, Center } from "@chakra-ui/react";
+import { Flex, Icon, Text, Image, IconButton } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
@@ -8,6 +8,7 @@ import { useState, useContext, useEffect } from "react";
 import { SidebarContext } from "../../context/SidebarContext";
 
 const Option = ({ icon: iconComponent, name, href, active, minimizeStatus }) => {
+
 	return (
 		<Link to={href} _hover={"none"} >
 			<Flex
@@ -15,7 +16,7 @@ const Option = ({ icon: iconComponent, name, href, active, minimizeStatus }) => 
 				borderRadius={"10px"}
 				borderColor={"gray.800"}
 				justifyContent={"flex-start"}
-				width={minimizeStatus ? "max-content" : "160px"}
+				width={{ base: "160px", md: minimizeStatus.md ? "max-content" : "160px", lg: minimizeStatus.lg ? "max-content" : "160px" }}
 				minWidth={"max-content"}
 				alignItems={"center"}
 				background={"primary"}
@@ -36,7 +37,8 @@ const Option = ({ icon: iconComponent, name, href, active, minimizeStatus }) => 
 				{/* </Box> */}
 				<Flex
 					//if minimized is true, then set display to none
-					display={minimizeStatus && "none"}>
+					display={{ base: "flex", md: minimizeStatus.md ? "none" : "flex", lg: minimizeStatus.lg ? "none" : "flex" }}
+				>
 					<Text fontSize={"14px"}>{name}</Text>
 				</Flex>
 			</Flex>
@@ -48,7 +50,18 @@ const Sidebar = ({ Options, minimized = false, full = true, setSidebarWidth, hid
 	useEffect(() => {
 		const width = window.getComputedStyle(document.getElementById("Sidebar")).width;
 		setSidebarWidth(width);
+		console.log("sidebar rendered")
+		console.log(minimized)
 	}, [setSidebarWidth]);
+
+	const handleMinimizing = () => {
+		const status = {
+			base: minimizedStatus.base ? false : true,
+			md: minimizedStatus.md ? false : true,
+			lg: minimizedStatus.lg ? false : true,
+		}
+		setMinimizedStatus(status);
+	};
 
 	const { activeTab, handleTabClick } = useContext(SidebarContext);
 	const [minimizedStatus, setMinimizedStatus] = useState(minimized);
@@ -62,7 +75,7 @@ const Sidebar = ({ Options, minimized = false, full = true, setSidebarWidth, hid
 		<Flex
 			id="Sidebar"
 			h={full ? "100vh" : "calc(100% - 64px)"}
-			w={minimizedStatus ? "max-content" : "260px"}
+			w={{ base: "260px", md: minimizedStatus.md ? "max-content" : "260px", lg: minimizedStatus.lg ? "max-content" : "260px" }}
 			bg="primary"
 			flexDirection={"column"}
 			alignItems={"center"}
@@ -74,8 +87,8 @@ const Sidebar = ({ Options, minimized = false, full = true, setSidebarWidth, hid
 			transition={"all 0.5s"}
 			pos={"fixed"}
 			zIndex={"1000"}
-			onChange={setSidebarWidth()}
-			display={hidden ? { base: "flex", lg: "flex" } : { base: "none", lg: "flex" }}
+			// onChange={setSidebarWidth()}
+			display={hidden ? { base: "flex", md: "flex", lg: "flex" } : { base: "none", md: "flex", lg: "flex" }}
 			{...rest}>
 			<Flex
 				p={"4px"}
@@ -86,7 +99,7 @@ const Sidebar = ({ Options, minimized = false, full = true, setSidebarWidth, hid
 				gap="60px"
 				//if not full is true, then set display to none
 				display={full ? "flex" : "none"}>
-				<Flex justifyContent="center" alignItems={"center"} h="64px" display={minimizedStatus ? "none" : "flex"}>
+				<Flex justifyContent="center" alignItems={"center"} h="64px" display={{ base: "flex", md: minimizedStatus.md ? "none" : "flex", lg: minimizedStatus.lg ? "none" : "flex" }}>
 					<Image
 						h="36px"
 						src="/logo.png"
@@ -100,7 +113,8 @@ const Sidebar = ({ Options, minimized = false, full = true, setSidebarWidth, hid
 					minWidth="max-content"
 					p="10px"
 					onClick={() => {
-						hidden ? setHidden(!hidden) : setMinimizedStatus(!minimizedStatus);
+						setSidebarWidth();
+						hidden ? setHidden(!hidden) : handleMinimizing();
 					}}>
 					<FontAwesomeIcon icon={faBars} />
 				</IconButton>
@@ -109,7 +123,7 @@ const Sidebar = ({ Options, minimized = false, full = true, setSidebarWidth, hid
 			<Flex direction={"column"} w={"max-content"}>
 				<Flex direction={"column"} w={"max-content"} alignItems={"center"} px={!minimizedStatus ? "30px" : "10px"} py={"30px"} gap="10px">
 					{Options.map((option) => (
-						<Option {...option} minimizeStatus={minimizedStatus ? true : false} active={activeTab == option.value ? true : false} />
+						<Option {...option} minimizeStatus={{ base: false, md: minimizedStatus.md ? true : false, lg: minimizedStatus.lg ? true : false }} active={activeTab == option.value ? true : false} />
 					))}
 				</Flex>
 
