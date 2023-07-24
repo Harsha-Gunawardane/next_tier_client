@@ -6,13 +6,6 @@ import Unauthorized from "./pages/auth/Unauthorized";
 import UserVerify from "./pages/auth/UserVerify";
 import Landing from "./pages/LandingPage/Landing";
 import ForgottenPassword from "./pages/auth/ForgottenPassword";
-import InstStaffDashboard from "./pages/InstituteStaff/Dashboard";
-import ViewTeacher from "./pages/InstituteStaff/ViewTeacher";
-import AddTeacher from "./pages/InstituteStaff/AddTeacher";
-import InstStaffProfile from './pages/InstituteStaff/Profile';
-import InstStaffComplaintsList from './pages/InstituteStaff/Complaints/ComplaintsListView';
-import ApproveClass from "./pages/InstituteStaff/ApproveClass";
-import HallList from "./pages/InstituteStaff/HallList";
 
 // import auth features
 import PersistLogin from "./features/auth/PersistLogin";
@@ -27,6 +20,15 @@ import ReviewQuiz from "./pages/student/ReviewQuiz";
 
 // tutor components
 // import TutorDashboard from "./pages/student/TutorDashboard";
+
+// staff components
+// import InstStaffDashboard from "./pages/InstituteStaff/Dashboard";
+// import ViewTeacher from "./pages/InstituteStaff/ViewTeacher";
+// import AddTeacher from "./pages/InstituteStaff/AddTeacher";
+// import InstStaffProfile from './pages/InstituteStaff/Profile';
+// import InstStaffComplaintsList from './pages/InstituteStaff/Complaints/ComplaintsListView';
+// import ApproveClass from "./pages/InstituteStaff/ApproveClass";
+// import HallList from "./pages/InstituteStaff/HallList";
 
 // import layouts
 import Layout from "./layouts/Layout";
@@ -72,7 +74,7 @@ function App() {
           </Route>
         </Route>
 
-        <Route
+        {/* <Route
           path="staff"
           element={<SidebarAndHeader userRole={"InstituteStaff"} />}
         >
@@ -83,7 +85,7 @@ function App() {
           <Route path="profile" element={<InstStaffProfile />} />
           <Route path="complaints" element={<InstStaffComplaintsList />} />
           <Route path="hall" element={<HallList/>} />
-        </Route>
+        </Route> */}
 
         {/* <Route element={<RequireAuth allowedRoles={[ROLES.Tutor]} />}> */}
         {/* <Route path="tutor" element={<SidebarAndHeader userRole={"teacher"} />}>
