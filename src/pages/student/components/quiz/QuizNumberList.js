@@ -1,7 +1,11 @@
-import { Grid, GridItem } from "@chakra-ui/react"; // Assuming you are using Chakra UI
+import { Grid, GridItem } from "@chakra-ui/react";
+import { useSelector } from "react-redux";
 
-const GridWith20Numbers = () => {
-  const numbers = Array.from({ length: 10 }, (_, index) => index + 1); // Generate an array of numbers from 1 to 20
+const GridWithNumbers = ({count}) => {
+  const numbers = Array.from({ length: count }, (_, index) => index + 1);
+
+  const trace = useSelector((state) => state.questions.trace);
+  const result = useSelector((state) => state.result.result);
 
   return (
     <Grid templateColumns="repeat(5, 1fr)" gap={3}>
@@ -10,7 +14,14 @@ const GridWith20Numbers = () => {
           key={number}
           w={10}
           h={10}
-          bg="#EDEDED"
+          bg={
+            trace + 1 === number
+              ? "#1294F2"
+              : result[number - 1] !== undefined
+              ? "#BBBBBB"
+              : "#EDEDED"
+          }
+          color={trace + 1 === number ? "#FFFFFF" : "#444444"}
           borderRadius={50}
           display="flex"
           justifyContent="center"
@@ -23,4 +34,4 @@ const GridWith20Numbers = () => {
   );
 };
 
-export default GridWith20Numbers;
+export default GridWithNumbers;
