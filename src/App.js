@@ -29,6 +29,15 @@ import ApproveClass from "./pages/InstituteStaff/ApproveClass";
 // tutor components
 // import TutorDashboard from "./pages/student/TutorDashboard";
 
+// institute syaff components
+// import InstStaffDashboard from "./pages/InstituteStaff/Dashboard";
+// import ViewTeacher from "./pages/InstituteStaff/ViewTeacher";
+// import AddTeacher from "./pages/InstituteStaff/AddTeacher";
+// import InstStaffProfile from './pages/InstituteStaff/Profile';
+// import InstStaffComplaintsList from './pages/InstituteStaff/Complaints/ComplaintsListView';
+// import ApproveClass from "./pages/InstituteStaff/ApproveClass";
+// import HallList from "./pages/InstituteStaff/HallList";
+
 // import layouts
 import Layout from "./layouts/Layout";
 import SidebarAndHeader from "./layouts/SidebarAndHeader";
@@ -74,15 +83,16 @@ function App() {
               <Route path="courses" element={<Courses />} />
               <Route path="content" element={<Content />} />
               <Route path="quizzes" element={<Quizzes />} />
-              <Route path="quizzes/review" element={<ReviewQuiz />} />
-              <Route path="quizzes/1" element={<Quiz />} />
+              <Route path="quizzes/:subject" element={<Quizzes />} />
+              <Route path="quizzes/:subject/:mcqname/review" element={<ReviewQuiz />} />
+              <Route path="quizzes/:subject/:mcqname" element={<Quiz />} />
 
               <Route path="settings" element={<Settings />} />
             </Route>
           </Route>
         </Route>
 
-        <Route
+        {/* <Route
           path="staff"
           element={<SidebarAndHeader userRole={"InstituteStaff"} />}
         >
@@ -92,7 +102,8 @@ function App() {
           <Route path="class" element={<ApproveClass/>} />
           <Route path="profile" element={<InstStaffProfile />} />
           <Route path="complaints" element={<InstStaffComplaintsList />} />
-        </Route>
+          <Route path="hall" element={<HallList/>} />
+        </Route> */}
 
         {/* <Route element={<RequireAuth allowedRoles={[ROLES.Tutor]} />}> */}
         <Route path="tutor" element={<SidebarAndHeader userRole={"teacher"} />}>

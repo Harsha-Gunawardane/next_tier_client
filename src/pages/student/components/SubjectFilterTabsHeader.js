@@ -1,8 +1,8 @@
 import { Box, Text, Flex } from "@chakra-ui/react";
 import { useState } from "react";
 
-function SubjectFilterTabsHeader({ subjects }) {
-  const [focusedTab, setFocusedTab] = useState("Mathematics");
+function SubjectFilterTabsHeader({ subjects, focusedSubject, setFocusedSubject }) {
+
   return (
     <Flex mb={3} mt={2}>
       {subjects.map((subject) => (
@@ -17,9 +17,9 @@ function SubjectFilterTabsHeader({ subjects }) {
           borderRadius={25}
           display="flex"
           alignItems="center"
-          bg={focusedTab === subject ? "#383838" : "#E9E9E9"}
-          color={focusedTab === subject ? "#FFFFFF" : "#383838"}
-          onClick={(subject) => setFocusedTab(subject)}
+          bg={focusedSubject === subject ? "#383838" : "#E9E9E9"}
+          color={focusedSubject === subject ? "#FFFFFF" : "#383838"}
+          onClick={() => setFocusedSubject(subject)}
         >
           <Text letterSpacing={0.5} fontSize={13} fontStyle="Roboto">
             {subject}

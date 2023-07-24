@@ -6,6 +6,7 @@ import {
 } from "react-icons/ai";
 import { Flex, Box, Text } from "@chakra-ui/react";
 import { useState } from "react";
+import { useParams } from "react-router-dom";
 
 // import components
 import Card from "./components/cards/Card";
@@ -16,6 +17,14 @@ import QuizMarkChart from "./components/quiz/QuizMarkChart";
 import StartQuizModal from "./components/modals/StartQuizModal";
 
 function Quizzes() {
+  let { subject } = useParams();
+  if (subject) {
+    subject = subject.charAt(0).toUpperCase() + subject.slice(1);
+  }
+  subject = subject ? subject : "Mathematics";
+
+  const [focusedSubject, setFocusedSubject] = useState(subject);
+  console.log(focusedSubject);
   const [isOpen, setIsOpen] = useState(false);
 
   const handleCloseModal = () => {
@@ -69,6 +78,8 @@ function Quizzes() {
       <Box ml={5}>
         <SubjectFilterTabsHeader
           subjects={["Mathematics", "Physics", "Chemistry"]}
+          focusedSubject={focusedSubject}
+          setFocusedSubject={setFocusedSubject}
         />
         <Flex>
           <Box w={850}>
@@ -177,8 +188,8 @@ function Quizzes() {
             <Text color="#666666" fontSize={20} fontWeight="semibold" mb={3}>
               Upcomming Quizzes
             </Text>
-            <Box h={80} overflowY='scroll'>
-            <QuizEventList events={events} mb={2} />
+            <Box h={80} overflowY="scroll">
+              <QuizEventList events={events} mb={2} />
             </Box>
           </Box>
         </Flex>
@@ -195,22 +206,35 @@ function Quizzes() {
                 Previous Quizzes
               </Text>
             </Flex>
-            <Flex justifyContent='center' w="100%">
+            <Flex justifyContent="center" w="100%">
               <Flex flexDirection="column">
-                <PreviousQuizCard value={78} color="#15BD66" />
-                <PreviousQuizCard value={62} color="#FFD466" />
-                <PreviousQuizCard value={95} color="#15BD66" />
+                <PreviousQuizCard subject='Physics' quizname='23-quiz' value={78} color="#15BD66" />
+                <PreviousQuizCard subject='Physics' quizname='23-quiz' value={62} color="#FFD466" />
+                <PreviousQuizCard subject='Physics' quizname='23-quiz' value={95} color="#15BD66" />
               </Flex>
             </Flex>
           </Box>
           <Box mt={2}>
-            <Text mb={2} ml={5} fontSize={20} fontWeight='semibold' color='#666666'>Your Progress</Text>
+            <Text
+              mb={2}
+              ml={5}
+              fontSize={20}
+              fontWeight="semibold"
+              color="#666666"
+            >
+              Your Progress
+            </Text>
             <QuizMarkChart />
           </Box>
         </Flex>
       </Box>
 
-      <StartQuizModal isOpen={isOpen} handleCloseModal={handleCloseModal}/>
+      <StartQuizModal
+        isOpen={isOpen}
+        handleCloseModal={handleCloseModal}
+        subject={focusedSubject.toLowerCase()}
+        quizname="23-quiz"
+      />
     </>
   );
 }
