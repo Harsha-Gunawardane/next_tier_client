@@ -81,6 +81,8 @@ const SidebarAndHeader = ({ userRole }) => {
 		{ icon: AccountCircleIcon, name: 'Profile', value: 'profile', href: '/staff/Profile' },
 		{ icon: ReportProblemIcon, name: 'Complaints', value: 'complaints', href: '/staff/complaints' },
 		{icon: TiDocumentText, name: "Hall Management", value: "hallSchedule", href: "/staff/hall"},
+		{ icon: ReportProblemIcon, name: 'Institute Staffs', value: 'staff-list', href: '/staff/staff-list' },
+		{ icon: ReportProblemIcon, name: 'Student Payments', value: 'payments', href: '/staff/stu-payment' }
 	]
 
 	switch (userRole) {

@@ -27,6 +27,9 @@ import InstStaffComplaintsList from './pages/InstituteStaff/Complaints/Complaint
 import ApproveClass from "./pages/InstituteStaff/ApproveClass";
 import HallList from "./pages/InstituteStaff/HallList";
 import HallSchedule from "./pages/InstituteStaff/HallSchedule";
+import InstStaffStuPayment from './pages/InstituteStaff/StuPayment';
+import InstStaffList from './pages/InstituteStaff/StaffList'
+import AddInstStaff from './pages/InstituteStaff/AddInstStaff';
 
 // tutor components
 // import TutorDashboard from "./pages/student/TutorDashboard";
@@ -97,6 +100,9 @@ function App() {
           <Route path="complaints" element={<InstStaffComplaintsList />} />
           <Route path="hall" element={<HallSchedule/>} />
           <Route path="hall/view" element={<HallList/>} />
+          <Route path="stu-payment" element={<InstStaffStuPayment />} />
+          <Route path="staff-list" element={<InstStaffList />} />
+          <Route path="staff-list/add-inst-staff" element={<AddInstStaff />} />
         </Route> 
 
         {/* <Route element={<RequireAuth allowedRoles={[ROLES.Tutor]} />}> */}
