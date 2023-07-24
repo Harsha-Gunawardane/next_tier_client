@@ -80,7 +80,7 @@ const SidebarAndHeader = ({ userRole }) => {
 		{icon: TiDocumentText, name: "Approve Class", value: "approveClass", href: "/staff/class"},
 		{ icon: AccountCircleIcon, name: 'Profile', value: 'profile', href: '/staff/Profile' },
 		{ icon: ReportProblemIcon, name: 'Complaints', value: 'complaints', href: '/staff/complaints' },
-		{icon: TiDocumentText, name: "Hall Management", value: "hallList", href: "/staff/hall"},
+		{icon: TiDocumentText, name: "Hall Management", value: "hallSchedule", href: "/staff/hall"},
 	]
 
 	switch (userRole) {

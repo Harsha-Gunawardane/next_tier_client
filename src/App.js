@@ -25,18 +25,11 @@ import AddTeacher from "./pages/InstituteStaff/AddTeacher";
 import InstStaffProfile from './pages/InstituteStaff/Profile';
 import InstStaffComplaintsList from './pages/InstituteStaff/Complaints/ComplaintsListView';
 import ApproveClass from "./pages/InstituteStaff/ApproveClass";
+import HallList from "./pages/InstituteStaff/HallList";
+import HallSchedule from "./pages/InstituteStaff/HallSchedule";
 
 // tutor components
 // import TutorDashboard from "./pages/student/TutorDashboard";
-
-// institute syaff components
-// import InstStaffDashboard from "./pages/InstituteStaff/Dashboard";
-// import ViewTeacher from "./pages/InstituteStaff/ViewTeacher";
-// import AddTeacher from "./pages/InstituteStaff/AddTeacher";
-// import InstStaffProfile from './pages/InstituteStaff/Profile';
-// import InstStaffComplaintsList from './pages/InstituteStaff/Complaints/ComplaintsListView';
-// import ApproveClass from "./pages/InstituteStaff/ApproveClass";
-// import HallList from "./pages/InstituteStaff/HallList";
 
 // import layouts
 import Layout from "./layouts/Layout";
@@ -51,13 +44,13 @@ import { ROLES } from "./config/roles";
 
 //Tutor Components
 import TutorDashboard from "./pages/tutor/TutorDashboard";
-import StaffList from "./pages/tutorStaff/staffList";
-import StaffAdd from "./pages/tutorStaff/staffAdd";
+import StaffList from "./pages/TutorStaff/staffList";
+import StaffAdd from "./pages/TutorStaff/staffAdd";
 import McqCategoryPool from "./pages/tutor/mcq/mcqCategoryPool";
 import Mcqs from "./pages/tutor/mcq/mcqs";
 import CreateMcq from "./pages/tutor/mcq/mcqCreate";
 import EditMcq from "./pages/tutor/mcq/mcqEdit";
-import PaperMarking from "./pages/tutorStaff/paperMarking";
+import PaperMarking from "./pages/TutorStaff/paperMarking";
 
 function App() {
   return (
@@ -92,7 +85,7 @@ function App() {
           </Route>
         </Route>
 
-        {/* <Route
+        <Route
           path="staff"
           element={<SidebarAndHeader userRole={"InstituteStaff"} />}
         >
@@ -102,8 +95,9 @@ function App() {
           <Route path="class" element={<ApproveClass/>} />
           <Route path="profile" element={<InstStaffProfile />} />
           <Route path="complaints" element={<InstStaffComplaintsList />} />
-          <Route path="hall" element={<HallList/>} />
-        </Route> */}
+          <Route path="hall" element={<HallSchedule/>} />
+          <Route path="hall/view" element={<HallList/>} />
+        </Route> 
 
         {/* <Route element={<RequireAuth allowedRoles={[ROLES.Tutor]} />}> */}
         <Route path="tutor" element={<SidebarAndHeader userRole={"teacher"} />}>
