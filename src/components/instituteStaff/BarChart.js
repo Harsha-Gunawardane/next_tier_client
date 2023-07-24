@@ -22,10 +22,11 @@ const BarChart = () => {
           text: 'Income',
         },
       },
+       colors: ['#0074D9'],
     },
     series: [
       {
-        name: 'Series 1',
+        name: 'Income',
         data: [90000, 50000, 150000, 120000, 80000],
       },
     ],

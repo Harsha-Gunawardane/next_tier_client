@@ -22,10 +22,11 @@ const LineChart = () => {
           text: 'Number of Students',
         },
       },
+      colors: ['#008080'],
     },
     series: [
       {
-        name: 'Series 1',
+        name: 'Students',
         data: [800, 750, 600, 825, 875],
       },
     ],

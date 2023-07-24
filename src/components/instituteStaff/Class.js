@@ -1,23 +1,49 @@
 import React from 'react';
-import { List, ListItem, ListIcon, Flex } from '@chakra-ui/react';
-import { MinusIcon } from '@chakra-ui/icons';
+import { List, ListItem, Flex, Box } from '@chakra-ui/react';
 import data from '../../pages/InstituteStaff/data/data';
 
 function Classes() {
+  const scrollbarStyles = `
+  ::-webkit-scrollbar {
+    width: 4px;
+    height: 8px;
+    border-radius: 10px;
+    background-color: #f5f5f5;
+    margin-left: 2px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: #888;
+    border-radius: 8px;
+    border: 1px solid white;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: #555;
+  }
+`;
   return (
-    <List spacing={3}>
-      {data.classes.map((classItem, index) => (
-        <ListItem key={index}>
-          <Flex alignItems="center" flexDirection={['column', 'row']} textAlign={['center', 'left']}>
-            <ListIcon as={MinusIcon} ml={[0, 10]} mr={[0, 10]} mb={[2, 0]} />
-            <div>
-              <div>{`${classItem.subject} - ${classItem.teacher} (${classItem.examYear})`}</div>
-              <div>{classItem.time}</div>
-            </div>
-          </Flex>
-        </ListItem>
-      ))}
-    </List>
+    <List spacing={3} mr="3" height="450px" overflowY="scroll" css={scrollbarStyles}>
+  {data.classes.map((classItem, index) => (
+    <Box key={index} bg="#f2f5f7" mx="25" my="3" borderRadius="lg">
+      <ListItem
+        fontSize="13px"
+        height="85px"
+        pr="5" 
+      >
+        <Flex alignItems="center" flexDirection={['column', 'row']} textAlign={['center', 'left']}>
+          <Box my="2" ml="2">
+            <Box>
+              <strong>{`${classItem.subject} `} {classItem.time}</strong>
+            </Box>
+            <Box fontSize="12px">{` ${classItem.teacher} (${classItem.examYear})`}</Box>
+            <Box fontSize="12px" color="gray.500">{classItem.details}</Box>
+          </Box>
+        </Flex>
+      </ListItem>
+    </Box>
+  ))}
+</List>
   );
 }
 
