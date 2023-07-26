@@ -14,6 +14,7 @@ import {
   import { useDisclosure } from '@chakra-ui/react'
   import { IconButton } from '@chakra-ui/react'
   import { HamburgerIcon ,EditIcon} from '@chakra-ui/icons'
+  
 
  
 
@@ -41,11 +42,11 @@ const Contentedit = (props) => {
       >
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Update Course Details</ModalHeader>
+          <ModalHeader>Update Content Details</ModalHeader>
           <ModalCloseButton />
           <ModalBody pb={6}>
             <FormControl>
-              <FormLabel fontSize='15px'>Thumbnail</FormLabel>
+              <FormLabel fontSize='15px'>Title</FormLabel>
               <Input fontSize='15px' height='40px' ref={initialRef} placeholder='Title' />
             </FormControl>
 
@@ -55,13 +56,24 @@ const Contentedit = (props) => {
             </FormControl>
 
             <FormControl mt={4}>
-              <FormLabel fontSize='15px'>Date</FormLabel>
+              <FormLabel fontSize='15px'>Thumbnail</FormLabel>
+              <Input fontSize='15px' height='40px' ref={initialRef} placeholder='Title' />
+            </FormControl>
+
+            <FormControl mt={4}>
+              <FormLabel fontSize='15px'>Course</FormLabel>
+              <Input fontSize='15px' height='40px' ref={initialRef} placeholder='Title' />
+            </FormControl>
+
+            <FormControl mt={4}>
+              <FormLabel fontSize='15px'>Visibility</FormLabel>
               <Input fontSize='15px' height='40px' ref={initialRef} placeholder='Title' />
             </FormControl>
 
           </ModalBody>
 
           <ModalFooter>
+     
             <Button colorScheme='blue' mr={3} fontSize='18px' height='30px'>
               Save
             </Button>

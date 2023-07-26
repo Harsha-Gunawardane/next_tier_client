@@ -14,11 +14,11 @@ const Coursepackage = (props) => {
   const navigate = useNavigate();
 
   const LoadDetail = (id) => {
-    navigate("/coursepackage/detail/" + id);
+    navigate("/tutor/courses/studypackdetails/" + id);
 }
 
 const Coursecontent = (id) => {
-  navigate("/course/coursecontent/" + id);
+  navigate("/tutor/courses/studypackcontent/" + id);
 }
  
   useEffect(() => {
@@ -38,7 +38,7 @@ const Coursecontent = (id) => {
      <div>
 
 <ChakraProvider>
-<SimpleGrid minChildWidth='300px' maxChildWidth='300px' spacing='40px'>
+<SimpleGrid minChildWidth='300px'  spacing='40px'>
 {coursesdata != null && coursesdata.length>0 ? coursesdata.map(item => (
 
 
@@ -66,7 +66,7 @@ const Coursecontent = (id) => {
       <IconButton onClick={() => { LoadDetail(item.id) }} 
   bg='white'
   aria-label='Search database'
-  ml='140px'
+  ml='180px'
   mt='-2px'
   height='20px'
   width='1%'
@@ -81,7 +81,7 @@ const Coursecontent = (id) => {
   <Divider />
       
     
-      <Button variant='solid' colorScheme='blue' fontSize='15px' width='95%' ml='10px' height='35px' mb='10px'onClick={() => { Coursecontent(item.id) }}>
+      <Button variant='solid' colorScheme='blue' fontSize='15px' width='95%' ml='10px' mt='20px' height='35px' mb='10px'onClick={() => { Coursecontent(item.id) }}>
         View
       </Button>
      

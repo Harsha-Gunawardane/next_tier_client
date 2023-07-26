@@ -1,94 +1,105 @@
 import React from "react";
-
-
 import { Box} from "@chakra-ui/react";
-
-
 import { Progress,Button,Text ,Flex} from '@chakra-ui/react'
 
-import {
- 
-  Heading,
-
-} from "@chakra-ui/react";
-
-import Progressbar from "../../components/student/progressbar";
-
-
-
+import {Heading,} from "@chakra-ui/react";
 
 import { Stack, HStack, VStack } from '@chakra-ui/react'
-
-
-
-
 import { SimpleGrid,ChakraProvider} from '@chakra-ui/react'
 
-import {
-    Table,
-    Thead,
-    Tbody,
-    Tfoot,
-    Tr,
-    Th,
-    Td,
-    TableCaption,
-    TableContainer,
+
+import { Table } from '@mantine/core';
+  import {
+    
+    ListItem,
+   
+    UnorderedList,
   } from '@chakra-ui/react'
+
+  import { CheckCircleIcon} from '@chakra-ui/icons'
+  import { CircularProgress, CircularProgressLabel } from '@chakra-ui/react'
+  import { Divider } from '@chakra-ui/react'
+  import Barchart from "../../components/charts/BarChart"
+
 
 
 const quiz = () => {
+
+  const elements = [
+    { name: 'Thisura', course: 'Physics 2024 Theory', marks: '90', rank: '1' },
+    { name: 'Thisura', course: 'Physics 2024 Theory', marks: '90', rank: '1' },
+    { name: 'Thisura', course: 'Physics 2024 Theory', marks: '90', rank: '1' },
+    { name: 'Thisura', course: 'Physics 2024 Theory', marks: '90', rank: '1' },
+    { name: 'Thisura', course: 'Physics 2024 Theory', marks: '90', rank: '1' },
+    { name: 'Thisura', course: 'Physics 2024 Theory', marks: '90', rank: '1' },
+    { name: 'Thisura', course: 'Physics 2024 Theory', marks: '90', rank: '1' },
+    { name: 'Thisura', course: 'Physics 2024 Theory', marks: '90', rank: '1' },
+    { name: 'Thisura', course: 'Physics 2024 Theory', marks: '90', rank: '1' },
+   
+  ];
+
+  const rows = elements.map((element) => (
+    <tr key={element.name}>
+      <td>{element.name}</td>
+      <td>{element.course}</td>
+      <td>{element.marks}</td>
+      <td>{element.rank}</td>
+    </tr>
+  ));
  
   return (
 
-      <Box overflow='scroll'>
-
+      <Box>
+      
+        
+        <Heading fontSize='25px' mt='5px' ml='10px'>2024 AL Paper Classs-Paper 03 - Analyze</Heading>
 <SimpleGrid spacing={20} minChildWidth='250px'>
 
 </SimpleGrid>
 
 <SimpleGrid spacing={20} minChildWidth='250px'>
 
-<Box bg='white' width={{base:350,lg:500,xl:800}} height='400px' p={4} color='black'>
+<Box bg='white' width={{base:350,lg:500,xl:800}} height='800px' p={4} color='black'>
 
 <HStack spacing='24px' mt='30px'>
-<Box bg='#eee' w='70%' height='110px' p={2} color='black' borderRadius={'10px'} boxShadow='0 3px 10px rgb(0 0 0 / 0.2)'>
+<Box bg='white' w='70%' height='110px' p={2} color='black' borderRadius={'10px'} boxShadow='0 3px 10px rgb(0 0 0 / 0.2)'>
   <Text fontSize='15px'>Highest Mark</Text>
 
   <HStack spacing='24px' mt='20px'>
-  <Box w='60%' h='40px' bg='#eee'>
+  <Box w='60%' h='40px' bg='white'>
   <Heading ml='20px' fontSize='25px'>53</Heading>
   </Box>
-  <Box w='40%' h='40px' bg='#eee'>
+  <Box w='40%' h='40px' bg='white' mt='-20px'>
 
+<CircularProgress value={53} size='50px' />
   </Box>
  
 </HStack>
   
 </Box>
-<Box bg='#eee' w='70%' height='110px' p={2} color='black' borderRadius={'10px'} boxShadow='0 3px 10px rgb(0 0 0 / 0.2)'>
+<Box bg='wwhite' w='70%' height='110px' p={2} color='black' borderRadius={'10px'} boxShadow='0 3px 10px rgb(0 0 0 / 0.2)'>
 <Text fontSize='15px'>Average Mark</Text>
 
 <HStack spacing='24px' mt='20px'>
-<Box w='60%' h='40px' bg='#eee'>
-<Heading ml='20px' fontSize='25px'>53</Heading>
+<Box w='60%' h='40px' bg='white'>
+<Heading ml='20px' fontSize='25px'>43</Heading>
 </Box>
-<Box w='40%' h='40px' bg='#eee'>
-
+<Box w='40%' h='40px' bg='white' mt='-20px'>
+<CircularProgress value={43} size='50px' color='green' />
 </Box>
 
  
 </HStack>
 </Box>
-<Box bg='#eee' w='70%' height='110px' p={2} color='black' borderRadius={'10px'} boxShadow='0 3px 10px rgb(0 0 0 / 0.2)'>
+<Box bg='white' w='70%' height='110px' p={2} color='black' borderRadius={'10px'} boxShadow='0 3px 10px rgb(0 0 0 / 0.2)'>
 <Text fontSize='15px'>Lowest Mark</Text>
 
 <HStack spacing='24px' mt='20px'>
-<Box w='60%' h='40px' bg='#eee'>
-<Heading ml='20px' fontSize='25px'>53</Heading>
+<Box w='60%' h='40px' bg='white'>
+<Heading ml='20px' fontSize='25px'>13</Heading>
 </Box>
-<Box w='40%' h='40px' bg='#eee'>
-
+<Box w='40%' h='40px' bg='white' mt='-20px'>
+<CircularProgress value={13} size='50px' color='red' />
 </Box>
 
  
@@ -96,110 +107,78 @@ const quiz = () => {
 </Box>
 </HStack>
 
-</Box>
 
 
-<Box bg='white' width={{base:200,lg:200,xl:450}} height='420px' p={4} color='black' ml={{base:0,lg:200,xl:120}}>
-<Heading fontSize='20px'>Upcoming Events</Heading>
-<Box bg='#FAEBD7' w='100%' height='100px' p={4} color='black' mt='20px' borderRadius={'10px'} boxShadow='0 3px 10px rgb(0 0 0 / 0.2)'>
+<Box bg='white' width='100%' mt='30px' p={5}>
+      <Heading fontSize='25px' mb='20px'>Students Marks</Heading>
 
-<HStack spacing='24px'>
-  <Box w='60%' h='40px' bg='transparent'>
-<Heading fontSize='20px'>Physics</Heading>
-<Text fontSize='15px'>26th June</Text>
-<Text fontSize='15px'>#25th Quiz</Text>
-  </Box>
-  <Box w='40%' h='40px' bg='transparent'>
-<Text fontSize='15px' p={2}>15.00-18.00</Text>
-  </Box>
- 
-</HStack>
-
-</Box>
-<Box bg='#F0F8FF' w='100%' height='100px' p={4} color='black' mt='20px' borderRadius={'10px'} boxShadow='0 3px 10px rgb(0 0 0 / 0.2)'>
-<HStack spacing='24px'>
-  <Box w='60%' h='40px' bg='transparent'>
-<Heading fontSize='20px'>Physics</Heading>
-<Text fontSize='15px'>26th June</Text>
-<Text fontSize='15px'>#25th Quiz</Text>
-  </Box>
-  <Box w='40%' h='40px' bg='transparent'>
-<Text fontSize='15px' p={2}>15.00-18.00</Text>
-  </Box>
- 
-</HStack>
-</Box>
-<Box bg='#FFF0F5' w='100%' height='100px' p={4} color='black' mt='20px' borderRadius={'10px'} boxShadow='0 3px 10px rgb(0 0 0 / 0.2)'>
-<HStack spacing='24px'>
-  <Box w='60%' h='40px' bg='transparent'>
-<Heading fontSize='20px'>Physics</Heading>
-<Text fontSize='15px'>26th June</Text>
-<Text fontSize='15px'>#25th Quiz</Text>
-  </Box>
-  <Box w='40%' h='40px' bg='transparent'>
-<Text fontSize='15px' p={2}>15.00-18.00</Text>
-  </Box>
- 
-</HStack>
-</Box>
-  
-</Box>
-
-</SimpleGrid>
-
-
-
-
-<SimpleGrid spacing={20} minChildWidth='250px'>
-
-    <Box bg='white' height='400px' mt='-180px' width='120%'>
-
-    <TableContainer>
-  <Table variant='striped' colorScheme='teal'>
-    <TableCaption>Imperial to metric conversion factors</TableCaption>
-    <Thead>
-      <Tr>
-        <Th fontSize='12px'>To convert</Th>
-        <Th fontSize='12px'>into</Th>
-        <Th fontSize='12px' isNumeric>multiply by</Th>
-      </Tr>
-    </Thead>
-    <Tbody>
-      <Tr>
-        <Td fontSize='12px'>inches</Td>
-        <Td fontSize='12px'>millimetres (mm)</Td>
-        <Td fontSize='12px' isNumeric>25.4</Td>
-      </Tr>
-      <Tr>
-        <Td fontSize='12px'>inches</Td>
-        <Td fontSize='12px'>millimetres (mm)</Td>
-        <Td fontSize='12px' isNumeric>25.4</Td>
-      </Tr>
-      <Tr>
-        <Td fontSize='12px'>inches</Td>
-        <Td fontSize='12px'>millimetres (mm)</Td>
-        <Td fontSize='12px' isNumeric>25.4</Td>
-      </Tr>
-    </Tbody>
-  
-  </Table>
-</TableContainer>
+      <Table horizontalSpacing="md" verticalSpacing="sm" fontSize="md" striped highlightOnHover withBorder>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Course</th>
+          <th>Marks</th>
+          <th>Rank</th>
+        </tr>
+      </thead>
+      <tbody>{rows}</tbody>
+    </Table>
 
     </Box>
 
-
-
-<Box bg='white' width={{base:200,lg:200,xl:450}} height='450px' p={10} color='black' ml={{base:0,lg:200,xl:100}}>
-  <Heading fontSize={30}>Your Progress</Heading>
-
-  
 </Box>
+
+
+<Box bg='white' width={{base:200,lg:200,xl:450}}  p={4} color='black' ml={{base:0,lg:200,xl:360}}>
+<Box bg='#F0F8FF'  w='100%' height='190px' p={4} color='black' mt='20px' borderRadius={'10px'} boxShadow='0 3px 10px rgb(0 0 0 / 0.2)'>
+
+<HStack spacing='24px'>
+  <Box w='60%' h='40px' bg='transparent'>
+<Heading fontSize='20px'>Paper 03</Heading>
+<Divider />
+<Heading fontSize='15px' mt='25px'>Paper Type</Heading>
+<Heading fontSize='15px' mt='15px'>No of Questions</Heading>
+<Heading fontSize='15px' mt='15px'>Time</Heading>
+
+  </Box>
+  <Box w='40%' h='40px' bg='transparent'>
+  <Text fontSize='15px' mt='48px'>Paper Type</Text>
+  <Text fontSize='15px' mt='10px'>Paper Type</Text>
+  <Text fontSize='15px' mt='10px'>Paper Type</Text>
+
+  </Box>
+ 
+</HStack>
+
+</Box>
+
+<Heading fontSize='20px' mt='30px'>Related Areas</Heading>
+
+<Box bg='white' mt='10px'>
+<UnorderedList spacing='10px'>
+  <ListItem fontSize='15px' mt='10px'><CheckCircleIcon color='#20B2AA' mr='4px'></CheckCircleIcon>Lorem ipsum dolor sit amet</ListItem>
+  <ListItem  fontSize='15px'><CheckCircleIcon color='#20B2AA' mr='4px'></CheckCircleIcon>Consectetur adipiscing elit</ListItem>
+  <ListItem  fontSize='15px'><CheckCircleIcon color='#20B2AA' mr='4px'></CheckCircleIcon>Integer molestie lorem at massa</ListItem>
+  <ListItem  fontSize='15px'><CheckCircleIcon color='#20B2AA' mr='4px'></CheckCircleIcon>Facilisis in pretium nisl aliquet</ListItem>
+  <ListItem  fontSize='15px'><CheckCircleIcon color='#20B2AA' mr='4px'></CheckCircleIcon>Facilisis in pretium nisl aliquet</ListItem>
+</UnorderedList>
+
+</Box>
+
+<Heading fontSize='20px' mt='30px'>Mark Range</Heading>
+
+
+<Box bg='white' mt='10px'  height='200px'>
+
+<Barchart></Barchart>
+</Box>
+
+</Box>
+
+
 
 </SimpleGrid>
 
-
-
-<br></br>
 
 
 </Box>

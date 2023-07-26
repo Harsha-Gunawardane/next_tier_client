@@ -39,7 +39,7 @@ const Addcoursecontent = (props) => {
       >
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Add Content</ModalHeader>
+          <ModalHeader>Add Video Content</ModalHeader>
           <ModalCloseButton />
 
           <Tabs isFitted variant='enclosed'>

@@ -17,7 +17,7 @@ import axios from 'axios';
 
 
 
-const Videocontent= () => {
+const Addcoursepack= () => {
 
 
 
@@ -325,4 +325,4 @@ const Videocontent= () => {
   );
 }
 
-export default Videocontent;
+export default Addcoursepack;

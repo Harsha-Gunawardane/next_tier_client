@@ -12,10 +12,6 @@ import {
 
 } from "@chakra-ui/react";
 
-import Progressbar from "../../components/student/progressbar";
-
-
-
 
 import { Stack, HStack, VStack } from '@chakra-ui/react'
 
@@ -28,7 +24,7 @@ const quiz = () => {
  
   return (
 
-      <Box overflow='scroll'>
+      <Box width='100%'>
 
 <SimpleGrid spacing={20} minChildWidth='250px'>
 

@@ -35,8 +35,8 @@ const SidebarAndHeader = ({ userRole }) => {
 	];
 
 	const TeacherOptions = [
-		{ icon: GridViewRoundedIcon, name: "Dashboard", value: "dashboard", href: "/dashboard" },
-		{ icon: TiDocumentText, name: "Courses", value: "courses", href: "/courses" },
+		{ icon: GridViewRoundedIcon, name: "Dashboard", value: "dashboard", href: "/teacher/dashboard" },
+		{ icon: TiDocumentText, name: "Courses", value: "courses", href: "/tutor/courses" },
 	];
 
 	const InstStaffOptions = [

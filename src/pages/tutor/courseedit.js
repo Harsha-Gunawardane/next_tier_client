@@ -16,16 +16,16 @@ import {
 } from "@chakra-ui/react";
 import { TimeIcon,CalendarIcon} from '@chakra-ui/icons'
 
-import CourseInclude from "../../components/student/courseInclude";
-import CourseDetails from "../../components/student/courseDetails";
+import CourseInclude from "../../components/tutor/coursedetails/courseInclude";
+import CourseDetails from "../../components/tutor/coursedetails/courseDetails";
 import TutorDetails from "../../components/tutor/tutordetails";
-import Courseeditbutton from "../../components/tutor/courseeditbutton";
-import Courseremove from "../../components/tutor/courseremove";
+import Courseeditbutton from "../../components/tutor/coursedetails/courseeditbutton";
+import Courseremove from "../../components/tutor/coursedetails/courseremove";
 import { useEffect,useState } from "react";
 import { useParams } from "react-router-dom";
 
 
-const Coursepackedit = () => {
+const Courseedit = () => {
 
 
 
@@ -34,7 +34,7 @@ const Coursepackedit = () => {
   const [coursedata, coursedatachange] = useState({});
 
   useEffect(() => {
-      fetch("http://localhost:8000/coursepackage/" + courseid).then((res) => {
+      fetch("http://localhost:8000/courses/" + courseid).then((res) => {
           return res.json();
       }).then((resp) => {
           coursedatachange(resp);
@@ -70,10 +70,12 @@ const Coursepackedit = () => {
                                     
          
     <HStack spacing='24px' mt='20px'>
- 
+    <Box w='50%' h='30px' bg='white'>
+  <Text ml='20px' fontSize='15px'><CalendarIcon mr='4px' mt='-2px'></CalendarIcon>Monday</Text>
+  </Box>
 
   <Box w='50%' h='30px' bg='white'>
-  <Text ml='' fontSize='15px'><TimeIcon mr='4px' mt='-2px'></TimeIcon>20h 20 min</Text>
+  <Text ml='' fontSize='15px'><TimeIcon mr='4px' mt='-2px'></TimeIcon>8.00 a.m. - 5.00 p.m.</Text>
   </Box>
   <Box w='50%' h='30px' bg='white'>
   <Text ml='35px' fontSize='15px'>Rs.{coursedata.price}</Text>
@@ -107,7 +109,7 @@ const Coursepackedit = () => {
 
           <CourseInclude></CourseInclude>
 
-<HStack spacing='30px'> 
+<HStack spacing='30px' mt='20px'> 
 <Courseeditbutton></Courseeditbutton>
 <Courseremove></Courseremove>
 
@@ -125,4 +127,4 @@ const Coursepackedit = () => {
   );
 };
 
-export default Coursepackedit;
+export default Courseedit;

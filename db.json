@@ -66,6 +66,8 @@
       "monthlyfee": "a",
       "id": 6
     }
+   
+ 
   ],
   "coursepackage": [
     {
@@ -83,6 +85,42 @@
         }
       ],
       "id": 1,
+      "imgUrl": "https://www.ufs.ac.za/images/librariesprovider22/default-album/shutterstock_1140894395.jpg?sfvrsn=554a8521_0"
+    },
+    {
+      "name": "Physics 2023 - Theory",
+      "description": "Find Physics stock images in HD and millions of other royalty-free stock photos, illustrations and vectors in the Shutterstock collection. Thousands of new, high-quality pictures added every day",
+      "email": "rp@in.com",
+      "phone": "98899090",
+      "time": "8.00 a.m. - 5.00 p.m.",
+      "day": "Monday",
+      "price": "3500",
+      "active": true,
+      "id": 2,
+      "imgUrl": "https://www.ufs.ac.za/images/librariesprovider22/default-album/shutterstock_1140894395.jpg?sfvrsn=554a8521_0"
+    },
+    {
+      "name": "Physics 2023 - Theory",
+      "description": "Find Physics stock images in HD and millions of other royalty-free stock photos, illustrations and vectors in the Shutterstock collection. Thousands of new, high-quality pictures added every day",
+      "email": "rp@in.com",
+      "phone": "98899090",
+      "time": "8.00 a.m. - 5.00 p.m.",
+      "day": "Monday",
+      "price": "3500",
+      "active": true,
+      "id": 2,
+      "imgUrl": "https://www.ufs.ac.za/images/librariesprovider22/default-album/shutterstock_1140894395.jpg?sfvrsn=554a8521_0"
+    },
+    {
+      "name": "Physics 2023 - Theory",
+      "description": "Find Physics stock images in HD and millions of other royalty-free stock photos, illustrations and vectors in the Shutterstock collection. Thousands of new, high-quality pictures added every day",
+      "email": "rp@in.com",
+      "phone": "98899090",
+      "time": "8.00 a.m. - 5.00 p.m.",
+      "day": "Monday",
+      "price": "3500",
+      "active": true,
+      "id": 2,
       "imgUrl": "https://www.ufs.ac.za/images/librariesprovider22/default-album/shutterstock_1140894395.jpg?sfvrsn=554a8521_0"
     },
     {
@@ -225,5 +263,6 @@
       "phone": "908908767",
       "imgUrl": "https://www.ufs.ac.za/images/librariesprovider22/default-album/shutterstock_1140894395.jpg?sfvrsn=554a8521_0"
     }
+   
   ]
 }

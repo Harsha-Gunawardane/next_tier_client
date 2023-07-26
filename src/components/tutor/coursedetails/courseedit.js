@@ -17,7 +17,7 @@ import {
 import { TimeIcon,CalendarIcon} from '@chakra-ui/icons'
 
 
-import TutorDetails from "../../components/tutor/tutordetails";
+import TutorDetails from "../tutordetails";
 import Courseeditbutton from "../../components/tutor/courseeditbutton";
 import Courseremove from "../../components/tutor/courseremove";
 import { useEffect,useState } from "react";

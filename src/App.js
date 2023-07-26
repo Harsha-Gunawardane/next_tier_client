@@ -12,7 +12,7 @@ import AddTeacher from "./pages/InstituteStaff/AddTeacher";
 import InstStaffProfile from './pages/InstituteStaff/Profile';
 import InstStaffComplaintsList from './pages/InstituteStaff/Complaints/ComplaintsListView';
 import ApproveClass from "./pages/InstituteStaff/ApproveClass";
-import HallList from "./pages/InstituteStaff/HallList";
+
 
 // import auth features
 import PersistLogin from "./features/auth/PersistLogin";
@@ -21,9 +21,19 @@ import RequireAuth from "./features/auth/RequireAuth";
 // student components
 import Settings from "./pages/student/Settings";
 import Dashboard from "./pages/student/Dashboard";
-import Quizzes from "./pages/student/Quizzes";
+
 
 // tutor components
+import TDashboard from "./pages/tutor/dashboard";
+import TCourses from "./pages/tutor/course";
+import Tcontents from "./pages/tutor/contents";
+import Addcourse from "./pages/tutor/addcourse";
+import Addstudypack from "./pages/tutor/addcoursepack";
+import Studypackedit from "./pages/tutor/coursepackageedit";
+import Studypackcontent from "./pages/tutor/coursepackcontent";
+import Coursecontent from "./pages/tutor/courseContent";
+import Courseedit from "./pages/tutor/courseedit";
+
 // import TutorDashboard from "./pages/student/TutorDashboard";
 
 // import layouts
@@ -51,6 +61,7 @@ function App() {
         <Route path="register" element={<Register />} />
         <Route path="verify" element={<UserVerify />} />
         <Route path="forgot-password" element={<ForgottenPassword />} />
+       
 
         {/* we want to protect these routes */}
         <Route element={<PersistLogin />}>
@@ -62,8 +73,14 @@ function App() {
               <Route path="dashboard" element={<Dashboard />} />
               <Route path="courses" element={<Courses />} />
               <Route path="content" element={<Content />} />
-              <Route path="quizzes" element={<Quizzes />} />
               <Route path="settings" element={<Settings />} />
+
+
+         
+            
+          
+
+
             </Route>
           </Route>
         </Route>
@@ -75,27 +92,25 @@ function App() {
           <Route path="class" element={<ApproveClass/>} />
           <Route path="profile" element={<InstStaffProfile />} />
           <Route path="complaints" element={<InstStaffComplaintsList />} />
-          <Route path="hall" element={<HallList/>} />
+          
         </Route>
 
-        {/* <Route element={<RequireAuth allowedRoles={[ROLES.Tutor]} />}> */}
-        {/* <Route path="tutor" element={<SidebarAndHeader userRole={"teacher"} />}>
-          <Route path="dashboard" element={<TutorDashboard />} />
-          <Route path="courses" element={<Courses />} />
-          <Route path="content" element={<Content />} />
 
-          <Route path="staff">
-            <Route index element={<StaffList />} />
-            <Route path="add" element={<StaffAdd />} />
-          </Route>
+        <Route path='tutor' element={<SidebarAndHeader userRole={"tutor"} />}>
+          <Route path="dashboard" element={<TDashboard />} />
+          <Route path="content" element={<Tcontents />} />
+          <Route path="courses/add" element={<Addcourse />} />
+          <Route path="courses" element={<TCourses />} ></Route>
+          <Route path='courses/content/:courseid' element={<Coursecontent />} ></Route>
+          <Route path='courses/details/:courseid' element={<Courseedit />} ></Route>
+          <Route path='courses/studypackcontent/:courseid' element={<Studypackcontent />} ></Route>
+          <Route path='courses/studypackdetails/:courseid' element={<Studypackedit />} ></Route>
+          <Route path="courses/addstudypack" element={<Addstudypack/>} />
+     
+          
+        </Route>
 
-          <Route path="mcqpool">
-            <Route index element={<McqCategoryPool />} />
-            <Route path=":id" element={<Mcqs />}>
-              <Route path="add" element={<CreateMcq />} />
-            </Route>
-          </Route>
-        </Route> */}
+ 
 
         {/* </Route> */}
 

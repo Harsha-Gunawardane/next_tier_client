@@ -1,104 +1,52 @@
 import React from "react";
-import { Card, CardHeader, CardBody, CardFooter,Button,Text,ButtonGroup,Image,Stack,StackDivider,Heading,Divider,SimpleGrid } from '@chakra-ui/react'
-import { CalendarIcon, TimeIcon,AddIcon,EditIcon, WarningIcon } from '@chakra-ui/icons'
-import { ChakraProvider,HStack } from '@chakra-ui/react'
+import course from "../../assets/data/course.js";
+import Coursecomp from "../../components/tutor/coursedetails/course.js";
+import Coursepackage from "../../components/tutor/coursepackage/coursepackage.js";
+import { Tabs, TabList, TabPanels, Tab, TabPanel , SimpleGrid,Box} from '@chakra-ui/react'
+import { ChakraProvider,Button } from '@chakra-ui/react'
 import { useEffect,useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { IconButton,Box } from '@chakra-ui/react'
 
 
-
-const Course = (props) => {
-
-  const[coursesdata,coursesdatachange]=useState(null);
-  const navigate = useNavigate();
-
-  const LoadDetail = (id) => {
-    navigate("/tutor/courses/detail/" + id);
-}
-
-const Coursecontent = (id) => {
-  navigate("/course/coursecontent/" + id);
-}
- 
-  useEffect(() => {
-    fetch("http://localhost:8000/courses").then((res) => {
-        return res.json();
-    }).then((resp) => {
-        coursesdatachange(resp);
-    }).catch((err) => {
-        console.log(err.message);
-    })
-}, [])
+const Courses = () => {
 
  
+
   return (
-     
 
-     <div>
-
-
-<ChakraProvider>
-<SimpleGrid minChildWidth='300px' spacing='40px'>
-{coursesdata != null && coursesdata.length>0 ? coursesdata.map(item => (
-
-
-<Card maxW='lg'>
-  <CardBody>
-    <Image
-      src={item.imgUrl}
-    
-      borderRadius='lg'
-      
-    />
-    <Stack mt='6' spacing='3'>
-      <Heading color='black' fontSize='l'>{item.name}</Heading>
-      <Text color='black' fontSize='12px' >
-      <CalendarIcon></CalendarIcon>  {item.day}
-      </Text>
-      <HStack mt='-4px' spacing='20px'>
-        <Box>
-      <Text color='black'  fontSize='12px' mt='-0px' >
-      <TimeIcon></TimeIcon>  {item.time}
-      </Text>
-      </Box>
-      <Box  width='50px'>
-      <IconButton onClick={() => { LoadDetail(item.id) }} 
-  bg='white'
-  aria-label='Search database'
-  ml='160px'
-  mt='-2px'
-  height='20px'
-  width='1%'
-  fontSize='16px'
-  icon={<EditIcon />}
-/> 
-   </Box>
-      </HStack>
-   
-    </Stack>
-  </CardBody>
-  <Divider />
-      
-    
-      <Button variant='solid' colorScheme='blue' fontSize='15px' mt='15px' width='95%' ml='10px' height='35px' mb='10px'onClick={() => { Coursecontent(item.id) }}>
-        View
-      </Button>
-     
-     
  
 
-</Card>
 
-)): <Box mt='150px' ><Heading fontSize='25px' ml='400px'>No Course Packages Avaliable</Heading>
-<Button colorScheme="blue" width='18%' height='40px' ml='450px' fontSize='15px'>Add Course Package</Button></Box>}
+<Box width='100%' >
+  <Tabs isFitted variant='enclosed' >
+  <TabList mb='1em'>
+    <Tab fontSize='15px'>Course</Tab>
+    <Tab fontSize='15px'>Course Package</Tab>
+  </TabList>
+  <TabPanels>
+    <TabPanel>
 
-</SimpleGrid>
-
+<Link to = {'add'}>Add Course</Link>
+    <SimpleGrid minChildWidth='300px' spacing='40px'>
     
-</ChakraProvider>
-    </div>
+        <Coursecomp></Coursecomp>
+     
+     </SimpleGrid>
+
+    </TabPanel>
+    <TabPanel>
+    <Link to = {'addstudypack'}>Add Study Pack</Link>
+    <SimpleGrid minChildWidth='400px' spacing='40px'>
+
+      <Coursepackage></Coursepackage>
+        </SimpleGrid>
+    </TabPanel>
+  </TabPanels>
+</Tabs>
+
+  </Box>
+   
   );
 };
 
-export default Course;
+export default Courses;

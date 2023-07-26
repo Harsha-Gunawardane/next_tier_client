@@ -1,5 +1,6 @@
 import React from "react";
 import { Card, CardHeader, CardBody, CardFooter,Button,Text,ButtonGroup,Image,Stack,HStack,Heading,Divider,SimpleGrid } from '@chakra-ui/react'
+import { CalendarIcon, TimeIcon,AddIcon, WarningIcon } from '@chakra-ui/icons'
 import { ChakraProvider } from '@chakra-ui/react'
 import { Tabs, TabList, TabPanels, Tab, TabPanel,Box } from '@chakra-ui/react'
 import { useEffect,useState } from "react";
@@ -28,8 +29,7 @@ const Contents = (props) => {
     
 
 <ChakraProvider>
-
-{videodata && videodata.map(item => (
+{videodata  != null && videodata.length>0 ? videodata.map(item => (
 <Card maxW='lg' bg='transparent' boxShadow='none'>
   <CardBody>
     <Image
@@ -41,12 +41,12 @@ const Contents = (props) => {
     />
     <Stack mt='6' spacing='3'>
 
-    <HStack spacing='2px' mt='-20px'>
+    <HStack spacing='2px' mt='-10px'>
     <Image
       
       alt='Green double couch with wooden legs'
-     height='40px'
-      width='40px'
+     height='35px'
+      width='35px'
       borderRadius='50%'
       src={item.imgUrl}
     />
@@ -58,14 +58,14 @@ const Contents = (props) => {
    
  
 </HStack>
-<Text ml='50px' mt='-10px' fontSize='12px' colorScheme="blue">Public</Text>
+<Text ml='50px' mt='-12px' fontSize='12px' colorScheme="blue">Public</Text>
 
 <Text ml='50px' mt='-10px' fontSize='12px' color='grey'>Nilantha Jayasooriya</Text>
 
-<HStack spacing='20px' mt='-18px'>
+<HStack spacing='20px' mt='-10px'>
 <Text ml='50px' fontSize='10px' color='grey'>4.8k views</Text>
 <Text fontSize='10px' color='grey'>1 year ago</Text>
-<Box mt='-20px' ml='100px'><Edit></Edit></Box>
+<Box mt='-20px'><Edit></Edit></Box>
 
     
    
@@ -79,7 +79,9 @@ const Contents = (props) => {
   </CardBody>
 
 </Card>
-))}
+)):<Box mt='150px' ><Heading fontSize='25px' ml='400px'>No Contents Avaliable</Heading>
+<Button colorScheme="blue" width='18%' height='40px' ml='450px' fontSize='15px'>Add contents</Button></Box>
+}
 </ChakraProvider>
    
   );
