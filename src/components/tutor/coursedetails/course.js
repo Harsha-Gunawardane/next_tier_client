@@ -5,6 +5,7 @@ import { ChakraProvider,HStack } from '@chakra-ui/react'
 import { useEffect,useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { IconButton,Box } from '@chakra-ui/react'
+import axios from "axios";
 
 
 
@@ -31,6 +32,13 @@ const Coursecontent = (id) => {
     })
 }, [])
 
+
+
+
+
+
+
+
  
   return (
      
@@ -39,32 +47,32 @@ const Coursecontent = (id) => {
 
 
 <ChakraProvider>
-<SimpleGrid minChildWidth='300px' spacing='40px'>
+<SimpleGrid minChildWidth='300px' spacing='40px' p={5}>
 {coursesdata != null && coursesdata.length>0 ? coursesdata.map(item => (
 
 
 <Card maxW='lg'>
   <CardBody>
     <Image
-      src={item.imgUrl}
+      src={item.thumbnail}
     
       borderRadius='lg'
       
     />
     <Stack mt='6' spacing='3'>
-      <Heading color='black' fontSize='l'>{item.name}</Heading>
+      <Heading color='black' fontSize='l'>{item.title}</Heading>
       <Text color='black' fontSize='12px' >
-      <CalendarIcon></CalendarIcon>  {item.day}
+      <CalendarIcon></CalendarIcon>  {item.startday}
       </Text>
       <HStack mt='-10px'>
       <Text color='black'  fontSize='12px' mt='-0px' >
-      <TimeIcon></TimeIcon>  {item.time}
+      <TimeIcon></TimeIcon>  {item.startday}
       </Text>
 
       <IconButton onClick={() => { LoadDetail(item.id) }} 
   bg='white'
   aria-label='Search database'
-  ml='175px'
+  ml='245px'
   mt='-2px'
   height='20px'
   width='1%'

@@ -18,10 +18,10 @@ const Courses = () => {
 
 
 <Box width='100%' >
-  <Tabs isFitted variant='enclosed' >
-  <TabList mb='1em'>
-    <Tab fontSize='15px'>Course</Tab>
-    <Tab fontSize='15px'>Course Package</Tab>
+  <Tabs isFitted variant='enclosed' colorScheme="blue" >
+  <TabList mb='1em' colorScheme="blue">
+    <Tab fontSize='20px'>Course</Tab>
+    <Tab fontSize='20px'>Course Package</Tab>
   </TabList>
   <TabPanels>
     <TabPanel>

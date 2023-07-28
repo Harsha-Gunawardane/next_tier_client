@@ -21,6 +21,7 @@ const Videocontent= () => {
 
 
 
+  const navigate = useNavigate();
 
 
   const [active, setActive] = useState(0);
@@ -47,6 +48,7 @@ const Videocontent= () => {
 
     },
 
+
     validate: (values) => {
       if (active === 0) {
         return {
@@ -63,19 +65,15 @@ const Videocontent= () => {
 
           
 
-                  medium:
-                  values.medium.trim().length < 1
-                    ? 'Medium is Required'
-                    : null,
 
                     title:
                     values.title.trim().length < 1
-                      ?  'Course Type is Required':values.title.length >25 ? 'Title Too Long' 
+                      ?  'Title is Required':values.title.length >25 ? 'Title Too Long' 
                       : null,
     
                       description:
                       values.description.trim().length < 1
-                        ? 'Language is Required' :values.description.length >75 ? 'Description Too Long' 
+                        ? 'Description is Required' :values.description.length >75 ? 'Description Too Long' 
                         : null,
     
 
@@ -90,13 +88,20 @@ const Videocontent= () => {
 
           grade:
           values.grade.length < 1
-            ? 'Year is Required':    (values.grade < 2023 || values.grade >3000)
-            ? 'Year should be in range 2023 to 3000'
+            ? 'grade is Required':    (values.grade < 2023 || values.grade >3000)
+            ? 'grade should be in range 2023 to 3000'
             : null,
+
             thumbnail:
             values.thumbnail.trim().length < 1
-              ?  'Course Type is Required'
+              ?  'Thumbnail is Required'
               : null,
+
+              
+              medium:
+              values.medium.trim().length < 1
+                ? 'Medium is Required'
+                : null,
                 
 
 
@@ -106,17 +111,17 @@ const Videocontent= () => {
       return {
         hallID:
         values.hallID.trim().length < 1
-          ?  'Course Type is Required'
+          ?  'Hall ID is Required'
           : null,
 
-          starday:
+          startday:
           values.startday.trim().length < 1
-            ? 'Language is Required'
+            ? 'start day is Required'
             : null,
 
             monthlyfee:
             values.monthlyfee.trim().length < 1
-              ? 'Language is Required'
+              ? 'Monthlyfee is Required'
               : null,
       };
     },
@@ -143,9 +148,13 @@ const Videocontent= () => {
       try {
         console.log(form.values)
         // Send the form values to the Firebase Cloud Function using Axios POST request
-        await axios.post('http://localhost:8000/courses', form.values);
+        const response = await axios.post("http://localhost:8000/courses", form.values);
         // Handle success or show a success message to the user
         console.log('Form data submitted successfully!');
+        const newCourseId = response.data.id;
+
+      // Navigate to the new course details page with the new course ID
+      navigate("/tutor/courses/details/" + newCourseId);
       } catch (error) {
         // Handle error or show an error message to the user
         console.error('Error sending data:', error);
@@ -158,6 +167,7 @@ const Videocontent= () => {
 
 
     <Box width='100%' p={10} >
+      <Heading fontSize='30px' ml='450px' mb='40px'>Course Registration</Heading>
           <form className="container" onSubmit={handleSubmit}>
 
            
@@ -212,23 +222,25 @@ const Videocontent= () => {
     { value: 'svelte', label: 'Svelte' },
     { value: 'vue', label: 'Vue' },
   ]}
-/>
+
+  styles={{
+    input: { // Styles for the input element
+     
+      color: 'black',
+      borderRadius: '8px',
+      padding: '10px',
+      height:'60px',
+    },
+    label: { // Styles for the label element
+      fontSize: '16px',
+      fontWeight: 'bold',
+      marginBottom: '5px',
+    },
+ 
+  }}/>
 
 
-<Radio.Group
 
-{...form.getInputProps('medium')}
-      name="favoriteFramework"
-      label="Medium"
-
-      withAsterisk
-    >
-      <Group mt="xs">
-        <Radio value="Sinhala" label="Sinhala" />
-        <Radio value="English" label="English" />
-       
-      </Group>
-    </Radio.Group>
           
      
          
@@ -253,19 +265,107 @@ const Videocontent= () => {
       placeholder="grade"
       label="grade"
     
-    />
+      styles={{
+        input: { // Styles for the input element
+         
+          color: 'black',
+          borderRadius: '8px',
+          padding: '10px',
+          height:'60px',
+        },
+        label: { // Styles for the label element
+          fontSize: '16px',
+          fontWeight: 'bold',
+          marginBottom: '5px',
+        },
+     
+      }}/>
 
-<TextInput label="Thumbnail" placeholder="Title" {...form.getInputProps('thumbnail')} />
+<TextInput label="Thumbnail" placeholder="Title" {...form.getInputProps('thumbnail')}     styles={{
+              input: { // Styles for the input element
+               
+                color: 'black',
+                borderRadius: '8px',
+                padding: '10px',
+                height:'60px',
+              },
+              label: { // Styles for the label element
+                fontSize: '16px',
+                fontWeight: 'bold',
+                marginBottom: '5px',
+              },
+           
+            }}/>
+
+<Radio.Group
+
+{...form.getInputProps('medium')}
+      name="favoriteFramework"
+      label="Medium"
+
+      withAsterisk
+    >
+      <Group mt="xs">
+        <Radio value="Sinhala" label="Sinhala" />
+        <Radio value="English" label="English" />
+       
+      </Group>
+    </Radio.Group>
     
         </Stepper.Step>
 
         <Stepper.Step label="Final step" description="Social media">
 
-        <TextInput label="Monthly Fee" placeholder="Monthly Fee" {...form.getInputProps('monthlyfee')}  />
+        <TextInput label="Monthly Fee" placeholder="Monthly Fee" {...form.getInputProps('monthlyfee')} 
+            styles={{
+              input: { // Styles for the input element
+               
+                color: 'black',
+                borderRadius: '8px',
+                padding: '10px',
+                height:'60px',
+              },
+              label: { // Styles for the label element
+                fontSize: '16px',
+                fontWeight: 'bold',
+                marginBottom: '5px',
+              },
+           
+            }} />
 
-        <TextInput label="Hall ID" placeholder="Hall ID" {...form.getInputProps('hallID')}  />
+        <TextInput label="Hall ID" placeholder="Hall ID" {...form.getInputProps('hallID')} 
+            styles={{
+              input: { // Styles for the input element
+               
+                color: 'black',
+                borderRadius: '8px',
+                padding: '10px',
+                height:'60px',
+              },
+              label: { // Styles for the label element
+                fontSize: '16px',
+                fontWeight: 'bold',
+                marginBottom: '5px',
+              },
+           
+            }} />
 
-        <TextInput label="Start Date" placeholder="Start Date" {...form.getInputProps('startday')}  />
+        <TextInput label="Start Date" placeholder="Start Date" {...form.getInputProps('startday')} 
+            styles={{
+              input: { // Styles for the input element
+               
+                color: 'black',
+                borderRadius: '8px',
+                padding: '10px',
+                height:'60px',
+              },
+              label: { // Styles for the label element
+                fontSize: '16px',
+                fontWeight: 'bold',
+                marginBottom: '5px',
+              },
+           
+            }} />
      
         </Stepper.Step>
 
@@ -273,7 +373,7 @@ const Videocontent= () => {
         <Stepper.Completed>
         <Box>
     <Heading as="h2" fontSize="lg" mb={2}>
-      Completed! Form values:
+      Completed! 
     </Heading>
     <Box>
       <Text>

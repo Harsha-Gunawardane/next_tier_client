@@ -143,7 +143,7 @@ const Addcoursepack= () => {
       try {
         console.log(form.values)
         // Send the form values to the Firebase Cloud Function using Axios POST request
-        await axios.post('http://localhost:8000/courses', form.values);
+        await axios.post('http://localhost:8000/coursepackage', form.values);
         // Handle success or show a success message to the user
         console.log('Form data submitted successfully!');
       } catch (error) {

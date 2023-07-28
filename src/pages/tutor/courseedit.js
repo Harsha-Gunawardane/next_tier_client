@@ -18,6 +18,7 @@ import { TimeIcon,CalendarIcon} from '@chakra-ui/icons'
 
 import CourseInclude from "../../components/tutor/coursedetails/courseInclude";
 import CourseDetails from "../../components/tutor/coursedetails/courseDetails";
+import Add from "../../components/tutor/coursedetails/add";
 import TutorDetails from "../../components/tutor/tutordetails";
 import Courseeditbutton from "../../components/tutor/coursedetails/courseeditbutton";
 import Courseremove from "../../components/tutor/coursedetails/courseremove";
@@ -46,6 +47,16 @@ const Courseedit = () => {
 
 
 
+  const [courseVisibility, setCourseVisibility] = useState({});
+
+  // Function to toggle visibility for a specific course
+  const toggleCourseVisibility = (courseId) => {
+    setCourseVisibility((prevVisibility) => ({
+      ...prevVisibility,
+      [courseId]: !prevVisibility[courseId],
+    }));
+  };
+
   return (
    <Box overflowY='scroll'>
 
@@ -59,26 +70,26 @@ const Courseedit = () => {
             width="100%"
             height='350px'
             objectFit="cover"
-            src="   https://th.bing.com/th/id/OIP.VJQzsb88_Ogu1MFyxA6HxQHaEj?pid=ImgDet&rs=1"
+            src={coursedata.thumbnail}
             alt="Dan Abramov"
           />
           <br></br>
         
 
-        <Heading fontSize='25px'>{coursedata.name}</Heading>
+        <Heading fontSize='25px'>{coursedata.title}</Heading>
         
                                     
          
     <HStack spacing='24px' mt='20px'>
     <Box w='50%' h='30px' bg='white'>
-  <Text ml='20px' fontSize='15px'><CalendarIcon mr='4px' mt='-2px'></CalendarIcon>Monday</Text>
+  <Text ml='20px' fontSize='15px'><CalendarIcon mr='4px' mt='-2px'></CalendarIcon>{coursedata.startday}</Text>
   </Box>
 
   <Box w='50%' h='30px' bg='white'>
   <Text ml='' fontSize='15px'><TimeIcon mr='4px' mt='-2px'></TimeIcon>8.00 a.m. - 5.00 p.m.</Text>
   </Box>
   <Box w='50%' h='30px' bg='white'>
-  <Text ml='35px' fontSize='15px'>Rs.{coursedata.price}</Text>
+  <Text ml='35px' fontSize='15px'>Rs.{coursedata.monthlyfee}</Text>
   </Box>
  
 </HStack>

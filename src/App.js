@@ -63,6 +63,8 @@ function App() {
         <Route path="forgot-password" element={<ForgottenPassword />} />
        
 
+       
+
         {/* we want to protect these routes */}
         <Route element={<PersistLogin />}>
           <Route element={<RequireAuth allowedRoles={[ROLES.Student]} />}>
