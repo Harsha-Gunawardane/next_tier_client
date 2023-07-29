@@ -47,6 +47,9 @@ const Addannouncement = () => {
   
 
 
+ 
+
+
     return (
 
         <>
@@ -66,7 +69,7 @@ const Addannouncement = () => {
 
           <DrawerBody>
          
-          <Input fontSize='15px' placeholder='Heading' />
+            <Input fontSize='15px' placeholder='Heading' />
           
             <Textarea fontSize='15px' mt='10px' placeholder='Message' />
             <Button variant='outline' mr={3} onClick={onClose} fontSize='15px' height='30px' mt='20px'>
@@ -79,9 +82,10 @@ const Addannouncement = () => {
 {announcementdata != null && announcementdata.length>0 ? announcementdata.map(item => (
             <Box bg='white' mt='20px' p={2} boxShadow='0 3px 10px rgb(0 0 0 / 0.2)' borderLeft='6px solid red'>
         <Text fontSize='16px' color='grey'>{item.Heading}</Text>
+        <Text fontSize='12px' color='grey'>{item.message}</Text>
         <HStack mt='8px' spacing='30px'>
-          <Text fontSize='12px'  color='grey'>{item.Date}</Text>
-          <Text fontSize='12px'  color='grey'>{item.Time}</Text>
+          <Text fontSize='12px'  color='grey'>{item.date}</Text>
+          <Text fontSize='12px'  color='grey'>{item.time}</Text>
         </HStack>
       </Box>
       )): <Box mt='10' ml='40px' ><Heading fontSize='15px' color='grey'>No Announcements</Heading>

@@ -36,7 +36,7 @@ const Coursecontentremove = (props) => {
 
   return (
     <>
-      <Button colorScheme='red' onClick={onOpen} height='20px' fontSize='10px' width='60px'>
+      <Button colorScheme='red' onClick={onOpen} height='20px' fontSize='10px' width='70px' p={2}>
         Remove
       </Button>
 

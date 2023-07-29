@@ -11,7 +11,7 @@
       "monthlyfee": "3500",
       "startday": "Monday",
       "id": 1,
-      "type":"Theory"
+      "type": "Theory"
     },
     {
       "grade": 2024,
@@ -24,7 +24,7 @@
       "monthlyfee": "3500",
       "startday": "Monday",
       "id": 2,
-      "type":"Paper"
+      "type": "Paper"
     },
     {
       "grade": 2024,
@@ -331,7 +331,6 @@
       "id": 6
     }
   ],
-
   "paperclasscontent": [
     {
       "title": "Paper 01",
@@ -364,22 +363,37 @@
       "doc": "document",
       "quiz": "quiz",
       "id": 4
+    }
+  ],
+
+  "Announcement": [
+    {
+      "Heading": "Paper 01",
+      "message": "https://www.ufs.ac.za/images/librariesprovider22/default-album/shutterstock_1140894395.jpg?sfvrsn=554a8521_0",
+      "date": "Physics part 01",
+      "time": "document",
+      "id": 1
     },
     {
-      "title": "Paper 05",
-      "video": "https://www.ufs.ac.za/images/librariesprovider22/default-album/shutterstock_1140894395.jpg?sfvrsn=554a8521_0",
-      "videotitle": "Physics part 01",
-      "doc": "document",
-      "quiz": "quiz",
-      "id": 5
+      "Heading": "Paper 01",
+      "message": "https://www.ufs.ac.za/images/librariesprovider22/default-album/shutterstock_1140894395.jpg?sfvrsn=554a8521_0",
+      "date": "Physics part 01",
+      "time": "document",
+      "id": 2
     },
     {
-      "title": "Paper 06",
-      "video": "https://www.ufs.ac.za/images/librariesprovider22/default-album/shutterstock_1140894395.jpg?sfvrsn=554a8521_0",
-      "videotitle": "Physics part 01",
-      "doc": "document",
-      "quiz": "quiz",
-      "id": 6
+      "Heading": "Paper 01",
+      "message": "https://www.ufs.ac.za/images/librariesprovider22/default-album/shutterstock_1140894395.jpg?sfvrsn=554a8521_0",
+      "date": "Physics part 01",
+      "time": "document",
+      "id": 3
+    },
+    {
+      "Heading": "Paper 01",
+      "message": "no classes today",
+      "date": "Physics part 01",
+      "time": "document",
+      "id": 4
     }
   ]
 }

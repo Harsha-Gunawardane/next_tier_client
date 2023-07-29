@@ -28,7 +28,7 @@ const Coursecontent = () => {
 
  
   useEffect(() => {
-    fetch("http://localhost:8000/content").then((res) => {
+    fetch("http://localhost:8000/paperclasscontent").then((res) => {
         return res.json();
     }).then((resp) => {
         coursecontentdatachange(resp);
