@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { SimpleGrid, Box, Flex, Card, CardHeader, CardBody, Input, InputLeftElement, InputGroup, Button } from '@chakra-ui/react';
 import { SearchIcon } from '@chakra-ui/icons';
-import AddHall from '../../components/instituteStaff/AddHall';
-import EditHall from '../../components/instituteStaff/EditHall';
+import AddHall from '../../components/Hall/AddHall';
+import EditHall from '../../components/Hall/EditHall';
 import data from './data/data';
 
 function HallList() {
@@ -46,7 +46,7 @@ function HallList() {
   };
 
   const ButtonStyles = {
-    bg: 'blue.600',
+    bg: '#0074D9',
     height: '40px',
     color: 'white',
     borderRadius: '2',
@@ -85,7 +85,6 @@ function HallList() {
         </Box>
       <Box border="1px solid" borderColor="gray.100" borderRadius="15px">
         
-        {/* Flex container for Search Bar and Add Hall button */}
       <Flex justify="space-between" align="center" mt="5" ml="10" mr="90px">
           {/* Search Bar */}
           <InputGroup>
@@ -107,7 +106,7 @@ function HallList() {
           {/* Add Hall */}
           <AddHall onAddHall={handleAddHall} />
         </Flex>
-
+        
         <Box px="4" mt="5">
           <SimpleGrid columns={{ base: 1, sm: 2, md: 3, lg: 4 }} height="550px" overflowY="scroll" css={scrollbarStyles}>
             {/* Hall list cards */}
