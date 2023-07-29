@@ -34,12 +34,6 @@ const Coursecontent = (id) => {
 
 
 
-
-
-
-
-
- 
   return (
      
 
@@ -65,14 +59,16 @@ const Coursecontent = (id) => {
       <CalendarIcon></CalendarIcon>  {item.startday}
       </Text>
       <HStack mt='-10px'>
-      <Text color='black'  fontSize='12px' mt='-0px' >
+        <Box width='400px' >
+      <Text color='black'  fontSize='12px' mt='-0px'  >
       <TimeIcon></TimeIcon>  {item.startday}
       </Text>
-
+</Box>
+<Box width='100px'>
       <IconButton onClick={() => { LoadDetail(item.id) }} 
   bg='white'
   aria-label='Search database'
-  ml='245px'
+  ml='35px'
   mt='-2px'
   height='20px'
   width='1%'
@@ -80,6 +76,7 @@ const Coursecontent = (id) => {
   icon={<EditIcon />}
 /> 
    
+   </Box>
       </HStack>
    
     </Stack>

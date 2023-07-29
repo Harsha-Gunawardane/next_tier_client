@@ -16,7 +16,7 @@ import {
 } from "@chakra-ui/react";
 
 
-import CourseContent from "../../components/tutor/coursecontent/coursecontent";
+import PaperclassContent from "../../components/tutor/coursecontent/paperclasscontent";
 import Adddate from "../../components/tutor/coursecontent/addmonth";
 import Addmonth from "../../components/tutor/coursecontent/addmonth.js";
 import Announcement from "../../components/tutor/coursecontent/announcement";
@@ -36,9 +36,6 @@ const Coursecontent = () => {
         console.log(err.message);
     })
 }, [])
-
-
-
   return (
    <Box>
 
@@ -49,7 +46,7 @@ const Coursecontent = () => {
       <SimpleGrid spacing={20} minChildWidth="250px">
 
  <Box w="130%" bg="white" p={10} borderRadius="10px" ml="10px">
- <Heading fontSize='30px' mb='30px'>Physics 2024 Theory</Heading>
+ <Heading fontSize='30px' mb='30px'>Physics 2024 Paper</Heading>
  <Hide below='md'>
  <SimpleGrid spacing={2} minChildWidth="250px">
   <Box bg='white' width={{base:160,xl:250}} height={{bae:120,xl:200}}>
@@ -69,7 +66,7 @@ const Coursecontent = () => {
   <Heading fontSize='20px' mt='40px' mb='20px'>Course Content</Heading>
 
  {coursecontentdata?.map((item) => (
-      <CourseContent item={item} key={item.id} />
+      <PaperclassContent item={item} key={item.id} />
     ))}
 
 <Addmonth></Addmonth>

@@ -33,6 +33,7 @@ import Studypackedit from "./pages/tutor/coursepackageedit";
 import Studypackcontent from "./pages/tutor/coursepackcontent";
 import Coursecontent from "./pages/tutor/courseContent";
 import Courseedit from "./pages/tutor/courseedit";
+import PaperclassContent from "./pages/tutor/paperclasscontent";
 
 // import TutorDashboard from "./pages/student/TutorDashboard";
 
@@ -104,6 +105,7 @@ function App() {
           <Route path="courses/add" element={<Addcourse />} />
           <Route path="courses" element={<TCourses />} ></Route>
           <Route path='courses/content/:courseid' element={<Coursecontent />} ></Route>
+          <Route path='courses/paperclasscontent' element={<PaperclassContent />} ></Route>
           <Route path='courses/details/:courseid' element={<Courseedit />} ></Route>
           <Route path='courses/studypackcontent/:courseid' element={<Studypackcontent />} ></Route>
           <Route path='courses/studypackdetails/:courseid' element={<Studypackedit />} ></Route>

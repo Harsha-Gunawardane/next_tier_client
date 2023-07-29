@@ -10,19 +10,21 @@
       "hallID": "01",
       "monthlyfee": "3500",
       "startday": "Monday",
-      "id": 1
+      "id": 1,
+      "type":"Theory"
     },
     {
       "grade": 2024,
       "subject": "react",
       "medium": "Sinhala",
-      "title": "Physics 2024 AL Theory",
+      "title": "Physics 2024 AL Paper",
       "description": "Find Physics stock images in HD and millions of other royalty-free stock photos, illustrations and vectors in the Shutterstock collection. Thousands of new, high-quality pictures added every day",
       "thumbnail": "https://www.ufs.ac.za/images/librariesprovider22/default-album/shutterstock_1140894395.jpg?sfvrsn=554a8521_0",
       "hallID": "01",
       "monthlyfee": "3500",
       "startday": "Monday",
-      "id": 2
+      "id": 2,
+      "type":"Paper"
     },
     {
       "grade": 2024,
@@ -322,6 +324,57 @@
     },
     {
       "title": "2023 July",
+      "video": "https://www.ufs.ac.za/images/librariesprovider22/default-album/shutterstock_1140894395.jpg?sfvrsn=554a8521_0",
+      "videotitle": "Physics part 01",
+      "doc": "document",
+      "quiz": "quiz",
+      "id": 6
+    }
+  ],
+
+  "paperclasscontent": [
+    {
+      "title": "Paper 01",
+      "video": "https://www.ufs.ac.za/images/librariesprovider22/default-album/shutterstock_1140894395.jpg?sfvrsn=554a8521_0",
+      "videotitle": "Physics part 01",
+      "doc": "document",
+      "quiz": "quiz",
+      "id": 1
+    },
+    {
+      "title": "Paper 02",
+      "video": "https://th.bing.com/th/id/OIP.Y8b_hrQjRkgsq1KBqtjrEwHaDt?w=331&h=175&c=7&r=0&o=5&dpr=1.3&pid=1.7",
+      "videotitle": "Physics part 02",
+      "doc": "document",
+      "quiz": "quiz",
+      "id": 2
+    },
+    {
+      "title": "Paper 03",
+      "video": "https://www.ufs.ac.za/images/librariesprovider22/default-album/shutterstock_1140894395.jpg?sfvrsn=554a8521_0",
+      "videotitle": "Physics part 01",
+      "doc": "document",
+      "quiz": "quiz",
+      "id": 3
+    },
+    {
+      "title": "Paper 04",
+      "video": "https://www.ufs.ac.za/images/librariesprovider22/default-album/shutterstock_1140894395.jpg?sfvrsn=554a8521_0",
+      "videotitle": "Physics part 01",
+      "doc": "document",
+      "quiz": "quiz",
+      "id": 4
+    },
+    {
+      "title": "Paper 05",
+      "video": "https://www.ufs.ac.za/images/librariesprovider22/default-album/shutterstock_1140894395.jpg?sfvrsn=554a8521_0",
+      "videotitle": "Physics part 01",
+      "doc": "document",
+      "quiz": "quiz",
+      "id": 5
+    },
+    {
+      "title": "Paper 06",
       "video": "https://www.ufs.ac.za/images/librariesprovider22/default-album/shutterstock_1140894395.jpg?sfvrsn=554a8521_0",
       "videotitle": "Physics part 01",
       "doc": "document",
