@@ -4,21 +4,21 @@ const approvedData = [
     fullName: 'K.P. Nimal Perera',
     subject: 'Chemistry',
     class: '2023 A/L',
-    status: 'approved',
+    status: 'Approved',
   },
   {
     id: 'S102',
     fullName: 'M.L. Sujith Liyanage',
     subject: 'Physics',
     class: '2024 A/L',
-    status: 'approved',
+    status: 'Approved',
   },
   {
     id: 'S103',
     fullName: 'Chithra Kuruppu',
     subject: 'ICT',
     class: '2023 A/L',
-    status: 'approved',
+    status: 'Approved',
   },
 ];
 
@@ -28,21 +28,21 @@ const pendingData = [
     fullName: 'Lahiru Disanayaka',
     subject: 'Biology',
     class: '2024 A/L',
-    status: 'pending',
+    status: 'Pending',
   },
   {
     id: 'S109',
     fullName: 'Ajith Manamperi',
     subject: 'Agriculture',
     class: '2023 A/L',
-    status: 'pending',
+    status: 'Pending',
   },
   {
     id: 'S110',
     fullName: 'Ranga Gunarathna',
     subject: 'Physics',
     class: '2025 A/L',
-    status: 'pending',
+    status: 'Pending',
   },
 ];
 
@@ -52,21 +52,21 @@ const rejectedData = [
     fullName: 'Prabath De Silva',
     subject: 'Accounting',
     class: '2023 A/L',
-    status: 'rejected',
+    status: 'Rejected',
   },
   {
     id: 'S115',
     fullName: 'Mahash Indula',
     subject: 'Physics',
     class: '2025 A/L',
-    status: 'rejected',
+    status: 'Rejected',
   },
   {
     id: 'S116',
     fullName: 'Damayanthi Disanayaka',
     subject: 'ICT',
     class: '2023 A/L',
-    status: 'rejected',
+    status: 'Rejected',
   },
 ];
 

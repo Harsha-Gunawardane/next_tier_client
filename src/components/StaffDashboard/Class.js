@@ -25,14 +25,15 @@ function Classes() {
   return (
     <List spacing={3} mr="3" height="450px" overflowY="scroll" css={scrollbarStyles}>
   {data.classes.map((classItem, index) => (
-    <Box key={index} bg="#f2f5f7" mx="25" my="3" borderRadius="lg">
+    <Box key={index} bg="#f2f5f7" mx="25" my="5" borderRadius="lg">
       <ListItem
         fontSize="13px"
         height="85px"
         pr="5" 
       >
         <Flex alignItems="center" flexDirection={['column', 'row']} textAlign={['center', 'left']}>
-          <Box my="2" ml="2">
+        <Box width={1} height="9.5vh" bg="blue.600" marginTop={1.5} marginLeft={1.5} borderRadius={10}></Box>
+          <Box my="2" ml="3">
             <Box>
               <strong>{`${classItem.subject} `} {classItem.time}</strong>
             </Box>
@@ -48,3 +49,4 @@ function Classes() {
 }
 
 export default Classes;
+                   

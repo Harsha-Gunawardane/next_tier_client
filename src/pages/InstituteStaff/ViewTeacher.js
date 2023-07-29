@@ -128,7 +128,7 @@ function ViewTeacher() {
                   Update
                 </Button>
                 <Button size="sm" ml="5" sx={DeleteStyles}>
-                  Delete
+                  Remove
                 </Button>
               </Td>
             </Tr>

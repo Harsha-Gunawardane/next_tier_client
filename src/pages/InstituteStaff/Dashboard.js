@@ -4,10 +4,10 @@ import { faUser } from '@fortawesome/free-solid-svg-icons';
 import { faChalkboardUser } from "@fortawesome/free-solid-svg-icons";
 import { faBuildingColumns } from "@fortawesome/free-solid-svg-icons";
 import { faChalkboard } from "@fortawesome/free-solid-svg-icons";
-import Complain from "../../components/instituteStaff/Complain";
-import BarChart from "../../components/instituteStaff/BarChart";
-import LineChart from "../../components/instituteStaff/LineChart";
-import Classes from "../../components/instituteStaff/Class";
+import Complain from "../../components/StaffDashboard/Complain";
+import BarChart from "../../components/StaffDashboard/BarChart";
+import LineChart from "../../components/StaffDashboard/LineChart";
+import Classes from "../../components/StaffDashboard/Class";
 
 function Dashboard() {
   const customColors = ["red", "green", "blue", "purple", "black"];
