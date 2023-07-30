@@ -80,6 +80,8 @@ const Login = () => {
 
         if (roles.includes(ROLES.Student)) {
           navigate("/stu/dashboard");
+        } else if (roles.includes(ROLES.Staff)) {
+            navigate("/staff/dashboard");
         } else if (roles.includes(ROLES.Tutor)) {
           navigate("")
         }
