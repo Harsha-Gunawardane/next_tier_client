@@ -12,7 +12,7 @@ import AddTeacher from "./pages/InstituteStaff/AddTeacher";
 import InstStaffProfile from './pages/InstituteStaff/Profile';
 import InstStaffComplaintsList from './pages/InstituteStaff/Complaints/ComplaintsListView';
 import ApproveClass from "./pages/InstituteStaff/ApproveClass";
-import HallList from "./pages/InstituteStaff/HallList";
+// import HallList from "./pages/InstituteStaff/HallList";
 
 // import auth features
 import PersistLogin from "./features/auth/PersistLogin";
@@ -22,6 +22,7 @@ import RequireAuth from "./features/auth/RequireAuth";
 import Settings from "./pages/student/Settings";
 import Dashboard from "./pages/student/Dashboard";
 import Quizzes from "./pages/student/Quizzes";
+import Videocontent from "./pages/student/content";
 
 // tutor components
 // import TutorDashboard from "./pages/student/TutorDashboard";
@@ -37,6 +38,7 @@ import Content from "./components/Content";
 
 import { Routes, Route } from "react-router-dom";
 import { ROLES } from "./config/roles";
+import ContentWatch from "./pages/student/contentWatch";
 
 
 function App() {
@@ -61,7 +63,8 @@ function App() {
             >
               <Route path="dashboard" element={<Dashboard />} />
               <Route path="courses" element={<Courses />} />
-              <Route path="content" element={<Content />} />
+              <Route path="content" element={<Videocontent />} />
+              <Route path="content/:id" element={<ContentWatch />} />
               <Route path="quizzes" element={<Quizzes />} />
               <Route path="settings" element={<Settings />} />
             </Route>
@@ -70,12 +73,12 @@ function App() {
 
         <Route path='staff' element={<SidebarAndHeader userRole={"InstituteStaff"} />}>
           <Route path="dashboard" element={<InstStaffDashboard />} />
-          <Route path="teacher" element={<ViewTeacher/>} />
+          <Route path="teacher" element={<ViewTeacher />} />
           <Route path="teacher/add" element={< AddTeacher />} />
-          <Route path="class" element={<ApproveClass/>} />
+          <Route path="class" element={<ApproveClass />} />
           <Route path="profile" element={<InstStaffProfile />} />
           <Route path="complaints" element={<InstStaffComplaintsList />} />
-          <Route path="hall" element={<HallList/>} />
+          {/* <Route path="hall" element={<HallList />} /> */}
         </Route>
 
         {/* <Route element={<RequireAuth allowedRoles={[ROLES.Tutor]} />}> */}

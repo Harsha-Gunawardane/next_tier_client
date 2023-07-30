@@ -11,19 +11,22 @@ import { icon } from "@fortawesome/fontawesome-svg-core";
 // import ToggleColorMode from "../ToggleColorMode";
 
 // import { SidebarContext } from "../../context/SidebarContext";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 
-const Header = ({ full = false, hidden, setHidden, ...rest }) => {
+const Header = ({ full = false, hidden, setHidden, onOpen, ...rest }) => {
+
+	useEffect(() => {
+		console.log("header rendered")
+	}, []);
 
 
 
 	return (
-		<Flex h="64px" bg="white" justifyContent={"space-between"} alignItems={"center"} borderBottom="1px" borderColor="gray.100" pos={"fixed"} zIndex={"999"} {...rest}>
+		<Flex h="64px" bg="white" justifyContent={"space-between"} alignItems={"center"} zIndex={2} position={"fixed"} {...rest} >
 			<Flex h="100%" justifyContent={"space-between"}>
 				<Flex
 					p={"4px"}
 					h={"100%"}
-					w={"260px"}
 					alignItems={"center"}
 					justifyContent={"space-between"}
 					px="10px"
@@ -40,17 +43,19 @@ const Header = ({ full = false, hidden, setHidden, ...rest }) => {
 						p="10px"
 						display={{ base: "flex", lg: "none" }}
 						onClick={() => {
-							setHidden(!hidden);
+							// setHidden(!hidden);
+							onOpen()
+							console.log("clicked")
 						}}
 					>
 						<BiMenuAltLeft size={"24px"} />
 					</IconButton>
 				</Flex>
 				<Flex alignItems={"Center"}>
-					<FormControl id="search" h="40px" justifyContent={"center"} alignItems={"center"} display={"none"}>
-						<InputGroup borderColor="#E0E1E7" h={"40px"}>
+					<FormControl id="search" h="56px" justifyContent={"center"} alignItems={"center"} display={"none"}>
+						<InputGroup borderColor="#E0E1E7" h={"100%"}>
 							<InputLeftElement pointerEvents="none" children={<HiSearch h="30px" color="gray.100" />} h={"max-content"} w={"max-content"} p="5px" />
-							<Input variant="filled" placeholder="Search" size="xs" borderRadius={"10px"} />
+							<Input variant="filled" placeholder="Search" size="lg" borderRadius={"2px"} />
 						</InputGroup>
 					</FormControl>
 				</Flex>

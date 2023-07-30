@@ -62,13 +62,13 @@ const Dashboard = () => {
 					</GridItem>
 				</SimpleGrid>
 				<SimpleGrid columns={{ base: 1, md: 2, lg: 2 }} gap="20px" mt="10px">
-					<GridItem colSpan={{ base: 1, md: 1, lg: 1 }} >
+					<GridItem colSpan={{ base: 1, md: 2, lg: 1 }} >
 						<Text fontSize={sectionTitleFontSize} fontWeight={"600"} mb="10px">
 							Grade Analysis
 						</Text>
 						<GradeAnalysis />
 					</GridItem>
-					<GridItem colSpan={{ base: 1, md: 1, lg: 1 }} >
+					<GridItem colSpan={{ base: 1, md: 2, lg: 1 }} >
 						<Text fontSize={sectionTitleFontSize} fontWeight={"600"} mb="10px">
 							Upcoming Classes
 						</Text>

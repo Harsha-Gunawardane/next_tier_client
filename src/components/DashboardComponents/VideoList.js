@@ -6,12 +6,16 @@ import React from "react";
 import Video from "./Video";
 
 export default function VideoList(props) {
-	const { videos, ...rest } = props;
+	const { videos, thumbnailSize, gap = "5px", ...rest } = props;
 
 	return (
-		<Flex direction={"column"} mb={{ base: "0px", "2xl": "20px" }} gap="5px" overflow={"scroll"} p="5px">
+		<Flex direction={"column"} mb={{ base: "0px", "2xl": "20px" }} gap={gap} p="5px" w="100%">
 			{videos.map((video, index) => (
-				<Video key={index} title={video.title} tutor={video.tutor} time={video.time} link={video.link} image={video.image} viewcount={video.viewcount} uploadDateTime={video.uploadDateTime} />
+				<Video
+					key={index}
+					thumbnailSize={thumbnailSize}
+					{...video}
+				/>
 			))}
 		</Flex>
 	);

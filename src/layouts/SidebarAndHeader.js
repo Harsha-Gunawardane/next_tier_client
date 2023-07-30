@@ -2,10 +2,12 @@ import { Outlet } from "react-router-dom";
 import Header from "../components/Header/Header";
 import Layout from "./Layout";
 import Sidebar from "../components/Sidebar/Sidebar";
+import ResponsiveSidebar from "../components/Sidebar/ResponsiveSidebar";
+
 import { SidebarProvider, SidebarContext } from "../context/SidebarContext";
 import { useContext, useEffect, useState } from "react";
 
-import { Box, Flex } from "@chakra-ui/react";
+import { Box, Flex, Grid, GridItem, useDisclosure } from "@chakra-ui/react";
 
 //icons
 import GridViewRoundedIcon from "@mui/icons-material/GridViewRounded";
@@ -18,13 +20,25 @@ import ReportProblemIcon from "@mui/icons-material/ReportProblem";
 const SidebarAndHeader = ({ userRole }) => {
 	//get width of sidebar component and set to state
 	const [sidebarWidth, setSidebarWidth] = useState("");
-	const [hidden, setHidden] = useState(false);
+	const { isOpen, onOpen, onClose } = useDisclosure();
+	const [hidden, setHidden] = useState(isOpen);
+	const [minimized, setMinimized] = useState({ base: false, md: true, lg: false });
 
 	useEffect(() => {
 		const width = window.getComputedStyle(document.getElementById("Sidebar")).width;
 		setSidebarWidth(width);
 		console.log(sidebarWidth);
 	}, [sidebarWidth]);
+
+	const setTemplateColumns = (minimized) => {
+		var templateColumns = { base: "0 1fr", md: "260px 1fr", lg: "260px 1fr" };
+		if (minimized.md) {
+			templateColumns.md = "64px 1fr";
+		} else if (minimized.lg) {
+			templateColumns.lg = "64px 1fr";
+		}
+		return templateColumns;
+	}
 
 	var Options = [];
 
@@ -42,10 +56,10 @@ const SidebarAndHeader = ({ userRole }) => {
 	const InstStaffOptions = [
 		{ icon: GridViewRoundedIcon, name: 'Dashboard', value: 'dashboard', href: '/staff/dashboard' },
 		{ icon: FaCompass, name: "View Teacher", value: "viewTeacher", href: "/staff/teacher" },
-		{icon: TiDocumentText, name: "Approve Class", value: "approveClass", href: "/staff/class"},
+		{ icon: TiDocumentText, name: "Approve Class", value: "approveClass", href: "/staff/class" },
 		{ icon: AccountCircleIcon, name: 'Profile', value: 'profile', href: '/staff/Profile' },
 		{ icon: ReportProblemIcon, name: 'Complaints', value: 'complaints', href: '/staff/complaints' },
-		{icon: TiDocumentText, name: "Hall Management", value: "hallList", href: "/staff/hall"},
+		{ icon: TiDocumentText, name: "Hall Management", value: "hallList", href: "/staff/hall" },
 	]
 
 	switch (userRole) {
@@ -67,29 +81,56 @@ const SidebarAndHeader = ({ userRole }) => {
 
 	return (
 		// <SidebarProvider>
-		<Box
-			sx={{
-				"&::-webkit-scrollbar": {
-					width: "16px",
-					borderRadius: "8px",
-					backgroundColor: `rgba(0, 0, 0, 0.05)`,
-				},
-				"&::-webkit-scrollbar-thumb": {
-					backgroundColor: `rgba(0, 0, 0, 0.05)`,
-				},
-			}}
+		// <Box
+		// 	sx={{
+		// 		"&::-webkit-scrollbar": {
+		// 			width: "16px",
+		// 			borderRadius: "8px",
+		// 			backgroundColor: `rgba(0, 0, 0, 0.05)`,
+		// 		},
+		// 		"&::-webkit-scrollbar-thumb": {
+		// 			backgroundColor: `rgba(0, 0, 0, 0.05)`,
+		// 		},
+		// 	}}
+		// 	h="100vh"
+		// 	w="100vw"
+		// >
+		// 	<Sidebar Options={Options} minimized={{ base: false, md: true, lg: false }} setSidebarWidth={setSidebarWidth} hidden={hidden} setHidden={setHidden} />
+		// 	<Box ml={{ base: "0", lg: sidebarWidth }} w={{ base: "100vw", lg: "calc(100vw - " + sidebarWidth + ")" }} h={"100vh"}>
+		// 		<Header w={{ base: "100%", lg: "calc(100% - " + sidebarWidth + ")" }} hidden={hidden} setHidden={setHidden} />
+		// 		<Flex pt={"64px"}>
+		// 			<Outlet />
+		// 		</Flex>
+		// 	</Box>
+		// </Box>
+
+		<Grid
+			templateAreas={`'sidebar main'`}
+			templateColumns={
+				// minimized ? { base: "0 1fr", md: "64px 1fr", lg: "64px 1fr" } : { base: "0 1fr", md: "260px 1fr", lg: "260px 1fr" }
+				setTemplateColumns(minimized)
+			}
+			// templateRows={"64px 1fr"}
 			h="100vh"
 			w="100vw"
+			overflow={"hidden"}
+			// position={"fixed"}
+			position={"relative"}
+			overscrollBehaviorY={"none"}
+			transition={"all 0.5s ease"}
 		>
-			<Sidebar Options={Options} minimized={{ base: false, md: true, lg: false }} setSidebarWidth={setSidebarWidth} hidden={hidden} setHidden={setHidden} />
-			<Box ml={{ base: "0", lg: sidebarWidth }} w={{ base: "100vw", lg: "calc(100vw - " + sidebarWidth + ")" }} h={"100vh"}>
-				<Header w={{ base: "100%", lg: "calc(100% - " + sidebarWidth + ")" }} hidden={hidden} setHidden={setHidden} />
-				<Flex pt={"64px"}>
-					<Outlet />
-				</Flex>
-			</Box>
-		</Box>
-
+			<GridItem area="sidebar" as={"aside"} h="100vh" maxWidth={"260px"} transition={"all 0.5s ease"}>
+				<ResponsiveSidebar Options={Options} minimized={minimized} setMinimized={setMinimized} setSidebarWidth={setSidebarWidth} hidden={hidden} setHidden={setHidden} open={isOpen} onOpening={onOpen} close={onClose} />
+			</GridItem>
+			<GridItem area="main" as={"main"} position={"relative"} overflowY={"auto"} overscrollBehavior={"none"} transition={"all 0.5s ease"} sx={{ "clip-path": "inset(0 0 0 0)" }}>
+				<Header w={{ base: "100vw", lg: "calc(100vw - " + sidebarWidth + ")" }} hidden={hidden} setHidden={setHidden} right={0} onOpen={onOpen} transition={"width 0.5s ease"} />
+				<Box h={"100vh"} pt="64px" >
+					<Flex >
+						<Outlet />
+					</Flex>
+				</Box>
+			</GridItem>
+		</Grid >
 	);
 };
 
