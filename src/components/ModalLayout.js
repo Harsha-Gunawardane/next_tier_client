@@ -7,11 +7,11 @@ import {
   ModalContent,
 } from "@chakra-ui/react";
 
-const ModalLayout = ({isOpen, title, body, footer, handleCloseModal}) => {
+const ModalLayout = ({isOpen, title, body, footer, handleCloseModal, isCloseable=true}) => {
   
 
   return (
-    <Modal isOpen={isOpen} onClose={handleCloseModal} size="lg">
+    <Modal isOpen={isOpen} onClose={handleCloseModal} size="lg" closeOnOverlayClick={isCloseable}>
       <ModalOverlay />
       <ModalContent>
         <ModalHeader>{title}</ModalHeader>

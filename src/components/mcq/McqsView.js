@@ -8,25 +8,38 @@ import {
   FormLabel,
   HStack,
 } from "@chakra-ui/react";
-import { ActionIcon } from "@mantine/core";
+import { ActionIcon, ScrollArea } from "@mantine/core";
 
 import { IconPencil, IconTrash } from "@tabler/icons-react";
+import { NavLink } from "react-router-dom";
 
 
 export default function McqsView({ mcqs , handleDeleteMcq }) {
   return (
-    <Accordion defaultIndex={[0]} allowMultiple margin="10px">
+    <Accordion
+      defaultIndex={[0]}
+      allowMultiple
+      margin="10px"
+      padding="10px"
+      maxH="500px"
+      overflowY="auto"
+    >
       {mcqs.map((mcq) => (
         <AccordionItem key={mcq.id}>
           <h2>
-            <AccordionButton>
-              <Box as="span" flex="1" textAlign="left">
-                <FormLabel>{mcq.question}</FormLabel>
+            <AccordionButton _expanded={{ bg: "gray.200" }}>
+              <Box as="span" flex="1" textAlign="left" pt="8px">
+                <FormLabel>{`${mcq.id}) ${mcq.question}`}</FormLabel>
               </Box>
               <ActionIcon>
-                <IconPencil size="1.2rem" stroke={1.3} />
+                <NavLink to={`${mcq.id}/edit`}>
+                  <IconPencil size="1.2rem" stroke={1.3} />
+                </NavLink>
               </ActionIcon>
-              <ActionIcon style={{ color: "red" }} onClick={() =>handleDeleteMcq(mcq.id)}>
+              <ActionIcon
+                style={{ color: "red" }}
+                onClick={() => handleDeleteMcq(mcq.id)}
+              >
                 <IconTrash size="1.2rem" stroke={1.3} />
               </ActionIcon>
               <AccordionIcon size="1.2rem" stroke={1.3} />

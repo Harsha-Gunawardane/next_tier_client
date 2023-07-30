@@ -10,9 +10,9 @@ import {
 } from "@chakra-ui/react";
 import { AddIcon } from "@chakra-ui/icons";
 
-import PersonalInfo from "./components/PersonalInfo";
-import GuardianInfo from "./components/GuardianInfo";
-import SecurityInfo from "./components/SecurityInfo";
+import PersonalInfo from "./components/settings/PersonalInfo";
+import GuardianInfo from "./components/settings/GuardianInfo";
+import SecurityInfo from "./components/settings/SecurityInfo";
 
 import Profile from "../../assests/images/profile.jpg";
 import ModalLayout from "../../components/ModalLayout";

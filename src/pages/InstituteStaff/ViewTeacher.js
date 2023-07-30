@@ -1,87 +1,190 @@
 import React, { useState } from 'react';
-import { Table, Thead, Tbody, Tr, Th, Td, TableContainer, Button, Image, Heading, Flex, Modal, ModalOverlay, ModalContent, ModalHeader, ModalBody, ModalCloseButton, ModalFooter } from '@chakra-ui/react';
+import {
+  Table,
+  Thead,
+  Tbody,
+  Tr,
+  Th,
+  Td,
+  TableContainer,
+  Button,
+  Heading,
+  Flex,
+  Avatar,
+  Text,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  Box,
+  ModalBody,
+  ModalFooter,
+  ModalCloseButton,
+  Textarea,
+  FormControl,
+  FormLabel,
+  Input,
+} from '@chakra-ui/react';
 import { NavLink } from 'react-router-dom';
 import data from './data/data';
 
 function ViewTeacher() {
-  
-  const ButtonStyles = {
-    backgroundColor: 'blue.400',
+  const getButtonStyles = (backgroundColor) => ({
+    backgroundColor: `${backgroundColor}.500`,
     color: 'white',
-    borderRadius: '5px',
+    borderRadius: '4px',
     _hover: {
-      backgroundColor: 'blue.300',
+      backgroundColor: `${backgroundColor}.300`,
     },
+  });
+
+  const ButtonStyles = getButtonStyles('blue');
+  const UpdateStyles = getButtonStyles('green');
+  const DeleteStyles = getButtonStyles('red');
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [fullName, setFullName] = useState('');
+  const [address, setAddress] = useState('');
+  const [phoneNo, setPhoneNo] = useState('');
+  const [stream, setStream] = useState('');
+  const [subject, setSubject] = useState('');
+  const [qualification, setQualification] = useState('');
+
+  const openModal = (teacher) => {
+    setFullName(teacher.fullName);
+    setAddress(teacher.address);
+    setPhoneNo(teacher.phoneNo);
+    setStream(teacher.stream);
+    setSubject(teacher.subject);
+    setQualification(teacher.qualification);
+    setIsModalOpen(true);
   };
 
-  const [selectedTeacher, setSelectedTeacher] = useState(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  function handleViewClick(teacher) {
-    setSelectedTeacher(teacher);
-    setIsModalOpen(true);
-  }
-
-  function closeModal() {
+  const closeModal = () => {
     setIsModalOpen(false);
-  }
+  };
+
+  const handleUpdate = () => {
+   
+    // Close the modal
+    setIsModalOpen(false);
+  };
 
   return (
-    <TableContainer width="1500px" height="500px" px="120px" py="60px" >
-      <Flex justify="space-between" align="center" mb="4">
-        <Heading as="h1" size="lg" mb="10">Registered Teachers</Heading>
+    <TableContainer width="1500px" height="500px" px="40px" py="30px">
+      <Flex justify="space-between" align="center" mb="5" mr="80px">
+        <Heading marginLeft={13} fontSize={20} color="#242424">
+          Registered Teachers
+        </Heading>
+
         <NavLink to="add">
-          <Button size="md" sx={ButtonStyles} mb="4"> Add Teacher </Button>
+          <Button size="md" sx={ButtonStyles}>
+            Add Teacher
+          </Button>
         </NavLink>
       </Flex>
 
-      <Table >
+      <Table border="0.05px solid #DAE6F0">
         <Thead>
           <Tr>
-            <Th fontSize='md' fontWeight='bold'>ID</Th>
-            <Th fontSize='md' fontWeight='bold'>Full Name</Th>
-            <Th fontSize='md' fontWeight='bold'>Subject</Th>
-            <Th fontSize='md' fontWeight='bold'>View</Th>
+            <Th fontSize="md" fontWeight="bold">
+              ID
+            </Th>
+            <Th fontSize="md" fontWeight="bold">
+              Profile
+            </Th>
+            <Th fontSize="md" fontWeight="bold">
+              Stream
+            </Th>
+            <Th fontSize="md" fontWeight="bold">
+              Subject
+            </Th>
+            <Th fontSize="md" fontWeight="bold" paddingLeft={20}>
+              Action
+            </Th>
           </Tr>
         </Thead>
         <Tbody>
           {data.viewTeacher.map((teacher) => (
             <Tr key={teacher.id}>
-              <Td>{teacher.id}</Td>
-              <Td>{teacher.fullName}</Td>
-              <Td>{teacher.subject}</Td>
+              <Td fontSize={13}>{teacher.id}</Td>
               <Td>
-                <Button size='md' sx={ButtonStyles} onClick={() => handleViewClick(teacher)}>View</Button>
+                <Flex gap={4}>
+                  <Avatar src={teacher.profileImage} />
+                  <Text fontSize={13} marginTop={4}>
+                    {teacher.fullName}
+                  </Text>
+                </Flex>
+              </Td>
+              <Td fontSize={13}>{teacher.stream}</Td>
+              <Td fontSize={13}>{teacher.subject}</Td>
+              <Td>
+                <Button
+                  size="sm"
+                  colorScheme="green"
+                  sx={UpdateStyles}
+                  onClick={() => openModal(teacher)}
+                >
+                  Update
+                </Button>
+                <Button size="sm" ml="5" sx={DeleteStyles}>
+                  Remove
+                </Button>
               </Td>
             </Tr>
           ))}
         </Tbody>
       </Table>
 
-      {isModalOpen && (
-        <Modal isOpen={isModalOpen} onClose={closeModal} size="xl">
-          <ModalOverlay />
-          <ModalContent  padding="20px" border="2px solid" borderColor="gray.300">
-            <ModalHeader>Teacher Details</ModalHeader>
-            <ModalCloseButton />
-            <ModalBody sx={{ background: 'gray.100', padding: '20px', borderRadius:'15' }}>
-            <Flex alignItems="center" mb="4">
-                <Image src={selectedTeacher.profileImage} alt="Profile Image" boxSize="100px" objectFit="cover" mr="4" />
-                <div>
-                  <p style={{ marginBottom: '10px' }}>ID Number: {selectedTeacher.id}</p>
-                  <p style={{ marginBottom: '10px' }}>Name: {selectedTeacher.fullName}</p>
-                  <p style={{ marginBottom: '10px' }}>Email Address: {selectedTeacher.email}</p>
-                  <p style={{ marginBottom: '10px' }}>Subject: {selectedTeacher.subject}</p>
-                </div>
-              </Flex>
+      {/* Modal for updating teacher profile */}
+      <Modal isOpen={isModalOpen} onClose={closeModal} size="3xl">
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Update Teacher Profile</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <Flex justifyContent="space-between">
+              <Box flex="1" mr="4">
+                <FormControl mb="4">
+                  <FormLabel>Profile Name</FormLabel>
+                  <Input value={fullName} onChange={(e) => setFullName(e.target.value)} />
+                </FormControl>
+                <FormControl mb="4">
+                  <FormLabel>Address</FormLabel>
+                  <Input value={address} onChange={(e) => setAddress(e.target.value)} />
+                </FormControl>
+                <FormControl mb="4">
+                  <FormLabel>Phone</FormLabel>
+                  <Input value={phoneNo} onChange={(e) => setPhoneNo(e.target.value)} />
+                </FormControl>
+              </Box>
 
-            </ModalBody>
-            <ModalFooter>
-            <Button ml="2" sx={ButtonStyles} onClick={closeModal}> Cancel </Button>
-          </ModalFooter>
-          </ModalContent>
-        </Modal>
-      )}
+              <Box flex="1" ml="4">
+                <FormControl mb="4">
+                  <FormLabel>Stream</FormLabel>
+                  <Input value={stream} onChange={(e) => setStream(e.target.value)} />
+                </FormControl>
+                <FormControl mb="4">
+                  <FormLabel>Subject</FormLabel>
+                  <Input value={subject} onChange={(e) => setSubject(e.target.value)} />
+                </FormControl>
+                <FormControl>
+                  <FormLabel>Qualification</FormLabel>
+                  <Textarea value={qualification} onChange={(e) => setQualification(e.target.value)} />
+                </FormControl>
+              </Box>
+            </Flex>
+          </ModalBody>
+          <ModalFooter>
+            <Button colorScheme="blue" mr={3} onClick={handleUpdate}>
+              Update
+            </Button>
+            <Button colorScheme="blue" onClick={closeModal} mr={3}>
+              Close 
+              </Button>
+            </ModalFooter>
+        </ModalContent>
+      </Modal>
     </TableContainer>
   );
 }
