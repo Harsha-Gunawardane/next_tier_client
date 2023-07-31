@@ -1,12 +1,7 @@
 import { Box, Text, Flex } from "@chakra-ui/react";
+import React from "react";
 
-function DoneQuizCard({
-  time,
-  questionname,
-  linecolor,
-  bgcolor,
-  mb,
-}) {
+const DoneQuizCard = React.memo(({ i, time, questionname, linecolor, bgcolor, mb, onClick }) => {
   return (
     <Flex
       mb={mb}
@@ -15,7 +10,8 @@ function DoneQuizCard({
       bg={bgcolor}
       borderRadius={8}
       alignItems="center"
-      cursor='pointer'
+      cursor="pointer"
+      onClick={onClick} // Use the passed click event handler
     >
       <Box h="85%" w={1.5} mr={4} ml={2} borderRadius={5} bg={linecolor} />
       <Box>
@@ -30,6 +26,6 @@ function DoneQuizCard({
       </Box>
     </Flex>
   );
-}
+});
 
 export default DoneQuizCard;
