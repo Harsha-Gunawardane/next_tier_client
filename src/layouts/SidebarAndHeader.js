@@ -79,7 +79,7 @@ const SidebarAndHeader = ({ userRole }) => {
 		{ icon: GridViewRoundedIcon, name: 'Dashboard', value: 'dashboard', href: '/staff/dashboard' },
 		{ icon: FaCompass, name: "View Teacher", value: "viewTeacher", href: "/staff/teacher" },
 		{icon: TiDocumentText, name: "Approve Class", value: "approveClass", href: "/staff/class"},
-		{ icon: AccountCircleIcon, name: 'Profile', value: 'profile', href: '/staff/Profile' },
+		{ icon: AccountCircleIcon, name: 'Profile', value: 'profile', href: '/staff/my-profile' },
 		{ icon: ReportProblemIcon, name: 'Complaints', value: 'complaints', href: '/staff/complaints' },
 		{icon: TiDocumentText, name: "Hall Management", value: "hallSchedule", href: "/staff/hall"},
 		{ icon: FaUserAlt, name: 'Institute Staffs', value: 'staff-list', href: '/staff/staff-list' },

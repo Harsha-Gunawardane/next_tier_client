@@ -16,6 +16,7 @@ import {
   useDisclosure
 } from '@chakra-ui/react';
 import data from "./data/data.json";
+import { Link } from "react-router-dom";
 const payments = data.Payments;
 
 
@@ -63,9 +64,9 @@ function StuPayment() {
         <Heading fontSize={20} color="#242424" mb={4}>
           Student Class Payment
         </Heading>
-        <Button size="sm" mr={4} mt={4} colorScheme='blue'>
+       <Link to="/staff/payment-history"><Button size="sm" mr={4} mt={4} colorScheme='blue'>
           View Payment History
-        </Button>
+        </Button></Link> 
       </Flex>
 
       <Grid templateColumns="repeat(8, 1fr)" gap={6} marginBottom={5}>

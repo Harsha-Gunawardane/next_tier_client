@@ -9,9 +9,12 @@ import {
   Input,
   Select,
   SimpleGrid,
-  Spacer
+  Spacer,
+  Badge
 } from '@chakra-ui/react';
 import data from './data/data.json';
+import { useNavigate } from 'react-router-dom';
+
 
 const staffData = data.staffs;
 
@@ -78,6 +81,14 @@ const StaffList = () => {
     }
     return compareValue * (sortOrder === 'asc' ? 1 : -1);
   });
+
+  const navigate = useNavigate();
+
+  const handleViewProfile = (staffId) => {
+    // history.push(`/staff/profile/${staffId}`);
+    // With this:
+navigate(`/staff/profile/${staffId}`);
+  };
 
   return (
 
@@ -147,7 +158,7 @@ const StaffList = () => {
             <Flex paddingLeft={7}>
               <Box>
                 <Text mr="2" fontSize={13} marginTop={2}>
-                  Filter By:
+                  Filter By role:
                 </Text>
               </Box>
               <Box>
@@ -203,7 +214,7 @@ const StaffList = () => {
               p="4"
               shadow="md"
               bg="white"
-              mb="4"
+              mb="1"
               display="flex"
               flexDirection="column"
               alignItems="center"
@@ -215,14 +226,23 @@ const StaffList = () => {
               <Text fontSize={13}>{staff.gender}</Text>
               <Text fontSize={13}>{staff.designation}</Text>
               <Text fontSize={13}>Joined Date: {staff.joinedDate}</Text>
-              <Flex gap={3}>
-                <Button size="sm" colorScheme="blue" marginTop={2}>
-                  View Profile
-                </Button>
-                <Button size="sm"  marginTop={2} colorScheme={staff.acc_status === 'Disabled' ? 'red' : 'green'}>
+              <Flex>
+                {/* <Text fontSize={13} >Account status:</Text> */}
+                <Badge colorScheme={staff.acc_status === 'Disabled' ? 'red' : 'green'} >
                   {staff.acc_status}
-                </Button>
-                </Flex>
+                </Badge>
+              </Flex>
+              {/* <Link to={`/staff/profile/${staff.id}`}><Button size="sm" colorScheme="blue" marginTop={2}>
+                View Profile
+              </Button></Link> */}
+              <Button
+              size="sm"
+              colorScheme="blue"
+              marginTop={2}
+              onClick={() => handleViewProfile(staff.id)}
+            >
+              View Profile
+            </Button>
             </Box>
           ))}
         </SimpleGrid>
