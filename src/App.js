@@ -18,6 +18,14 @@ import QuizDashboard from "./pages/student/QuizDashboard";
 import Quiz from "./pages/student/Quiz";
 import ReviewQuiz from "./pages/student/ReviewQuiz";
 
+// instituteStaff components
+import InstStaffDashboard from "./pages/InstituteStaff/Dashboard";
+import ViewTeacher from "./pages/InstituteStaff/ViewTeacher";
+import AddTeacher from "./pages/InstituteStaff/AddTeacher";
+import InstStaffProfile from './pages/InstituteStaff/Profile';
+import InstStaffComplaintsList from './pages/InstituteStaff/Complaints/ComplaintsListView';
+import ApproveClass from "./pages/InstituteStaff/ApproveClass";
+
 // tutor components
 // import TutorDashboard from "./pages/student/TutorDashboard";
 
@@ -41,6 +49,15 @@ import Content from "./components/Content";
 import { Routes, Route } from "react-router-dom";
 import { ROLES } from "./config/roles";
 
+//Tutor Components
+import TutorDashboard from "./pages/tutor/TutorDashboard";
+import StaffList from "./pages/tutorStaff/staffList";
+import StaffAdd from "./pages/tutorStaff/staffAdd";
+import McqCategoryPool from "./pages/tutor/mcq/mcqCategoryPool";
+import Mcqs from "./pages/tutor/mcq/mcqs";
+import CreateMcq from "./pages/tutor/mcq/mcqCreate";
+import EditMcq from "./pages/tutor/mcq/mcqEdit";
+import PaperMarking from "./pages/tutorStaff/paperMarking";
 
 function App() {
   return (
@@ -89,29 +106,42 @@ function App() {
         </Route> */}
 
         {/* <Route element={<RequireAuth allowedRoles={[ROLES.Tutor]} />}> */}
-        {/* <Route path="tutor" element={<SidebarAndHeader userRole={"teacher"} />}>
+        <Route path="tutor" element={<SidebarAndHeader userRole={"teacher"} />}>
           <Route path="dashboard" element={<TutorDashboard />} />
           <Route path="courses" element={<Courses />} />
           <Route path="content" element={<Content />} />
 
-          <Route path="staff">
-            <Route index element={<StaffList />} />
-            <Route path="add" element={<StaffAdd />} />
-          </Route>
+            <Route path="staff">
+              <Route index element={<StaffList />} />
+              <Route path="add" element={<StaffAdd />} />
+              <Route path="edit" element={<StaffAdd />} />
+            </Route>
 
-          <Route path="mcqpool">
-            <Route index element={<McqCategoryPool />} />
-            <Route path=":id" element={<Mcqs />}>
-              <Route path="add" element={<CreateMcq />} />
+            <Route path="paper">
+              <Route path="marking" element={<PaperMarking />} />
+            </Route>
+
+            <Route path="mcqpool">
+              <Route index element={<McqCategoryPool />} />
+              <Route path=":id" element={<Mcqs />}>
+                <Route path="add" element={<CreateMcq />} />
+              </Route>
+              <Route path=":id/add" element={<CreateMcq />} />
+              <Route path=":id/:id/edit" element={<EditMcq />} />
             </Route>
           </Route>
-        </Route> */}
+          {/* </Route> */}
 
-        {/* </Route> */}
+          {/* <Route element={<RequireAuth allowedRoles={[ROLES.User]} />}>
+            <Route path="user" element={<UserLayout />}>
+              <Route path="profile" element={<UserProfile />} />
+            </Route>
+          </Route> */}
+        </Route>
 
         {/* catch all */}
         <Route path="*" element={<Missing />} />
-      </Route>
+      {/* </Route> */}
     </Routes>
   );
 }
