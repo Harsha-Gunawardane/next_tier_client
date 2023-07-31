@@ -144,11 +144,7 @@ const Register = () => {
 
   return (
     <>
-      <Header
-        message={"Already registered?"}
-        action={"Login"}
-        url={"/login"}
-      />
+      <Header message={"Already registered?"} action={"Login"} url={"/login"} />
 
       <Flex mt={5} gap={10} minW="max-content" justifyContent="center">
         <Image
@@ -192,7 +188,10 @@ const Register = () => {
             </Alert>
             <form onSubmit={handleSubmit}>
               <FormControl>
-                <Flex minW="max-content" gap={10}>
+                <Flex
+                  minW="max-content"
+                  gap={10}
+                >
                   <Box w="50%">
                     <FormLabel
                       fontSize={16}

@@ -22,7 +22,7 @@ function Question({ questionNo, question, options, trace }) {
   };
 
   return (
-    <Box mt={6} ml={12} w={820}>
+    <Box mt={6} ml={12} w='90%' >
       <Text mb={4} fontSize={24} color="#333333" fontWeight="medium">
         {questionNo}
       </Text>

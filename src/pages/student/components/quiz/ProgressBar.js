@@ -1,10 +1,13 @@
-import { Box, Text, Flex } from "@chakra-ui/react";
+import { Box, Text, Flex, useBreakpointValue } from "@chakra-ui/react";
 import { Progress } from "@mantine/core";
 import { AiOutlineCaretDown } from "react-icons/ai";
 
 function ProgressBar({ color, width, value }) {
 
-  let valueWidth = value + 3;
+  const isMobile = useBreakpointValue({ base: true, md: false });
+
+  const additionalWidth = isMobile ? value === 100 ? 6 : 12 : 4
+  let valueWidth = value + additionalWidth;
   valueWidth = valueWidth + "%";
 
   return (

@@ -1,22 +1,23 @@
 import { Button, Flex, Text } from "@chakra-ui/react";
 import ModalLayout from "../../../../components/ModalLayout";
 
-function AlreadyDoneQuizModal({
+function QuizErrorModal({
+  title = "Warning!!",
   quizname,
   handleGoBack,
   isOpen,
+  message,
   handleCloseModal,
 }) {
-  const title = "Quiz is already done!";
+
   const body = (
     <Flex>
       <Text fontSize={14}>{quizname}</Text>
       <Text fontSize={14} ml={3}>
-        is already done.
+        {message}
       </Text>
     </Flex>
   );
-
   const footer = (
     <Flex>
       <Button onClick={handleGoBack}>Go back</Button>
@@ -35,4 +36,4 @@ function AlreadyDoneQuizModal({
   );
 }
 
-export default AlreadyDoneQuizModal;
+export default QuizErrorModal;

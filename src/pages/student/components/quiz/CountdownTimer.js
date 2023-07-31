@@ -40,7 +40,7 @@ function CountdownTimer({time}) {
       direction="column"
       alignItems="center"
       justifyContent="center"
-      bg="#D3F3D2"
+      bg={timeRemaining < 30 ? '#FDE6E6' : '#D3F3D2'}
       ml="10%"
       mr="10%"
       h={14}
@@ -50,7 +50,7 @@ function CountdownTimer({time}) {
         fontSize="3xl"
         fontWeight="semibold"
         textAlign="center"
-        color="#15BD66"
+        color={timeRemaining < 30 ? '#EF7373' : '#15BD66'}
       >
         {formatTime(timeRemaining)}
       </Box>
