@@ -1,10 +1,19 @@
 import { Box, Text, Flex } from "@chakra-ui/react";
 import { useState } from "react";
 
-function SubjectFilterTabsHeader({ subjects, focusedSubject, setFocusedSubject }) {
-
+function SubjectFilterTabsHeader({
+  subjects,
+  focusedSubject,
+  setFocusedSubject,
+}) {
   return (
-    <Flex mb={3} mt={2}>
+    <Flex
+      mb={3}
+      mt={2}
+      ml={{
+        base: 3,
+      }}
+    >
       {subjects.map((subject) => (
         <Box
           cursor="pointer"

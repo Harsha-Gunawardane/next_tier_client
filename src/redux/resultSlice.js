@@ -3,13 +3,9 @@ import { createSlice } from "@reduxjs/toolkit";
 export const resultReducer = createSlice({
   name: "result",
   initialState: {
-    username: null,
     result: [], // Initialize result as an empty array
   },
   reducers: {
-    setUsername: (state, action) => {
-      state.username = action.payload;
-    },
     putResult: (state, action) => {
       const { trace, result } = action.payload;
       console.log(trace + " " + result);
@@ -24,7 +20,6 @@ export const resultReducer = createSlice({
     },    
     reset: () => {
       return {
-        username: null,
         result: [],
       };
     },

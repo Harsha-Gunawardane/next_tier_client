@@ -1,13 +1,18 @@
 import { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { useToast } from "@chakra-ui/react";
 
-import apiData, { answers } from "../pages/student/reviewdata";
+import useAxiosPrivate from "./useAxiosPrivate";
 
 // redux actions
 import * as Action from "../redux/reveiwQuestionSlice";
 
-export const useFetchReviewQuestions = () => {
+const STUDENT_QUIZ_MARKING_URL = "/stu/marking"
+
+export const useFetchReviewQuestions = (subject, quizName) => {
+  const toast = useToast();
   const dispatch = useDispatch();
+  const axiosPrivate = useAxiosPrivate()
 
   const [data, setData] = useState({
     isLoading: false,
@@ -16,27 +21,43 @@ export const useFetchReviewQuestions = () => {
   });
 
   useEffect(() => {
+
     const fetchData = async () => {
       setData((prev) => ({ ...prev, isLoading: true }));
 
       try {
+        const response = await axiosPrivate.post(STUDENT_QUIZ_MARKING_URL, {
+          subject,
+          quizName
+        }) 
 
-        let questions = await apiData;
-        let correctAnswers = await answers;
+        console.log(response.data)
+
+        const questions = response.data?.response?.questions
+        const answers = response.data?.response?.answers
+        const mark = response.data?.response?.mark
+        const dateDetails = response.data?.response?.dateDetails
 
         if (questions.length > 0) {
           setData((prev) => ({
             ...prev,
             isLoading: false,
-            apiData: { questions, correctAnswers },
+            apiData: { questions, answers },
           }));
           dispatch(
-            Action.startReviewQuiz({ questions, answers: correctAnswers })
+            Action.startReviewQuiz({ questions, answers, subject, quizName, mark, dateDetails })
           );
         } else {
           throw new Error("No questions");
         }
       } catch (error) {
+        toast({
+          title: error.message,
+          status: "error",
+          isClosable: true,
+          position: "top-right",
+        });
+
         setData((prev) => ({ ...prev, isLoading: false, serverError: error }));
       }
     };

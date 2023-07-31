@@ -14,7 +14,7 @@ import RequireAuth from "./features/auth/RequireAuth";
 // student components
 import Settings from "./pages/student/Settings";
 import Dashboard from "./pages/student/Dashboard";
-import Quizzes from "./pages/student/Quizzes";
+import QuizDashboard from "./pages/student/QuizDashboard";
 import Quiz from "./pages/student/Quiz";
 import ReviewQuiz from "./pages/student/ReviewQuiz";
 
@@ -65,8 +65,8 @@ function App() {
               <Route path="dashboard" element={<Dashboard />} />
               <Route path="courses" element={<Courses />} />
               <Route path="content" element={<Content />} />
-              <Route path="quizzes" element={<Quizzes />} />
-              <Route path="quizzes/:subject" element={<Quizzes />} />
+              <Route path="quizzes" element={<QuizDashboard />} />
+              <Route path="quizzes/:subject" element={<QuizDashboard />} />
               <Route path="quizzes/:subject/:mcqname/review" element={<ReviewQuiz />} />
               <Route path="quizzes/:subject/:mcqname" element={<Quiz />} />
 

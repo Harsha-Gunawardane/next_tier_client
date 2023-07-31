@@ -1,15 +1,18 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import apiData from "../pages/student/data";
+import useAxiosPrivate from "./useAxiosPrivate";
 
 // redux actions
 import * as Action from "../redux/questionSlice";
 
-export const useFetchQuestions = () => {
+const STUDENT_QUIZ_URL = "/stu/quiz";
 
-  const subject = useSelector((state) => state.questions.subject)
-  const noOfQuestions = useSelector((state) => state.questions.noOfQuestions)
+export const useFetchQuestions = () => {
+  const axiosPrivate = useAxiosPrivate();
+
+  const subject = useSelector((state) => state.questions.subject);
+  const value = useSelector((state) => state.questions.noOfQuestions);
 
   const dispatch = useDispatch();
   const [data, setData] = useState({
@@ -20,19 +23,37 @@ export const useFetchQuestions = () => {
 
   useEffect(() => {
     const fetchData = async () => {
+      console.log("I need " + value + " questions from " + subject);
       setData((prev) => ({ ...prev, isLoading: true }));
       try {
-        let questions = await apiData;
+        const response = await axiosPrivate.post(STUDENT_QUIZ_URL, {
+          subject,
+          value,
+        });
 
-        console.log("I need " + noOfQuestions + " questions from " + subject)
+        console.log(response.data.response.questions)
+        const questions = response?.data?.response?.questions;
+
         if (questions.length > 0) {
-          setData((prev) => ({ ...prev, isLoading: false, apiData: questions, serverError: 'I am the error' }));
+          setData((prev) => ({
+            ...prev,
+            isLoading: false,
+            apiData: questions,
+          }));
+
           dispatch(Action.startQuiz(questions));
+          dispatch(
+            Action.initializeQuiz({
+              noOfQuestions: value,
+              mcqName: response?.data?.response?.quizName,
+              subject,
+            })
+          );
         } else {
           throw new Error("No questions");
         }
       } catch (error) {
-        setData((prev) => ({ ...prev, isLoading: false, serverError: error }));
+        setData((prev) => ({ ...prev, isLoading: false, serverError: error?.response?.data?.error }));
       }
     };
     fetchData();
@@ -41,13 +62,16 @@ export const useFetchQuestions = () => {
   return data;
 };
 
-export const initializeQuiz = (noOfQuestions, subject, mcqName) => async (dispatch) => {
-  try {
-    await dispatch(Action.initializeQuiz({noOfQuestions, subject, mcqName}));
-  } catch (error) {
-    console.log(error);
-  }
-}
+export const initializeQuiz =
+  (noOfQuestions, subject, mcqName) => async (dispatch) => {
+    try {
+      await dispatch(
+        Action.initializeQuiz({ noOfQuestions, subject, mcqName })
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
 export const moveNextQuestion = () => (dispatch) => {
   dispatch(Action.moveNext());
@@ -56,3 +80,7 @@ export const moveNextQuestion = () => (dispatch) => {
 export const movePrevQuestion = () => (dispatch) => {
   dispatch(Action.movePrev());
 };
+
+export const resetQuiz = () => (dispatch) => {
+  dispatch(Action.reset())
+}

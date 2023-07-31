@@ -12,23 +12,23 @@ function McqExplaination({
   questionNo,
   question,
   options,
-  answer,
+  answers,
   pickedAnswer,
   explain,
 }) {
   return (
     <Box mt={6} ml={5} w="90%">
-      <Text mb={4} fontSize={24} color="#333333" fontWeight="medium">
+      <Text mb={4} fontSize={24} color="#555555" fontWeight="semibold">
         {questionNo}
       </Text>
 
       <Text fontSize={15}>{question}</Text>
       <OrderedList mt={5}>
         {options.map((option, index) => (
-          <Flex ml={answer === index || (pickedAnswer === index && answer !== index) ? 4 : 16}>
-            <ListIcon as={MdCheckCircle} display={answer === index ? 'block' : 'none'} color="#15BD66" mt={1} mr={8} />
-            <ListIcon as={MdClose} display={pickedAnswer === index && answer !== index ? 'block' : 'none'} color="#EF7373" mt={1} mr={8} />
-            <ListItem bg={(pickedAnswer === index && answer === index) ? '#D3F3D2' : pickedAnswer === index ?'#F1F1F1' : '#FFFFFF'} pl={2} pr={3} pt={1} pb={1} borderRadius={4} fontSize={15}>{option}</ListItem>
+          <Flex ml={answers === index || (pickedAnswer === index && answers !== index) ? 4 : 16}>
+            <ListIcon as={MdCheckCircle} display={answers === index ? 'block' : 'none'} color="#15BD66" mt={1} mr={8} />
+            <ListIcon as={MdClose} display={pickedAnswer === index && answers !== index ? 'block' : 'none'} color="#EF7373" mt={1} mr={8} />
+            <ListItem bg={(pickedAnswer === index && answers === index) ? '#D3F3D2' : pickedAnswer === index ?'#F1F1F1' : '#FFFFFF'} pl={2} pr={3} pt={1} pb={1} borderRadius={4} fontSize={15}>{option}</ListItem>
           </Flex>
         ))}
       </OrderedList>
