@@ -1,140 +1,152 @@
 import React from "react";
 
-
-import { Box } from "@chakra-ui/react";
+import { Box, Button } from "@chakra-ui/react";
 import { Image, Heading, Text } from "@chakra-ui/react";
 
-import {
-  Avatar,
-
-} from "@chakra-ui/react";
-import {  HStack} from "@chakra-ui/react";
-import {
-
-  SimpleGrid,
-  Button,
-} from "@chakra-ui/react";
-import { TimeIcon,CalendarIcon} from '@chakra-ui/icons'
+import { HStack } from "@chakra-ui/react";
+import { SimpleGrid } from "@chakra-ui/react";
+import { TimeIcon, CalendarIcon } from "@chakra-ui/icons";
 
 import CourseInclude from "../../components/tutor/coursedetails/courseInclude";
 import CourseDetails from "../../components/tutor/coursedetails/courseDetails";
-import Add from "../../components/tutor/coursedetails/add";
 import TutorDetails from "../../components/tutor/tutordetails";
 import Courseeditbutton from "../../components/tutor/coursedetails/courseeditbutton";
 import Courseremove from "../../components/tutor/coursedetails/courseremove";
-import { useEffect,useState } from "react";
-import { useParams } from "react-router-dom";
-
+import { useEffect, useState } from "react";
+import useAxiosPrivate from "../../hooks/useAxiosPrivate";
+import { useLocation } from "react-router-dom";
+import { Switch, FormControl, FormLabel } from "@chakra-ui/react";
 
 const Courseedit = () => {
+  const axiosPrivate = useAxiosPrivate();
 
+  const [coursedata, setcoursedata] = useState({});
+  const [isPublic, setIsPublic] = useState(false);
 
-
-  const { courseid } = useParams();
-
-  const [coursedata, coursedatachange] = useState({});
+  const location = useLocation();
+  const id = location.pathname.split("/").pop();
 
   useEffect(() => {
-      fetch("http://localhost:8000/courses/" + courseid).then((res) => {
-          return res.json();
-      }).then((resp) => {
-          coursedatachange(resp);
-      }).catch((err) => {
-          console.log(err.message);
-      })
-  }, []);
+    const getStudyPack = async () => {
+      const controller = new AbortController();
+      try {
+        const response = await axiosPrivate.get(`/tutor/course/${id}`, {
+          signal: controller.signal,
+        });
+        setcoursedata(response.data);
+        console.log(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getStudyPack();
+  }, [axiosPrivate]);
 
-
-
-
-  const [courseVisibility, setCourseVisibility] = useState({});
-
-  // Function to toggle visibility for a specific course
-  const toggleCourseVisibility = (courseId) => {
-    setCourseVisibility((prevVisibility) => ({
-      ...prevVisibility,
-      [courseId]: !prevVisibility[courseId],
-    }));
+  const handleToggleVisibility = () => {
+    // Update the isPublic state locally without making an API call
+    setIsPublic(!isPublic);
   };
 
   return (
-   <Box overflowY='scroll'>
+    <Box>
+      {coursedata && (
+        <SimpleGrid spacing={20} minChildWidth="250px">
+          <Box w="120%" bg="white" p={10} borderRadius="10px" ml="10px">
+            <Image
+              boxSize="60%"
+              width="100%"
+              height="350px"
+              objectFit="cover"
+              src={coursedata.thumbnail}
+              alt="Dan Abramov"
+            />
+            <br></br>
 
+            <Heading fontSize="25px">{coursedata.title}</Heading>
 
-{coursedata &&
-      <SimpleGrid spacing={20} minChildWidth="250px">
+            <HStack spacing="24px" mt="20px">
+              <Box w="50%" h="30px" bg="white">
+                {coursedata.schedule && coursedata.schedule.length > 0 ? (
+                  <Text color="black" fontSize="12px" mt="-0px">
+                    <CalendarIcon /> {coursedata.schedule[0].day}
+                  </Text>
+                ) : (
+                  <Text color="black" fontSize="12px" mt="-0px">
+                    <TimeIcon /> No Day Available
+                  </Text>
+                )}
+              </Box>
 
-        <Box w="120%" bg="white" p={10} borderRadius="10px" ml="10px">
-          <Image
-            boxSize="60%"
-            width="100%"
-            height='350px'
-            objectFit="cover"
-            src={coursedata.thumbnail}
-            alt="Dan Abramov"
-          />
-          <br></br>
-        
+              <Box w="50%" h="30px" bg="white">
+                {coursedata.schedule && coursedata.schedule.length > 0 ? (
+                  <Text color="black" fontSize="12px" mt="-0px">
+                    <TimeIcon /> {coursedata.schedule[0].start_time} -{" "}
+                    {coursedata.schedule[0].end_time}
+                  </Text>
+                ) : (
+                  <Text color="black" fontSize="12px" mt="-0px">
+                    <TimeIcon /> No Schedule Available
+                  </Text>
+                )}
+              </Box>
+              <Box w="50%" h="30px" bg="white">
+                <Text ml="35px" fontSize="12px">
+                  Rs.{coursedata.monthly_fee}
+                </Text>
+              </Box>
+              <Box w="50%" h="30px" bg="white">
+                <Text ml="35px" fontSize="12px">
+                  {coursedata.medium}
+                </Text>
+              </Box>
+            </HStack>
 
-        <Heading fontSize='25px'>{coursedata.title}</Heading>
-        
-                                    
-         
-    <HStack spacing='24px' mt='20px'>
-    <Box w='50%' h='30px' bg='white'>
-  <Text ml='20px' fontSize='15px'><CalendarIcon mr='4px' mt='-2px'></CalendarIcon>{coursedata.startday}</Text>
-  </Box>
+            <br></br>
 
-  <Box w='50%' h='30px' bg='white'>
-  <Text ml='' fontSize='15px'><TimeIcon mr='4px' mt='-2px'></TimeIcon>8.00 a.m. - 5.00 p.m.</Text>
-  </Box>
-  <Box w='50%' h='30px' bg='white'>
-  <Text ml='35px' fontSize='15px'>Rs.{coursedata.monthlyfee}</Text>
-  </Box>
- 
-</HStack>
-        
-          <br></br>
-          <Heading fontSize='22px'>Description</Heading>
-          <br></br>
-          <Text fontSize='15px'>{coursedata.description}</Text>
-         
-          
+            <Heading fontSize="22px">Description</Heading>
+            <br></br>
+            <Box width="90%">
+              {" "}
+              <Text fontSize="15px">{coursedata.description}</Text>
+            </Box>
 
-          <Heading></Heading>
-        </Box>
+            <Heading></Heading>
+          </Box>
 
-      
+          <Box width="80%" ml="10%" bg="white " p={10} borderRadius="10px">
+            <TutorDetails></TutorDetails>
 
-        <Box width="80%" ml="10%" bg="white " p={10} borderRadius="10px">
- 
+            <Heading fontSize="20px" mt="20px">
+              Course Details
+            </Heading>
 
-          <TutorDetails></TutorDetails>
-      
+            <CourseDetails></CourseDetails>
+            <br></br>
+            <Heading fontSize="20px" mb="10px">
+              Course Includes
+            </Heading>
 
- 
-          <Heading fontSize='20px' mt='20px' >Course Details</Heading>
-     <CourseDetails></CourseDetails>
-<br></br>
-          <Heading fontSize='20px'>Course Includes</Heading>
+            <CourseInclude></CourseInclude>
 
-          <CourseInclude></CourseInclude>
+            <HStack spacing="30px" mt="50px">
+              <Courseeditbutton></Courseeditbutton>
+              <Courseremove></Courseremove>
 
-<HStack spacing='30px' mt='20px'> 
-<Courseeditbutton></Courseeditbutton>
-<Courseremove></Courseremove>
-
-</HStack>
-         
-
-        </Box>
-
-   
-      </SimpleGrid>
-     }
-     
-     
-      </Box>
+              <FormControl display="flex" alignItems="center" mt={2}>
+                <FormLabel htmlFor="course-visibility" mb="0" mr={2}>
+                  Course Visibility
+                </FormLabel>
+                <Switch
+                  id="course-visibility"
+                  isChecked={isPublic}
+                  onChange={handleToggleVisibility}
+                />
+              </FormControl>
+            </HStack>
+          </Box>
+        </SimpleGrid>
+      )}
+    </Box>
   );
 };
 

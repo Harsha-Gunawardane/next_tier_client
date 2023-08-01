@@ -1,11 +1,11 @@
 import React from "react";
 import { MantineProvider, Textarea } from '@mantine/core';
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
 import { Stepper, Button, Group, TextInput, PasswordInput, NumberInput,Code,Select,Radio,FileInput } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { Box,Text,Heading, HStack } from '@chakra-ui/react'
 import { Link, useNavigate } from "react-router-dom";
-import axios from 'axios';
+import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 
 
 
@@ -20,8 +20,9 @@ import axios from 'axios';
 const Addcoursepack= () => {
 
 
-
-
+  const navigate = useNavigate();
+  const axiosPrivate = useAxiosPrivate();
+  const [coursesdata, setCoursesData] = useState(null);
 
   const [active, setActive] = useState(0);
 
@@ -29,18 +30,21 @@ const Addcoursepack= () => {
     initialValues: {
     
 
-      grade: '',
       subject: '',
-      medium: '',
-
       title: '',
       description: '',
       thumbnail: '',
-
-      hallID:'',
-
-      monthlyfee: '',
-      startday: '',
+      price: '',
+      access_period: '',
+      
+      subject_area_1: '',
+      subject_area_2: '',
+      subject_area_3: '',
+      subject_area_4: '',
+      
+   
+      course_id:'',
+     
     
       
 
@@ -55,19 +59,9 @@ const Addcoursepack= () => {
        
              
 
-              subject:
-              values.subject.trim().length < 1
-                ?  'Subject is Required'
-                : null,
+           
+
   
-
-          
-
-                  medium:
-                  values.medium.trim().length < 1
-                    ? 'Medium is Required'
-                    : null,
-
                     title:
                     values.title.trim().length < 1
                       ?  'Course Type is Required':values.title.length >25 ? 'Title Too Long' 
@@ -75,8 +69,13 @@ const Addcoursepack= () => {
     
                       description:
                       values.description.trim().length < 1
-                        ? 'Language is Required' :values.description.length >75 ? 'Description Too Long' 
+                        ? 'Language is Required' :values.description.length >200 ? 'Description Too Long' 
                         : null,
+
+                        course_id:
+                        values.course_id.trim().length < 1
+                          ?  'Course Type is Required'
+                          : null,
     
 
 
@@ -87,16 +86,17 @@ const Addcoursepack= () => {
       if (active === 1) {
         return {
        
-
-          grade:
-          values.grade.length < 1
-            ? 'Year is Required':    (values.grade < 2023 || values.grade >3000)
-            ? 'Year should be in range 2023 to 3000'
+          subject:
+          values.subject.trim().length < 1
+            ?  'Subject is Required'
             : null,
+  
             thumbnail:
             values.thumbnail.trim().length < 1
               ?  'Course Type is Required'
               : null,
+
+            
                 
 
 
@@ -104,20 +104,12 @@ const Addcoursepack= () => {
       }
 
       return {
-        hallID:
-        values.hallID.trim().length < 1
-          ?  'Course Type is Required'
-          : null,
+     
 
-          starday:
-          values.startday.trim().length < 1
-            ? 'Language is Required'
-            : null,
+        price:
+        values.price.length < 1 ? "Price is Required" : null,
 
-            monthlyfee:
-            values.monthlyfee.trim().length < 1
-              ? 'Language is Required'
-              : null,
+            
       };
     },
   });
@@ -135,34 +127,92 @@ const Addcoursepack= () => {
 
 
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
+  useEffect(() => {
+    const getCourses = async () => {
+      const controller = new AbortController();
+      try {
+        const response = await axiosPrivate.get(`/tutor/course`, {
+          signal: controller.signal,
+        });
+        setCoursesData(response.data);
+        console.log(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getCourses();
+  }, [axiosPrivate]); 
 
-    // Ensure that the form is valid before submitting
+
+
+
+  const handleSubmit = async (event) => {
+    
+    event.preventDefault();
+    const controller = new AbortController();
+  
+   
     if (!form.validate().hasErrors) {
       try {
-        console.log(form.values)
-        // Send the form values to the Firebase Cloud Function using Axios POST request
-        await axios.post('http://localhost:8000/coursepackage', form.values);
-        // Handle success or show a success message to the user
+        console.log(form.values);
+
+        const subjectAreas = [
+          form.values.subject_area_1,
+          form.values.subject_area_2,
+          form.values.subject_area_3,
+          form.values.subject_area_4,
+        ];
+
+        const updatedFormValues = {
+          ...form.values,
+          subject_areas: subjectAreas.filter((area) => area.trim().length > 0),
+          // Remove the individual subject area fields from the updatedFormValues object
+          subject_area_1: undefined,
+          subject_area_2: undefined,
+          subject_area_3: undefined,
+          subject_area_4: undefined,
+        };
+
+        console.log(updatedFormValues);
+      
+        const response = await axiosPrivate.post("/tutor/studypack", updatedFormValues);
+     
         console.log('Form data submitted successfully!');
+        const newCourseId = response.data.id;
+  
+       
+        navigate("/tutor/courses/studypackdetails/" + newCourseId);
       } catch (error) {
-        // Handle error or show an error message to the user
+     
         console.error('Error sending data:', error);
       }
     }
   };
 
 
+  if (coursesdata === null) {
+    return <div>Loading...</div>;
+  }
+
+
   return (
 
 
+
+    
+  
+
+
     <Box width='100%' p={10} >
+    
+   
+
           <form className="container" onSubmit={handleSubmit}>
 
            
 
     <Box bg='white' width='90%' ml='5%' p={5}>
+      <Heading ml={{base:200,xl:350}} fontSize='25px' mb='30px' colorScheme="blue">Study Pack Registration</Heading>
       <Stepper active={active} breakpoint="sm">
         <Stepper.Step label="First step" description="Profile settings">
 
@@ -199,114 +249,269 @@ const Addcoursepack= () => {
           },
        
         }}/>
-
-        
-        <Select
-  
-  label="Subject"
-  placeholder="Subject"
-  {...form.getInputProps('subject')}
-  data={[
-    { value: 'react', label: 'React' },
-    { value: 'ng', label: 'Angular' },
-    { value: 'svelte', label: 'Svelte' },
-    { value: 'vue', label: 'Vue' },
-  ]}
-/>
-
-
-<Radio.Group
-
-{...form.getInputProps('medium')}
-      name="favoriteFramework"
-      label="Medium"
-
-      withAsterisk
-    >
-      <Group mt="xs">
-        <Radio value="Sinhala" label="Sinhala" />
-        <Radio value="English" label="English" />
+ <Select
+        label="Course"
+        mt='10px'
+        placeholder="course"
+        {...form.getInputProps("course_id")}
+        // Update data array to include the course ID as the value property
+        data={coursesdata.map((course) => ({
+          value: course.id,
+          label: course.title,
+        }))}
+        styles={{
+          input: { // Styles for the input element
+           
+            color: 'black',
+            borderRadius: '8px',
+            padding: '10px',
+            height:'60px',
+          },
+          label: { // Styles for the label element
+            fontSize: '16px',
+            fontWeight: 'bold',
+            marginBottom: '5px',
+          },
        
-      </Group>
-    </Radio.Group>
-          
-     
-         
+        }} />
+        
 
 
-
-
-
-
-
-
-  
 
     
         </Stepper.Step>
+
+   
 
         <Stepper.Step label="Second step" description="Personal information">
-   
-        <NumberInput
-         {...form.getInputProps('grade')} 
-      defaultValue={18}
-      placeholder="grade"
-      label="grade"
-    
-    />
 
-<TextInput label="Thumbnail" placeholder="Title" {...form.getInputProps('thumbnail')} />
+        <TextInput label="Subject" placeholder="Subject" {...form.getInputProps('subject')} h='50px' mb='60px'
+             styles={{
+              input: { // Styles for the input element
+               
+                color: 'black',
+                borderRadius: '8px',
+                padding: '10px',
+                height:'60px',
+              },
+              label: { // Styles for the label element
+                fontSize: '16px',
+                fontWeight: 'bold',
+                marginBottom: '5px',
+              },
+           
+            }} />
+
+
+           
+            <HStack spacing='50px'>
+
+            <TextInput label="Subject Areas" placeholder="Subject area" {...form.getInputProps('subject_area_1')} h='50px' mb='60px'
+             styles={{
+              input: { // Styles for the input element
+               
+                color: 'black',
+                borderRadius: '8px',
+                padding: '10px',
+                height:'60px',
+                width:'400px',
+              },
+              label: { // Styles for the label element
+                fontSize: '16px',
+                fontWeight: 'bold',
+                marginBottom: '5px',
+              },
+           
+            }} />
+            
+        <TextInput label="" placeholder="Subject area" {...form.getInputProps('subject_area_2')} h='50px' mb='60px' mt='60px'
+             styles={{
+              input: { // Styles for the input element
+               
+                color: 'black',
+                borderRadius: '8px',
+                padding: '10px',
+                height:'60px',
+                width:'400px',
+              },
+              label: { // Styles for the label element
+                fontSize: '16px',
+                fontWeight: 'bold',
+                marginBottom: '5px',
+              },
+           
+            }} />
+
+
+
+            </HStack>
+
+            <HStack spacing='50px'>
+            <TextInput label="" placeholder="Subject area" {...form.getInputProps('subject_area_3')} h='50px' mb='60px'
+             styles={{
+              input: { // Styles for the input element
+               
+                color: 'black',
+                borderRadius: '8px',
+                padding: '10px',
+                height:'60px',
+                width:'400px',
+              },
+              label: { // Styles for the label element
+                fontSize: '16px',
+                fontWeight: 'bold',
+                marginBottom: '5px',
+              },
+           
+            }} />
+
+<TextInput label="" placeholder="Subject Area" {...form.getInputProps('subject_area_4')} h='50px' mb='60px'
+             styles={{
+              input: { // Styles for the input element
+               
+                color: 'black',
+                borderRadius: '8px',
+                padding: '10px',
+                height:'60px',
+                width:'400px',
+              },
+              label: { // Styles for the label element
+                fontSize: '16px',
+                fontWeight: 'bold',
+                marginBottom: '5px',
+              },
+           
+            }} />
+            </HStack>
+
+
+
+            <TextInput label="Thumbnail" placeholder="Thumbnail" {...form.getInputProps('thumbnail')} h='50px' mb='60px'
+             styles={{
+              input: { // Styles for the input element
+               
+                color: 'black',
+                borderRadius: '8px',
+                padding: '10px',
+                height:'60px',
+              
+              },
+              label: { // Styles for the label element
+                fontSize: '16px',
+                fontWeight: 'bold',
+                marginBottom: '5px',
+              },
+           
+            }} />
     
+
         </Stepper.Step>
+
+
 
         <Stepper.Step label="Final step" description="Social media">
 
-        <TextInput label="Monthly Fee" placeholder="Monthly Fee" {...form.getInputProps('monthlyfee')}  />
+       
+        <NumberInput
+                {...form.getInputProps("price")}
+                defaultValue={18}
+                placeholder="Price"
+                label="Price"
+                onKeyPress={(event) => {
+                  const isNumber = /[0-9]/.test(event.key);
+                  if (!isNumber) {
+                    event.preventDefault();
+                  }
+                }}
+                styles={{
+                  input: {
+                    // Styles for the input element
 
-        <TextInput label="Hall ID" placeholder="Hall ID" {...form.getInputProps('hallID')}  />
+                    color: "black",
+                    borderRadius: "8px",
+                    padding: "10px",
+                    height: "60px",
+                  },
+                  label: {
+                    // Styles for the label element
+                    fontSize: "16px",
+                    fontWeight: "bold",
+                    marginBottom: "5px",
+                  },
+                }}
+              />
 
-        <TextInput label="Start Date" placeholder="Start Date" {...form.getInputProps('startday')}  />
+
      
         </Stepper.Step>
 
 
         <Stepper.Completed>
-        <Box>
-    <Heading as="h2" fontSize="lg" mb={2}>
-      Completed! Form values:
-    </Heading>
-    <Box>
-      <Text>
-        Year: {form.values.title}
+              <Box>
+                <Heading as="h2" fontSize="lg" mb={2}>
+                  Completed!
+                </Heading>
+                <Box>
+                  <HStack spacing="100px">
+                    <Box width='100px'>
+                      <Text>Title:</Text>
+                    </Box>
+                    <Box width='200px'>
+                      <Text> {form.values.title}</Text>
+                    </Box>
+                  </HStack>
+                  <HStack spacing="100px" >
+                  <Box width='100px'>
+                      <Text>Description:</Text>
+                    </Box>
+                    <Box width='200px'>
+                      <Text> {form.values.description}</Text>
+                    </Box>
+                  </HStack>
+                  <HStack spacing="100px">
+                  <Box width='100px'>
+                      <Text>Subject:</Text>
+                    </Box>
+                    <Box width='200px'>
+                      <Text> {form.values.subject}</Text>
+                    </Box>
+                  </HStack>
+                  <HStack spacing="100px">
+                  <Box width='100px'>
+                      <Text>Subject Areas:</Text>
+                    </Box>
+                    <Box width='200px'>
+                      <Text> {form.values.subject_area_1}</Text>
+                      <Text> {form.values.subject_area_2}</Text>
+                      <Text> {form.values.subject_area_3}</Text>
+                      <Text> {form.values.subject_area_4}</Text>
+                    </Box>
+                  </HStack>
+                  <HStack spacing="100px">
+                  <Box width='100px'>
+                      <Text>Price:</Text>
+                    </Box>
+                    <Box width='200px'>
+                      <Text> {form.values.price}</Text>
+                    </Box>
+                  </HStack>
+
+                  <HStack spacing="100px">
+                  <Box width='100px'>
+                      <Text>Course:</Text>
+                    </Box>
+                    <Box width='200px'>
+                    <Text>
+         {coursesdata.find((course) => course.id === form.values.course_id)?.title}
       </Text>
-      <Text>
-        Subject: {form.values.description}
-      </Text>
-      <Text>
-        Course Type: {form.values.subject}
-      </Text>
-      <Text>
-        Language: {form.values.medium}
-      </Text>
-      <Text>
-        Title: {form.values.grade}
-      </Text>
-      <Text>
-        Description: {form.values.thumbnail}
-      </Text>
-      <Text>
-        Day: {form.values.startday}
-      </Text>
-      <Text>
-        Time: {form.values.hallID}
-      </Text>
-      <Text>
-        Monthly Fee: {form.values.monthlyfee}
-      </Text>
-    </Box>
-  </Box>
+                    </Box>
+                  </HStack>
         
-        </Stepper.Completed>
+                
+              
+                </Box>
+              </Box>
+            </Stepper.Completed>
       </Stepper>
 
       <Group position="right" mt="xl">

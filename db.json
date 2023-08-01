@@ -73,6 +73,16 @@
       "monthlyfee": "3500",
       "startday": "Monday",
       "id": 6
+    },
+    {
+      "title": "ssss",
+      "description": "ssss",
+      "subject": "react",
+      "medium": "English",
+      "grade": 2030,
+      "thumbnail": "ww",
+      "monthlyfee": "3333",
+      "id": 7
     }
   ],
   "coursepackage": [
@@ -144,6 +154,7 @@
   ],
   "content": [
     {
+      "course_id": 1,
       "month": "2023 July",
       "week1": {
         "video": "https://www.ufs.ac.za/images/librariesprovider22/default-album/shutterstock_1140894395.jpg?sfvrsn=554a8521_0",
@@ -187,11 +198,6 @@
       "week2": "week2",
       "week3": "week3",
       "week4": "week4"
-    },
-    {
-      "month": "2027 July",
-      "week1": "week1",
-      "id": 6
     }
   ],
   "videocontents": [
@@ -273,12 +279,20 @@
   ],
   "data": [
     {
-      "id": 1,
-      "name": "Data item 1"
-    },
-    {
       "id": 2,
       "name": "Data item 2"
+    },
+    {
+      "name": "dddd",
+      "id": 3
+    },
+    {
+      "name": "dddd",
+      "id": 4
+    },
+    {
+      "name": "eeeee",
+      "id": 5
     }
   ],
   "studypackcontent": [
@@ -365,35 +379,117 @@
       "id": 4
     }
   ],
-
   "Announcement": [
     {
-      "Heading": "Paper 01",
+      "heading": "Paper 01",
       "message": "https://www.ufs.ac.za/images/librariesprovider22/default-album/shutterstock_1140894395.jpg?sfvrsn=554a8521_0",
       "date": "Physics part 01",
       "time": "document",
       "id": 1
     },
     {
-      "Heading": "Paper 01",
+      "heading": "Paper 01",
       "message": "https://www.ufs.ac.za/images/librariesprovider22/default-album/shutterstock_1140894395.jpg?sfvrsn=554a8521_0",
       "date": "Physics part 01",
       "time": "document",
       "id": 2
     },
     {
-      "Heading": "Paper 01",
+      "heading": "Paper 01",
       "message": "https://www.ufs.ac.za/images/librariesprovider22/default-album/shutterstock_1140894395.jpg?sfvrsn=554a8521_0",
       "date": "Physics part 01",
       "time": "document",
       "id": 3
     },
     {
-      "Heading": "Paper 01",
+      "heading": "Paper 01",
       "message": "no classes today",
       "date": "Physics part 01",
       "time": "document",
       "id": 4
+    },
+    {
+      "heading": "33333",
+      "message": "3333333",
+      "date": "2023-07-29",
+      "time": "02:44 PM",
+      "id": 6
+    },
+    {
+      "heading": "hello",
+      "message": "sssssss",
+      "date": "2023-07-29",
+      "time": "02:44 PM",
+      "id": 7
     }
-  ]
+  ],
+  "content2": {
+    "course_id": 1,
+    "months": {
+      "january": {
+        "id": 1,
+        "name": "January",
+        "week1": {
+          "id": 1,
+          "name": "Introduction to the Course",
+          "video": "video_url_week1",
+          "doc": "document_url_week1",
+          "quiz": "quiz_url_week1"
+        },
+        "week2": {
+          "id": 2,
+          "name": "Topic 1: Week 1",
+          "video": "video_url_week2",
+          "doc": "document_url_week2",
+          "quiz": "quiz_url_week2"
+        },
+        "week3": {
+          "id": 3,
+          "name": "Topic 2: Week 2",
+          "video": "video_url_week3",
+          "doc": "document_url_week3",
+          "quiz": "quiz_url_week3"
+        },
+        "week4": {
+          "id": 4,
+          "name": "Topic 3: Week 3",
+          "video": "video_url_week4",
+          "doc": "document_url_week4",
+          "quiz": "quiz_url_week4"
+        }
+      },
+      "february": {
+        "id": 2,
+        "name": "February",
+        "week1": {
+          "id": 5,
+          "name": "Topic 4: Week 1",
+          "video": "video_url_week1",
+          "doc": "document_url_week1",
+          "quiz": "quiz_url_week1"
+        },
+        "week2": {
+          "id": 6,
+          "name": "Topic 5: Week 2",
+          "video": "video_url_week2",
+          "doc": "document_url_week2",
+          "quiz": "quiz_url_week2"
+        },
+        "week3": {
+          "id": 7,
+          "name": "Topic 6: Week 3",
+          "video": "video_url_week3",
+          "doc": "document_url_week3",
+          "quiz": "quiz_url_week3"
+        },
+        "week4": {
+          "id": 8,
+          "name": "Final Assessment",
+          "video": "video_url_week4",
+          "doc": "document_url_week4",
+          "quiz": "quiz_url_week4"
+        }
+      }
+    }
+  }
 }

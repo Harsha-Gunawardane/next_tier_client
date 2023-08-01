@@ -13,26 +13,31 @@ import {
   import { useDisclosure } from '@chakra-ui/react'
   import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
   import { useNavigate, useParams } from "react-router-dom";
+  import { useLocation } from "react-router-dom";
  
 
 
 
 
-const Courseremove = (props) => {
+const Studypackremove = (props) => {
 
     const { isOpen, onOpen, onClose } = useDisclosure()
     const cancelRef = React.useRef()
     const axiosPrivate = useAxiosPrivate();
     const navigate = useNavigate();
-    const { courseid } = useParams();
+    const {studypackId} = useParams();
+
+    const location = useLocation();
+    const iid = location.pathname.split("/").pop();
+  
 
     const handleRemoveCourse = () => {
       // Show a confirmation dialog before proceeding with deletion
     
         axiosPrivate
-          .delete(`/tutor/course/${courseid}`) // Use '/courses/:id' to match the server route
+          .delete(`/tutor/studypack/${iid}`) // Use '/courses/:id' to match the server route
           .then((response) => {
-            alert("Course removed successfully.");
+            alert("Study Pack removed successfully.");
             onClose();
             // Optionally, you can navigate to a different page after deletion
             navigate("/tutor/courses"); // Change the path to the desired destination after deletion
@@ -83,4 +88,4 @@ const Courseremove = (props) => {
 
 
 
-export default Courseremove;
+export default Studypackremove;

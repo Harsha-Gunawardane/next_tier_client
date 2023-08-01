@@ -5,12 +5,12 @@ import { ChakraProvider,HStack } from '@chakra-ui/react'
 import { useEffect,useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { IconButton ,Box} from '@chakra-ui/react';
-import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
-import SearchStudypack from "./search";
+import useAxiosPrivate from "../../hooks/useAxiosPrivate";
+// import SearchStudypack from "./search";
 
 
 
-const Coursepackage = (props) => {
+const Studypack = (props) => {
 
   const[coursesdata,setCoursesData]=useState(null);
   const navigate = useNavigate();
@@ -61,7 +61,7 @@ const handleSearch = (searchTerm) => {
      <div>
 
 <ChakraProvider>
-<SearchStudypack onSearch={handleSearch} />
+{/* <SearchStudypack onSearch={handleSearch} /> */}
 <SimpleGrid minChildWidth='300px'  spacing='40px'>
 {coursesdata != null && coursesdata.length>0 ? coursesdata.map(item => (
 
@@ -126,4 +126,4 @@ const handleSearch = (searchTerm) => {
   );
 };
 
-export default Coursepackage;
+export default Studypack;

@@ -15,8 +15,8 @@ import { CalendarIcon, TimeIcon, EditIcon } from "@chakra-ui/icons";
 import { ChakraProvider, HStack } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import { IconButton } from "@chakra-ui/react";
-import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
-import SearchCourse from "./search";
+import useAxiosPrivate from "../../hooks/useAxiosPrivate";
+// import SearchCourse from "./search";
 
 const Course = (props) => {
   const [coursesdata, setCoursesData] = useState(null);
@@ -64,7 +64,7 @@ const Course = (props) => {
   return (
     <div>
       <ChakraProvider>
-        <SearchCourse onSearch={handleSearch} />
+        {/* <SearchCourse onSearch={handleSearch} /> */}
         <SimpleGrid minChildWidth="300px" spacing="40px" p={5}>
           {coursesdata != null && coursesdata.length > 0 ? (
             coursesdata.map((item) => (

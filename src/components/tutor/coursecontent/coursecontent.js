@@ -1,13 +1,14 @@
 import React from "react";
 import { Flex,AccordionPanel,Text,Accordion,AccordionButton,AccordionIcon,AccordionItem,HStack,Heading} from '@chakra-ui/react'
 import { SmallAddIcon} from '@chakra-ui/icons'
-import { ChakraProvider,Button } from '@chakra-ui/react'
+import { ChakraProvider,Button,Image } from '@chakra-ui/react'
 import { Tabs, TabList, TabPanels, Tab, TabPanel,Box } from '@chakra-ui/react'
 
 import Addcoursecontent from "./addcoursecontent.js";
 import Addcoursedoccontent from "./addcoursedoccontent.js";
 import Addcoursequiz from "./addcoursequiz.js";
 import Remove from "./Coursecontentremove.js";
+import Removecontent from "./contentremove.js";
 import "../../../index.css"
 
 
@@ -25,7 +26,7 @@ const CourseContent = (props) => {
 <Accordion allowToggle>
   <AccordionItem width={{base:400,xl:700}}>
     <h2>
-      <AccordionButton bg='#eee' border='2px solid white' borderRadius='5px' height='50px' >
+      <AccordionButton bg='#eee' border='2px solid white' borderRadius='5px' height='50px' ><Removecontent  item={props.item}></Removecontent>
         <Box as="span" flex='1' textAlign='left'  height='30px'>
         <Heading p={1} ml='20px' fontSize='15px'>{month}</Heading>
         </Box>
@@ -56,15 +57,23 @@ const CourseContent = (props) => {
   </HStack>
 
 
-<Box bg='#F0F8FF'mt='4px' className="box1" >
-  <HStack spacing='50px'>
-  <Box p={2}><Text fontSize='15px' width={{base:150,xl:480}} className="box2">{week1.video}</Text></Box> 
-  <Box width='60px' ml='10px' mt='-5px' > <Remove></Remove></Box>
+  <Box bg='#F0F8FF'mt='4px' className="box1" >
+  <HStack spacing={{base:90,xl:330}}>
+  <Box p={2}  width='210px'><HStack>  <Image
+            boxSize="50%"
+            width={{base:70,xl:70}}
+            height='50px'
+            objectFit="cover"
+            src={week1.video}
+          
+          />
+         <Box ><Text fontSize='14px' className="box2">{week1.title}</Text></Box> 
+          </HStack></Box> 
+  <Box width='90px' ml='5px' mt='-5px' > <HStack><Button fontSize='12px' height='20px' >View</Button> <Remove></Remove></HStack></Box>
 
 
   </HStack>
 </Box>
-
 
 <HStack  spacing='480px' mt='10px' >
   <Text fontSize='15px'>Document Content</Text>
@@ -72,9 +81,19 @@ const CourseContent = (props) => {
   </HStack>
 
   <Box bg='#F0F8FF'mt='4px' className="box1" >
-  <HStack spacing='50px'>
-  <Box p={2}><Text fontSize='15px' width="480px" className="box2">{week1.video}</Text></Box> 
-  <Box width='60px' ml='10px' mt='-5px' > <Remove></Remove></Box>
+  <HStack spacing={{base:90,xl:330}}>
+  <Box p={2}  width='210px'><HStack>  <Image
+            boxSize="50%"
+            width={{base:70,xl:70}}
+            height='50px'
+            objectFit="cover"
+            src={week1.video}
+          
+          />
+         <Box ><Text fontSize='14px' className="box2">{week1.title}</Text></Box> 
+          </HStack></Box> 
+  <Box width='90px' ml='5px' mt='-5px' > <HStack><Button fontSize='12px' height='20px' >View</Button> <Remove></Remove></HStack></Box>
+
 
   </HStack>
 </Box>
@@ -88,13 +107,22 @@ const CourseContent = (props) => {
   </HStack>
 
   <Box bg='#F0F8FF'mt='4px' className="box1" >
-  <HStack spacing='50px'>
-  <Box p={2}><Text fontSize='15px' width="480px" className="box2">{week1.video}</Text></Box> 
-  <Box width='60px' ml='10px' mt='-5px' > <Remove></Remove></Box>
+  <HStack spacing={{base:90,xl:330}}>
+  <Box p={2}  width='210px'><HStack>  <Image
+            boxSize="50%"
+            width={{base:70,xl:70}}
+            height='50px'
+            objectFit="cover"
+            src={week1.video}
+          
+          />
+         <Box ><Text fontSize='14px' className="box2">{week1.title}</Text></Box> 
+          </HStack></Box> 
+  <Box width='90px' ml='5px' mt='-5px' > <HStack><Button fontSize='12px' height='20px' >View</Button> <Remove></Remove></HStack></Box>
+
 
   </HStack>
 </Box>
-
    
     </TabPanel>
 
@@ -119,10 +147,20 @@ const CourseContent = (props) => {
   </HStack>
 
 
-<Box bg='#F0F8FF'mt='4px' className="box1" >
-  <HStack spacing='500px'>
-  <Box p={2}><Text fontSize='15px'  className="box2">{week1.video}</Text></Box> 
-  <Button fontSize='10px' colorScheme="red" height='18px' width='30px' mt='-5px'>Remove</Button> 
+  <Box bg='#F0F8FF'mt='4px' className="box1" >
+  <HStack spacing={{base:90,xl:330}}>
+  <Box p={2}  width='210px'><HStack>  <Image
+            boxSize="50%"
+            width={{base:70,xl:70}}
+            height='50px'
+            objectFit="cover"
+            src={week1.video}
+          
+          />
+         <Box ><Text fontSize='14px' className="box2">{week1.title}</Text></Box> 
+          </HStack></Box> 
+  <Box width='90px' ml='5px' mt='-5px' > <HStack><Button fontSize='12px' height='20px' >View</Button> <Remove></Remove></HStack></Box>
+
 
   </HStack>
 </Box>
@@ -133,10 +171,20 @@ const CourseContent = (props) => {
   <Box mt='-25px'> <Addcoursecontent></Addcoursecontent></Box>   
   </HStack>
 
-  <Box bg='#F0F8FF' mt='4px' className="box1"  >
-  <HStack spacing='500px'>
-  <Box p={2}><Text fontSize='15px'   className="box2">{week1.video}</Text></Box> 
-  <Button fontSize='10px' colorScheme="red" height='18px' width='30px' mt='5px' >Remove</Button> 
+  <Box bg='#F0F8FF'mt='4px' className="box1" >
+  <HStack spacing={{base:90,xl:330}}>
+  <Box p={2}  width='210px'><HStack>  <Image
+            boxSize="50%"
+            width={{base:70,xl:70}}
+            height='50px'
+            objectFit="cover"
+            src={week1.video}
+          
+          />
+         <Box ><Text fontSize='14px' className="box2">{week1.title}</Text></Box> 
+          </HStack></Box> 
+  <Box width='90px' ml='5px' mt='-5px' > <HStack><Button fontSize='12px' height='20px' >View</Button> <Remove></Remove></HStack></Box>
+
 
   </HStack>
 </Box>
@@ -148,15 +196,22 @@ const CourseContent = (props) => {
   <Box mt='-25px'> <Addcoursecontent></Addcoursecontent></Box>     
   </HStack>
 
-  <Box bg='#F0F8FF' mt='4px' className="box1"  >
-  <HStack spacing='500px'>
-  <Box p={2}><Text fontSize='15px' className="box2">{week1.video}</Text></Box> 
-  <Button fontSize='10px' colorScheme="red" height='18px' width='30px' mt='5px' >Remove</Button> 
+  <Box bg='#F0F8FF'mt='4px' className="box1" >
+  <HStack spacing={{base:90,xl:330}}>
+  <Box p={2}  width='210px'><HStack>  <Image
+            boxSize="50%"
+            width={{base:70,xl:70}}
+            height='50px'
+            objectFit="cover"
+            src={week1.video}
+          
+          />
+         <Box ><Text fontSize='14px' className="box2">{week1.title}</Text></Box> 
+          </HStack></Box> 
+  <Box width='90px' ml='5px' mt='-5px' > <HStack><Button fontSize='12px' height='20px' >View</Button> <Remove></Remove></HStack></Box>
+
 
   </HStack>
-
-
-
 </Box>
    
     </TabPanel>
@@ -183,24 +238,43 @@ const CourseContent = (props) => {
   </HStack>
 
 
-<Box bg='#F0F8FF'mt='4px' className="box1" >
-  <HStack spacing='500px'>
-  <Box p={2}><Text fontSize='15px'  className="box2">{week1.video}</Text></Box> 
-  <Button fontSize='10px' colorScheme="red" height='18px' width='30px' mt='-5px'>Remove</Button> 
+  <Box bg='#F0F8FF'mt='4px' className="box1" >
+  <HStack spacing={{base:90,xl:330}}>
+  <Box p={2}  width='210px'><HStack>  <Image
+            boxSize="50%"
+            width={{base:70,xl:70}}
+            height='50px'
+            objectFit="cover"
+            src={week1.video}
+          
+          />
+         <Box ><Text fontSize='14px' className="box2">{week1.title}</Text></Box> 
+          </HStack></Box> 
+  <Box width='90px' ml='5px' mt='-5px' > <HStack><Button fontSize='12px' height='20px' >View</Button> <Remove></Remove></HStack></Box>
+
 
   </HStack>
 </Box>
-
 
 <HStack  spacing='480px' mt='10px' >
   <Text fontSize='15px'>Document Content</Text>
   <Box mt='-25px'> <Addcoursecontent></Addcoursecontent></Box>   
   </HStack>
 
-  <Box bg='#F0F8FF' mt='4px' className="box1"  >
-  <HStack spacing='500px'>
-  <Box p={2}><Text fontSize='15px'   className="box2">{week1.video}</Text></Box> 
-  <Button fontSize='10px' colorScheme="red" height='18px' width='30px' mt='5px' >Remove</Button> 
+  <Box bg='#F0F8FF'mt='4px' className="box1" >
+  <HStack spacing={{base:90,xl:330}}>
+  <Box p={2}  width='210px'><HStack>  <Image
+            boxSize="50%"
+            width={{base:70,xl:70}}
+            height='50px'
+            objectFit="cover"
+            src={week1.video}
+          
+          />
+         <Box ><Text fontSize='14px' className="box2">{week1.title}</Text></Box> 
+          </HStack></Box> 
+  <Box width='90px' ml='5px' mt='-5px' > <HStack><Button fontSize='12px' height='20px' >View</Button> <Remove></Remove></HStack></Box>
+
 
   </HStack>
 </Box>
@@ -212,15 +286,22 @@ const CourseContent = (props) => {
   <Box mt='-25px'> <Addcoursecontent></Addcoursecontent></Box>     
   </HStack>
 
-  <Box bg='#F0F8FF' mt='4px' className="box1"  >
-  <HStack spacing='500px'>
-  <Box p={2}><Text fontSize='15px' className="box2">{week1.video}</Text></Box> 
-  <Button fontSize='10px' colorScheme="red" height='18px' width='30px' mt='5px' >Remove</Button> 
+  <Box bg='#F0F8FF'mt='4px' className="box1" >
+  <HStack spacing={{base:90,xl:330}}>
+  <Box p={2}  width='210px'><HStack>  <Image
+            boxSize="50%"
+            width={{base:70,xl:70}}
+            height='50px'
+            objectFit="cover"
+            src={week1.video}
+          
+          />
+         <Box ><Text fontSize='14px' className="box2">{week1.title}</Text></Box> 
+          </HStack></Box> 
+  <Box width='90px' ml='5px' mt='-5px' > <HStack><Button fontSize='12px' height='20px' >View</Button> <Remove></Remove></HStack></Box>
+
 
   </HStack>
-
-
-
 </Box>
    
     </TabPanel>
@@ -250,10 +331,20 @@ const CourseContent = (props) => {
   </HStack>
 
 
-<Box bg='#F0F8FF'mt='4px' className="box1" >
-  <HStack spacing='500px'>
-  <Box p={2}><Text fontSize='15px'  className="box2">{week1.video}</Text></Box> 
-  <Button fontSize='10px' colorScheme="red" height='18px' width='30px' mt='-5px'>Remove</Button> 
+  <Box bg='#F0F8FF'mt='4px' className="box1" >
+  <HStack spacing={{base:90,xl:330}}>
+  <Box p={2}  width='210px'><HStack>  <Image
+            boxSize="50%"
+            width={{base:70,xl:70}}
+            height='50px'
+            objectFit="cover"
+            src={week1.video}
+          
+          />
+         <Box ><Text fontSize='14px' className="box2">{week1.title}</Text></Box> 
+          </HStack></Box> 
+  <Box width='90px' ml='5px' mt='-5px' > <HStack><Button fontSize='12px' height='20px' >View</Button> <Remove></Remove></HStack></Box>
+
 
   </HStack>
 </Box>
@@ -264,10 +355,20 @@ const CourseContent = (props) => {
   <Box mt='-25px'> <Addcoursecontent></Addcoursecontent></Box>   
   </HStack>
 
-  <Box bg='#F0F8FF' mt='4px' className="box1"  >
-  <HStack spacing='500px'>
-  <Box p={2}><Text fontSize='15px'   className="box2">{week1.video}</Text></Box> 
-  <Button fontSize='10px' colorScheme="red" height='18px' width='30px' mt='5px' >Remove</Button> 
+  <Box bg='#F0F8FF'mt='4px' className="box1" >
+  <HStack spacing={{base:90,xl:330}}>
+  <Box p={2}  width='210px'><HStack>  <Image
+            boxSize="50%"
+            width={{base:70,xl:70}}
+            height='50px'
+            objectFit="cover"
+            src={week1.video}
+          
+          />
+         <Box ><Text fontSize='14px' className="box2">{week1.title}</Text></Box> 
+          </HStack></Box> 
+  <Box width='90px' ml='5px' mt='-5px' > <HStack><Button fontSize='12px' height='20px' >View</Button> <Remove></Remove></HStack></Box>
+
 
   </HStack>
 </Box>
@@ -279,15 +380,22 @@ const CourseContent = (props) => {
   <Box mt='-25px'> <Addcoursecontent></Addcoursecontent></Box>     
   </HStack>
 
-  <Box bg='#F0F8FF' mt='4px' className="box1"  >
-  <HStack spacing='500px'>
-  <Box p={2}><Text fontSize='15px' className="box2">{week1.video}</Text></Box> 
-  <Button fontSize='10px' colorScheme="red" height='18px' width='30px' mt='5px' >Remove</Button> 
+  <Box bg='#F0F8FF'mt='4px' className="box1" >
+  <HStack spacing={{base:90,xl:330}}>
+  <Box p={2}  width='210px'><HStack>  <Image
+            boxSize="50%"
+            width={{base:70,xl:70}}
+            height='50px'
+            objectFit="cover"
+            src={week1.video}
+          
+          />
+         <Box ><Text fontSize='14px' className="box2">{week1.title}</Text></Box> 
+          </HStack></Box> 
+  <Box width='90px' ml='5px' mt='-5px' > <HStack><Button fontSize='12px' height='20px' >View</Button> <Remove></Remove></HStack></Box>
+
 
   </HStack>
-
-
-
 </Box>
    
     </TabPanel>

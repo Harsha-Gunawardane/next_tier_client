@@ -1,127 +1,306 @@
-import React from "react";
-
-
-import { Box } from "@chakra-ui/react";
-import { Image, Heading, Text } from "@chakra-ui/react";
-
+import React, { useState, useEffect } from "react";
 import {
-  Avatar,
-
-} from "@chakra-ui/react";
-import {  HStack} from "@chakra-ui/react";
-import {
-
-  SimpleGrid,
+  useDisclosure,
   Button,
+  FormControl,
+  FormLabel,
+  Input,
 } from "@chakra-ui/react";
-import { TimeIcon,CalendarIcon} from '@chakra-ui/icons'
-
-import CourseInclude from "../../student/courseInclude";
-import CourseDetails from "../../student/courseDetails";
-import TutorDetails from "../tutordetails";
-import Courseeditbutton from "../../components/tutor/courseeditbutton";
-import Courseremove from "../../components/tutor/courseremove";
-import { useEffect,useState } from "react";
+import {
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+  FormErrorMessage,
+  Text
+} from "@chakra-ui/react";
 import { useParams } from "react-router-dom";
-
+import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
+import {
+  NumberInput,
+  NumberInputField,
+  NumberInputStepper,
+  NumberIncrementStepper,
+  NumberDecrementStepper,
+} from "@chakra-ui/react";
+import { Select } from "@chakra-ui/react";
+ import { useLocation } from "react-router-dom";
+ 
 
 const Coursepackedit = () => {
+  const axiosPrivate = useAxiosPrivate();
+  
+  const [coursesdata, setCoursesData] = useState(null);
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [price, setPrice] = useState("");
+  const [thumbnail, setThumbnail] = useState("");
+  const [subject, setSubject] = useState("");
+  const [course_id, setCourse_Id] = useState("");
+  const [validation, valchange] = useState(false);
 
-
-
-  const { courseid } = useParams();
-
-  const [coursedata, coursedatachange] = useState({});
+  const location = useLocation();
+  const Studypackid = location.pathname.split("/").pop();
 
   useEffect(() => {
-      fetch("http://localhost:8000/coursepackage/" + courseid).then((res) => {
-          return res.json();
-      }).then((resp) => {
-          coursedatachange(resp);
-      }).catch((err) => {
-          console.log(err.message);
+    const getStudypack = async () => {
+      const controller = new AbortController();
+      try {
+        const response = await axiosPrivate.get(`/tutor/studypack/${Studypackid}`, {
+          signal: controller.signal,
+        });
+        const courseData = response.data;
+
+        // Set the initial values for title, description, and monthly_fee
+        setTitle(courseData.title);
+        setDescription(courseData.description);
+        setPrice(courseData.price.toString());
+        setThumbnail(courseData.thumbnail); // Convert to string if necessary
+        setSubject(courseData.subject);
+        setCourse_Id(courseData.course_id);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getStudypack();
+  }, [axiosPrivate, Studypackid]);
+
+  ;
+
+  useEffect(() => {
+    const getCourses = async () => {
+      const controller = new AbortController();
+      try {
+        const response = await axiosPrivate.get(`/tutor/course`, {
+          signal: controller.signal,
+        });
+        setCoursesData(response.data);
+        console.log(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getCourses();
+  }, [axiosPrivate]); 
+
+
+  const [val, setValidation] = useState(false);
+  const handleChange = (value) => {
+    // Only set the monthly_fee if the value is a valid number
+    if (value === null || !isNaN(value)) {
+      setPrice(value);
+      setValidation(false);
+    } else {
+      // If the value is not a valid number, mark it as invalid
+      setValidation(true);
+    }
+  };
+
+
+
+  const handlesubmit = (e) => {
+    e.preventDefault();
+
+    const coursedata = {
+      id: Studypackid,
+      title,
+      description,
+      price,
+      thumbnail,
+      subject,
+      course_id,
+   
+    };
+
+    axiosPrivate
+      .put(`/tutor/studypack/${Studypackid}`, coursedata)
+      .then((response) => {
+        alert("Saved successfully.");
+        onClose();
+        window.location.reload();
       })
-  }, []);
+      .catch((error) => {
+        console.log(error.message);
+      });
+  };
 
 
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const initialRef = React.useRef(null);
+  const finalRef = React.useRef(null);
 
+  if (coursesdata === null) {
+    return <div>Loading...</div>;
+  }
 
   return (
-   <Box overflowY='scroll'>
+    <>
+      <Button fontSize="12px" colorScheme="blue" height="30px" onClick={onOpen}>
+        Edit
+      </Button>
+
+      <Modal
+        initialFocusRef={initialRef}
+        finalFocusRef={finalRef}
+        isOpen={isOpen}
+        onClose={onClose}
+      >
+        <ModalOverlay />
+        <ModalContent>
+          <form onSubmit={handlesubmit}>
+            <ModalHeader>Update Course Details</ModalHeader>
+            <ModalCloseButton />
+            <ModalBody pb={6}>
+              <FormControl isRequired isInvalid={title.trim().length === 0}>
+                <FormLabel fontSize="15px">Title</FormLabel>
+                <Input
+                  fontSize="15px"
+                  value={title}
+                  height="40px"
+                  ref={initialRef}
+                  placeholder="Title"
+                  onMouseDown={(e) => valchange(true)}
+                  onChange={(e) => setTitle(e.target.value)}
+                />
+                <FormErrorMessage>Title is required</FormErrorMessage>
+              </FormControl>
+
+              <FormControl
+                mt={4}
+                isRequired
+                isInvalid={
+                  description.trim().length === 0 || description.length > 200
+                }
+              >
+                <FormLabel fontSize="15px">Description</FormLabel>
+                <Input
+                  fontSize="15px"
+                  value={description}
+                  height="40px"
+                  ref={initialRef}
+                  placeholder="Description"
+                  onMouseDown={(e) => valchange(true)}
+                  onChange={(e) => setDescription(e.target.value)}
+                />
+                <FormErrorMessage>
+                  {description.trim().length === 0
+                    ? "Description is required"
+                    : `Description cannot exceed 200 characters`}
+                </FormErrorMessage>
+              </FormControl>
+
+              <FormControl
+                mt={4}
+                isRequired
+                isInvalid={
+                  price.trim().length === 0 || parseFloat(price) < 0
+                }
+              >
+                <FormLabel fontSize="15px">Monthly Fee</FormLabel>
+                <NumberInput
+                  value={price}
+                  precision={2}
+                  onChange={handleChange}
+                  
+                >
+                  <NumberInputField
+                    fontSize="15px"
+                    height="40px"
+                    placeholder="Monthly Fee"
+                  />
+                  <NumberInputStepper>
+                    <NumberIncrementStepper />
+                    <NumberDecrementStepper />
+                  </NumberInputStepper>
+                </NumberInput>
+                <FormErrorMessage>Monthly Fee is Required</FormErrorMessage>
+              </FormControl>
+
+              <FormControl
+                mt={4}
+                isRequired
+                isInvalid={thumbnail.trim().length === 0}
+              >
+                <FormLabel fontSize="15px">Thumbnail</FormLabel>
+                <Input
+                  fontSize="15px"
+                  value={thumbnail}
+                  height="40px"
+                  ref={initialRef}
+                  placeholder="Thumbnail"
+                  onMouseDown={(e) => valchange(true)}
+                  onChange={(e) => setThumbnail(e.target.value)}
+                />
+                <FormErrorMessage>Thumbnail is required</FormErrorMessage>
+              </FormControl>
 
 
-{coursedata &&
-      <SimpleGrid spacing={20} minChildWidth="250px">
 
-        <Box w="120%" bg="white" p={10} borderRadius="10px" ml="10px">
-          <Image
-            boxSize="60%"
-            width="100%"
-            height='350px'
-            objectFit="cover"
-            src="   https://th.bing.com/th/id/OIP.VJQzsb88_Ogu1MFyxA6HxQHaEj?pid=ImgDet&rs=1"
-            alt="Dan Abramov"
-          />
-          <br></br>
-        
+          <FormControl mt={4} >
+        <FormLabel fontSize="16px">Course</FormLabel>
+        <Select
+          mt="10px"
+          ref={initialRef}
+          onMouseDown={(e) => valchange(true)}
+          onChange={(e) => setCourse_Id(e.target.value)}
 
-        <Heading fontSize='25px'>{coursedata.name}</Heading>
-        
-                                    
-         
-    <HStack spacing='24px' mt='20px'>
- 
-
-  <Box w='50%' h='30px' bg='white'>
-  <Text ml='' fontSize='15px'><TimeIcon mr='4px' mt='-2px'></TimeIcon>20h 20 min</Text>
-  </Box>
-  <Box w='50%' h='30px' bg='white'>
-  <Text ml='35px' fontSize='15px'>Rs.{coursedata.price}</Text>
-  </Box>
- 
-</HStack>
-        
-          <br></br>
-          <Heading fontSize='22px'>Description</Heading>
-          <br></br>
-          <Text fontSize='15px'>{coursedata.description}</Text>
-         
+        >
           
+       
+          {coursesdata.map((course) => (
+            <option key={course.id} value={course.id}>
+              {course.title}
+            </option>
+          ))}
+        </Select>
+     
+      </FormControl>
 
-          <Heading></Heading>
-        </Box>
 
-      
 
-        <Box width="80%" ml="10%" bg="white " p={10} borderRadius="10px">
- 
 
-          <TutorDetails></TutorDetails>
-      
+              <FormControl
+                mt={4}
+                isRequired
+                isInvalid={subject.trim().length === 0}
+              >
+                <FormLabel fontSize="15px">Subject</FormLabel>
+                <Input
+                  fontSize="15px"
+                  value={subject}
+                  height="40px"
+                  ref={initialRef}
+                  placeholder="Thumbnail"
+                  onMouseDown={(e) => valchange(true)}
+                  onChange={(e) => setSubject(e.target.value)}
+                />
+                <FormErrorMessage>Subject is required</FormErrorMessage>
+              </FormControl>
 
- 
-          <Heading fontSize='20px' mt='20px' >Course Details</Heading>
-     <CourseDetails></CourseDetails>
-<br></br>
-          <Heading fontSize='20px'>Course Includes</Heading>
-
-          <CourseInclude></CourseInclude>
-
-<HStack spacing='30px'> 
-<Courseeditbutton></Courseeditbutton>
-<Courseremove></Courseremove>
-
-</HStack>
          
+            </ModalBody>
 
-        </Box>
-
-   
-      </SimpleGrid>
-     }
-     
-     
-      </Box>
+            <ModalFooter>
+              <Button
+                colorScheme="blue"
+                mr={3}
+                fontSize="14px"
+                height="30px"
+                type="submit"
+              >
+                Save
+              </Button>
+              <Button onClick={onClose} fontSize="14px" height="30px">
+                Cancel
+              </Button>
+            </ModalFooter>
+          </form>
+        </ModalContent>
+      </Modal>
+    </>
   );
 };
 

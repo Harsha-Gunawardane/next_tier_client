@@ -21,6 +21,9 @@ import Adddate from "../../components/tutor/coursecontent/addmonth";
 import Addmonth from "../../components/tutor/coursecontent/addmonth.js";
 import Announcement from "../../components/tutor/coursecontent/announcement";
 import { Show, Hide } from '@chakra-ui/react'
+import { useParams } from "react-router-dom";
+import useAxiosPrivate from "../../hooks/useAxiosPrivate";
+import { useLocation } from "react-router-dom";
 
 const Coursecontent = () => {
 
@@ -39,6 +42,36 @@ const Coursecontent = () => {
 
 
 
+
+
+
+  
+const axiosPrivate = useAxiosPrivate();
+
+const [coursedata, setcoursedata] = useState({});
+
+const location = useLocation();
+const id = location.pathname.split("/").pop();
+
+
+
+useEffect(() => {
+  const getcourse = async () => {
+    const controller = new AbortController();
+    try {
+      const response = await axiosPrivate.get(`/tutor/course/${id}`, {
+        signal: controller.signal,
+        
+      });
+      setcoursedata(response.data);
+      console.log(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  getcourse();
+}, [axiosPrivate]); 
+
   return (
    <Box>
 
@@ -49,21 +82,26 @@ const Coursecontent = () => {
       <SimpleGrid spacing={20} minChildWidth="250px">
 
  <Box w="130%" bg="white" p={10} borderRadius="10px" ml="10px">
- <Heading fontSize='30px' mb='30px'>Physics 2024 Theory</Heading>
+ {coursedata &&
+ <Heading fontSize='30px' mb='30px'>{coursedata.title}</Heading>
+ }
  <Hide below='md'>
  <SimpleGrid spacing={2} minChildWidth="250px">
   <Box bg='white' width={{base:160,xl:250}} height={{bae:120,xl:200}}>
+  {coursedata &&
   <Image
-      src="https://www.ufs.ac.za/images/librariesprovider22/default-album/shutterstock_1140894395.jpg?sfvrsn=554a8521_0"
+      src={coursedata.thumbnail}
       alt='Green double couch with wooden legs'
       height={{base:120,xl:150}}
       
       
     />
+  }
   </Box>
   <Box bg='white' height='100px' p={5}>
-    <Text fontSize='15px' ml={{base:-20,xl:-100}} mt='-20px'>Find Physics stock images in HD and millions of other royalty-free stock photos, illustrations and vectors in the Shutterstock collection. Thousands of new, high-quality pictures added every day</Text>
-  </Box>
+  {coursedata &&
+    <Text fontSize='15px' ml={{base:-20,xl:-100}} mt='-20px'>{coursedata.description}</Text>
+   } </Box>
  </SimpleGrid>
 </Hide>
   <Heading fontSize='20px' mt='40px' mb='20px'>Course Content</Heading>

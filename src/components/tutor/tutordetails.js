@@ -28,7 +28,7 @@ const Tutordetails = (props) => {
             ml='20px'
           />
   </Box>
-  <Box w='70%' h='40px' bg='white' ml='-20px'>
+  <Box w='70%' h='40px' bg='white' ml={{base:0,xl:-50}}>
 <Heading fontSize='15px'>Mr.Nilantha jayasooriya</Heading>
 <Text fontSize='12px'>Bsc.Eng University of Moratuwa</Text>
   </Box>
@@ -36,7 +36,7 @@ const Tutordetails = (props) => {
 </HStack>
           <br></br>
 
-          <Text fontSize='15px'>
+          <Text fontSize='15px' mt={{base:10,sm:10,xl:0}}>
             Find Physics stock images in HD and millions of other royalty-free
             stock photos, illustrations and vectors in the Shutterstock
             collection. Thousands of new, high-quality pictures added every day.

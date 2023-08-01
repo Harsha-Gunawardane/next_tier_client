@@ -21,6 +21,7 @@ import RequireAuth from "./features/auth/RequireAuth";
 // student components
 import Settings from "./pages/student/Settings";
 import Dashboard from "./pages/student/Dashboard";
+import Courses from "./pages/student/Courses";
 
 
 // tutor components
@@ -42,7 +43,7 @@ import Layout from "./layouts/Layout";
 import SidebarAndHeader from "./layouts/SidebarAndHeader";
 
 // incorrect structure
-import Courses from "./components/Courses";
+// import Courses from "./components/Courses";
 import Content from "./components/Content";
 
 
@@ -86,20 +87,9 @@ function App() {
 
             </Route>
           </Route>
-        </Route>
 
-        <Route path='staff' element={<SidebarAndHeader userRole={"InstituteStaff"} />}>
-          <Route path="dashboard" element={<InstStaffDashboard />} />
-          <Route path="teacher" element={<ViewTeacher/>} />
-          <Route path="teacher/add" element={< AddTeacher />} />
-          <Route path="class" element={<ApproveClass/>} />
-          <Route path="profile" element={<InstStaffProfile />} />
-          <Route path="complaints" element={<InstStaffComplaintsList />} />
-          
-        </Route>
-
-
-        <Route path='tutor' element={<SidebarAndHeader userRole={"tutor"} />}>
+          <Route element={<RequireAuth allowedRoles={[ROLES.Tutor]} />}>
+          <Route path='tutor' element={<SidebarAndHeader userRole={"tutor"} />}>
           <Route path="dashboard" element={<TDashboard />} />
           <Route path="content" element={<Tcontents />} />
           <Route path="courses/add" element={<Addcourse />} />
@@ -113,6 +103,21 @@ function App() {
      
           
         </Route>
+          </Route>
+        </Route>
+
+        <Route path='staff' element={<SidebarAndHeader userRole={"InstituteStaff"} />}>
+          <Route path="dashboard" element={<InstStaffDashboard />} />
+          <Route path="teacher" element={<ViewTeacher/>} />
+          <Route path="teacher/add" element={< AddTeacher />} />
+          <Route path="class" element={<ApproveClass/>} />
+          <Route path="profile" element={<InstStaffProfile />} />
+          <Route path="complaints" element={<InstStaffComplaintsList />} />
+          
+        </Route>
+
+
+    
 
  
 

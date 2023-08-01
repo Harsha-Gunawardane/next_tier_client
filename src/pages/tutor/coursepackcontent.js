@@ -24,6 +24,9 @@ import Remove from "../../components/tutor/coursecontent/Coursecontentremove";
 import Addcoursedoccontent from "../../components/tutor/coursecontent/addcoursedoccontent";
 import Addcoursequiz from "../../components/tutor/coursecontent/addcoursequiz";
 import Addcoursecontent from "../../components/tutor/coursecontent/addcoursecontent";
+import { useParams } from "react-router-dom";
+import useAxiosPrivate from "../../hooks/useAxiosPrivate";
+import { useLocation } from "react-router-dom";
 
 const Coursepackcontent = () => {
 
@@ -66,14 +69,48 @@ const handleViewClickdoc = (item) => {
 };
 
 
+
+
+
+
+  
+const axiosPrivate = useAxiosPrivate();
+
+const [studypackdata, setstudypackdata] = useState({});
+
+const location = useLocation();
+const id = location.pathname.split("/").pop();
+
+
+
+useEffect(() => {
+  const getStudyPack = async () => {
+    const controller = new AbortController();
+    try {
+      const response = await axiosPrivate.get(`/tutor/studypack/${id}`, {
+        signal: controller.signal,
+        
+      });
+      setstudypackdata(response.data);
+      console.log(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  getStudyPack();
+}, [axiosPrivate]); 
+
+
+
+
   return (
    <Box width='100%'>
 
 
-  
-<Heading fontSize='30px' mb='30px'>Physics 2024 Theory</Heading>
+{studypackdata &&
+<Heading fontSize='30px' mb='30px'>{studypackdata.title}</Heading>
 
-
+}
 
       <SimpleGrid spacing={20} minChildWidth="250px">
 
