@@ -277,9 +277,9 @@ function StuPayment() {
                   <Button colorScheme="gray" mr={3} onClick={onClose} size="sm">
                     Close
                   </Button>
-                  <Button colorScheme="blue" mr={3} onClick={onClose} type='submit' size="sm">
+                  <Link to="/staff/cash-receipt"><Button colorScheme="blue" mr={3}  type='submit' size="sm">
                     Yes
-                  </Button>
+                  </Button></Link>
                 </ModalFooter>
               </ModalContent>
             </Modal>

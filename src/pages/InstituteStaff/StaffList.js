@@ -228,9 +228,9 @@ navigate(`/staff/profile/${staffId}`);
               <Text fontSize={13}>Joined Date: {staff.joinedDate}</Text>
               <Flex>
                 {/* <Text fontSize={13} >Account status:</Text> */}
-                <Badge colorScheme={staff.acc_status === 'Disabled' ? 'red' : 'green'} >
+                {/* <Badge colorScheme={staff.acc_status === 'Disabled' ? 'red' : 'green'} >
                   {staff.acc_status}
-                </Badge>
+                </Badge> */}
               </Flex>
               {/* <Link to={`/staff/profile/${staff.id}`}><Button size="sm" colorScheme="blue" marginTop={2}>
                 View Profile

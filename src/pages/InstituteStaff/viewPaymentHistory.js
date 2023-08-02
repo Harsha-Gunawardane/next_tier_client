@@ -19,6 +19,7 @@ import {
 } from '@chakra-ui/react'
 import { SearchIcon, EditIcon, ViewIcon } from '@chakra-ui/icons';
 import data from "./data/data.json";
+import { Link } from 'react-router-dom';
 const payments = data.Payments;
 
 function viewPaymentHistory() {
@@ -190,7 +191,7 @@ function viewPaymentHistory() {
                       </Text>
                     </Td>
                     <Td fontSize={13}>{payment.amount}</Td>
-                    <Td ><Icon as={ViewIcon} marginLeft={4}/></Td>
+                    <Td ><Link to="/staff/cash-receipt"><Icon as={ViewIcon} marginLeft={4}/></Link></Td>
                   </Tr>
                 ))}
               </Tbody>

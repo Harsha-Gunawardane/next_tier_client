@@ -32,6 +32,8 @@ import InstStaffList from './pages/InstituteStaff/StaffList'
 import AddInstStaff from './pages/InstituteStaff/AddInstStaff';
 import ViewPaymentHistory from './pages/InstituteStaff/viewPaymentHistory';
 import MyProfile from './pages/InstituteStaff/myProfile';
+import CashReceipt from './pages/InstituteStaff/cashReceiptStaff';
+
 
 
 
@@ -104,7 +106,7 @@ function App() {
           </Route>
         </Route>
 
-        <Route element={<RequireAuth allowedRoles={[ROLES.Staff]} />}>
+        {/* <Route element={<RequireAuth allowedRoles={[ROLES.Staff]} />}> */}
           <Route
             path="staff"
             element={<SidebarAndHeader userRole={"InstituteStaff"} />}
@@ -122,8 +124,9 @@ function App() {
             <Route path="staff-list" element={<InstStaffList />} />
             <Route path="staff-list/add-inst-staff" element={<AddInstStaff />} />
             <Route path="payment-history" element={<ViewPaymentHistory/>} />
+            <Route path="cash-receipt" element={<CashReceipt/>} />
           </Route>
-        </Route>
+        {/* </Route> */}
 
         {/* <Route element={<RequireAuth allowedRoles={[ROLES.Tutor]} />}> */}
         {/* <Route path="tutor" element={<SidebarAndHeader userRole={"teacher"} />}>
