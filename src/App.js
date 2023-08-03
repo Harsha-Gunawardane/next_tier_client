@@ -34,6 +34,8 @@ import ViewPaymentHistory from './pages/InstituteStaff/viewPaymentHistory';
 import MyProfile from './pages/InstituteStaff/myProfile';
 import CashReceipt from './pages/InstituteStaff/cashReceiptStaff';
 import OnlineReceipt from './pages/InstituteStaff/onlineReceiptStaff';
+import StudentsList from "./pages/InstituteStaff/studentsList";
+import StudentProfile from './pages/InstituteStaff/StudentProfile';
 
 
 
@@ -126,6 +128,8 @@ function App() {
             <Route path="payment-history" element={<ViewPaymentHistory/>} />
             <Route path="cash-receipt" element={<CashReceipt/>} />
             <Route path="online-receipt" element={<OnlineReceipt/>} />
+            <Route path="stu-list" element={<StudentsList/>} />
+            <Route path="stu-profile/:id" element={<StudentProfile />} />
           </Route>
         {/* </Route> */}
 

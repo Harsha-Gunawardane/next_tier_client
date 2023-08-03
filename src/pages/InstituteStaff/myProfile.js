@@ -202,7 +202,7 @@ const resetPwd = async (e) => {
               {profileInfo.first_name} {profileInfo.last_name}
             </Text>
             <Text fontSize={13} mt={1}>Female</Text>
-            <Text fontSize={13} mt={1}>Manager</Text>
+            <Text fontSize={13} mt={1}>Staff</Text>
             <Text fontSize={13} mt={1}>Joined Date: {profileInfo.join_date}</Text>
             <Flex mt={3} >
               {/* <Text fontSize={13} >Account status:</Text> */}
@@ -254,7 +254,7 @@ const resetPwd = async (e) => {
                         <Input bg="white" />
                       </FormControl>
                       <FormControl>
-                        <FormLabel fontSize={12} mt={3}>E-mail</FormLabel>
+                        <FormLabel fontSize={12} mt={3}>NIC</FormLabel>
                         <Input bg="white" />
                       </FormControl>
                       <FormControl>

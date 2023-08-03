@@ -4,7 +4,7 @@ import Layout from "./Layout";
 import Sidebar from "../components/Sidebar/Sidebar";
 import { SidebarProvider, SidebarContext } from "../context/SidebarContext";
 import { useContext, useEffect, useState } from "react";
-import { FaUserAlt, FaMoneyBillAlt } from "react-icons/fa";
+import { FaUserAlt, FaMoneyBillAlt,FaUsers } from "react-icons/fa";
 
 import { Box, Container, Flex, Grid, GridItem } from "@chakra-ui/react";
 
@@ -83,6 +83,7 @@ const SidebarAndHeader = ({ userRole }) => {
 		{ icon: ReportProblemIcon, name: 'Complaints', value: 'complaints', href: '/staff/complaints' },
 		{icon: TiDocumentText, name: "Hall Management", value: "hallSchedule", href: "/staff/hall"},
 		{ icon: FaUserAlt, name: 'Institute Staffs', value: 'staff-list', href: '/staff/staff-list' },
+		{ icon: FaUsers, name: 'Students', value: 'stu-list', href: '/staff/stu-list' },
 		{ icon: FaMoneyBillAlt, name: 'Student Payments', value: 'payments', href: '/staff/stu-payment' }
 	]
 

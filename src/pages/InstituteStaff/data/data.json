@@ -200,7 +200,7 @@
     }, {
       "id": 10,
       "name": "Wesley Doe",
-      "designation": "Maanger",
+      "designation": "Manager",
       "joinedDate": "2021-05-30",
       "profileImage": "/InstituteStaffAssets/avtr8.jpg",
       "gender" : "Male",
@@ -455,5 +455,207 @@
         "description" :"BSc (Hons) in Information Systems,Univerity of Colombo School of Computing",
         "Courseimg" :"/InstituteStaffAssets/CourseImage.png"
       }
-    ]
+    ],
+    "Students": [
+      {
+        "stu_id": 1,
+        "fName": "Dinesh",
+        "gender":"Male",
+        "lName": "Khan",
+        "phn_num": "+94775093445",
+        "stream":"Biology",
+        "joinedDate":"05/04/2021",
+        "College":"Ananda College,Kandy",
+        "Medium":"English",
+        "NIC":"986665745V",
+        "parent_id":"1",
+        "profileImage":"/InstituteStaffAssets/prfl6.jpeg",
+        "courses": [
+          {
+            "course_id": 1,
+            "course_name": "Biology Theory",
+            "tutor": "John Doe",
+            "ProfileImageTutor":"/InstituteStaffAssets/avtr8.jpg",
+            "description" :"BSc (Hons) in Information Systems,Univerity of Colombo School of Computing",
+            "Courseimg" :"/InstituteStaffAssets/CourseImage.png"
+          },
+          {
+            "course_id": 2,
+            "course_name": "Chemistry Theory",
+            "ProfileImageTutor":"/InstituteStaffAssets/avtr8.jpg",
+            "description" :"BSc (Hons) in Information Systems,Univerity of Colombo School of Computing",
+            "Courseimg" :"/InstituteStaffAssets/CourseImage.png",
+            "tutor": "Jane Smith"
+          }
+        ],
+        "Parents": [
+          {
+            "parent_id": 1,
+            "fullName": "Danagesh paul",
+            "mobile_num": "+94775093445",
+           "address":"143,Kawdana road,Dhehiwala"
+          }
+        ]
+      },
+      {
+        "stu_id": 2,
+        "fName": "Alisha",
+        "lName": "Kaiar",
+        "gender":"Female",
+        "phn_num": "+94775093445",
+        "stream":"Mathematics",
+        "College":"Ananda College,Kandy",
+        "joinedDate":"05/04/2021",
+        "Medium":"English",
+        "NIC":"986665748V",
+        "profileImage":"/InstituteStaffAssets/prfl2.jpg",
+        "parent_id":"1",
+        "courses": [
+          {
+            "course_id": 1,
+            "course_name": "Biology Theory",
+            "tutor": "John Doe",
+            "ProfileImageTutor":"/InstituteStaffAssets/avtr8.jpg",
+            "description" :"BSc (Hons) in Information Systems,Univerity of Colombo School of Computing",
+            "Courseimg" :"/InstituteStaffAssets/CourseImage.png"
+          },
+          {
+            "course_id": 2,
+            "course_name": "Chemistry Theory",
+            "ProfileImageTutor":"/InstituteStaffAssets/avtr8.jpg",
+            "description" :"BSc (Hons) in Information Systems,Univerity of Colombo School of Computing",
+            "Courseimg" :"/InstituteStaffAssets/CourseImage.png",
+            "tutor": "Jane Smith"
+          }
+        ],
+        "Parents": [
+          {
+            "parent_id": 1,
+            "fullName": "Mary reshmin",
+            "mobile_num": "+94775093445",
+           "address":"143,Kawdana road,Dhehiwala"
+          }
+        ]
+      },
+      {
+        "stu_id": 3,
+        "fName": "James",
+        "lName": "stralin",
+        "gender":"Male",
+        "phn_num": "+94775093445",
+        "stream":"Mathematics",
+        "College":"Ananda College,Kandy",
+        "joinedDate":"05/04/2021",
+        "profileImage":"/InstituteStaffAssets/prfl1.jpg",
+        "Medium":"English",
+        "NIC":"986665748V",
+        "parent_id":"1",
+        "courses": [
+          {
+            "course_id": 1,
+            "course_name": "Biology Theory",
+            "tutor": "John Doe",
+            "ProfileImageTutor":"/InstituteStaffAssets/avtr8.jpg",
+            "description" :"BSc (Hons) in Information Systems,Univerity of Colombo School of Computing",
+            "Courseimg" :"/InstituteStaffAssets/CourseImage.png"
+          },
+          {
+            "course_id": 2,
+            "course_name": "Chemistry Theory",
+            "ProfileImageTutor":"/InstituteStaffAssets/avtr8.jpg",
+            "description" :"BSc (Hons) in Information Systems,Univerity of Colombo School of Computing",
+            "Courseimg" :"/InstituteStaffAssets/CourseImage.png",
+            "tutor": "Jane Smith"
+          }
+        ],
+        "Parents": [
+          {
+            "parent_id": 1,
+            "fullName": "James atlin",
+            "mobile_num": "+94775093445",
+           "address":"143,Kawdana road,Dhehiwala"
+          }
+        ]
+      },
+      {
+        "stu_id": 4,
+        "fName": "Katherine",
+        "lName": "john",
+        "gender":"Female",
+        "phn_num": "+94775093445",
+        "stream":"Arts",
+        "College":"Ananda College,Kandy",
+        "joinedDate":"05/04/2021",
+        "profileImage":"/InstituteStaffAssets/prfl3.jpg",
+        "Medium":"Sinhala",
+        "NIC":"986665748V",
+        "parent_id":"1",
+        "courses": [
+          {
+            "course_id": 1,
+            "course_name": "Biology Theory",
+            "tutor": "John Doe",
+            "ProfileImageTutor":"/InstituteStaffAssets/avtr8.jpg",
+            "description" :"BSc (Hons) in Information Systems,Univerity of Colombo School of Computing",
+            "Courseimg" :"/InstituteStaffAssets/CourseImage.png"
+          },
+          {
+            "course_id": 2,
+            "course_name": "Chemistry Theory",
+            "ProfileImageTutor":"/InstituteStaffAssets/avtr8.jpg",
+            "description" :"BSc (Hons) in Information Systems,Univerity of Colombo School of Computing",
+            "Courseimg" :"/InstituteStaffAssets/CourseImage.png",
+            "tutor": "Jane Smith"
+          }
+        ],
+        "Parents": [
+          {
+            "parent_id": 1,
+            "fullName": "Madona james",
+            "mobile_num": "+94775093445",
+           "address":"143,Kawdana road,Dhehiwala"
+          }
+        ]
+      },
+      {
+        "stu_id": 5,
+        "fName": "Kumar",
+        "lName": "Kesan",
+        "gender":"Male",
+        "phn_num": "+94775093445",
+        "stream":"Commerce",
+        "College":"Ananda College,Kandy",
+        "joinedDate":"05/04/2021",
+        "profileImage":"/InstituteStaffAssets/prfl1.jpg",
+        "Medium":"Tamil",
+        "NIC":"986665748V",
+        "parent_id":"1",
+        "courses": [
+          {
+            "course_id": 1,
+            "course_name": "Biology Theory",
+            "tutor": "John Doe",
+            "ProfileImageTutor":"/InstituteStaffAssets/avtr8.jpg",
+            "description" :"BSc (Hons) in Information Systems,Univerity of Colombo School of Computing",
+            "Courseimg" :"/InstituteStaffAssets/CourseImage.png"
+          },
+          {
+            "course_id": 2,
+            "course_name": "Chemistry Theory",
+            "ProfileImageTutor":"/InstituteStaffAssets/avtr8.jpg",
+            "description" :"BSc (Hons) in Information Systems,Univerity of Colombo School of Computing",
+            "Courseimg" :"/InstituteStaffAssets/CourseImage.png",
+            "tutor": "Jane Smith"
+          }
+        ],
+        "Parents": [
+          {
+            "parent_id": 1,
+            "fullName": "Nitharshan",
+            "mobile_num": "+94775093445",
+           "address":"143,Kawdana road,Dhehiwala"
+          }
+        ]
+      }
+    ] 
 }

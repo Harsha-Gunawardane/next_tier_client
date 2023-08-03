@@ -39,6 +39,15 @@ const StaffList = () => {
       background-color: #555;
     }
   `;
+
+  // Calculate the counts for each filter option
+  const totalCount = staffData.length;
+  const maleCount = staffData.filter((staff) => staff.gender.toLowerCase() === 'male').length;
+  const femaleCount = staffData.filter((staff) => staff.gender.toLowerCase() === 'female').length;
+  const managerCount = staffData.filter((staff) => staff.designation.toLowerCase() === 'manager').length;
+  const staffCount = staffData.filter((staff) => staff.designation.toLowerCase() === 'staff').length;
+
+
   const [searchTerm, setSearchTerm] = useState('');
   const [sortBy, setSortBy] = useState('name');
   const [sortOrder, setSortOrder] = useState('asc');
@@ -169,9 +178,9 @@ navigate(`/staff/profile/${staffId}`);
                   w="max-content"
                   backgroundColor="white"
                 >
-                  <option value="">All</option>
-                  <option value="Manager">Manager</option>
-                  <option value="Staff">Staff</option>
+                  <option value="">All-{totalCount}</option>
+                  <option value="Manager">Manager -{managerCount}</option>
+                  <option value="Staff">Staff -{staffCount}</option>
                 </Select>
               </Box>
             </Flex>
@@ -191,18 +200,15 @@ navigate(`/staff/profile/${staffId}`);
                   w="max-content"
                   backgroundColor="white"
                 >
-                  <option value="">All</option>
-                  <option value="Male">Male</option>
-                  <option value="Female">Female</option>
+                  <option value="">All-{totalCount}</option>
+                  <option value="Male">Male -{maleCount}</option>
+                  <option value="Female">Female - {femaleCount}</option>
                 </Select>
               </Box>
             </Flex>
           </Box>
-
-
-
-
         </SimpleGrid>
+        
       </Box>
       <Box width="100%" height="72vh" overflowY="scroll" css={scrollbarStyles}>
         <SimpleGrid columns={[1, 2, 3, 4, 5]} spacing="6" marginLeft={4} marginRight={4}>
