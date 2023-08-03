@@ -23,6 +23,7 @@ function cashReceiptStaff() {
       study_packID="B23"
       amount="Rs.2500"
       paid_amount="Rs.2500"
+      expire_date="03/07/2023"
       >
 
       </CashReceipt>

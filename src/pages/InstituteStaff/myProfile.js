@@ -1,10 +1,82 @@
 import { useEffect, useState } from "react";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
-import { Tabs, TabList, TabPanels, Tab, TabPanel, Button, InputGroup, InputRightElement, Divider } from '@chakra-ui/react';
+import { Tabs, TabList, TabPanels, Tab, TabPanel, Button, InputGroup, InputRightElement, Divider, useToast } from '@chakra-ui/react';
 import { Box, Grid, GridItem, Avatar, Text, Badge, Flex, SimpleGrid, FormControl, FormLabel, Input, Textarea } from '@chakra-ui/react'
+import { CheckIcon, CloseIcon } from "@chakra-ui/icons";
+
+
+
+const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
+
+const STAFF_INFO_URL = "/staff/profile";
+
 
 function Profile() {
+  {/**re set pw */}
+const [currentPwd, setCurrentPwd] = useState("");
+const [newPwd, setNewPwd] = useState("");
+const [confirmPwd, setConfirmPwd] = useState("");
+
+const [validCurrentPwd, setValidCurrentPwd] = useState(false);
+const [validNewPwd, setValidNewPwd] = useState(false);
+const [validConfirmPwd, setValidConfirmPwd] = useState(false);
+
+useEffect(() => {
+  setValidCurrentPwd(PWD_REGEX.test(currentPwd));
+}, [currentPwd]);
+
+useEffect(() => {
+  setValidNewPwd(PWD_REGEX.test(newPwd));
+  setValidConfirmPwd(newPwd === confirmPwd);
+}, [newPwd, confirmPwd]);
+
+const resetPwd = async (e) => {
+  e.preventDefault();
+
+  if (validNewPwd && validConfirmPwd && validCurrentPwd) {
+    try {
+      const response = await axiosPrivate.patch(STAFF_INFO_URL, {
+        currentPwd,
+        newPwd,
+        confirmPwd,
+      });
+
+      console.log("Request successful:", response.data);
+
+      toast({
+        title: "Password reset successfully",
+        status: "success",
+        isClosable: true,
+        position: "top-right",
+      });
+    } catch (error) {
+      let errorMessage = "An error occurred";
+
+      if (error.response) {
+        console.log("Server responded with an error:", error.response.data);
+        errorMessage = error.response.data.error || errorMessage;
+      } else if (error.request) {
+        console.log("No response received from the server");
+        errorMessage = "No response received from the server";
+      } else {
+        console.log("Error occurred during request:", error.message);
+        errorMessage = error.message || errorMessage;
+      }
+
+      toast({
+        title: errorMessage,
+        status: "error",
+        isClosable: true,
+        position: "top-right",
+      });
+    }
+  }
+};
+  const toast = useToast();
+
+  
+ 
   const axiosPrivate = useAxiosPrivate();
   const [profileInfo, setProfileInfo] = useState(null);
 
@@ -60,7 +132,7 @@ function Profile() {
 
   // ...Other code...
 
-
+{/**view personal info */}
   useEffect(() => {
     const getStaffProfile = async () => {
       const controller = new AbortController();
@@ -101,6 +173,7 @@ function Profile() {
     background-color: #555;
   }
 `;
+
 
   return (
     <Box backgroundColor="#F9F9F9" width="100%">
@@ -269,11 +342,13 @@ function Profile() {
                     <Divider></Divider>
                     <FormControl mt={2}>
                       <Flex>
-                        <FormLabel fontSize={12} width={250} mt={1.5}>
+                        <FormLabel fontSize={12} width={250} mt={1.5} htmlFor="currentPwd">
                           Current password
                         </FormLabel>
                         <InputGroup width={250}>
                           <Input
+                           value={currentPwd}
+                           onChange={(e) => setCurrentPwd(e.target.value)}
                             type={showCurrentPassword ? 'text' : 'password'}
                             bg="white"
                             pr="4rem"
@@ -288,15 +363,31 @@ function Profile() {
                             )}
                           </InputRightElement>
                         </InputGroup>
+                        <CheckIcon
+                color="#15BD66"
+                ml={2}
+                bottom={1}
+                display={validCurrentPwd ? "block" : "none"}
+              />
+              <CloseIcon
+                color="#D93400"
+                ml={2}
+                bottom={1}
+                display={currentPwd && !validCurrentPwd ? "block" : "none"}
+              />
                       </Flex>
                     </FormControl>
                    
 
                     <FormControl mt={5}>
                       <Flex>
-                        <FormLabel fontSize={12} width={250} mt={1.5}>New password</FormLabel>
+                        <FormLabel fontSize={12} width={250} mt={1.5 } htmlFor="newPwd">New password</FormLabel>
                         <InputGroup width={250}>
                           <Input
+                            id="newPwd"
+                           
+                            value={newPwd}
+                            onChange={(e) => setNewPwd(e.target.value)}
                             type={showCurrentPassword ? 'text' : 'password'}
                             bg="white"
                             pr="4rem"
@@ -311,17 +402,33 @@ function Profile() {
                             )}
                           </InputRightElement>
                         </InputGroup>
+                        <CheckIcon
+                color="#15BD66"
+                ml={2}
+                bottom={1}
+                display={validNewPwd ? "block" : "none"}
+              />
+              <CloseIcon
+                color="#D93400"
+                ml={2}
+                bottom={1}
+                display={newPwd && !validNewPwd ? "block" : "none"}
+              />
                       </Flex>
                     </FormControl>
                     <FormControl mt={3}>
                       <Flex>
-                        <FormLabel fontSize={12} width={250} mt={1.5}>Confirm password</FormLabel>
+                        <FormLabel fontSize={12} width={250} mt={1.5} htmlFor="confirmPwd" >Confirm password</FormLabel>
                         <InputGroup width={250}>
                           <Input
                             type={showCurrentPassword ? 'text' : 'password'}
                             bg="white"
                             pr="4rem"
                             width={250}
+                            id="confirmPwd"
+                          
+                            value={confirmPwd}
+                            onChange={(e) => setConfirmPwd(e.target.value)}
                           // ...other props as needed
                           />
                           <InputRightElement width="4rem">
@@ -332,8 +439,38 @@ function Profile() {
                             )}
                           </InputRightElement>
                         </InputGroup>
+                        <CheckIcon
+                color="#15BD66"
+                ml={2}
+                bottom={1}
+                display={confirmPwd && validConfirmPwd ? "block" : "none"}
+              />
+              <CloseIcon
+                color="#D93400"
+                ml={2}
+                bottom={1}
+                display={!validConfirmPwd ? "block" : "none"}
+              />
                       </Flex>
                     </FormControl>
+                  </Box>
+                  <Box>
+                  <Button
+          cursor="pointer"
+          w={85}
+          h={35}
+          mr={15}
+          mb={5}
+          colorScheme="blue"
+          color="#ffffff"
+          fontWeight="medium"
+          justifyContent="center"
+          alignItems="center"
+          borderRadius={5}
+          onClick={resetPwd}
+        >
+          Reset
+        </Button>
                   </Box>
                 </SimpleGrid>
               </TabPanel>

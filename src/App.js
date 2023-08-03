@@ -33,7 +33,7 @@ import AddInstStaff from './pages/InstituteStaff/AddInstStaff';
 import ViewPaymentHistory from './pages/InstituteStaff/viewPaymentHistory';
 import MyProfile from './pages/InstituteStaff/myProfile';
 import CashReceipt from './pages/InstituteStaff/cashReceiptStaff';
-
+import OnlineReceipt from './pages/InstituteStaff/onlineReceiptStaff';
 
 
 
@@ -125,6 +125,7 @@ function App() {
             <Route path="staff-list/add-inst-staff" element={<AddInstStaff />} />
             <Route path="payment-history" element={<ViewPaymentHistory/>} />
             <Route path="cash-receipt" element={<CashReceipt/>} />
+            <Route path="online-receipt" element={<OnlineReceipt/>} />
           </Route>
         {/* </Route> */}
 

@@ -191,7 +191,17 @@ function viewPaymentHistory() {
                       </Text>
                     </Td>
                     <Td fontSize={13}>{payment.amount}</Td>
-                    <Td ><Link to="/staff/cash-receipt"><Icon as={ViewIcon} marginLeft={4}/></Link></Td>
+                    <Td>
+              {payment.payment_type === "Physical" ? (
+                <Link  to="/staff/cash-receipt">
+                  <Icon as={ViewIcon} marginLeft={4} />
+                </Link>
+              ) : (
+                <Link  to="/staff/online-receipt">
+                  <Icon as={ViewIcon} marginLeft={4} />
+                </Link>
+              )}
+            </Td>
                   </Tr>
                 ))}
               </Tbody>

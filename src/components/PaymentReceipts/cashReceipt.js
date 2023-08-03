@@ -81,6 +81,7 @@ function cashReceipt(props) {
       <Tr>
         <Th fontFamily="sans-serif">Course</Th>
         <Th fontFamily="sans-serif">Study pack ID</Th>
+        <Th fontFamily="sans-serif">Expire Date</Th>
         <Th fontFamily="sans-serif">Amount</Th>
         <Th fontFamily="sans-serif">Paid Amount</Th>
       </Tr>
@@ -89,12 +90,14 @@ function cashReceipt(props) {
       <Tr>
         <Td  fontSize="small" >{props.course}</Td>
         <Td  fontSize="small">{props.study_packID}</Td>
+        <Td  fontSize="small">{props.expire_date}</Td>
         <Td  fontSize="small">{props.amount}</Td>
-        <Td  fontSize="small">{props.paid_amount}</Td>
+        <Td  fontSize="small">{props.paid_amount}</Td>     
       </Tr>
     </Tbody>
     <Tfoot>
       <Tr>
+        <Th></Th>
         <Th></Th>
         <Th></Th>
         <Th  fontSize="small" fontFamily="sans-serif">Total</Th>
