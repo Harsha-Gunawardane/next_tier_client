@@ -5,11 +5,11 @@ import { Image, Heading, Text } from "@chakra-ui/react";
 
 import { Avatar } from "@chakra-ui/react";
 import { HStack } from "@chakra-ui/react";
-import { SimpleGrid, Button } from "@chakra-ui/react";
+import { SimpleGrid, Button,FormControl,Switch,FormLabel } from "@chakra-ui/react";
 import { TimeIcon, CalendarIcon } from "@chakra-ui/icons";
 
-import CourseInclude from "../../components/tutor/coursedetails/courseInclude";
-import CourseDetails from "../../components/tutor/coursedetails/courseDetails";
+import CourseInclude from "../../components/tutor/coursepackage/coursepackInclude";
+import CourseDetails from "../../components/tutor/coursepackage/coursepackDetails";
 import TutorDetails from "../../components/tutor/tutordetails";
 import Courseeditbutton from "../../components/tutor/coursepackage/coursepackageedit";
 import Courseremove from "../../components/tutor/coursepackage/coursepackremove";
@@ -43,6 +43,12 @@ const Coursepackedit = () => {
     };
     getStudyPack();
   }, [axiosPrivate]);
+
+  const [isPublic, setIsPublic] = useState(false);
+  const handleToggleVisibility = () => {
+    // Update the isPublic state locally without making an API call
+    setIsPublic(!isPublic);
+  };
 
   return (
     <Box overflowY="scroll">
@@ -113,6 +119,17 @@ const Coursepackedit = () => {
             <HStack spacing="30px" mt="20px">
               <Courseeditbutton></Courseeditbutton>
               <Courseremove></Courseremove>
+
+              <FormControl display="flex" alignItems="center" mt={2}>
+                <FormLabel htmlFor="course-visibility" mb="0" mr={2}>
+                  Course Visibility
+                </FormLabel>
+                <Switch
+                  id="course-visibility"
+                  isChecked={isPublic}
+                  onChange={handleToggleVisibility}
+                />
+              </FormControl>
             </HStack>
           </Box>
         </SimpleGrid>

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { MdCheckCircle} from '@chakra-ui/icons'
 import { ListItem,UnorderedList,Button,ButtonGroupStackDivider,Stack,Input,List,ListIcon } from '@chakra-ui/react'
 
-const Coursedetails = () => {
+const Coursepackdetails = () => {
 
 
   return (
@@ -19,7 +19,7 @@ const Coursedetails = () => {
   );
 };
 
-export default Coursedetails;
+export default Coursepackdetails;
 
 
 
@@ -124,4 +124,4 @@ export default Coursedetails;
 //   );
 // };
 
-// export default Coursedetails;
+// export default Coursepackdetails;

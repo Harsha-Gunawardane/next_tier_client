@@ -12,7 +12,7 @@ import {
   Box,
 } from "@chakra-ui/react";
 import { CalendarIcon, TimeIcon, EditIcon } from "@chakra-ui/icons";
-import { ChakraProvider, HStack } from "@chakra-ui/react";
+import { ChakraProvider, HStack,Link } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import { IconButton } from "@chakra-ui/react";
 import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
@@ -64,13 +64,15 @@ const Course = (props) => {
   return (
     <div>
       <ChakraProvider>
+        
+        
         <SearchCourse onSearch={handleSearch} />
         <SimpleGrid minChildWidth="300px" spacing="40px" p={5}>
           {coursesdata != null && coursesdata.length > 0 ? (
             coursesdata.map((item) => (
               <Card key={item.id} maxW="lg">
                 <CardBody>
-                  <Image src={item.thumbnail} borderRadius="lg" height='210px' />
+                  <Image src={item.thumbnail} borderRadius="lg" height='210px' width='100%' />
                   <Stack mt="6" spacing="3">
                     <Heading color="black" fontSize="l">
                       {item.title}
@@ -140,15 +142,7 @@ const Course = (props) => {
               <Heading fontSize="25px" ml="400px">
                 No Course Packages Available
               </Heading>
-              <Button
-                colorScheme="blue"
-                width="18%"
-                height="40px"
-                ml="450px"
-                fontSize="15px"
-              >
-                Add Course Package
-              </Button>
+         
             </Box>
           )}
         </SimpleGrid>

@@ -3,7 +3,7 @@ import { MantineProvider, Textarea } from '@mantine/core';
 import { useState,useEffect } from 'react';
 import { Stepper, Button, Group, TextInput, PasswordInput, NumberInput,Code,Select,Radio,FileInput } from '@mantine/core';
 import { useForm } from '@mantine/form';
-import { Box,Text,Heading, HStack } from '@chakra-ui/react'
+import { Box,Text,Heading, HStack,ListItem,UnorderedList } from '@chakra-ui/react'
 import { Link, useNavigate } from "react-router-dom";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 
@@ -44,7 +44,9 @@ const Addcoursepack= () => {
       
    
       course_id:'',
-     
+     years:'',
+     days:'',
+     months:'',
     
       
 
@@ -109,6 +111,15 @@ const Addcoursepack= () => {
         price:
         values.price.length < 1 ? "Price is Required" : null,
 
+         days:
+        values.days.length < 1 ? "Day is Required" : null,
+
+        months:
+        values.months.length < 1 ? "Month is Required" : null,
+
+        years:
+        values.years.length < 1 ? "Year is Required" : null,
+
             
       };
     },
@@ -163,6 +174,13 @@ const Addcoursepack= () => {
           form.values.subject_area_4,
         ];
 
+        // const access_period = [
+        //   form.values.years,
+        //   form.values.months,
+        //   form.values.days,
+         
+        // ];
+
         const updatedFormValues = {
           ...form.values,
           subject_areas: subjectAreas.filter((area) => area.trim().length > 0),
@@ -171,6 +189,13 @@ const Addcoursepack= () => {
           subject_area_2: undefined,
           subject_area_3: undefined,
           subject_area_4: undefined,
+
+          access_period: {
+            days: form.values.days,
+            months: form.values.months,
+            years: form.values.years,
+          },
+       
         };
 
         console.log(updatedFormValues);
@@ -442,74 +467,204 @@ const Addcoursepack= () => {
               />
 
 
+
+<HStack spacing='40px' mt='20px'>
+
+<NumberInput
+                {...form.getInputProps("years")}
+                defaultValue={18}
+                placeholder="Years"
+                label="Access Period"
+                styles={{
+                  input: {
+                    // Styles for the input element
+
+                    color: "black",
+                    borderRadius: "8px",
+                    padding: "10px",
+                    height: "60px",
+                    width:'100%'
+                  },
+                  label: {
+                    // Styles for the label element
+                    fontSize: "16px",
+                    fontWeight: "bold",
+                    marginBottom: "5px",
+                  },
+                }}
+              />
+
+
+<NumberInput
+                {...form.getInputProps("months")}
+                defaultValue={18}
+                placeholder="Months"
+                label=""
+                mt='30px'
+                styles={{
+                  input: {
+                    // Styles for the input element
+
+                    color: "black",
+                    borderRadius: "8px",
+                    padding: "10px",
+                    height: "60px",
+                    width:'100%'
+                  },
+                  label: {
+                    // Styles for the label element
+                    fontSize: "16px",
+                    fontWeight: "bold",
+                    marginBottom: "5px",
+                  },
+                }}
+              />
+
+
+<NumberInput
+                {...form.getInputProps("days")}
+                defaultValue={18}
+                placeholder="Days"
+                label=""
+                mt='30px'
+                styles={{
+                  input: {
+                    // Styles for the input element
+
+                    color: "black",
+                    borderRadius: "8px",
+                    padding: "10px",
+                    height: "60px",
+                    width:'100%'
+                  },
+                  label: {
+                    // Styles for the label element
+                    fontSize: "16px",
+                    fontWeight: "bold",
+                    marginBottom: "5px",
+                  },
+                }}
+              />
+
+</HStack>
+
+
+
      
         </Stepper.Step>
 
 
-        <Stepper.Completed>
+       
+
+
+
+            
+            <Stepper.Completed>
               <Box>
-                <Heading as="h2" fontSize="lg" mb={2}>
-                  Completed!
-                </Heading>
+                <Heading
+                  as="h2"
+                  fontSize="20px"
+                  color="blue"
+                  ml="300px"
+                  mb="20px"
+                ></Heading>
                 <Box>
+                <UnorderedList>
+                <ListItem>
                   <HStack spacing="100px">
-                    <Box width='100px'>
+                  <Box width="150px">
                       <Text>Title:</Text>
                     </Box>
-                    <Box width='200px'>
-                      <Text> {form.values.title}</Text>
+                    <Box width="200px">
+                      <Text  color='grey'>
+                      {form.values.title}
+                      </Text>
                     </Box>
                   </HStack>
-                  <HStack spacing="100px" >
-                  <Box width='100px'>
+                  </ListItem>
+
+                  <ListItem>
+                  <HStack spacing="100px" mt='10px'>
+                  <Box width="150px">
                       <Text>Description:</Text>
                     </Box>
-                    <Box width='200px'>
-                      <Text> {form.values.description}</Text>
+                    <Box width="200px">
+                      <Text  color='grey'> {form.values.description}</Text>
                     </Box>
                   </HStack>
-                  <HStack spacing="100px">
-                  <Box width='100px'>
+                  </ListItem>
+
+                  <ListItem>
+                  <HStack spacing="100px" mt='10px'>
+                  <Box width="150px">
                       <Text>Subject:</Text>
                     </Box>
-                    <Box width='200px'>
-                      <Text> {form.values.subject}</Text>
+                    <Box width="200px">
+                      <Text  color='grey'> {form.values.subject}</Text>
                     </Box>
                   </HStack>
-                  <HStack spacing="100px">
-                  <Box width='100px'>
+                  </ListItem>
+
+                  <ListItem>
+                  <HStack spacing="100px" mt='10px'>
+                  <Box width="150px">
                       <Text>Subject Areas:</Text>
                     </Box>
-                    <Box width='200px'>
-                      <Text> {form.values.subject_area_1}</Text>
-                      <Text> {form.values.subject_area_2}</Text>
-                      <Text> {form.values.subject_area_3}</Text>
-                      <Text> {form.values.subject_area_4}</Text>
+                    <Box width="200px">
+                    <Text color="grey">
+          {form.values.subject_area_1}
+          {form.values.subject_area_2 && `, ${form.values.subject_area_2}`}
+          {form.values.subject_area_3 && `, ${form.values.subject_area_3}`}
+          {form.values.subject_area_4 && `, ${form.values.subject_area_4}`}
+        </Text>
+               
                     </Box>
                   </HStack>
-                  <HStack spacing="100px">
-                  <Box width='100px'>
+                  </ListItem>
+
+
+                  <ListItem>
+                  <HStack spacing="100px" mt='10px'>
+                  <Box width="150px">
                       <Text>Price:</Text>
                     </Box>
-                    <Box width='200px'>
-                      <Text> {form.values.price}</Text>
+                    <Box width="200px">
+                      <Text color='grey'> {form.values.price}</Text>
                     </Box>
                   </HStack>
+                  </ListItem>
 
-                  <HStack spacing="100px">
-                  <Box width='100px'>
+                  <ListItem>
+                  <HStack spacing="100px" mt='10px'>
+                  <Box width="150px">
                       <Text>Course:</Text>
                     </Box>
-                    <Box width='200px'>
-                    <Text>
-         {coursesdata.find((course) => course.id === form.values.course_id)?.title}
-      </Text>
+                    <Box width="200px">
+                      <Text color='grey'>{coursesdata.find((course) => course.id === form.values.course_id)?.title}</Text>
                     </Box>
                   </HStack>
-        
+                  </ListItem>
+
+                  <ListItem>
+                  <HStack spacing="100px" mt='10px'>
+                  <Box width="150px">
+                      <Text>Access Period:</Text>
+                    </Box>
+                    <Box width="200px">
+                      <Text color='grey'>Days:{form.values.days}    Months:{form.values.months}    Years:{form.values.years}</Text>
+                 
+                    </Box>
+                  </HStack>
+                  </ListItem>
+
                 
-              
+
+
+
+             
+      </UnorderedList>
                 </Box>
+                
               </Box>
             </Stepper.Completed>
       </Stepper>

@@ -8,21 +8,24 @@ import {
   AlertDialogContent,
   AlertDialogOverlay,
 } from '@chakra-ui/react';
+import axios from 'axios';
 import { useDisclosure } from '@chakra-ui/react';
 import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
 
-const Contentremove = ({ course,month }) => {
+const Contentremove = ({ courseId, month }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const cancelRef = React.useRef();
   const axiosPrivate = useAxiosPrivate();
 
   const handleDelete = () => {
     // Replace 'YOUR_API_ENDPOINT' with the actual URL of your backend endpoint for removing the month
+   
 
     // Make the API call to delete the month using Axios
     axiosPrivate
-      .delete(`/tutor/course/${course}/month/${month}`)
+    .delete(`/tutor/course/${courseId}/${month}`)
       .then((response) => {
+        console.log(`Month ${month} deleted successfully!`);
         onClose(); // Close the modal after deleting the month
         window.location.reload();
       })

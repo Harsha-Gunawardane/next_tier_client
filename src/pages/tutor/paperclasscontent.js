@@ -49,7 +49,7 @@ const Coursecontent = () => {
  <Heading fontSize='30px' mb='30px'>Physics 2024 Paper</Heading>
  <Hide below='md'>
  <SimpleGrid spacing={2} minChildWidth="250px">
-  <Box bg='white' width={{base:160,xl:250}} height={{bae:120,xl:200}}>
+  <Box bg='white' width={{base:160,xl:250}} height={{base:120,xl:200}}>
   <Image
       src="https://www.ufs.ac.za/images/librariesprovider22/default-album/shutterstock_1140894395.jpg?sfvrsn=554a8521_0"
       alt='Green double couch with wooden legs'

@@ -101,8 +101,39 @@ const Coursepackedit = () => {
 
 
 
+  const [selectedCourseId, setSelectedCourseId] = useState("");
+
+  // Step 2: Find the course title based on the selected course ID
+  const selectedCourseTitle =
+  coursesdata && coursesdata.find((course) => course.id === selectedCourseId)?.title || "";
+
+  useEffect(() => {
+    if (coursesdata && coursesdata.length > 0) {
+      setSelectedCourseId(course_id); // Set the selectedCourseId to the course_id from the response
+    }
+  }, [coursesdata, course_id]);
+
+
+
+
   const handlesubmit = (e) => {
     e.preventDefault();
+
+    const isFormValid =
+    title.trim().length !== 0 &&
+    description.trim().length !== 0 &&
+    description.length >= 200 &&
+    description.length <= 400 &&
+    price.trim().length !== 0 &&
+    !isNaN(price) &&
+    parseFloat(price) >= 0 &&
+    thumbnail.trim().length !== 0 &&
+    subject.trim().length !== 0 ;
+
+  if (!isFormValid) {
+    alert("Please fill in all the required fields correctly.");
+    return;
+  }
 
     const coursedata = {
       id: Studypackid,
@@ -135,6 +166,13 @@ const Coursepackedit = () => {
   if (coursesdata === null) {
     return <div>Loading...</div>;
   }
+
+
+
+
+
+
+
 
   return (
     <>
@@ -172,7 +210,7 @@ const Coursepackedit = () => {
                 mt={4}
                 isRequired
                 isInvalid={
-                  description.trim().length === 0 || description.length > 200
+                  description.trim().length === 0 || description.length > 400 || description.length < 200 
                 }
               >
                 <FormLabel fontSize="15px">Description</FormLabel>
@@ -185,10 +223,12 @@ const Coursepackedit = () => {
                   onMouseDown={(e) => valchange(true)}
                   onChange={(e) => setDescription(e.target.value)}
                 />
-                <FormErrorMessage>
-                  {description.trim().length === 0
-                    ? "Description is required"
-                    : `Description cannot exceed 200 characters`}
+           <FormErrorMessage>
+                {description.trim().length === 0
+          ? "Description is required"
+          : description.length > 400
+          ? "Description cannot exceed 400 characters"
+          : "Description must be at least 200 characters"}
                 </FormErrorMessage>
               </FormControl>
 
@@ -241,22 +281,25 @@ const Coursepackedit = () => {
 
           <FormControl mt={4} >
         <FormLabel fontSize="16px">Course</FormLabel>
-        <Select
-          mt="10px"
-          ref={initialRef}
-          onMouseDown={(e) => valchange(true)}
-          onChange={(e) => setCourse_Id(e.target.value)}
-
-        >
-          
-       
-          {coursesdata.map((course) => (
-            <option key={course.id} value={course.id}>
-              {course.title}
-            </option>
-          ))}
-        </Select>
-     
+ <Select
+  mt="10px"
+  ref={initialRef}
+  onMouseDown={(e) => valchange(true)}
+  onChange={(e) => setCourse_Id(e.target.value)}
+  value={selectedCourseId}
+>
+<option key={selectedCourseId} value={selectedCourseId}>
+          {selectedCourseTitle}
+        </option>
+  {coursesdata &&
+    coursesdata.map((course) =>
+      course.id === selectedCourseId ? null : (
+        <option key={course.id} value={course.id}>
+          {course.title}
+        </option>
+      )
+    )}
+</Select>
       </FormControl>
 
 

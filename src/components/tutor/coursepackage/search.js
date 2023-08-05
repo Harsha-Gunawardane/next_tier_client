@@ -8,10 +8,10 @@ const SearchStudypack = ({ onSearch }) => {
   };
 
   return (
-    <Box width="80%" mb="1em" ml='100px'>
+    <Box width="30%" mb="1em" ml='20px'>
       <Input
         type="text"
-        placeholder="Search by course title..."
+        placeholder="Search by StudyPack Title"
         onChange={handleSearchChange}
       />
     </Box>

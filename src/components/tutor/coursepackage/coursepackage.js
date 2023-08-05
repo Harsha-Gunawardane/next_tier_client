@@ -13,6 +13,7 @@ import SearchStudypack from "./search";
 const Coursepackage = (props) => {
 
   const[coursesdata,setCoursesData]=useState(null);
+  const [courseTitles, setCourseTitles] = useState({});
   const navigate = useNavigate();
   const axiosPrivate = useAxiosPrivate();
 
@@ -38,7 +39,29 @@ useEffect(() => {
     }
   };
   getStudyPack();
+  fetchCourseTitles();
 }, [axiosPrivate]); 
+
+
+
+
+const fetchCourseTitles = async () => {
+  const controller = new AbortController();
+  try {
+    const response = await axiosPrivate.get(`/tutor/course`, {
+      signal: controller.signal,
+    });
+
+    const courseTitleMap = {};
+    response.data.forEach((course) => {
+      courseTitleMap[course.id] = course.title;
+    });
+
+    setCourseTitles(courseTitleMap);
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 
 const handleSearch = (searchTerm) => {
@@ -84,7 +107,7 @@ const handleSearch = (searchTerm) => {
       </Text>
       <HStack mt='-5px'>
       <Text color='black'  fontSize='12px' mt='5px' >
-      <TimeIcon></TimeIcon> 10 Study Packs sold
+      <TimeIcon></TimeIcon>  {courseTitles[item.course_id]}
       </Text>
 
       <IconButton onClick={() => { LoadDetail(item.id) }} 
@@ -115,7 +138,7 @@ const handleSearch = (searchTerm) => {
 </Card>
 
 )): <Box mt='150px' ><Heading fontSize='25px' ml='400px'>No Course Packages Avaliable</Heading>
-<Button colorScheme="blue" width='18%' height='40px' ml='450px' fontSize='15px'>Add Course Package</Button></Box>
+</Box>
 }
 
 </SimpleGrid>

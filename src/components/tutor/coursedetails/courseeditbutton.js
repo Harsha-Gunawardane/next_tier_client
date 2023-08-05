@@ -107,10 +107,31 @@ const Courseeditbutton = () => {
   };
 
 
+  const [isFormSubmitted, setIsFormSubmitted] = useState(false);
 
+
+
+  
   const handlesubmit = (e) => {
     e.preventDefault();
-
+  
+    // Check all the validations before submitting the form
+    const isFormValid =
+      title.trim().length !== 0 &&
+      description.trim().length !== 0 &&
+      description.length >= 200 &&
+      description.length <= 400 &&
+      monthly_fee.trim().length !== 0 &&
+      !isNaN(monthly_fee) &&
+      parseFloat(monthly_fee) >= 0 &&
+      thumbnail.trim().length !== 0 &&
+      subject.trim().length !== 0 &&
+      isGradeValid;
+  
+    if (!isFormValid) {
+      return;
+    }
+  
     const coursedata = {
       id: courseid,
       title,
@@ -122,7 +143,7 @@ const Courseeditbutton = () => {
       type,
       grade,
     };
-
+  
     axiosPrivate
       .put(`/tutor/course/${courseid}`, coursedata)
       .then((response) => {
@@ -134,6 +155,8 @@ const Courseeditbutton = () => {
         console.log(error.message);
       });
   };
+
+
 
   const { isOpen, onOpen, onClose } = useDisclosure();
   const initialRef = React.useRef(null);
@@ -175,7 +198,7 @@ const Courseeditbutton = () => {
                 mt={4}
                 isRequired
                 isInvalid={
-                  description.trim().length === 0 || description.length > 200
+                  description.trim().length === 0 || description.length > 400 || description.length < 200 
                 }
               >
                 <FormLabel fontSize="15px">Description</FormLabel>
@@ -189,9 +212,11 @@ const Courseeditbutton = () => {
                   onChange={(e) => setDescription(e.target.value)}
                 />
                 <FormErrorMessage>
-                  {description.trim().length === 0
-                    ? "Description is required"
-                    : `Description cannot exceed 200 characters`}
+                {description.trim().length === 0
+          ? "Description is required"
+          : description.length > 400
+          ? "Description cannot exceed 400 characters"
+          : "Description must be at least 200 characters"}
                 </FormErrorMessage>
               </FormControl>
 
@@ -238,7 +263,7 @@ const Courseeditbutton = () => {
                 />
                 <FormErrorMessage>Thumbnail is required</FormErrorMessage>
               </FormControl>
-
+{/* 
               <FormControl
                 mt={4}
                 isRequired
@@ -255,9 +280,9 @@ const Courseeditbutton = () => {
                   onChange={(e) => setSubject(e.target.value)}
                 />
                 <FormErrorMessage>Subject is required</FormErrorMessage>
-              </FormControl>
+              </FormControl> */}
 
-              <FormControl mt={4} isRequired isInvalid={!isGradeValid}>
+              {/* <FormControl mt={4} isRequired isInvalid={!isGradeValid}>
                 <FormLabel fontSize="15px">Grade</FormLabel>
                 <Input
                   fontSize="15px"
@@ -272,8 +297,8 @@ const Courseeditbutton = () => {
                 <FormErrorMessage>
         {isGradeValid ? "" : "Grade must be in the format: YYYY A/L or YYYY O/L"}
       </FormErrorMessage>
-              </FormControl>
-
+              </FormControl> */}
+{/* 
               <FormControl mt={4} isRequired>
                 <FormLabel fontSize="15px">Course Type</FormLabel>
                 <Select
@@ -309,10 +334,10 @@ const Courseeditbutton = () => {
                   {/* <option value='Theory'>Theory</option>
                        <option value='Revision'>Revision</option>
                        <option value='Paper'>Paper</option> */}
-                </Select>
+                {/* </Select>
 
                 <FormErrorMessage>Course Type is Required</FormErrorMessage>
-              </FormControl>
+              </FormControl> */} 
 
               <FormControl
                 mt={4}
@@ -361,6 +386,8 @@ const Courseeditbutton = () => {
           </form>
         </ModalContent>
       </Modal>
+
+      
     </>
   );
 };

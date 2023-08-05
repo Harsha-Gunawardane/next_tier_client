@@ -26,7 +26,7 @@ const Courses = () => {
   <TabPanels>
     <TabPanel>
 
-<Link to = {'add'}><Box width='120px' height='40px' bg='blue' ml='85%' p={2}><Text fontSize='15px' ml='5px' color='white'>+ Add Course</Text></Box></Link>
+<Link to = {'add'}><Button width='140px' height='40px' colorScheme="blue" ml={{base:300,xl:1000}} p={2} mt='10px' borderRadius='10px'><Text fontSize='15px' ml='5px' color='white'>+ Add Course</Text></Button></Link>
 
 
     <SimpleGrid minChildWidth='300px' spacing='40px'>
@@ -37,7 +37,7 @@ const Courses = () => {
 
     </TabPanel>
     <TabPanel>
-    <Link to = {'addstudypack'}><Box width='140px' height='40px' bg='blue' ml='85%' p={2}><Text fontSize='14px' ml='5px' color='white'>+ Add StudyPack</Text></Box></Link>
+    <Link to = {'addstudypack'}><Button width='160px' height='40px' colorScheme="blue" ml={{base:300,xl:1000}} p={2} mt='10px' borderRadius='10px'><Text fontSize='15px' ml='5px' color='white'>+ Add StudyPack</Text></Button></Link>
   
     <SimpleGrid minChildWidth='400px' spacing='40px'>
 

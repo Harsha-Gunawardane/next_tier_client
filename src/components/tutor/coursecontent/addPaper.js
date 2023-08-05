@@ -1,5 +1,5 @@
-import React, { useState,useEffect } from "react";
-import { Box, Heading, Input, Button,Select } from "@chakra-ui/react";
+import React, { useState } from "react";
+import { Box, Heading, Input, Button } from "@chakra-ui/react";
 import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
 import { useLocation } from "react-router-dom";
 import {
@@ -12,49 +12,45 @@ import {
 
 const Addmonth = ({ onClose }) => {
   const [month, setMonth] = useState("");
-  const [name, setName] = useState("");
   const [validation, setValidation] = useState(false);
-  const[coursesdata,setCoursesData]=useState(null);
 
   const axiosPrivate = useAxiosPrivate();
 
   const location = useLocation();
   const id = location.pathname.split("/").pop();
-  const [studypack_ids, setStudyPackIds] = useState([]);
-
-
-
-  useEffect(() => {
-    const getStudyPack = async () => {
-      const controller = new AbortController();
-      try {
-        const response = await axiosPrivate.get(`/tutor/studypack`, {
-          signal: controller.signal,
-        });
-        setCoursesData(response.data);
-        console.log(response.data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    getStudyPack();
-  }, [axiosPrivate]);
-
-
-  const filteredStudyPacks = coursesdata
-    ? coursesdata.filter((course) => course.course_id === id)
-    : [];
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Create the new study pack object with the selected study pack ID and name
-    const newStudyPack = { [name]: month };
+
+
+
+    // Create the new study pack object with the automatically generated week data
+    const newStudyPack = {
+      [month]: {
+        week1: {
+          tute_id: [`${month}_week1_tute_1`, `${month}_week1_tute_2`],
+          video_id: [`${month}_week1_video_1`, `${month}_week1_video_2`],
+        },
+        week2: {
+          tute_id: [`${month}_week2_tute_1`, `${month}_week2_tute_2`],
+          video_id: [`${month}_week2_video_1`, `${month}_week2_video_2`],
+        },
+        week3: {
+          tute_id: [`${month}_week3_tute_1`, `${month}_week3_tute_2`],
+          video_id: [`${month}_week3_video_1`, `${month}_week3_video_2`],
+        },
+        week4: {
+          tute_id: [`${month}_week4_tute_1`, `${month}_week4_tute_2`],
+          video_id: [`${month}_week4_video_1`, `${month}_week4_video_2`],
+        },
+      },
+    };
 
     // Make the API call to update the course with the new data
     axiosPrivate
       .put(`/tutor/course/studypack/${id}`, {
-        studypack_ids: [newStudyPack, ...studypack_ids],
+        studypack_ids: [newStudyPack],
       })
       .then((response) => {
         alert("Saved successfully.");
@@ -83,32 +79,14 @@ const Addmonth = ({ onClose }) => {
               <Heading fontSize="20px" mb="10px">
                 Add Content
               </Heading>
-            <Select
+              <Input
                 fontSize="15px"
                 height="30px"
                 onMouseDown={(e) => setValidation(true)}
                 onChange={(e) => setMonth(e.target.value)}
                 className="form-control"
-                placeholder="Select Studypack ID"
-              >
-                       {filteredStudyPacks.map((course) => (
-                    <option key={course.id} value={course.id}>
-                      {course.id}
-                    </option>
-                  ))}
-              </Select>
-
-              <Input
-                fontSize="15px"
-                height="30px"
-                onMouseDown={(e) => setValidation(true)}
-                onChange={(e) => setName(e.target.value)} 
-                className="form-control"
-                placeholder="Name"
+                placeholder=""
               />
-              
-              
-
               <Button type="submit" height="30px" mt="20px" colorScheme="blue" fontSize="12px">
                 Add
               </Button>

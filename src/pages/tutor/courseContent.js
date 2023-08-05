@@ -17,9 +17,11 @@ import {
 
 
 import CourseContent from "../../components/tutor/coursecontent/coursecontent";
+import PaperContent from "../../components/tutor/coursecontent/paperclasscontent";
 import Adddate from "../../components/tutor/coursecontent/addmonth";
 import Addmonth from "../../components/tutor/coursecontent/addmonth.js";
 import Announcement from "../../components/tutor/coursecontent/announcement";
+import Forum from "../../components/tutor/coursecontent/forum";
 import { Show, Hide } from '@chakra-ui/react'
 import { useParams } from "react-router-dom";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
@@ -28,21 +30,6 @@ import { useLocation } from "react-router-dom";
 const Coursecontent = () => {
 
   const[coursecontentdata,coursecontentdatachange]=useState(null);
-
- 
-  useEffect(() => {
-    fetch("http://localhost:8000/content").then((res) => {
-        return res.json();
-    }).then((resp) => {
-        coursecontentdatachange(resp);
-    }).catch((err) => {
-        console.log(err.message);
-    })
-}, [])
-
-
-
-
 
 
   
@@ -70,7 +57,23 @@ useEffect(() => {
     }
   };
   getcourse();
-}, [axiosPrivate]); 
+}, [axiosPrivate]);
+
+
+const renderCourseContent = () => {
+  if (coursedata && coursedata.title) {
+    const title = coursedata.title;
+    if (title.includes("Paper")) {
+      return <PaperContent />;
+    } else if (title.includes("Theory") || title.includes("Revision")) {
+      return <CourseContent />;
+    } else {
+      return <CourseContent />;
+    }
+  }
+  // If coursedata or coursedata.title is not available, you can return a loading component or a placeholder here
+  return <p>Loading...</p>;
+};
 
   return (
    <Box>
@@ -87,7 +90,7 @@ useEffect(() => {
  }
  <Hide below='md'>
  <SimpleGrid spacing={2} minChildWidth="250px">
-  <Box bg='white' width={{base:160,xl:250}} height={{bae:120,xl:200}}>
+  <Box bg='white' width={{base:160,xl:750}} height={{base:120,xl:200}}>
   {coursedata &&
   <Image
       src={coursedata.thumbnail}
@@ -98,24 +101,25 @@ useEffect(() => {
     />
   }
   </Box>
-  <Box bg='white' height='100px' p={5}>
+  <Box bg='white' height='200px' p={5} >
   {coursedata &&
-    <Text fontSize='15px' ml={{base:-20,xl:-100}} mt='-20px'>{coursedata.description}</Text>
+    <Text fontSize='15px' ml={{base:-20,xl:-50}} mt='-20px'>{coursedata.description}</Text>
    } </Box>
  </SimpleGrid>
 </Hide>
   <Heading fontSize='20px' mt='40px' mb='20px'>Course Content</Heading>
 
- {coursecontentdata?.map((item) => (
-      <CourseContent item={item} key={item.id} />
-    ))}
+
+  {renderCourseContent()}
+     
+  
 
 <Addmonth></Addmonth>
         </Box>
 
       
 
-        <Box width="72%" ml="20%" bg="white " p={10} borderRadius="10px">
+        <Box width="72%" ml="20%" bg="white" p={10} borderRadius="10px">
           
         <HStack spacing='10px' mt='-15px'>
   <Box w='30%' h='40px' ml={{base:-20,xl:0}}bg='white'>
@@ -142,7 +146,7 @@ useEffect(() => {
 <br></br>
 
 
- 
+ <Forum></Forum>
 
 
         </Box>
