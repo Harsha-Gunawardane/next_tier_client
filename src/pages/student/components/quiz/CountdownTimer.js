@@ -1,9 +1,12 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Box, Flex } from "@chakra-ui/react";
 
-function CountdownTimer() {
-  const initialTimeInSeconds = 2 * 60 * 60; // 2 hours in seconds
-  const [timeRemaining, setTimeRemaining] = useState(initialTimeInSeconds);
+function CountdownTimer({time}) {
+  const initialTimeInSeconds = time; // 2 hours in seconds
+  const [timeRemaining, setTimeRemaining] = useState(
+    // Use local storage value if available, or use the initial value
+    () => parseInt(localStorage.getItem("timeRemaining")) || initialTimeInSeconds
+  );
 
   useEffect(() => {
     // Timer function to update time remaining every second
@@ -12,8 +15,15 @@ function CountdownTimer() {
     }, 1000);
 
     // Clear the timer when the component unmounts
-    return () => clearInterval(timer);
+    return () => {
+      clearInterval(timer);
+    };
   }, []);
+
+  useEffect(() => {
+    // Save the remaining time to local storage whenever it changes
+    localStorage.setItem("timeRemaining", timeRemaining.toString());
+  }, [timeRemaining]);
 
   const formatTime = (timeInSeconds) => {
     const hours = Math.floor(timeInSeconds / 3600);
@@ -30,9 +40,9 @@ function CountdownTimer() {
       direction="column"
       alignItems="center"
       justifyContent="center"
-      bg="#D3F3D2"
+      bg={timeRemaining < 30 ? '#FDE6E6' : '#D3F3D2'}
       ml="10%"
-      mr='10%'
+      mr="10%"
       h={14}
       borderRadius={5}
     >
@@ -40,7 +50,7 @@ function CountdownTimer() {
         fontSize="3xl"
         fontWeight="semibold"
         textAlign="center"
-        color="#15BD66"
+        color={timeRemaining < 30 ? '#EF7373' : '#15BD66'}
       >
         {formatTime(timeRemaining)}
       </Box>
