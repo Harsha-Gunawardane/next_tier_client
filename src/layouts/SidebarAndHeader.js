@@ -4,14 +4,15 @@ import Layout from "./Layout";
 import Sidebar from "../components/Sidebar/Sidebar";
 import { SidebarProvider, SidebarContext } from "../context/SidebarContext";
 import { useContext, useEffect, useState } from "react";
+import { FaUserAlt, FaMoneyBillAlt,FaUsers } from "react-icons/fa";
 
 import { Box, Container, Flex, Grid, GridItem } from "@chakra-ui/react";
 
 //icons
 import GridViewRoundedIcon from "@mui/icons-material/GridViewRounded";
-import { TiDocumentText } from "react-icons/ti";
-import { FaCompass } from "react-icons/fa";
-import { TbChevronsUpLeft } from "react-icons/tb";
+import { TiDocumentText, TfiLayoutListThumbAlt } from "react-icons/ti";
+import { FaCompass, FaUserFriends, FaListAlt, FaQuestionCircle} from "react-icons/fa";
+import {TbChevronsUpLeft} from "react-icons/tb";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import ReportProblemIcon from "@mui/icons-material/ReportProblem";
 
@@ -35,17 +36,55 @@ const SidebarAndHeader = ({ userRole }) => {
 	];
 
 	const TeacherOptions = [
-		{ icon: GridViewRoundedIcon, name: "Dashboard", value: "dashboard", href: "/teacher/dashboard" },
-		{ icon: TiDocumentText, name: "Courses", value: "courses", href: "/tutor/courses" },
-	];
+    {
+      icon: GridViewRoundedIcon,
+      name: "Dashboard",
+      value: "dashboard",
+      href: "/tutor/dashboard",
+    },
+    {
+      icon: TiDocumentText,
+      name: "Courses",
+      value: "courses",
+      href: "/tutor/courses",
+    },
+    {
+      icon: FaCompass,
+      name: "Contents",
+      value: "contents",
+      href: "/tutor/contents",
+    },
+    {
+      icon: FaUserFriends,
+      name: "Support Staffs",
+      value: "staffs",
+      href: "/tutor/supportstaffs",
+    },
+    {
+      icon: FaListAlt,
+      FaQuestionCircle,
+      name: "Quizzes",
+      value: "Quizzes",
+      href: "/tutor/quizzes",
+    },
+    {
+      icon: FaQuestionCircle,
+      name: "Complaints",
+      value: "Complaints",
+      href: "/tutor/complaints",
+    },
+  ];
 
 	const InstStaffOptions = [
 		{ icon: GridViewRoundedIcon, name: 'Dashboard', value: 'dashboard', href: '/staff/dashboard' },
 		{ icon: FaCompass, name: "View Teacher", value: "viewTeacher", href: "/staff/teacher" },
 		{icon: TiDocumentText, name: "Approve Class", value: "approveClass", href: "/staff/class"},
-		{ icon: AccountCircleIcon, name: 'Profile', value: 'profile', href: '/staff/Profile' },
+		{ icon: AccountCircleIcon, name: 'Profile', value: 'profile', href: '/staff/my-profile' },
 		{ icon: ReportProblemIcon, name: 'Complaints', value: 'complaints', href: '/staff/complaints' },
-		{icon: TiDocumentText, name: "Hall Management", value: "hallList", href: "/staff/hall"},
+		{icon: TiDocumentText, name: "Hall Management", value: "hallSchedule", href: "/staff/hall"},
+		{ icon: FaUserAlt, name: 'Institute Staffs', value: 'staff-list', href: '/staff/staff-list' },
+		{ icon: FaUsers, name: 'Tutors', value: 'stu-list', href: '/staff/tutors-list' },
+		{ icon: FaMoneyBillAlt, name: 'Student Payments', value: 'payments', href: '/staff/stu-payment' }
 	]
 
 	switch (userRole) {
