@@ -50,7 +50,7 @@ function QuizzesTab({onOpen}) {
             quiz.title.toLowerCase().includes(search.toLowerCase())
           )
           .map((quiz) => (
-            <NavLink to={`quiz/${quiz.id}`}>
+            <NavLink to={`${quiz.id}`}>
               <QuizCard quiz={quiz} />
             </NavLink>
           ))}

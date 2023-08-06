@@ -27,20 +27,18 @@ import InstStaffComplaintsList from "./pages/InstituteStaff/Complaints/Complaint
 import ApproveClass from "./pages/InstituteStaff/ApproveClass";
 import HallList from "./pages/InstituteStaff/HallList";
 import HallSchedule from "./pages/InstituteStaff/HallSchedule";
-import InstStaffStuPayment from './pages/InstituteStaff/StuPayment';
-import InstStaffList from './pages/InstituteStaff/StaffList'
-import AddInstStaff from './pages/InstituteStaff/AddInstStaff';
-import ViewPaymentHistory from './pages/InstituteStaff/viewPaymentHistory';
-import MyProfile from './pages/InstituteStaff/myProfile';
-import CashReceipt from './pages/InstituteStaff/cashReceiptStaff';
-import OnlineReceipt from './pages/InstituteStaff/onlineReceiptStaff';
+import InstStaffStuPayment from "./pages/InstituteStaff/StuPayment";
+import InstStaffList from "./pages/InstituteStaff/StaffList";
+import AddInstStaff from "./pages/InstituteStaff/AddInstStaff";
+import ViewPaymentHistory from "./pages/InstituteStaff/viewPaymentHistory";
+import MyProfile from "./pages/InstituteStaff/myProfile";
+import CashReceipt from "./pages/InstituteStaff/cashReceiptStaff";
+import OnlineReceipt from "./pages/InstituteStaff/onlineReceiptStaff";
 import StudentsList from "./pages/InstituteStaff/studentsList";
-import StudentProfile from './pages/InstituteStaff/StudentProfile';
-import TutorsList from './pages/InstituteStaff/tutorsList';
-import TutorProfile from './pages/InstituteStaff/TutorProfile';
+import StudentProfile from "./pages/InstituteStaff/StudentProfile";
+import TutorsList from "./pages/InstituteStaff/tutorsList";
+import TutorProfile from "./pages/InstituteStaff/TutorProfile";
 import CourseProfile from "./pages/InstituteStaff/CourseDetail";
-
-
 
 // tutor components
 // import TutorDashboard from "./pages/student/TutorDashboard";
@@ -66,13 +64,13 @@ import { Routes, Route } from "react-router-dom";
 import { ROLES } from "./config/roles";
 
 //Tutor Components
-// import TutorDashboard from "./pages/tutor/tutorDashboard";
-// import StaffList from "./pages/tutorStaff/staffList";
-import CreateQuizzes from "./pages/tutor/createQuizzes";
-import Mcqs from "./pages/tutor/mcq/viewMcqs";
-// import PaperMarking from "./pages/tutorStaff/paperMarking";
-import CreateQuiz from "./pages/tutor/createQuiz";
-import ViewQuiz from "./pages/tutor/viewQuiz";
+import TutorDashboard from "./pages/tutor/TutorDashboard";
+import TutorStaffs from "./pages/tutor/TutorStaffs";
+import McqsByCategory from "./pages/tutor/McqsByCategory";
+import PaperMarking from "./pages/tutor/PaperMarking";
+import CreateQuiz from "./pages/tutor/CreateQuiz";
+import TutorQuiz from "./pages/tutor/TutorQuiz";
+import TutorQuizzes from "./pages/tutor/TutorQuizzes";
 
 function App() {
   return (
@@ -115,26 +113,25 @@ function App() {
             path="tutor"
             element={<SidebarAndHeader userRole={"teacher"} />}
           >
-            {/* <Route index element={<TutorDashboard />} />
+            <Route index element={<TutorDashboard />} />
             <Route path="supportstaffs">
-              <Route index element={<StaffList />} />
+              <Route index element={<TutorStaffs />} />
             </Route>
 
             <Route path="papers">
               <Route path="marking" element={<PaperMarking />} />
-            </Route> */}
+            </Route>
 
             <Route path="quizzes">
-              <Route index element={<CreateQuizzes />} />
+              <Route index element={<TutorQuizzes />} />
               <Route path="create/:quizId" element={<CreateQuiz />} />
-              <Route path=":quizId" element={<ViewQuiz />} />
-
-              <Route path="category/:id" element={<Mcqs />}></Route>
+              <Route path=":quizId" element={<TutorQuiz />} />
+              <Route path="category/:id" element={<McqsByCategory />}></Route>
             </Route>
           </Route>
           {/* </Route> */}
 
-        {/* <Route element={<RequireAuth allowedRoles={[ROLES.Staff]} />}> */}
+          {/* <Route element={<RequireAuth allowedRoles={[ROLES.Staff]} />}> */}
           <Route
             path="staff"
             element={<SidebarAndHeader userRole={"InstituteStaff"} />}
@@ -142,7 +139,7 @@ function App() {
             <Route path="dashboard" element={<InstStaffDashboard />} />
             <Route path="my-profile" element={<MyProfile />} />
             <Route path="teacher" element={<ViewTeacher />} />
-            <Route path="teacher/add" element={< AddTeacher />} />
+            <Route path="teacher/add" element={<AddTeacher />} />
             <Route path="class" element={<ApproveClass />} />
             <Route path="profile/:id" element={<InstStaffProfile />} />
             <Route path="complaints" element={<InstStaffComplaintsList />} />
@@ -150,19 +147,25 @@ function App() {
             <Route path="hall/view" element={<HallList />} />
             <Route path="stu-payment" element={<InstStaffStuPayment />} />
             <Route path="staff-list" element={<InstStaffList />} />
-            <Route path="staff-list/add-inst-staff" element={<AddInstStaff />} />
-            <Route path="payment-history" element={<ViewPaymentHistory/>} />
-            <Route path="cash-receipt" element={<CashReceipt/>} />
-            <Route path="online-receipt" element={<OnlineReceipt/>} />
-            <Route path="stu-list" element={<StudentsList/>} />
+            <Route
+              path="staff-list/add-inst-staff"
+              element={<AddInstStaff />}
+            />
+            <Route path="payment-history" element={<ViewPaymentHistory />} />
+            <Route path="cash-receipt" element={<CashReceipt />} />
+            <Route path="online-receipt" element={<OnlineReceipt />} />
+            <Route path="stu-list" element={<StudentsList />} />
             <Route path="stu-profile/:id" element={<StudentProfile />} />
             <Route path="add-staff" element={<AddInstStaff />} />
             <Route path="staff-list" element={<InstStaffList />} />
             <Route path="tutors-list" element={<TutorsList />} />
             <Route path="tutor-profile/:id" element={<TutorProfile />} />
-            <Route path="tutor-profile/:id/course/:id" element={<CourseProfile />} />
+            <Route
+              path="tutor-profile/:id/course/:id"
+              element={<CourseProfile />}
+            />
           </Route>
-        {/* </Route> */}
+          {/* </Route> */}
 
           {/* </Route> */}
 
