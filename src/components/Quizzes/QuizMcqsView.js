@@ -1,36 +1,56 @@
-
-import { Card, Flex, FormLabel, SimpleGrid, Spacer } from "@chakra-ui/react";
-import { Accordion, ActionIcon, Box } from "@mantine/core";
+import {
+  Accordion,
+  AccordionItem,
+  AccordionButton,
+  AccordionPanel,
+  Box,
+  AccordionIcon,
+  FormLabel,
+  Flex,
+  Spacer,
+  Card,
+  SimpleGrid,
+  Text,
+} from "@chakra-ui/react";
+import { ActionIcon, Space } from "@mantine/core";
 
 import { IconPencil, IconTrash } from "@tabler/icons-react";
 import { NavLink } from "react-router-dom";
 
-export default function McqsView({ mcqs, handleDeleteMcq }) {
+
+export default function QuizMcqsView({ mcqs, handleDeleteMcq }) {
   return (
     <Accordion
-      variant="separated"
-      defaultValue="customization"
-      chevronPosition="left"
-      m="20px"
-      style={{ overflow: "auto", maxHeight: "330px" }}
+      defaultIndex={[0]}
+      allowMultiple
+      margin="10px"
+      padding="10px"
+      maxH="330px"
+      overflowY="auto"
+      variant="seperated"
     >
       {mcqs.map((mcq) => (
-        <Accordion.Item value={mcq.question} key={mcq.id}>
-          <Box sx={{ display: "flex", alignItems: "center" }}>
-            <Accordion.Control>{mcq.question}</Accordion.Control>
-            <ActionIcon >
-              <NavLink to={`${mcq.id}/edit`}>
-                <IconPencil size="1rem" stroke={1.3} />
-              </NavLink>
-            </ActionIcon>
-            <ActionIcon
-              style={{ color: "red" }}
-              onClick={() => handleDeleteMcq(mcq.id)}
-            >
-              <IconTrash size="1rem" stroke={1.3} />
-            </ActionIcon>
-          </Box>
-          <Accordion.Panel>
+        <AccordionItem key={mcq.id}>
+          <h2>
+            <AccordionButton mb="2px">
+              <Box as="span" flex="1" textAlign="left" pt="8px">
+                <Text fontSize="16px">{`${mcq.id}) ${mcq.question}`}</Text>
+              </Box>
+              <ActionIcon>
+                <NavLink to={`${mcq.id}/edit`}>
+                  <IconPencil size="1.2rem" stroke={1.3} />
+                </NavLink>
+              </ActionIcon>
+              <ActionIcon
+                style={{ color: "red" }}
+                onClick={() => handleDeleteMcq(mcq.id)}
+              >
+                <IconTrash size="1.2rem" stroke={1.3} />
+              </ActionIcon>
+              <AccordionIcon size="1.2rem" stroke={1.3} />
+            </AccordionButton>
+          </h2>
+          <AccordionPanel>
             <Flex color="gray.500">
               <FormLabel fontWeight="400">Medium Level</FormLabel>
               <Spacer />
@@ -62,8 +82,8 @@ export default function McqsView({ mcqs, handleDeleteMcq }) {
                 Explanation : {mcq.explanation}
               </FormLabel>
             </Card>
-          </Accordion.Panel>
-        </Accordion.Item>
+          </AccordionPanel>
+        </AccordionItem>
       ))}
     </Accordion>
   );

@@ -5,7 +5,7 @@ import api from "../api/axios";
 
 const StaffStore = (set) => ({
   staffs: [],
-  //   setStaffs:((staffs) => set((state) => ({staffs: [...state.staffs ,staffs ]}))),
+
   fetchStaffs: async () => {
     try {
       const response = await api.get("/staffs");
@@ -17,7 +17,14 @@ const StaffStore = (set) => ({
       console.log(error.response.data);
     }
   },
-  addStaff: (staffs) => set((state) => ({ staffs: [...state.staffs, staffs] })),
+
+  addStaffs: (newStaff) =>
+    set((state) => ({ staffs: [...state.staffs, newStaff] })),
+
+  deleteStaff: (id) =>
+    set((state) => ({
+      staffs: state.staffs.filter((staff) => staff.id !== id),
+    })),
 });
 
 const useStaffStore = create(devtools(StaffStore));

@@ -17,27 +17,54 @@ import {
 
 import { EditIcon } from "@chakra-ui/icons";
 import { useState } from "react";
-// import useStaffStore from "../../zustandStore/staffStore";
 
+import api from "../../api/axios";
+import { useForm } from "react-hook-form";
+import BreadCrumbs from "../../components/BreadCrumbs/BreadCrumbs";
+import useStaffStore from "../../zustandStore/staffStore";
 
 const StaffEdit = () => {
-  // const [newItem, setNewItem] = useState("");
+  const { register, handleSubmit } = useForm();
 
-  // const addStaff = useStaffStore((state) => state.addStaff);
+  const staffs = useStaffStore((state) => state.staffs);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  let updatedData = {};
+
+  const handleEdit = async (id) => {
+    try {
+      const response = await api.put(`/posts/${id}`, updatedData);
+    } catch (err) {
+      console.log(`Error: ${err.message}`);
+    }
+  }
+
+  
+  const onSubmit = async (data) => {
+    try {
+      updatedData = data;
+    } catch (err) {
+      console.log(`Error: ${err.message}`);
+    }
+    console.log(data);
+    console.log(staffs);
   };
 
   return (
     <div>
-      <Container m="0">
-        <form onSubmit={handleSubmit}>
+      <BreadCrumbs />
+      {/* <FormLabel>{staffs.}</FormLabel> */}
+
+      <Container m="0" maxW="100%" p={4}>
+        <form onSubmit={handleSubmit(onSubmit)}>
           <Grid
-            h="500px"
-            w="1220px"
+            h="auto"
+            w={["100%", "100%", "100%", "1220px"]}
             templateRows="repeat(4, 1fr)"
-            templateColumns="repeat(8, 1fr)"
+            templateColumns={[
+              "repeat(1, 1fr)",
+              "repeat(1, 1fr)",
+              "repeat(8, 1fr)",
+            ]}
             gap={4}
           >
             <GridItem
@@ -49,12 +76,17 @@ const StaffEdit = () => {
             >
               <FormControl as="fieldset">
                 <FormLabel as="legend">Choose Staff Title</FormLabel>
-                <RadioGroup defaultValue="supportingStaff" name="staffTitle">
+                <RadioGroup name="staffTitle">
                   <HStack spacing="24px">
-                    <Radio value="supportingStaff">
+                    <Radio value="supportingStaff" {...register("staffTitle")}>
                       Class Supporting Staff
                     </Radio>
-                    <Radio value="paperMarkingStaff">Paper Marking Staff</Radio>
+                    <Radio
+                      value="paperMarkingStaff"
+                      {...register("staffTitle")}
+                    >
+                      Paper Marking Staff
+                    </Radio>
                   </HStack>
                 </RadioGroup>
               </FormControl>
@@ -74,6 +106,8 @@ const StaffEdit = () => {
                   placeholder="Name"
                   name="name"
                   color="blue.600"
+                  value={staffs.name}
+                  {...register("name")}
                 />
               </FormControl>
             </GridItem>
@@ -86,7 +120,12 @@ const StaffEdit = () => {
             >
               <FormControl isRequired>
                 <FormLabel>Address</FormLabel>
-                <Input type="text" placeholder="Address" name="address" />
+                <Input
+                  type="text"
+                  placeholder="Address"
+                  name="address"
+                  {...register("address")}
+                />
               </FormControl>
             </GridItem>
 
@@ -129,7 +168,7 @@ const StaffEdit = () => {
             >
               <FormControl isRequired>
                 <FormLabel>Birthday</FormLabel>
-                <Input type="date" name="birthday" />
+                <Input type="date" name="birthday" {...register("birthday")} />
               </FormControl>
             </GridItem>
             <GridItem
@@ -141,7 +180,12 @@ const StaffEdit = () => {
             >
               <FormControl isRequired>
                 <FormLabel>Contact</FormLabel>
-                <Input type="text" placeholder="Contact" name="contact" />
+                <Input
+                  type="text"
+                  placeholder="Contact"
+                  name="contact"
+                  {...register("contact")}
+                />
               </FormControl>
             </GridItem>
             <GridItem
@@ -153,7 +197,11 @@ const StaffEdit = () => {
             >
               <FormControl isRequired>
                 <FormLabel>Gender</FormLabel>
-                <Select placeholder="Select option" name="gender">
+                <Select
+                  placeholder="Select option"
+                  name="gender"
+                  {...register("gender")}
+                >
                   <option value="male">Male</option>
                   <option value="female">Female</option>
                 </Select>
@@ -168,7 +216,11 @@ const StaffEdit = () => {
             >
               <FormControl isRequired>
                 <FormLabel>Language</FormLabel>
-                <Select placeholder="Select option" name="language">
+                <Select
+                  placeholder="Select option"
+                  name="language"
+                  {...register("language")}
+                >
                   <option value="sinhala">Sinhala</option>
                   <option value="english">English</option>
                 </Select>
@@ -183,7 +235,12 @@ const StaffEdit = () => {
             >
               <FormControl isRequired>
                 <FormLabel>Email</FormLabel>
-                <Input type="text" placeholder="Address" name="address" />
+                <Input
+                  type="text"
+                  placeholder="Email"
+                  name="email"
+                  {...register("email")}
+                />
               </FormControl>
             </GridItem>
             <GridItem
@@ -200,6 +257,7 @@ const StaffEdit = () => {
                 alignItems="center"
                 justifyContent="center"
                 mr="28px"
+                onClick={() => handleEdit()}
               >
                 Save Information
               </Button>

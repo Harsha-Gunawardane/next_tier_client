@@ -55,16 +55,16 @@ const SidebarAndHeader = ({ userRole }) => {
     },
     {
       icon: FaUserFriends,
-      name: "Staffs",
+      name: "Support Staffs",
       value: "staffs",
-      href: "/tutor/staff",
+      href: "/tutor/supportstaffs",
     },
     {
       icon: FaListAlt,
       FaQuestionCircle,
-      name: "MCQs",
-      value: "MCQs",
-      href: "/tutor/mcqpool",
+      name: "Quizzes",
+      value: "Quizzes",
+      href: "/tutor/quizzes",
     },
     {
       icon: FaQuestionCircle,

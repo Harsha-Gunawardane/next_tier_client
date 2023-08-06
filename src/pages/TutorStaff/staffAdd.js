@@ -17,26 +17,52 @@ import {
 
 import { EditIcon } from "@chakra-ui/icons";
 import { useState } from "react";
-// import useStaffStore from "../../zustandStore/staffStore";
+
+import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 
 import {useForm} from "react-hook-form";
 import BreadCrumbs from "../../components/BreadCrumbs/BreadCrumbs";
+import useStaffStore from "../../zustandStore/staffStore";
+
 
 
 const StaffAdd = () => {
-
-  // const addStaff = useStaffStore((state) => state.addStaff);
-
+  
   const { register, handleSubmit } = useForm();
 
-  const onSubmit = (data) => {
-    // addStaff(data);
+  const staffs = useStaffStore((state) => state.staffs);
+  const setStaff = useStaffStore((state) => state.setStaffs);
+
+  const axiosPrivate = useAxiosPrivate();
+
+
+  const newdata = {
+    id:90,
+    avatar:
+      "https://images.unsplash.com/photo-1586297135537-94bc9ba060aa?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=250&q=80",
+    name: "John Jailbreaker",
+    job: "Paper Marking Staff",
+    email: "jj@breaker.com",
+    phone: "+44 (934) 777 12 76",
+  };
+
+  const onSubmit = async (data) => {
+    try {
+
+      const response = await axiosPrivate.post("/staffs", newdata);
+      // setStaff(newdata);
+
+    } catch (err) {
+      console.log(`Error: ${err.message}`);
+    }
     console.log(data);
+    console.log(staffs);
   };
 
   return (
     <div>
       <BreadCrumbs />
+      {/* <FormLabel>{staffs.}</FormLabel> */}
 
       <Container m="0" maxW="100%" p={4}>
         <form onSubmit={handleSubmit(onSubmit)}>

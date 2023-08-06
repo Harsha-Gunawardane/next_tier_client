@@ -81,7 +81,7 @@ const Login = () => {
         if (roles.includes(ROLES.Student)) {
           navigate("/stu/dashboard");
         } else if (roles.includes(ROLES.Tutor)) {
-          navigate("")
+          navigate("/tutor")
         }
       } else {
         navigate(from, { replace: true });
