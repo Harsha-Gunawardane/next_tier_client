@@ -6,12 +6,6 @@ import Unauthorized from "./pages/auth/Unauthorized";
 import UserVerify from "./pages/auth/UserVerify";
 import Landing from "./pages/LandingPage/Landing";
 import ForgottenPassword from "./pages/auth/ForgottenPassword";
-import InstStaffDashboard from './pages/InstituteStaff/Dashboard';
-import ViewTeacher from "./pages/InstituteStaff/ViewTeacher";
-import AddTeacher from "./pages/InstituteStaff/AddTeacher";
-import InstStaffProfile from './pages/InstituteStaff/Profile';
-import InstStaffComplaintsList from './pages/InstituteStaff/Complaints/ComplaintsListView';
-import ApproveClass from "./pages/InstituteStaff/ApproveClass";
 // import HallList from "./pages/InstituteStaff/HallList";
 
 // import auth features
@@ -87,7 +81,7 @@ function App() {
               <Route path="dashboard" element={<Dashboard />} />
               <Route path="courses" element={<Courses />} />
               <Route path="content" element={<Videocontent />} />
-              <Route path="content/:id" element={<ContentWatch />} />
+              <Route path="content/watch/:id" element={<ContentWatch />} />
               <Route path="quizzes" element={<Quizzes />} />
               <Route path="quizzes/:subject" element={<Quizzes />} />
               <Route path="quizzes/:subject/:mcqname/review" element={<ReviewQuiz />} />

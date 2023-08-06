@@ -6,8 +6,8 @@ import generateTimeAgoString from "../../utils/timesAgo";
 // Custom components
 import React from "react";
 
-export default function Event(props) {
-	const { title, time, tutor, viewcount, link, image, uploadDateTime, thumbnailSize = "200px", ...rest } = props;
+export default function Video(props) {
+	const { title, time, tutor, viewcount, link, image, uploadDateTime, thumbnailSize = { base: "170px", md: "180px", lg: "200px" }, ...rest } = props;
 
 	// Chakra Color Mode
 	const textColorPrimary = useColorModeValue("#3f3f3f", "white");
@@ -19,7 +19,7 @@ export default function Event(props) {
 			<Flex gap="8px" justifyContent={"space-between"} alignItems={"center"}>
 				<Flex>
 					<Box position={"relative"} h="max-content" w="max-content">
-						<AspectRatio ratio={16 / 9} minW={thumbnailSize} borderRadius="8px" bg={"gray.100"} >
+						<AspectRatio ratio={16 / 9} minW={{ base: thumbnailSize.base, md: thumbnailSize.md, lg: thumbnailSize.lg }} borderRadius="8px" bg={"gray.100"} >
 							<Image src={image} alt="image" objectFit="cover" />
 						</AspectRatio>
 						<Tag

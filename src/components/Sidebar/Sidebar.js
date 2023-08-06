@@ -1,4 +1,4 @@
-import { Flex, Icon, Text, Image, IconButton } from "@chakra-ui/react";
+import { Flex, Icon, Text, Image, IconButton, useBreakpointValue, Spacer } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
@@ -6,8 +6,35 @@ import { MdSettings } from "react-icons/md";
 import { TbLogout } from "react-icons/tb";
 import { useState, useContext, useEffect } from "react";
 import { SidebarContext } from "../../context/SidebarContext";
+import { motion } from "framer-motion";
+
+//images
+import logo_icon from "../../assests/logos/png/logo_icon.png";
+import logo_text from "../../assests/logos/png/logo_text.png";
+import { MdOutlineKeyboardArrowLeft } from "react-icons/md";
+
+
 
 const Option = ({ icon: iconComponent, name, href, active, minimizeStatus }) => {
+
+	//animation
+	const show = {
+		opacity: 1,
+		display: "flex"
+	};
+
+	const hide = {
+		opacity: 0,
+		transitionEnd: {
+			display: "none"
+		}
+	};
+
+	const animations = useBreakpointValue({
+		md: minimizeStatus.md ? hide : show,
+		lg: minimizeStatus.lg ? hide : show
+	});
+
 
 	return (
 		<Link to={href} _hover={"none"} >
@@ -16,7 +43,7 @@ const Option = ({ icon: iconComponent, name, href, active, minimizeStatus }) => 
 				borderRadius={"10px"}
 				borderColor={"gray.800"}
 				justifyContent={"flex-start"}
-				width={{ base: "160px", md: minimizeStatus.md ? "44px" : "180px", lg: minimizeStatus.lg ? "44px" : "180px" }}
+				width={{ base: "180px", md: minimizeStatus.md ? "44px" : "180px", lg: minimizeStatus.lg ? "44px" : "180px" }}
 				minWidth={"max-content"}
 				alignItems={"center"}
 				background={"primary"}
@@ -27,22 +54,21 @@ const Option = ({ icon: iconComponent, name, href, active, minimizeStatus }) => 
 						transition: "0.1s",
 					}
 				}
-				//if active is true, then set background to gray.100
 				bg={active && "accent"}
 				color={active ? "primary" : "#7F7F7F"}
 				boxShadow={active ? "0 0 8px 1px rgba(0, 0, 0, 0.1)" : "none"}
 				transition={"all 0.5s ease"}
 			>
-				{/* <Box as='box'> */}
 				<Flex alignItems={"center"} justifyContent={"center"} h="100%">
 					{iconComponent && <Icon fontSize="24" as={iconComponent} />}
 				</Flex>
-				{/* </Box> */}
 				<Flex
-					//if minimized is true, then set display to none
-					display={{ base: "flex", md: minimizeStatus.md ? "none" : "flex", lg: minimizeStatus.lg ? "none" : "flex" }}
+					as={motion.div}
+					// display={{ base: "flex", md: minimizeStatus.md ? "none" : "flex", lg: minimizeStatus.lg ? "none" : "flex" }}
 					width={minimizeStatus.md || minimizeStatus.lg ? "0" : "max-content"}
-					transition={"all 0.5s ease"}
+					// transition={"all 0.5s ease"}
+					animate={animations}
+					transition={{ duration: 0.5 }}
 				>
 					<Text fontSize={"14px"}>{name}</Text>
 				</Flex>
@@ -51,14 +77,29 @@ const Option = ({ icon: iconComponent, name, href, active, minimizeStatus }) => 
 	);
 };
 
-const Sidebar = ({ Options, minimized, setMinimized, full = true, setSidebarWidth, hidden, setHidden, onOpen, onClose, ...rest }) => {
-	useEffect(() => {
-		const width = window.getComputedStyle(document.getElementById("Sidebar")).width;
-		console.log(width);
-		setSidebarWidth(width);
-	}, [setSidebarWidth]);
+const Sidebar = ({ Options, minimized, setMinimized, full = true, hidden, setHidden, onOpen, onClose, ...rest }) => {
 
 	const { activeTab, handleTabClick } = useContext(SidebarContext);
+
+	//animation
+	const show = {
+		opacity: 1,
+		// scale: 1,
+		display: "flex"
+	};
+
+	const hide = {
+		opacity: 0,
+		// scale: 0,
+		transitionEnd: {
+			display: "none"
+		}
+	};
+
+	const animations = useBreakpointValue({
+		md: minimized.md ? hide : show,
+		lg: minimized.lg ? hide : show
+	});
 
 	const handleMinimizing = () => {
 		if (onClose) {
@@ -71,8 +112,6 @@ const Sidebar = ({ Options, minimized, setMinimized, full = true, setSidebarWidt
 				lg: minimized.lg ? false : true,
 			}
 			setMinimized(status);
-			const width = window.getComputedStyle(document.getElementById("Sidebar")).width;
-			setSidebarWidth(width);
 		}
 	};
 
@@ -96,52 +135,63 @@ const Sidebar = ({ Options, minimized, setMinimized, full = true, setSidebarWidt
 			justifyContent={"flex-start"}
 			gap="10px"
 			position={"sticky"}
-			// borderRight={"1px"}
-			// borderColor={"gray.100"}
 			transition={"all 0.5s ease"}
 			zIndex={"1000"}
-			// onChange={setSidebarWidth()}
 			{...rest}>
 			<Flex
-				p={"4px"}
+				p={"10px"}
 				h={"64px"}
-				w={"max-content"}
+				width={{ base: "260px", md: minimized.md ? "64px" : "260px", lg: minimized.lg ? "64px" : "260px" }}
 				alignItems={"center"}
-				justifyContent={"space-between"}
-				gap="60px"
-				//if not full is true, then set display to none
+				justifyContent={"flex-start"}
+				transition={"all 0.5s ease"}
 				display={full ? "flex" : "none"}>
+
 				<Flex
-					justifyContent="center"
-					alignItems={"center"} h="64px"
-					display={{ base: "flex", md: minimized.md ? "none" : "flex", lg: minimized.lg ? "none" : "flex" }}
-					// opacity={minimized.md || minimized.lg ? 0 : 1}
-					transition={"all 0.5s ease"}
+					justifyContent={"flex-start"}
+					alignItems={"center"}
+					h="64px"
+					gap="4px"
 				>
 					<Image
-						h="36px"
-						src="/logo.png"
+						h="44px"
+						src={logo_icon}
 						alt="logo"
-						// opacity={minimized.md || minimized.lg ? 0 : 1}
-						transition={"all 0.5s ease"}
+						maxW={"none"}
+
+					/>
+					<Image
+						as={motion.img}
+						h="24px"
+						src={logo_text}
+						alt="logo"
+						maxW={"none"}
+						// display={{ base: "flex", md: minimized.md ? "none" : "flex", lg: minimized.lg ? "none" : "flex" }}
+						animate={animations}
+						transition={{ duration: 0.5 }}
+
 					/>
 				</Flex>
+				<Spacer />
 				<IconButton
-					variant={"ghost"}
-					margin={0}
-					h="40px"
-					minWidth="max-content"
-					p="10px"
+					as={motion.div}
+					variant={"outline"}
 					onClick={() => handleMinimizing()}
+					// display={{ base: "flex", md: minimized.md ? "none" : "flex", lg: minimized.lg ? "none" : "flex" }}
+					animate={animations}
+					transition={{ duration: 0.5 }}
+					borderRadius={"50%"}
+					size={"sm"}
+					color="gray.500"
+					icon={<MdOutlineKeyboardArrowLeft size={"23px"} />}
 				>
-					<FontAwesomeIcon icon={faBars} />
 				</IconButton>
 			</Flex>
 
 			<Flex direction={"column"} w={"max-content"}>
 				<Flex direction={"column"} w={"max-content"} alignItems={"center"} px={!minimized ? "30px" : "10px"} py={"30px"} gap="10px">
-					{Options.map((option) => (
-						<Option {...option} minimizeStatus={{ base: false, md: minimized.md ? true : false, lg: minimized.lg ? true : false }} active={activeTab == option.value ? true : false} />
+					{Options.map((option, index) => (
+						<Option key={index} {...option} minimizeStatus={{ base: false, md: minimized.md ? true : false, lg: minimized.lg ? true : false }} active={activeTab == option.value ? true : false} />
 					))}
 				</Flex>
 

@@ -1,135 +1,375 @@
-import { Flex, Text, Avatar, Button, FormControl, Textarea, Box, Collapse, useDisclosure } from "@chakra-ui/react"
+import { Flex, Text, Avatar, Button, FormControl, Textarea, Box, Collapse, useDisclosure, Tag, TagLeftIcon, TagLabel, SimpleGrid, GridItem, Skeleton, SkeletonText, SkeletonCircle } from "@chakra-ui/react"
 import generateTimeAgoString from "../../../utils/timesAgo"
 import LikeDislike from "./LikeDislike"
-import { useRef, useState } from "react"
+import { useEffect, useLayoutEffect, useRef, useState, Fragment } from "react"
+
 
 
 //icons
 import { MdKeyboardArrowDown } from "react-icons/md"
+import { VscMention } from "react-icons/vsc"
+import MentionComment from "./MentionComment"
+import { axiosPrivate } from "../../../api/axios"
+import { set } from "date-fns"
+import { get } from "react-hook-form"
 
-//process comments array
 
-const processComments = (comments) => {
-    let processedComments = []
-    comments.forEach(comment => {
-        if (comment.parent_id === null) {
-            processedComments.push(comment)
+const renderCommentWithMentions = (comment) => {
+    const mentionsRegex = /\@\[(.*?)\]\((.*?)\)/g;
+    const mentions = comment.match(mentionsRegex) || [];
+
+    let lastIndex = 0;
+    const commentWithTags = [];
+
+    // Iterate over mentions and split the comment text using mentions as delimiters
+    mentions.forEach((mention) => {
+        const mentionIndex = comment.indexOf(mention, lastIndex);
+        if (mentionIndex !== -1) {
+            const partBeforeMention = comment.slice(lastIndex, mentionIndex);
+            const mentionData = mention.match(/\@\[(.*?)\]\((.*?)\)/);
+            const displayText = mentionData ? mentionData[1] : '';
+
+            commentWithTags.push(<Fragment key={mentionIndex}>{partBeforeMention}</Fragment>);
+            commentWithTags.push(
+                <Tag background={"gray.200"} color={"#3f3f3f"} variant="subtle" mx={1} px="1px" pr="3px">
+                    <TagLeftIcon as={VscMention} boxSize={"18px"} mr="0" size={"16px"} />                    {displayText}
+                </Tag>
+            );
+
+            lastIndex = mentionIndex + mention.length;
         }
+    });
 
-        if (comment.parent_id !== null) {
-            processedComments.forEach(processedComment => {
-                if (processedComment.id === comment.root_id) {
-                    // processedComment.replies.push(comment)
-                }
-            })
-        }
-    })
-    return processedComments
+    // Add the remaining part of the comment text after the last mention
+    if (lastIndex < comment.length) {
+        commentWithTags.push(
+            <Fragment key={lastIndex}>
+                {comment.slice(lastIndex)}
+            </Fragment>
+        );
+    }
+
+    return commentWithTags;
+};
+
+const sortCommentsArrByDate = (commentsArr, order) => {
+    console.log(commentsArr)
+    if (order === "asc") {
+        commentsArr.sort((a, b) => {
+            return new Date(a.posted_at) - new Date(b.posted_at)
+        })
+    } else if (order === "desc") {
+        commentsArr.sort((a, b) => {
+            return new Date(b.posted_at) - new Date(a.posted_at)
+        })
+    }
+    return commentsArr
 }
 
-const comment = {
-    id: 1,
-    user: {
-        id: 1,
-        name: "Samitha Rathnayake",
-        profilePic: "https://bit.ly/dan-abramov",
-    },
-    message: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla eget libero vitae eros ultricies facilisis. Sed euismod, nisl quis ali quam, quis aliquet elit.",
-    parent_id: null,
-    date: "2021-05-01"
-}
+
+
 
 const Comment = (props) => {
 
-    const { children, onReplyToggle, ...rest } = props
+    const { comment, keyVal, commentsArr, updateComments, setParentComment, ...rest } = props
 
+    //commentDetails state
+    const [commentDetails, setCommentDetails] = useState(comment)
+
+    //reply state
     const [replyCommentVal, setReplyCommentVal] = useState("")
+    const [mentions, setMentions] = useState([])
+    const [mentionUsers, setMentionUsers] = useState()
+    const [lastAddedMentionIndex, setLastAddedMentionIndex] = useState(0)
 
-    const [isFocused, setIsFocused] = useState(false)
+    //element states
+    const [isFocused, setIsFocused] = useState(true)
+    const [isRepliesLoaded, setIsRepliesLoaded] = useState(false)
+    const [isLoading, setIsLoading] = useState(false)
     const { isOpen, onToggle } = useDisclosure({ defaultIsOpen: false });
+    const { isOpen: isReplyOpen, onOpen: onReplyOpen, onToggle: onReplyToggle } = useDisclosure({ defaultIsOpen: false });
 
-    const handleCommentCancel = () => {
-        setReplyCommentVal("")
-        setIsFocused(false)
-        onToggle()
+    //pagination states
+    const [skip, setSkip] = useState(0)
+    const [exceptions, setExceptions] = useState([])
+    const limit = 5
+
+    useEffect(() => {
+        if (commentDetails.parent_id === null && commentDetails.replies.length > 0) {
+            setIsRepliesLoaded(true)
+        }
+        setMentionUsers([{ id: commentDetails.commenter.id, display: commentDetails.commenter.first_name + " " + commentDetails.commenter.last_name }])
+        getMentionUsers()
+    }, [commentDetails])
+
+
+    const getMentionUsers = () => {
+        commentDetails.replies && commentDetails.replies.length > 0 ?
+            //start from the last added mention index
+            commentDetails.replies.slice(lastAddedMentionIndex).forEach(reply => {
+                setMentionUsers((prevState) => {
+                    var newState = prevState
+                    //push unique users
+                    if (!newState.find(user => user.id === reply.commenter.id)) {
+                        //{id: 1, display: "John Doe"}
+                        newState.push({ id: reply.commenter.id, display: reply.commenter.first_name + " " + reply.commenter.last_name })
+                    }
+                    return newState
+                })
+            })
+            : <></>
+    }
+
+    const handleReplyToggle = async () => {
+        onReplyToggle()
+        console.log(commentDetails)
+        if (commentDetails._count.replies > commentDetails.replies.length) {
+            setIsLoading(true)
+            await fetchReplies();
+            setIsRepliesLoaded(true)
+            setIsLoading(false)
+        }
+    }
+
+    const fetchReplies = async () => {
+        let isMounted = true;
+        const controller = new AbortController();
+
+        try {
+            const response = await axiosPrivate.patch(`/comments/${commentDetails.id}/replies/?skip=${skip}&limit=${limit}`, { except: exceptions }, {
+                signal: controller.signal
+            })
+
+            const commentReplies = response.data
+
+            setSkip(skip + (commentReplies.length))
+            console.log(commentReplies)
+
+            if (isMounted) {
+                if (commentDetails.parent_id === null) {
+                    setCommentDetails((prevState) => {
+                        prevState.replies.push(...commentReplies)
+                        return prevState
+                    })
+                }
+                else {
+                    setParentComment((prevState) => {
+                        prevState.replies.push(...commentReplies)
+                        return prevState
+                    })
+                }
+            }
+
+        } catch (error) {
+            console.log(error)
+        }
     }
 
 
+    const handleReplyInputToggle = () => {
+        onToggle()
+        if (commentDetails.parent_id !== null && isOpen === false) {
+            setReplyCommentVal("@[" + commentDetails.commenter.first_name + " " + commentDetails.commenter.last_name + "](" + commentDetails.commenter.id + ") ")
+        }
+    }
 
 
+    const handleCommentCancel = () => {
+        setReplyCommentVal("")
+        onToggle()
+    }
+
+    const addReply = async () => {
+        let isMounted = true;
+        const controller = new AbortController();
+
+        try {
+            const formData = new FormData()
+            formData.append("message", replyCommentVal)
+            formData.append("parent_id", commentDetails.parent_id)
+            formData.append("replied_to", commentDetails.commenter.id)
+
+            const response = await axiosPrivate.post(`/comments/${commentDetails.id}/replies`, formData, {
+                signal: controller.signal
+            })
+
+            const newComment = response.data.data
+
+
+            if (commentDetails.parent_id === null) {
+                setCommentDetails((prevState) => {
+                    // console.log(prevState)
+                    const newState = { ...prevState }
+                    newState.replies.push(newComment)
+                    newState._count.replies += 1
+                    // console.log(newState)
+                    return newState
+                })
+            } else {
+                setParentComment((prevState) => {
+                    // console.log(prevState)
+                    const newState = { ...prevState }
+                    newState.replies.push(newComment)
+                    newState._count.replies += 1
+                    // console.log(newState)
+                    return newState
+                })
+            }
+
+
+            // handleReplyToggle()
+            setExceptions((prevState) => { var newState = prevState; newState.push(newComment.id); return newState })
+            onReplyOpen()
+            fetchReplies()
+            setReplyCommentVal("")
+            setIsLoading(false)
+            setIsRepliesLoaded(true)
+            onToggle()
+
+
+
+
+        } catch (error) {
+            console.log(error)
+        }
+    }
 
 
     return (
-        <Flex w="100%" direction={"row"} gap="5px" p="5px">
-            <Avatar h="32px" w="32px" name="Dan Abrahmov" src="https://bit.ly/dan-abramov" />
-            <Flex w="100%" direction={"column"} gap="10px">
-                <Box w={"100%"}>
-                    <Flex w="100%" alignItems={"center"} gap="10px">
-                        <Text fontSize={14} fontWeight={"bold"} color={"#3f3f3f"}>
-                            {props.user.name}
+        <SimpleGrid w="100%" gap="5px" position={"relative"} columns={12} templateColumns={"max-content repeat(11, 1fr)"}>
+            {/* <Flex w="100%" direction={"row"} gap="5px" p="5px" > */}
+            <GridItem colSpan={1} w="max-content">
+                <Avatar h="32px" w="32px" name="Dan Abrahmov" src="https://bit.ly/dan-abramov" />
+            </GridItem>
+            <GridItem colSpan={11} px="5px">
+                <Flex w="100%" direction={"column"} gap="6px">
+                    <Box w={"100%"}>
+                        <Flex w="100%" alignItems={"center"} gap="10px">
+                            <Text fontSize={14} fontWeight={"bold"} color={"#3f3f3f"}>
+                                {commentDetails.commenter ? `${commentDetails.commenter.first_name} ${commentDetails.commenter.last_name}` : console.log(commentDetails)}
+                            </Text>
+                            <Text fontSize={12} fontWeight={"semi-bold"} color={"gray.500"} >
+                                {generateTimeAgoString(commentDetails.posted_at)}
+                            </Text>
+                        </Flex>
+                        <Text fontSize={16} fontWeight={"semi-bold"} color={"#3f3f3f"} w="100%" mt="5px">
+                            {renderCommentWithMentions(commentDetails.message)}
                         </Text>
-                        <Text fontSize={12} fontWeight={"semi-bold"} color={"gray.500"} >
-                            {generateTimeAgoString(props.date)}
-                        </Text>
+                    </Box>
+                    <Flex gap="10px">
+                        <LikeDislike
+                            likeCount={commentDetails._count.comment_reactions}
+                            liked={commentDetails.comment_reactions.length > 0 ? commentDetails.comment_reactions[0].islike : null}
+                            type={"comments"}
+                            refid={commentDetails.id}
+                        />
+                        <Button variant={"ghost"} color={"gray.400"} fontWeight={"semi-bold"} fontSize={16} size="sm" _hover={{ color: "gray.600" }} onClick={handleReplyInputToggle}>
+                            Reply
+                        </Button>
                     </Flex>
-                    <Text fontSize={16} fontWeight={"semi-bold"} color={"#3f3f3f"} w="100%" mt="5px">
-                        {props.message}
-                    </Text>
-                </Box>
-                <Flex gap="10px">
-                    <LikeDislike />
-                    <Button variant={"ghost"} color={"gray.400"} fontWeight={"semi-bold"} fontSize={16} size="sm" _hover={{ color: "gray.600" }} onClick={onToggle}>
-                        Reply
-                    </Button>
+                    <Collapse in={isOpen} animateOpacity width="100%">
+                        <SimpleGrid w="100%" gap="5px" position={"relative"} columns={12} templateColumns={"max-content repeat(11, 1fr)"}>
+                            <GridItem colSpan={1} w="max-content">
+                                <Avatar h="24px" w="24px" name="Dan Abrahmov" src="https://bit.ly/dan-abramov" />
+                            </GridItem>
+                            <GridItem colSpan={11} px="5px">
+                                <FormControl gap="5px" w="100%">
+                                    {/* <Textarea placeholder="Write a comment..." onChange={(e) => { setReplyCommentVal(e.target.value) }} value={replyCommentVal} onFocus={() => setIsFocused(true)} /> */}
+                                    <MentionComment
+                                        setReplyCommentVal={setReplyCommentVal}
+                                        value={replyCommentVal}
+                                        setIsFocused={setIsFocused}
+                                        mentionUsers={mentionUsers}
+                                        setMentionUsers={setMentionUsers}
+                                        mentions={mentions}
+                                        setMentions={setMentions}
+                                    />
+                                    <Flex w="100%" justifyContent={"space-between"} alignItems={"center"} mt="5px" display={isFocused ? "flex" : "none"}>
+                                        <Flex gap={"10px"}>
+
+                                        </Flex>
+                                        <Flex gap={"10px"} >
+                                            <Button variant={"ghost"} color={"gray.600"} colorScheme='blue' fontWeight={"semi-bold"} fontSize={16} size="sm" onClick={() => handleCommentCancel()} >
+                                                Cancel
+                                            </Button>
+                                            <Button variant={"solid"} bg={"accent"} color={"white"} colorScheme='blue' fontWeight={"semi-bold"} fontSize={16} size="sm" isDisabled={replyCommentVal !== "" ? false : true} onClick={() => addReply()} type="submit">
+                                                Reply
+                                            </Button>
+                                        </Flex>
+                                    </Flex>
+                                </FormControl>
+                            </GridItem>
+                        </SimpleGrid>
+                    </Collapse>
+                    {commentDetails._count.replies > 0 ?
+                        <Flex w="100%" direction={"column"} justifyContent={"flex-start"} alignItems={"flex-start"}>
+                            {/* <Box> */}
+                            <Button
+                                leftIcon={
+                                    <MdKeyboardArrowDown
+                                        size="24px"
+                                        style={{
+                                            transform: isReplyOpen ? "rotate(-180deg)" : "rotate(0deg)",
+                                            transition: "transform 0.3s ease-in-out"
+                                        }}
+                                    />
+                                }
+                                isLoading={isLoading}
+                                loadingText={"View Replies • " + commentDetails._count.replies}
+                                variant={"link"}
+                                color={"blue.400"}
+                                fontWeight={"semi-bold"}
+                                fontSize={16}
+                                size="sm"
+                                _hover={{ color: "blue.500" }}
+                                onClick={handleReplyToggle}
+                            >
+                                View Replies • {commentDetails._count.replies}
+                            </Button>
+                            {/* </Box> */}
+                            <Box position={"relative"} w="100%">
+                                <Collapse in={isReplyOpen} animateOpacity>
+                                    {isRepliesLoaded && commentDetails.replies.length > 0
+                                        ? commentDetails.replies.map((reply, index) => (
+                                            <Comment key={reply.id} comment={reply} setParentComment={setCommentDetails} />
+                                        ))
+                                        :
+                                        <Flex w="100%" direction={"row"} gap="10px" p="10px" >
+                                            <SkeletonCircle size="10" />
+                                            <SkeletonText noOfLines={3} w="90%" mt="5px" />
+                                        </Flex>
+                                    }
+                                </Collapse>
+                            </Box>
+                        </Flex>
+                        : <></>
+                    }
+
                 </Flex>
-                <Collapse in={isOpen} animateOpacity>
-                    <Flex w="100%" direction={"row"} gap="5px" >
-                        <Avatar h="24px" w="24px" name="Dan Abrahmov" src="https://bit.ly/dan-abramov" />
-                        <FormControl gap="5px">
-                            <Textarea placeholder="Write a comment..." onChange={(e) => { setReplyCommentVal(e.target.value) }} value={replyCommentVal} onFocus={() => setIsFocused(true)} />
-                            <Flex w="100%" justifyContent={"flex-end"} alignItems={"center"} gap={"10px"} mt="5px" display={isFocused ? "flex" : "none"}>
-                                <Button variant={"ghost"} color={"gray.600"} colorScheme='blue' fontWeight={"semi-bold"} fontSize={16} size="sm" onClick={() => handleCommentCancel()}>
-                                    Cancel
-                                </Button>
-                                <Button variant={"solid"} bg={"accent"} color={"white"} colorScheme='blue' fontWeight={"semi-bold"} fontSize={16} size="sm" isActive={typeof commentVal === "string" && replyCommentVal.trim().length === 0 > 0 ? true : false} >
-                                    Comment
-                                </Button>
-                            </Flex>
-                        </FormControl>
-                    </Flex>
-                </Collapse>
-                {children}
-            </Flex>
-        </Flex>
+            </GridItem>
+            {/* </Flex > */}
+        </SimpleGrid>
     )
 }
 
-const CommentWithReplies = (props) => {
-
-    const { comment, children, ...rest } = props
-
-    const { isOpen: isReplyOpen, onToggle: onReplyToggle } = useDisclosure({ defaultIsOpen: false });
-
-    return (
-        <Comment onReplyToggle={onReplyToggle}  {...props}>
-            <Box>
-                <Button leftIcon={<MdKeyboardArrowDown size="24px" />} variant={"link"} color={"gray.400"} fontWeight={"semi-bold"} fontSize={16} size="sm" _hover={{ color: "gray.600" }} onClick={onReplyToggle} >
-                    View Replies
-                </Button>
-            </Box>
-            <Collapse in={isReplyOpen} animateOpacity>
-                <Comment {...props} />
-            </Collapse>
-        </Comment>
-    )
-}
 
 const CommentSection = (props) => {
 
-    const { comments, ...rest } = props
+    const { comments, commentCount, sectionId, videoDetails, setVideoDetails, ...rest } = props
 
+    const [commentsArr, setCommentsArr] = useState(comments)
     const [commentVal, setCommentVal] = useState("")
     const [isFocused, setIsFocused] = useState(false)
+
+    const [exceptions, setExceptions] = useState([])
+    const [skip, setSkip] = useState(comments.length)
+    const limit = 10
+
+
+    useEffect(() => {
+        setCommentsArr(comments)
+        console.log(comments)
+    }, [comments])
 
     const handleCommentCancel = () => {
         setCommentVal("")
@@ -137,32 +377,157 @@ const CommentSection = (props) => {
 
     }
 
+    const fetchComments = async (sectionId, skip, limit) => {
+        let isMounted = true;
+        const controller = new AbortController();
+        console.log("fetching comments")
 
-    const processedComments = processComments(comments)
+        try {
+            const response = await axiosPrivate.get(`/content/${sectionId}/comment/?skip=${skip}&limit=${limit}`, {
+                signal: controller.signal
+            })
+
+            const commentsWithCount = response.data
+            const commentsOnly = commentsWithCount.comments
+
+            setSkip(skip + (commentsOnly.length))
+
+
+            console.log(commentsArr)
+            if (isMounted) {
+                setCommentsArr((prevState) => {
+                    prevState.push(...commentsOnly)
+                    return prevState
+                })
+
+                // setVideoDetails((prevState) => {
+                //     const newState = prevState
+                //     newState.comments = [...prevState.comments, ...commentsOnly]
+                //     return newState
+                // })
+            }
+
+            console.log(commentsArr)
+
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    // const addComment = async () => {
+    //     let isMounted = true;
+    //     const controller = new AbortController();
+
+    //     try {
+    //         const formData = new FormData()
+    //         formData.append("message", commentVal)
+
+    //         const response = await axiosPrivate.post(`/content/${sectionId}/comment`, formData, {
+    //             signal: controller.signal
+    //         })
+
+    //         const newComment = response.data.data
+
+    //         setCommentsArr((prevState) => {
+    //             console.log(prevState)
+    //             var newState = [...prevState]
+    //             newState = [newComment, ...prevState]
+    //             console.log(newState)
+    //             return newState
+    //         })
+
+    //         // setVideoDetails((prevState) => {
+    //         //     console.log(prevState)
+    //         //     const newState = { ...prevState }
+    //         //     newState.comments = [newComment, ...prevState.comments]
+    //         //     newState.commentCount += 1
+    //         //     console.log(newState)
+    //         //     return newState
+    //         // })
+
+
+
+    //         console.log(commentsArr)
+
+    //         // handleReplyToggle()
+    //         setExceptions((prevState) => { var newState = prevState; newState.push(newComment.id); return newState })
+
+
+
+    //     } catch (error) {
+    //         console.log(error)
+    //     }
+    // }
+
+    const addComment = async () => {
+        try {
+            const formData = new FormData();
+            formData.append("message", commentVal);
+
+            const response = await axiosPrivate.post(`/content/${sectionId}/comment`, formData);
+            const newComment = response.data.data;
+
+            // setCommentsArr((prevState) => {
+            //     // Create a new array with the updated element at the beginning
+            //     // const updatedArr = [...prevState, newComment];
+            //     const updatedArr = [newComment, ...prevState];
+            //     return updatedArr;
+            // });
+
+            setVideoDetails((prevState) => {
+                const newState = { ...prevState };
+                newState.comments = [newComment, ...prevState.comments];
+                newState.commentCount += 1;
+                return newState;
+            });
+
+
+            setExceptions((prevState) => {
+                var newState = prevState;
+                newState.push(newComment.id);
+                return newState;
+            });
+
+            setCommentVal("");
+            setIsFocused(false);
+
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+
 
 
     return (
         <Flex w="100%" {...rest} direction={"column"} gap="5px">
             <Text>
-                {comments.length} Comments
+                {commentCount} Comments
             </Text>
             <Flex w="100%" direction={"row"} gap="5px" >
                 <Avatar h="40px" w="40px" name="Dan Abrahmov" src="https://bit.ly/dan-abramov" />
                 <FormControl gap="5px">
                     <Textarea placeholder="Write a comment..." onChange={(e) => { setCommentVal(e.target.value) }} value={commentVal} onFocus={() => setIsFocused(true)} />
-                    <Flex w="100%" justifyContent={"flex-end"} alignItems={"center"} gap={"10px"} mt="5px" display={isFocused ? "flex" : "none"}>
+                    <Flex w="100%" justifyContent={"flex-end"} alignItems={"center"} mt="5px" gap={"10px"} display={isFocused ? "flex" : "none"}>
                         <Button variant={"ghost"} color={"gray.600"} colorScheme='blue' fontWeight={"semi-bold"} fontSize={16} size="sm" onClick={() => handleCommentCancel()}>
                             Cancel
                         </Button>
-                        <Button variant={"solid"} bg={"accent"} color={"white"} colorScheme='blue' fontWeight={"semi-bold"} fontSize={16} size="sm" isActive={typeof commentVal === "string" && commentVal.trim().length === 0 > 0 ? true : false} >
+                        <Button variant={"solid"} bg={"accent"} color={"white"} colorScheme='blue' fontWeight={"semi-bold"} fontSize={16} size="sm" isDisabled={commentVal !== "" ? false : true} onClick={addComment} >
                             Comment
                         </Button>
                     </Flex>
                 </FormControl>
             </Flex>
-            <Flex w="100%" direction={"column"} gap="10px" mt="10px">
-                <CommentWithReplies {...comment} />
-                <Comment {...comment} />
+            <Flex w="100%" direction={"column"} gap="15px" mt="10px">
+                {console.log(commentsArr)}
+                {/* {commentsArr.map((commentDetails, index) => (
+                    <Comment key={index} keyVal={index} comment={commentDetails} updateComments={setCommentsArr} />
+                ))} */}
+                {commentsArr.map((commentDetails, index) => (
+                    <Comment key={commentDetails.id} keyVal={index} comment={commentDetails} updateComments={setCommentsArr} />
+                ))}
+
+
             </Flex>
         </Flex>
     )

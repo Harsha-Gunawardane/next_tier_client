@@ -24,7 +24,9 @@ export default function Default(props) {
 					<Text
 						color={textColorSecondary}
 						fontSize={{
-							base: "0.9rem",
+							base: "0.8rem",
+							md: "0.9rem",
+							lg: "0.9rem",
 						}}
 						fontWeight={"bold"}>
 						{name}
@@ -34,7 +36,8 @@ export default function Default(props) {
 							<Text
 								color={textColor}
 								fontSize={{
-									base: "2.6rem",
+									base: "2.4rem",
+									md: "2.5rem",
 									lg: "2.6rem",
 								}}
 								fontWeight={"semi-bold"}

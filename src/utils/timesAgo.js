@@ -1,6 +1,5 @@
 export default function generateTimeAgoString(datetime) {
     const timestamp = new Date(datetime).getTime() / 1000;
-    console.log(datetime);
     const currentTime = Math.floor(Date.now() / 1000);
     const timeDiff = currentTime - timestamp;
 

@@ -1,193 +1,127 @@
-import React from "react";
+import { Box, Flex, Text } from "@chakra-ui/react";
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom"; // Import `useNavigate` here
 
+import Question from "./components/quiz/Question";
+import QuizFooter from "./components/quiz/QuizFooter";
+import CountdownTimer from "./components/quiz/CountdownTimer";
+import QuizNumberList from "./components/quiz/QuizNumberList";
 
-import { Box} from "@chakra-ui/react";
+// import custom hook
+import { useFetchQuestions } from "../../hooks/fetchQuestions";
+import BreadCrumbs from "./components/quiz/BreadCrumbs";
+import AlreadyDoneQuizModal from "./components/modals/AlreadyDoneQuizModal";
 
+function Quiz() {
+  const { subject, mcqname } = useParams();
 
-import { Progress,Button,Text ,Flex} from '@chakra-ui/react'
+  const [isOpen, setIsOpen] = useState(false);
 
-import {
- 
-  Heading,
-
-} from "@chakra-ui/react";
-
-import Progressbar from "../../components/student/progressbar";
-
-
-
-
-import { Stack, HStack, VStack } from '@chakra-ui/react'
-
-
-
-
-import { SimpleGrid,ChakraProvider} from '@chakra-ui/react'
-
-const quiz = () => {
- 
-  return (
-
-      <Box overflow='scroll'>
-
-<SimpleGrid spacing={20} minChildWidth='250px'>
-
-<Box bg='white' w='100%' height='60px' p={4} color='black'>
-<Heading color='green' fontSize={25}>120 Days more for your Exam </Heading>
-  
-</Box>
-</SimpleGrid>
-
-<SimpleGrid spacing={20} minChildWidth='250px'>
-
-<Box bg='white' width={{base:350,lg:500,xl:800}} height='400px' p={4} color='black'>
-
-<HStack spacing='24px' mt='30px'>
-<Box bg='#eee' w='65%' height='100px' p={2} color='black' borderRadius={'10px'} boxShadow='0 3px 10px rgb(0 0 0 / 0.2)'>
-  <Text fontSize='15px'>Average Mark</Text>
-
-  <HStack spacing='24px' mt='20px'>
-  <Box w='60%' h='40px' bg='#eee'>
-  <Heading ml='20px' fontSize='25px'>53</Heading>
-  </Box>
-  <Box w='40%' h='40px' bg='#eee'>
-
-  </Box>
- 
-</HStack>
-  
-</Box>
-
-<Box bg='#eee' w='65%' height='100px' p={2} color='black' borderRadius={'10px'} boxShadow='0 3px 10px rgb(0 0 0 / 0.2)'>
-<Text fontSize='15px'>Average Mark</Text>
-
-<HStack spacing='24px' mt='20px'>
-<Box w='60%' h='40px' bg='#eee'>
-<Heading ml='20px' fontSize='25px'>53</Heading>
-</Box>
-<Box w='40%' h='40px' bg='#eee'>
-
-</Box>
-
- 
-</HStack>
-</Box>
-<Box bg='#eee' w='65%' height='100px' p={2} color='black' borderRadius={'10px'} boxShadow='0 3px 10px rgb(0 0 0 / 0.2)'>
-<Text fontSize='15px'>Average Mark</Text>
-
-<HStack spacing='24px' mt='20px'>
-<Box w='60%' h='40px' bg='#eee'>
-<Heading ml='20px' fontSize='25px'>53</Heading>
-</Box>
-<Box w='40%' h='40px' bg='#eee'>
-
-</Box>
-
- 
-</HStack>
-</Box>
-</HStack>
-
-<Flex bg='#eee'  width={{base:400,lg:500,xl:700}} height='90px' p={5} color='black' mt='60px' ml='50px' borderRadius={'10px'} boxShadow='0 3px 10px rgb(0 0 0 / 0.2)'>
-  
-
-  <HStack spacing='24px'>
-  <Box w='80%' h='40px' bg='#eee'>
-    <Heading p={0} ml='20px' fontSize={{base:10,lg:15,xl:20}}>Let Examine Your Knowledge</Heading>
-  </Box>
-  <Box w='20%' h='40px' bg='#eee'>
- <Button width='120%' height='25px' ml='15px' mt='-15px'p={4} bg='lightblue'><Text fontSize='15px'>Generate Quiz</Text></Button>
-  </Box>
- 
-</HStack>
-
-</Flex>
-  
-</Box>
-
-
-<Box bg='white' width={{base:200,lg:200,xl:450}} height='420px' p={4} color='black' ml={{base:0,lg:200,xl:120}}>
-
-<Box bg='#FAEBD7' w='100%' height='100px' p={4} color='black' mt='20px' borderRadius={'10px'} boxShadow='0 3px 10px rgb(0 0 0 / 0.2)'>
-
-<HStack spacing='24px'>
-  <Box w='60%' h='40px' bg='transparent'>
-<Heading fontSize='20px'>Physics</Heading>
-<Text fontSize='15px'>26th June</Text>
-<Text fontSize='15px'>#25th Quiz</Text>
-  </Box>
-  <Box w='40%' h='40px' bg='transparent'>
-<Text fontSize='15px' p={2}>15.00-18.00</Text>
-  </Box>
- 
-</HStack>
-
-</Box>
-<Box bg='#F0F8FF' w='100%' height='100px' p={4} color='black' mt='20px' borderRadius={'10px'} boxShadow='0 3px 10px rgb(0 0 0 / 0.2)'>
-<HStack spacing='24px'>
-  <Box w='60%' h='40px' bg='transparent'>
-<Heading fontSize='20px'>Physics</Heading>
-<Text fontSize='15px'>26th June</Text>
-<Text fontSize='15px'>#25th Quiz</Text>
-  </Box>
-  <Box w='40%' h='40px' bg='transparent'>
-<Text fontSize='15px' p={2}>15.00-18.00</Text>
-  </Box>
- 
-</HStack>
-</Box>
-<Box bg='#FFF0F5' w='100%' height='100px' p={4} color='black' mt='20px' borderRadius={'10px'} boxShadow='0 3px 10px rgb(0 0 0 / 0.2)'>
-<HStack spacing='24px'>
-  <Box w='60%' h='40px' bg='transparent'>
-<Heading fontSize='20px'>Physics</Heading>
-<Text fontSize='15px'>26th June</Text>
-<Text fontSize='15px'>#25th Quiz</Text>
-  </Box>
-  <Box w='40%' h='40px' bg='transparent'>
-<Text fontSize='15px' p={2}>15.00-18.00</Text>
-  </Box>
- 
-</HStack>
-</Box>
-  
-</Box>
-
-</SimpleGrid>
-
-
-
-
-<SimpleGrid spacing={20} minChildWidth='250px'>
-
-<Box bg='white' width={{base:350,lg:500,xl:800}} height='500px' p={4} color='black' mt='-80px'>
-
-<Heading color='black' fontSize={25}>Previous Quizes </Heading>
-<Progressbar></Progressbar>
-<Progressbar></Progressbar>
-<Progressbar></Progressbar>
-<Progressbar></Progressbar>
-  
-</Box>
-
-<Box bg='white' width={{base:200,lg:200,xl:450}} height='450px' p={10} color='black' ml={{base:0,lg:200,xl:100}} mt='-25px'>
-  <Heading fontSize={25}>Your Progress</Heading>
-
-  
-</Box>
-
-</SimpleGrid>
-
-
-
-<br></br>
-
-
-</Box>
-
-
-
-  
+  const state = useSelector((state) => state);
+  const question = useSelector(
+    (state) => state.questions.queue[state.questions.trace]
   );
-};
+  const trace = useSelector((state) => state.questions.trace);
+  const queue = useSelector((state) => state.questions.queue);
+  const quizname = useSelector((state) => state.questions.mcqName);
 
-export default quiz;
+  const { isLoading, serverError } = useFetchQuestions();
+
+  // Move the `useNavigate` hook outside the component body
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    console.log(state);
+  }, [state]);
+
+  useEffect(() => {
+    console.log(trace);
+  }, [trace]);
+
+  useEffect(() => {
+    if (serverError) {
+      handleOpenModal();
+    }
+  }, [serverError]);
+
+  const handleCloseModal = () => {
+    setIsOpen(false);
+  };
+
+  const handleOpenModal = () => {
+    setIsOpen(true);
+  };
+
+  // Check if question is available before rendering the Question component
+  if (!question) {
+    return <Text>No question found.</Text>;
+  }
+
+  const getQuestionNo = (trace) => {
+    trace = String(trace + 1);
+    if (trace.length === 1) trace = "0" + trace;
+
+    return "Question " + trace;
+  };
+
+  const handleGoBack = () => {
+    navigate(-1); // Use `navigate` directly without setting it as state
+  };
+
+  return (
+    <>
+      <Flex>
+        <Flex direction="column" minH="85vh">
+          <Box flex="1">
+            <BreadCrumbs />
+            <Question
+              key={question.id}
+              trace={trace}
+              questionNo={getQuestionNo(trace)}
+              question={question.question}
+              options={question.options}
+            />
+          </Box>
+          {/* QuizFooter at the bottom */}
+          <QuizFooter />
+        </Flex>
+        <Flex ml={20}>
+          <Box>
+            <Text
+              mt={6}
+              fontSize={20}
+              fontStyle="Roboto"
+              fontWeight="medium"
+              mb={7}
+              color="#444444"
+            >
+              #Quiz 22
+            </Text>
+            <QuizNumberList count={queue.length} />
+            <Text
+              mt={7}
+              mb={7}
+              fontSize={20}
+              fontStyle="Roboto"
+              fontWeight="medium"
+              color="#444444"
+            >
+              Time Remaining
+            </Text>
+            <CountdownTimer time={2 * queue.length * 60} />
+          </Box>
+        </Flex>
+      </Flex>
+      <AlreadyDoneQuizModal
+        quizname={mcqname}
+        handleGoBack={handleGoBack}
+        handleCloseModal={handleCloseModal}
+        isOpen={isOpen}
+      />
+    </>
+  );
+}
+
+export default Quiz;

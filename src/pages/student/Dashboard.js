@@ -10,7 +10,6 @@ import UpcommingClasses from "../../components/DashboardComponents/UpcommingClas
 import ContinueWatching from "../../components/DashboardComponents/ContinueWatching";
 import RecommendedVideos from "../../components/DashboardComponents/RecommendedVidoes";
 import MiniStatCardIcon from "../../components/icons/MiniStatCardIcon";
-import CardT from "../test_components/Card";
 
 //icons
 import { BiBook } from "react-icons/bi";
@@ -38,7 +37,7 @@ const Dashboard = () => {
 	return (
 		<Box m="0" p="0" w={"100%"} h={"max-content"} bg={"gray.50"}>
 			<Flex width={"100%"} mb="20px" p={"10px"} direction={"column"} >
-				<SimpleGrid columns={{ base: 2, md: 2, lg: 5 }} gap="20px" pl={0} gridRowGap={"5px"}>
+				<SimpleGrid columns={{ base: 2, md: 2, lg: 5 }} px={"5px"} gridRowGap={"10px"} gap={"10px"}>
 					<GridItem colSpan={{ base: 2, md: 2, lg: 5 }}>
 						<Text fontSize={sectionTitleFontSize} fontWeight={"600"}>
 							Overview
@@ -61,7 +60,7 @@ const Dashboard = () => {
 						{/* <CardT /> */}
 					</GridItem>
 				</SimpleGrid>
-				<SimpleGrid columns={{ base: 1, md: 2, lg: 2 }} gap="20px" mt="10px">
+				<SimpleGrid columns={{ base: 1, md: 2, lg: 2 }} gap="20px" mt="10px" px={"5px"} gridRowGap={"10px"}>
 					<GridItem colSpan={{ base: 1, md: 2, lg: 1 }} >
 						<Text fontSize={sectionTitleFontSize} fontWeight={"600"} mb="10px">
 							Grade Analysis
@@ -75,7 +74,7 @@ const Dashboard = () => {
 						<UpcommingClasses />
 					</GridItem>
 				</SimpleGrid>
-				<SimpleGrid columns={{ base: 1, md: 2, lg: 2 }} gap="20px" mt="10px">
+				<SimpleGrid columns={{ base: 1, md: 2, lg: 2 }} gap="20px" mt="10px" px={"5px"} gridRowGap={"10px"} >
 					<GridItem colSpan={{ base: 1, md: 1, lg: 1 }} mb="10px">
 						<Text fontSize={sectionTitleFontSize} fontWeight={"600"} mb="10px">
 							Continue Watching
