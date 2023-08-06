@@ -11,7 +11,6 @@ import {
 import { Button } from "@chakra-ui/react";
 import { FaUserFriends } from "react-icons/fa";
 import { IoCloseCircleSharp } from "react-icons/io5";
-import useStaffStore from "../../zustandStore/staffStore";
 import { IconSearch } from "@tabler/icons-react";
 import { IoIosAddCircleOutline } from "react-icons/io";
 
@@ -36,7 +35,7 @@ export default function StaffHeaderBar({ search, setSearch, onOpen }) {
           <InputGroup borderColor="#E0E1E7">
             <InputLeftElement
               pointerEvents="none"
-              fontSize="12px" // Decrease the font size to make the icon smaller
+              fontSize="12px"
               children={<IconSearch size="1.3rem" color="gray" />}
             />
 
@@ -73,7 +72,8 @@ export default function StaffHeaderBar({ search, setSearch, onOpen }) {
             <InputLeftElement
               pointerEvents="none"
               fontSize="12px"
-              children={<FaUserFriends size="1.3rem" color="gray" />}
+              children={<FaUserFriends size="1.2rem" color="gray" />}
+              paddingRight="7px"
             />
 
             <Input

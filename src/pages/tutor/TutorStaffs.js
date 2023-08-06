@@ -1,11 +1,9 @@
 import { useEffect, useState } from "react";
-import { Box, useDisclosure} from "@chakra-ui/react";
+import { Box, useDisclosure } from "@chakra-ui/react";
 
 import useStaffStore from "../../zustandStore/staffStore.js";
 
-import useAxiosPrivate from "../../hooks/useAxiosPrivate";
-
-
+import useAxiosPrivate from "../../hooks/useAxiosPrivate.js";
 
 //Imported Components
 import StaffTable from "../../components/TutorStaff/StaffTable.js";
@@ -17,13 +15,8 @@ import BreadCrumbs from "../../components/BreadCrumbs/BreadCrumbs.js";
 import NewStaffModalPopup from "../../components/TutorStaff/NewStaffModalPopup.js";
 import StaffDeleteAlertDialog from "../../components/TutorStaff/StaffDeleteAlertDialog.js";
 
-
-
-
-const StaffList = () => {
-
-
-  const [staffIdToDelete,setStaffIdToDelete] = useState();
+const TutorStaffs = () => {
+  const [staffIdToDelete, setStaffIdToDelete] = useState();
 
   const {
     isOpen: isNewStaffPopupOpen,
@@ -39,7 +32,7 @@ const StaffList = () => {
 
   const [search, setSearch] = useState("");
 
- //Zustand store
+  //Zustand store
   const staffs = useStaffStore((state) => state.staffs);
   const fetchStaffs = useStaffStore((state) => state.fetchStaffs);
   const deleteStaff = useStaffStore((state) => state.deleteStaff);
@@ -56,17 +49,14 @@ const StaffList = () => {
       onStaffDeleteAlertDialogOpen();
       // Save the staff ID to be deleted in the state
       setStaffIdToDelete(id);
-      
     } catch (err) {
       console.log(`Error: ${err.message}`);
     } finally {
-     
     }
   };
 
   return (
     <Box width="100%">
-      <BreadCrumbs />
       <NewStaffModalPopup
         isOpen={isNewStaffPopupOpen}
         onOpen={onNewStaffPopupOpen}
@@ -77,7 +67,7 @@ const StaffList = () => {
         onClose={onStaffDeleteAlertDialogClose}
         handleDelete={handleDelete}
         staffIdToDelete={staffIdToDelete}
-        deleteStaff = {deleteStaff}
+        deleteStaff={deleteStaff}
       />
       <StaffHeaderBar
         search={search}
@@ -94,4 +84,4 @@ const StaffList = () => {
   );
 };
 
-export default StaffList;
+export default TutorStaffs;

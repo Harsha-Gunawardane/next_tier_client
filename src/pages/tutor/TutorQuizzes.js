@@ -8,7 +8,7 @@ import McqCategoriesTab from "../../components/mcq/McqCategoriesTab";
 import ModalPopupCommon from "../../components/Quizzes/ModalPopupCommon";
 import QuizCreateForm from "../../components/Quizzes/QuizCreateForm";
 
-export default function CreateQuizzes() {
+export default function TutorQuizzes() {
   const tabFontSize = "17px";
 
   const {

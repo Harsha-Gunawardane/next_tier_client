@@ -4,7 +4,6 @@ import {
   Card,
   Grid,
   GridItem,
-  Text,
   useDisclosure,
 } from "@chakra-ui/react";
 import DonutChartQuiz from "../../components/Quizzes/DonutChartQuiz";
@@ -16,7 +15,6 @@ import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import QuizInsideCard from "../../components/Quizzes/QuizInsideCard";
 import ModalPopupCommon from "../../components/Quizzes/ModalPopupCommon";
 import NewMcqStepper from "../../components/Quizzes/NewMcqStepper";
-import QuizCreateForm from "../../components/Quizzes/QuizCreateForm";
 import { useParams } from "react-router-dom";
 
 export default function CreateQuiz() {

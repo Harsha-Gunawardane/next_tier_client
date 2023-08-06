@@ -1,8 +1,6 @@
 import { Box, Card, Grid, GridItem, useDisclosure } from "@chakra-ui/react";
 import BreadCrumbs from "../../components/BreadCrumbs/BreadCrumbs";
 import DonutChartQuiz from "../../components/Quizzes/DonutChartQuiz";
-import McqsHeaderBar from "../../components/mcq/McqsHeaderBar";
-import McqsView from "../../components/mcq/McqsView";
 import { useEffect, useState } from "react";
 import QuizInsideCard from "../../components/Quizzes/QuizInsideCard";
 
@@ -14,7 +12,7 @@ import McqDisplayFromLibraryDrawer from "../../components/Quizzes/McqDisplayFrom
 import NewMcqStepper from "../../components/Quizzes/NewMcqStepper";
 import ModalPopupCommon from "../../components/Quizzes/ModalPopupCommon";
 
-export default function ViewQuiz() {
+export default function TutorQuiz() {
 
   const { quizId } = useParams();
 

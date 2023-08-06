@@ -166,7 +166,7 @@ export default function NewStaffStepper() {
             />
           </Stepper.Step>
 
-          <Stepper.Step label="Final step" description="System information">
+          <Stepper.Step label="Final step" description="System info">
             <Radio.Group
               required
               name="staff_title"
