@@ -63,16 +63,11 @@ import { ROLES } from "./config/roles";
 //Tutor Components
 import TutorDashboard from "./pages/tutor/tutorDashboard";
 import StaffList from "./pages/tutorStaff/staffList";
-import StaffAdd from "./pages/tutorStaff/staffAdd";
 import CreateQuizzes from "./pages/tutor/createQuizzes";
 import Mcqs from "./pages/tutor/mcq/viewMcqs";
-import CreateMcq from "./pages/tutor/mcq/mcqCreate";
-import EditMcq from "./pages/tutor/mcq/mcqEdit";
 import PaperMarking from "./pages/tutorStaff/paperMarking";
-import StaffEdit from "./pages/tutorStaff/staffEdit";
 import CreateQuiz from "./pages/tutor/createQuiz";
 import ViewQuiz from "./pages/tutor/viewQuiz";
-import McqCreateForQuiz from "./pages/tutor/mcqCreateForQuiz";
 
 function App() {
   return (
@@ -116,11 +111,8 @@ function App() {
             element={<SidebarAndHeader userRole={"teacher"} />}
           >
             <Route index element={<TutorDashboard />} />
-
             <Route path="supportstaffs">
               <Route index element={<StaffList />} />
-              <Route path="add" element={<StaffAdd />} />
-              <Route path="edit/:id" element={<StaffEdit />} />
             </Route>
 
             <Route path="papers">
@@ -129,16 +121,10 @@ function App() {
 
             <Route path="quizzes">
               <Route index element={<CreateQuizzes />} />
-              <Route path="quiz">
-                <Route path="create/:quizId" element={<CreateQuiz />}></Route>
-                <Route path=":quizId" element={<ViewQuiz />}></Route>
-                <Route path="mcq/create" element={<McqCreateForQuiz />}></Route>
-              </Route>
+              <Route path="create/:quizId" element={<CreateQuiz />} />
+              <Route path=":quizId" element={<ViewQuiz />} />
+
               <Route path="category/:id" element={<Mcqs />}></Route>
-              <Route path="mcq">
-                <Route path="create" element={<CreateMcq />} />
-                <Route path="edit/:id" element={<EditMcq />} />
-              </Route>
             </Route>
           </Route>
           {/* </Route> */}
