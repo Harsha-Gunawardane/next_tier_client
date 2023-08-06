@@ -220,11 +220,11 @@ const resetPwd = async (e) => {
           marginRight={4}
           marginLeft={3}
         >
-          <Tabs height="88.3vh" mt={3} borderRadius={0} overflowY='scroll' css={scrollbarStyles} >
+          <Tabs height="88.3vh" mt={3} borderRadius={0} overflowY='scroll' css={scrollbarStyles} variant="enclosed">
             <TabList>
-              <Tab fontSize={13} fontWeight="bold" >Personal Information</Tab>
-              <Tab fontSize={13} fontWeight="bold" marginLeft={3}>More Information</Tab>
-              <Tab fontSize={13} fontWeight="bold" marginLeft={3}>Login and Security</Tab>
+              <Tab fontSize={13} fontWeight="bold" _selected={{color:'white',bg:'blue.500'}}>Personal Information</Tab>
+              <Tab fontSize={13} fontWeight="bold" marginLeft={3} _selected={{color:'white',bg:'blue.500'}}>More Information</Tab>
+              <Tab fontSize={13} fontWeight="bold" marginLeft={3} _selected={{color:'white',bg:'blue.500'}}>Login and Security</Tab>
             </TabList>
             <TabPanels>
               <TabPanel>
@@ -266,31 +266,16 @@ const resetPwd = async (e) => {
                         )}
                       </FormControl>
                       <FormControl>
+
                         <FormLabel fontSize={13} mt={3}>Role</FormLabel>
-                        <Input bg="white" />
+                        <Input value="Staff" bg="white" />
+                      </FormControl>
+                      <FormControl>
+                        <FormLabel fontSize={12} mt={3}>Address</FormLabel>
+                        <Textarea bg="white" />
                       </FormControl>
                     </SimpleGrid>
-                    <Text fontSize={13} fontWeight="semibold" mt={4}>Address</Text>
-                    <SimpleGrid columns={2} spacingX={4} spacingY={2} mt={3}>
-
-                      <FormControl>
-
-                        <FormLabel fontSize={12}>No</FormLabel>
-                        <Input bg="white" />
-                      </FormControl>
-                      <FormControl>
-                        <FormLabel fontSize={12}>Address Line 01</FormLabel>
-                        <Input bg="white" />
-                      </FormControl>
-                      <FormControl>
-                        <FormLabel fontSize={12} mt={3}>Address Line 02</FormLabel>
-                        <Input bg="white" />
-                      </FormControl>
-                      <FormControl>
-                        <FormLabel fontSize={12} mt={3}>City</FormLabel>
-                        <Input bg="white" />
-                      </FormControl>
-                    </SimpleGrid>
+                    
                     {isEditable ? (
                       <Flex mt={3} marginLeft={680}>
                         <Button onClick={handleCancelEdit} mr={4} colorScheme="blue" size="sm">

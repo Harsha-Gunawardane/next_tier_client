@@ -13,7 +13,7 @@ import {
   Badge
 } from '@chakra-ui/react';
 import data from './data/data.json';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 
 const staffData = data.staffs;
@@ -107,9 +107,11 @@ navigate(`/staff/profile/${staffId}`);
           <Text fontSize={20} color="#242424" mb={4} mt={1} fontWeight="bold">
             Institute Staffs
           </Text>
+          <Link to="/staff/add-staff">
           <Button size="sm" mr={4} colorScheme="blue" mt={1}>
             Add new staff
           </Button>
+          </Link>
         </Flex>
       </Box>
       <Box>

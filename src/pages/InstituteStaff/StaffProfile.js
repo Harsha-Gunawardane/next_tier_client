@@ -64,12 +64,12 @@ console.log('Staff Data:', staffData);
             <Text fontSize={13} mt={1}>{staffData.gender}</Text>
             <Text fontSize={13} mt={1}>{staffData.designation}</Text>
             <Text fontSize={13} mt={1}>Joined Date: {staffData.joinedDate}</Text>
-            <Flex mt={3} >
+            {/* <Flex mt={3} >
               <Text fontSize={13} >Account status:</Text>
               <Badge colorScheme="green" fontSize={15}>
                 Enabled
               </Badge>
-            </Flex>
+            </Flex> */}
           </Box>
 
 
@@ -82,10 +82,10 @@ console.log('Staff Data:', staffData);
           marginRight={4}
           marginLeft={3}
         >
-          <Tabs height="88.3vh" mt={3} borderRadius={0} overflowY='scroll' css={scrollbarStyles}>
+          <Tabs height="88.3vh" mt={3} borderRadius={0} overflowY='scroll' css={scrollbarStyles} variant="enclosed">
             <TabList>
-              <Tab fontSize={14} fontWeight="bold">Personal Information</Tab>
-              <Tab fontSize={14} fontWeight="bold">More Information</Tab>
+              <Tab fontSize={14} fontWeight="bold" _selected={{color:'white',bg:'blue.500'}}>Personal Information</Tab>
+              <Tab fontSize={14} fontWeight="bold" _selected={{color:'white',bg:'blue.500'}}>More Information</Tab>
             </TabList>
             <TabPanels>
               <TabPanel>

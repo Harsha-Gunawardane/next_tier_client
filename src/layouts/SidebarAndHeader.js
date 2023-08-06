@@ -11,7 +11,7 @@ import { Box, Container, Flex, Grid, GridItem } from "@chakra-ui/react";
 //icons
 import GridViewRoundedIcon from "@mui/icons-material/GridViewRounded";
 import { TiDocumentText, TfiLayoutListThumbAlt } from "react-icons/ti";
-import { FaCompass, FaUserFriends, FaListAlt, FaQuestionCircle } from "react-icons/fa";
+import { FaCompass, FaUserFriends, FaListAlt, FaQuestionCircle} from "react-icons/fa";
 import {TbChevronsUpLeft} from "react-icons/tb";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import ReportProblemIcon from "@mui/icons-material/ReportProblem";
@@ -83,7 +83,7 @@ const SidebarAndHeader = ({ userRole }) => {
 		{ icon: ReportProblemIcon, name: 'Complaints', value: 'complaints', href: '/staff/complaints' },
 		{icon: TiDocumentText, name: "Hall Management", value: "hallSchedule", href: "/staff/hall"},
 		{ icon: FaUserAlt, name: 'Institute Staffs', value: 'staff-list', href: '/staff/staff-list' },
-		{ icon: FaUsers, name: 'Students', value: 'stu-list', href: '/staff/stu-list' },
+		{ icon: FaUsers, name: 'Tutors', value: 'stu-list', href: '/staff/tutors-list' },
 		{ icon: FaMoneyBillAlt, name: 'Student Payments', value: 'payments', href: '/staff/stu-payment' }
 	]
 

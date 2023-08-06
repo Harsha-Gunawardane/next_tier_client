@@ -1,14 +1,25 @@
-import { Box, SimpleGrid, Text, Input, Spacer, Select, Flex, Avatar, Button, Badge } from '@chakra-ui/react'
-import React, { useState } from 'react';
-import data from './data/data.json';
-import { useNavigate } from 'react-router-dom';
 import {
-  Accordion,
-  AccordionItem,
-  AccordionButton,
-  AccordionPanel,
-  AccordionIcon,
-} from '@chakra-ui/react';
+  Box,
+  SimpleGrid,
+  Text,
+  Input,
+  Spacer,
+  Select,
+  Flex,
+  Avatar,
+  Button,
+  Badge,
+} from "@chakra-ui/react";
+import React, { useState } from "react";
+import data from "./data/data.json";
+import { useNavigate } from "react-router-dom";
+// import {
+//   Accordion,
+//   AccordionItem,
+//   AccordionButton,
+//   AccordionPanel,
+//   AccordionIcon,
+// } from "@chakra-ui/react";
 
 const stuData = data.Students;
 
@@ -17,11 +28,11 @@ function StudentsList() {
     /* your scrollbar styles here */
   `;
 
-  const [searchTerm, setSearchTerm] = useState('');
-  const [sortBy, setSortBy] = useState('fName');
-  const [sortOrder, setSortOrder] = useState('asc');
-  const [filterBy, setFilterBy] = useState('');
-  const [filterByGender, setFilterByGender] = useState('');
+  const [searchTerm, setSearchTerm] = useState("");
+  const [sortBy, setSortBy] = useState("fName");
+  const [sortOrder, setSortOrder] = useState("asc");
+  const [filterBy, setFilterBy] = useState("");
+  const [filterByGender, setFilterByGender] = useState("");
 
   const handleSearchInputChange = (event) => {
     setSearchTerm(event.target.value);
@@ -47,20 +58,22 @@ function StudentsList() {
     (stu) =>
       (stu.fName.toLowerCase().includes(searchTerm.toLowerCase()) ||
         stu.lName.toLowerCase().includes(searchTerm.toLowerCase())) &&
-      (filterBy === '' || stu.stream.toLowerCase() === filterBy.toLowerCase()) &&
-      (filterByGender === '' || stu.gender.toLowerCase() === filterByGender.toLowerCase())
+      (filterBy === "" ||
+        stu.stream.toLowerCase() === filterBy.toLowerCase()) &&
+      (filterByGender === "" ||
+        stu.gender.toLowerCase() === filterByGender.toLowerCase())
   );
 
   const sortedStu = filteredStu.sort((a, b) => {
     let compareValue = 0;
-    if (sortBy === 'fName') {
+    if (sortBy === "fName") {
       compareValue = a.fName.localeCompare(b.fName);
-    } else if (sortBy === 'lName') {
+    } else if (sortBy === "lName") {
       compareValue = a.lName.localeCompare(b.lName);
-    } else if (sortBy === 'joinedDate') {
+    } else if (sortBy === "joinedDate") {
       compareValue = new Date(a.joinedDate) - new Date(b.joinedDate);
     }
-    return compareValue * (sortOrder === 'asc' ? 1 : -1);
+    return compareValue * (sortOrder === "asc" ? 1 : -1);
   });
 
   const navigate = useNavigate();
@@ -74,20 +87,20 @@ function StudentsList() {
   // Get total count of students for each filter option
   const totalCount = {
     all: stuData.length,
-    Mathematics: stuData.filter((stu) => stu.stream === 'Mathematics').length,
-    Commerce: stuData.filter((stu) => stu.stream === 'Commerce').length,
-    Biology: stuData.filter((stu) => stu.stream === 'Biology').length,
-    Arts: stuData.filter((stu) => stu.stream === 'Arts').length,
-    Male: stuData.filter((stu) => stu.gender === 'Male').length,
-    Female: stuData.filter((stu) => stu.gender === 'Female').length,
+    Mathematics: stuData.filter((stu) => stu.stream === "Mathematics").length,
+    Commerce: stuData.filter((stu) => stu.stream === "Commerce").length,
+    Biology: stuData.filter((stu) => stu.stream === "Biology").length,
+    Arts: stuData.filter((stu) => stu.stream === "Arts").length,
+    Male: stuData.filter((stu) => stu.gender === "Male").length,
+    Female: stuData.filter((stu) => stu.gender === "Female").length,
   };
 
   return (
-    <Box backgroundColor="#F9F9F9" width="100%" >
+    <Box backgroundColor="#F9F9F9" width="100%">
       <Box>
         <Text>Students List</Text>
       </Box>
-      <SimpleGrid p="10px" columns={1} ml={4} mr={4} minChildWidth={400}>
+      <SimpleGrid p="10px" columns={5} ml={4} mr={4} minChildWidth={200}>
         {/* Search Box */}
         <Box height="40px">
           <Input
@@ -95,128 +108,123 @@ function StudentsList() {
             placeholder="Search for students"
             value={searchTerm}
             onChange={handleSearchInputChange}
-            mb={['2', '0']}
+            mb={["2", "0"]}
             fontSize={13}
             backgroundColor="white"
           />
         </Box>
         {/* Sort and Filter Options */}
         <Box height="40px">
+          <Flex paddingLeft={7}>
+            <Box>
+              <Text mr="2" fontSize={13} marginTop={2}>
+                Sort By:
+              </Text>
+            </Box>
+            <Box>
+              <Select
+                fontSize={13}
+                backgroundColor="white"
+                value={sortBy}
+                onChange={handleSortByChange}
+              >
+                <option value="fName">First Name</option>
+                <option value="lName">Last Name</option>
+                <option value="joinedDate">Joined Date</option>
+              </Select>
+              <Spacer mx="2" />
+            </Box>
+          </Flex>
+        </Box>
+
+        <Box height="40px">
+          <Flex paddingLeft={7} paddingRight={0}>
+            <Box>
+              <Text mr="2" fontSize={13} marginTop={2}>
+                Sort Order:
+              </Text>
+            </Box>
+            <Box>
+              <Select
+                fontSize={13}
+                backgroundColor="white"
+                value={sortOrder}
+                onChange={handleSortOrderChange}
+                w="max-content"
+              >
+                <option value="asc">Ascending</option>
+                <option value="desc">Descending</option>
+              </Select>
+            </Box>
+          </Flex>
+        </Box>
+
+        <Box height="40px">
           <Flex>
-            <Flex paddingLeft={7}>
-              <Box>
-                <Text mr="2" fontSize={13} marginTop={2}>
-                  Sort By:
-                </Text>
-              </Box>
-              <Box>
-                <Select
-                  fontSize={13}
-                  backgroundColor="white"
-                  value={sortBy}
-                  onChange={handleSortByChange}
-                >
-                  <option value="fName">First Name</option>
-                  <option value="lName">Last Name</option>
-                  <option value="joinedDate">Joined Date</option>
-                </Select>
-                <Spacer mx="2" />
-              </Box>
-            </Flex>
-            <Flex paddingLeft={7} paddingRight={0}>
-              <Box>
-                <Text mr="2" fontSize={13} marginTop={2}>
-                  Sort Order:
-                </Text>
-              </Box>
-              <Box>
-                <Select
-                  fontSize={13}
-                  backgroundColor="white"
-                  value={sortOrder}
-                  onChange={handleSortOrderChange}
-                  w="max-content"
-                >
-                  <option value="asc">Ascending</option>
-                  <option value="desc">Descending</option>
-                </Select>
-              </Box>
-            </Flex>
+            <Box>
+              <Text mr="2" fontSize={13} marginTop={2}>
+                Gender:
+              </Text>
+            </Box>
+            <Box>
+              <Select
+                fontSize={13}
+                w="max-content"
+                backgroundColor="white"
+                value={filterByGender}
+                onChange={handleFilterByGenderChange}
+              >
+                <option value="">All ({totalCount.all})</option>
+                <option value="Male">Male ({totalCount.Male})</option>
+                <option value="Female">Female ({totalCount.Female})</option>
+              </Select>
+            </Box>
+          </Flex>
+        </Box>
+
+        <Box height="40px" overflowX="hidden">
+          <Flex>
+            <Box>
+              <Text mr="2" fontSize={13} marginTop={2}>
+                Stream:
+              </Text>
+            </Box>
+            <Box>
+              <Select
+                fontSize={13}
+                w="max-content"
+                backgroundColor="white"
+                value={filterBy}
+                onChange={handleFilterByChange}
+              >
+                <option value="">All ({totalCount.all})</option>
+                <option value="Biology">Biology ({totalCount.Biology})</option>
+                <option value="Mathematics">
+                  Mathematics ({totalCount.Mathematics})
+                </option>
+                <option value="Arts">Arts ({totalCount.Arts})</option>
+                <option value="Commerce">
+                  Commerce ({totalCount.Commerce})
+                </option>
+              </Select>
+            </Box>
           </Flex>
         </Box>
       </SimpleGrid>
-      {/* Filter Accordion */}
-      <SimpleGrid columns={1}>
-        <Box>
-          <Accordion allowToggle >
-            <AccordionItem>
-              <AccordionButton>
-                <Box as="span" flex="1" textAlign="center">
-                  <Text fontSize={13} marginTop={2}>
-                    Filter by
-                  </Text>
-                </Box>
-                <AccordionIcon />
-              </AccordionButton>
-              <AccordionPanel pb={4}>
-                <Flex>
-                  {/* Stream Filter */}
-                  <Box height="40px" overflowX="hidden">
-                    <Flex>
-                      <Box>
-                        <Text mr="2" fontSize={13} marginTop={2}>
-                          Stream:
-                        </Text>
-                      </Box>
-                      <Box>
-                        <Select
-                          fontSize={13}
-                          w="max-content"
-                          backgroundColor="white"
-                          value={filterBy}
-                          onChange={handleFilterByChange}
-                        >
-                          <option value="">All ({totalCount.all})</option>
-                          <option value="Biology">Biology ({totalCount.Biology})</option>
-                          <option value="Mathematics">Mathematics ({totalCount.Mathematics})</option>
-                          <option value="Arts">Arts ({totalCount.Arts})</option>
-                          <option value="Commerce">Commerce ({totalCount.Commerce})</option>
-                        </Select>
-                      </Box>
-                    </Flex>
-                  </Box>
-                  {/* Gender Filter */}
-                  <Box height="40px">
-                    <Flex>
-                      <Box>
-                        <Text mr="2" fontSize={13} marginTop={2}>
-                          Gender:
-                        </Text>
-                      </Box>
-                      <Box>
-                        <Select
-                          fontSize={13}
-                          w="max-content"
-                          backgroundColor="white"
-                          value={filterByGender}
-                          onChange={handleFilterByGenderChange}
-                        >
-                          <option value="">All ({totalCount.all})</option>
-                          <option value="Male">Male ({totalCount.Male})</option>
-                          <option value="Female">Female ({totalCount.Female})</option>
-                        </Select>
-                      </Box>
-                    </Flex>
-                  </Box>
-                </Flex>
-              </AccordionPanel>
-            </AccordionItem>
-          </Accordion>
-        </Box>
-      </SimpleGrid>
+
       {/* Student List */}
-      <Box width="100%" height="72vh" overflowY="scroll" css={scrollbarStyles}>
-        <SimpleGrid columns={[1, 2, 3, 4, 5]} spacing="6" marginLeft={4} marginRight={4}>
+      <Box
+        width="100%"
+        height="79.2vh"
+        overflowY="scroll"
+        css={scrollbarStyles}
+      >
+        <SimpleGrid
+          columns={[1, 2, 3, 4, 5]}
+          spacing="6"
+          marginLeft={4}
+          marginRight={4}
+        >
           {sortedStu.map((stu) => (
             <Box
               key={stu.id}
@@ -235,13 +243,23 @@ function StudentsList() {
                 {stu.fName} {stu.lName}
               </Text>
               <Text fontSize={13}>{stu.gender}</Text>
-              <Badge colorScheme={stu.stream === 'Mathematics' ? 'red' : stu.stream === 'Biology' ? 'green' : stu.stream === 'Arts' ? 'teal' : 'orange'}>
+              <Badge
+                colorScheme={
+                  stu.stream === "Mathematics"
+                    ? "red"
+                    : stu.stream === "Biology"
+                    ? "green"
+                    : stu.stream === "Arts"
+                    ? "teal"
+                    : "orange"
+                }
+              >
                 <Text fontSize={13}>{stu.stream}</Text>
               </Badge>
               <Text fontSize={13}>Joined Date: {stu.joinedDate}</Text>
-              <Button 
-                size="sm" 
-                colorScheme="blue" 
+              <Button
+                size="sm"
+                colorScheme="blue"
                 marginTop={2}
                 onClick={() => handleViewProfile(stu.stu_id)}
               >

@@ -61,7 +61,7 @@ function StuProfile() {
                         mt={3}>
                         <Avatar width={200} height={200} mt={4} src={stuData.profileImage}></Avatar>
                         <Text fontWeight="bold" fontSize={20} mt={3}>
-                            {stuData.fName}{stuData.lName}
+                            {stuData.fName} {stuData.lName}
                         </Text>
                         <Text fontSize={13} mt={1}>{stuData.gender}</Text>
                         <Text fontSize={13} mt={1}>{stuData.stream}</Text>
