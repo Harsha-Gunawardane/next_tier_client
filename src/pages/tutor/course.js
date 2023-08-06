@@ -1,7 +1,7 @@
 import React from "react";
-import course from "../../assets/data/course.js";
-import Coursecomp from "../../components/tutor/coursedetails/course.js";
-import Coursepackage from "../../components/tutor/coursepackage/coursepackage.js";
+
+import Coursecomp from "../../components/tutor/coursedetails/Course.js";
+import Coursepackage from "../../components/tutor/coursepackage/Coursepackage.js";
 import { Tabs, TabList, TabPanels, Tab, TabPanel , SimpleGrid,Box} from '@chakra-ui/react'
 import { ChakraProvider,Button,Text } from '@chakra-ui/react'
 import { useEffect,useState } from "react";

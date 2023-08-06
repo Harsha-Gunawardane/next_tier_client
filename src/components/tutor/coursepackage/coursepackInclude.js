@@ -10,8 +10,8 @@ import {
 
 import { Box } from '@chakra-ui/react'
 import Remove from "../coursecontent/Coursecontentremove";
-import Addvideo from "./addvideo";
-import Adddoc from "./adddoc";
+import Addvideo from "./Addvideo";
+import Adddoc from "./Adddoc";
 import { Image,HStack,Avatar,Progress,Heading,Text,Button } from '@chakra-ui/react'
 
 const coursepackInclude = (props) => {

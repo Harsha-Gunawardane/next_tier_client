@@ -4,9 +4,9 @@ import { SmallAddIcon} from '@chakra-ui/icons'
 import { ChakraProvider,Button } from '@chakra-ui/react'
 import { Tabs, TabList, TabPanels, Tab, TabPanel,Box,Image } from '@chakra-ui/react'
 
-import Addcoursecontent from "../coursecontent/addcoursecontent";
-import Addcoursedoccontent from "../coursecontent/addcoursedoccontent";
-import Addcoursequiz from "../coursecontent/addcoursequiz";
+import Addcoursecontent from "./coursepackage/Addvideo";
+import Addcoursedoccontent from "./coursepackage/Adddoc";
+import Addcoursequiz from "./coursepackage/Addquiz";
 import Remove from "../coursecontent/Coursecontentremove";
 import  { useState } from "react";
 

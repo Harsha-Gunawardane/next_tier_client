@@ -6,7 +6,7 @@ import {
   } from '@chakra-ui/react'
   import React from "react";
   import { useDisclosure,Text } from '@chakra-ui/react'
-  import announcement from "./announcement";
+  import announcement from "./Announcement";
 
 
 
@@ -20,7 +20,7 @@ import {
     DrawerCloseButton,
     HStack,Textarea
   } from '@chakra-ui/react'
-import Announcement from './announcement';
+import Announcement from './Announcement';
 import { useEffect,useState } from "react";
 import { useForm } from '@mantine/form';
 import { TextInput} from '@mantine/core';

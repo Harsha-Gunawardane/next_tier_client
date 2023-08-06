@@ -8,11 +8,11 @@ import { HStack } from "@chakra-ui/react";
 import { SimpleGrid, Button,FormControl,Switch,FormLabel } from "@chakra-ui/react";
 import { TimeIcon, CalendarIcon } from "@chakra-ui/icons";
 
-import CourseInclude from "../../components/tutor/coursepackage/coursepackInclude";
-import CourseDetails from "../../components/tutor/coursepackage/coursepackDetails";
-import TutorDetails from "../../components/tutor/tutordetails";
-import Courseeditbutton from "../../components/tutor/coursepackage/coursepackageedit";
-import Courseremove from "../../components/tutor/coursepackage/coursepackremove";
+import CourseInclude from "../../components/tutor/coursepackage/CoursepackInclude";
+import CourseDetails from "../../components/tutor/coursepackage/CoursepackDetails";
+import TutorDetails from "../../components/tutor/Tutordetails";
+import Courseeditbutton from "../../components/tutor/coursepackage/Coursepackageedit";
+import Courseremove from "../../components/tutor/coursepackage/Coursepackremove";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";

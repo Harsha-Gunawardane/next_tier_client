@@ -4,7 +4,7 @@ import { CalendarIcon, TimeIcon,AddIcon, WarningIcon } from '@chakra-ui/icons'
 import { ChakraProvider } from '@chakra-ui/react'
 import { Tabs, TabList, TabPanels, Tab, TabPanel,Box } from '@chakra-ui/react'
 import { useEffect,useState } from "react";
-import Edit from "./contentedit.js";
+import Edit from "./Contentedit.js";
 
 
 

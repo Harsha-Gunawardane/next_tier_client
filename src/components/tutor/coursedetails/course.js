@@ -16,7 +16,7 @@ import { ChakraProvider, HStack,Link } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import { IconButton } from "@chakra-ui/react";
 import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
-import SearchCourse from "./search";
+import SearchCourse from "./Search";
 
 const Course = (props) => {
   const [coursesdata, setCoursesData] = useState(null);

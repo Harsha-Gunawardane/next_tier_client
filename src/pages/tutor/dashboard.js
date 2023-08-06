@@ -20,7 +20,7 @@ import { Stack, HStack, VStack } from '@chakra-ui/react'
 
 import { SimpleGrid,ChakraProvider} from '@chakra-ui/react'
 
-const quiz = () => {
+const dashboard = () => {
  
   return (
 
@@ -162,4 +162,4 @@ const quiz = () => {
   );
 };
 
-export default quiz;
+export default dashboard;

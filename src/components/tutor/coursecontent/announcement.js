@@ -2,7 +2,7 @@ import React from "react";
 
 
 import { ChakraProvider,Text,Heading,Box,HStack,Button } from "@chakra-ui/react";
-import Addannouncement from "./addannouncement";
+import Addannouncement from "./Addannouncement";
 
 
 

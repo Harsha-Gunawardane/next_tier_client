@@ -4,15 +4,15 @@ import { SmallAddIcon } from '@chakra-ui/icons'
 import { ChakraProvider, Button, Image } from '@chakra-ui/react'
 import { Tabs, TabList, TabPanels, Tab, TabPanel, Box } from '@chakra-ui/react'
 
-import Addcoursecontent from "./addcoursecontent.js";
-import Addcoursedoccontent from "./addcoursedoccontent.js";
-import Addcoursequiz from "./addcoursequiz.js";
+import Addcoursecontent from "./Addcoursecontent.js";
+import Addcoursedoccontent from "./Addcoursedoccontent.js";
+import Addcoursequiz from "./Addcoursequiz.js";
 import Remove from "./Coursecontentremove.js";
-import Removecontent from "./contentremove.js";
+import Removecontent from "./Contentremove.js";
 import { useNavigate, useLocation } from "react-router-dom";
 import "../../../index.css"
 import { useEffect, useState } from "react";
-import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
+import useAxiosPrivate from "../../../hooks/useAxiosPrivate.js";
 
 const CourseContent = () => {
   const [coursesdata, setCoursesData] = useState(null);

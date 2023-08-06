@@ -7,8 +7,8 @@ import { ChakraProvider,SimpleGrid,Box,Heading ,HStack,Center,Flex,Text,Image,Av
 
 
 import { useEffect,useState } from "react";
-import Contents from "../../components/tutor/contents/content";
-import Add from "../../components/tutor/contents/addcontent.js";
+import Contents from "../../components/tutor/contents/Content";
+import Add from "../../components/tutor/contents/Addcontent";
 import { Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react'
 
 

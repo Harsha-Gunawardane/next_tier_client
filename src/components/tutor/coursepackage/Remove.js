@@ -1,4 +1,4 @@
-import React,{ useState } from 'react';
+import React from 'react';
 import {
   Button,
   AlertDialog,
@@ -13,28 +13,25 @@ import { useDisclosure } from '@chakra-ui/react';
 import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
 import { useLocation } from "react-router-dom";
 
-const Contentremove = ({  month }) => {
+const Remove = ({  contentId,part }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const cancelRef = React.useRef();
   const axiosPrivate = useAxiosPrivate();
 
   const location = useLocation();
-  let id = location.pathname.split("/").pop();
+  const courseId = location.pathname.split("/").pop();
 
   const handleDelete = () => {
-    // Replace 'YOUR_API_ENDPOINT' with the actual URL of your backend endpoint for removing the month
-   
-
-    // Make the API call to delete the month using Axios
+    // Replace 'YOUR_API_ENDPOINT' with the actual URL of your backend endpoint for removing the content
     axiosPrivate
-    .delete(`/tutor/studypack/content/${id}/${month}`)
+      .delete(`/tutor/studypack/removecontent/${courseId}/${part}/${contentId}`)
       .then((response) => {
-        console.log(`Month ${month} deleted successfully!`);
-        onClose(); // Close the modal after deleting the month
-        window.location.reload();
+        console.log(`Tute ID ${contentId} removed successfully from study pack!`);
+        onClose(); // Close the modal after removing the content
+        // Notify parent component about content removal
       })
       .catch((error) => {
-        console.error('Error deleting month:', error);
+        console.error('Error removing content:', error);
       });
   };
 
@@ -52,7 +49,7 @@ const Contentremove = ({  month }) => {
             </AlertDialogHeader>
 
             <AlertDialogBody fontSize='15px'>
-              Are you sure you want to remove this month? You can't undo this action afterwards.
+              Are you sure you want to remove this content? You can't undo this action afterwards.
             </AlertDialogBody>
 
             <AlertDialogFooter>
@@ -70,4 +67,4 @@ const Contentremove = ({  month }) => {
   );
 };
 
-export default Contentremove;
+export default Remove;

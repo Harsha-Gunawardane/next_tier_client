@@ -93,7 +93,7 @@ const Addmonth = ({ onClose }) => {
               >
                        {filteredStudyPacks.map((course) => (
                     <option key={course.id} value={course.id}>
-                      {course.id}
+                       {course.title}
                     </option>
                   ))}
               </Select>

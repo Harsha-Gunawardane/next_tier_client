@@ -16,12 +16,12 @@ import {
 } from "@chakra-ui/react";
 
 
-import CourseContent from "../../components/tutor/coursecontent/coursecontent";
-import PaperContent from "../../components/tutor/coursecontent/paperclasscontent";
-import Adddate from "../../components/tutor/coursecontent/addmonth";
-import Addmonth from "../../components/tutor/coursecontent/addmonth.js";
-import Announcement from "../../components/tutor/coursecontent/announcement";
-import Forum from "../../components/tutor/coursecontent/forum";
+import CourseContent from "../../components/tutor/coursecontent/Coursecontent";
+import PaperContent from "../../components/tutor/coursecontent/Paperclasscontent";
+import Adddate from "../../components/tutor/coursecontent/Addmonth";
+import Addmonth from "../../components/tutor/coursecontent/Addmonth.js";
+import Announcement from "../../components/tutor/coursecontent/Announcement";
+import Forum from "../../components/tutor/coursecontent/Forum";
 import { Show, Hide } from '@chakra-ui/react'
 import { useParams } from "react-router-dom";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
@@ -77,10 +77,6 @@ const renderCourseContent = () => {
 
   return (
    <Box>
-
-
-  
-
 
       <SimpleGrid spacing={20} minChildWidth="250px">
 

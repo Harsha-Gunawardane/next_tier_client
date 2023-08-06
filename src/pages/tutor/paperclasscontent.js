@@ -16,10 +16,10 @@ import {
 } from "@chakra-ui/react";
 
 
-import PaperclassContent from "../../components/tutor/coursecontent/paperclasscontent";
-import Adddate from "../../components/tutor/coursecontent/addmonth";
-import Addmonth from "../../components/tutor/coursecontent/addmonth.js";
-import Announcement from "../../components/tutor/coursecontent/announcement";
+import PaperclassContent from "../../components/tutor/coursecontent/Paperclasscontent";
+import Adddate from "../../components/tutor/coursecontent/Addmonth";
+import Addmonth from "../../components/tutor/coursecontent/Addmonth.js";
+import Announcement from "../../components/tutor/coursecontent/Announcement";
 import { Show, Hide } from '@chakra-ui/react'
 
 const Coursecontent = () => {
