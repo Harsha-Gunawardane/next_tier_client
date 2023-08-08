@@ -27,6 +27,7 @@ import InstStaffComplaintsList from "./pages/InstituteStaff/Complaints/Complaint
 import ApproveClass from "./pages/InstituteStaff/ApproveClass";
 import HallList from "./pages/InstituteStaff/HallList";
 import HallSchedule from "./pages/InstituteStaff/HallSchedule";
+<<<<<<< Updated upstream
 import InstStaffStuPayment from "./pages/InstituteStaff/StuPayment";
 import InstStaffList from "./pages/InstituteStaff/StaffList";
 import AddInstStaff from "./pages/InstituteStaff/AddInstStaff";
@@ -34,6 +35,14 @@ import ViewPaymentHistory from "./pages/InstituteStaff/viewPaymentHistory";
 import MyProfile from "./pages/InstituteStaff/myProfile";
 import CashReceipt from "./pages/InstituteStaff/cashReceiptStaff";
 import OnlineReceipt from "./pages/InstituteStaff/onlineReceiptStaff";
+=======
+import InstStaffStuPayment from './pages/InstituteStaff/StuPayment';
+import InstStaffList from './pages/InstituteStaff/StaffList'
+import ViewPaymentHistory from './pages/InstituteStaff/viewPaymentHistory';
+import MyProfile from './pages/InstituteStaff/myProfile';
+import CashReceipt from './pages/InstituteStaff/cashReceiptStaff';
+import OnlineReceipt from './pages/InstituteStaff/onlineReceiptStaff';
+>>>>>>> Stashed changes
 import StudentsList from "./pages/InstituteStaff/studentsList";
 import StudentProfile from "./pages/InstituteStaff/StudentProfile";
 import TutorsList from "./pages/InstituteStaff/tutorsList";
@@ -195,6 +204,7 @@ function App() {
             <Route path="hall/view" element={<HallList />} />
             <Route path="stu-payment" element={<InstStaffStuPayment />} />
             <Route path="staff-list" element={<InstStaffList />} />
+<<<<<<< Updated upstream
             <Route
               path="staff-list/add-inst-staff"
               element={<AddInstStaff />}
@@ -203,8 +213,13 @@ function App() {
             <Route path="cash-receipt" element={<CashReceipt />} />
             <Route path="online-receipt" element={<OnlineReceipt />} />
             <Route path="stu-list" element={<StudentsList />} />
+=======
+            <Route path="payment-history" element={<ViewPaymentHistory/>} />
+            <Route path="cash-receipt" element={<CashReceipt/>} />
+            <Route path="online-receipt" element={<OnlineReceipt/>} />
+            <Route path="stu-list" element={<StudentsList/>} />
+>>>>>>> Stashed changes
             <Route path="stu-profile/:id" element={<StudentProfile />} />
-            <Route path="add-staff" element={<AddInstStaff />} />
             <Route path="staff-list" element={<InstStaffList />} />
             <Route path="tutors-list" element={<TutorsList />} />
             <Route path="tutor-profile/:id" element={<TutorProfile />} />
