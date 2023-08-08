@@ -5,7 +5,6 @@ import {
   FormControl,
   FormLabel,
   Input,
-  Textarea
 } from "@chakra-ui/react";
 import {
   Modal,
@@ -31,7 +30,7 @@ import { Select } from "@chakra-ui/react";
  import { useLocation } from "react-router-dom";
  
 
-const Coursepackedit = () => {
+const Studypackedit = ({ course}) => {
   const axiosPrivate = useAxiosPrivate();
   
   const [coursesdata, setCoursesData] = useState(null);
@@ -50,7 +49,7 @@ const Coursepackedit = () => {
     const getStudypack = async () => {
       const controller = new AbortController();
       try {
-        const response = await axiosPrivate.get(`/tutor/studypack/${Studypackid}`, {
+        const response = await axiosPrivate.get(`/tutor/studypack/${course}`, {
           signal: controller.signal,
         });
         const courseData = response.data;
@@ -148,7 +147,7 @@ const Coursepackedit = () => {
     };
 
     axiosPrivate
-      .put(`/tutor/studypack/${Studypackid}`, coursedata)
+      .put(`/tutor/studypack/${course}`, coursedata)
       .then((response) => {
         alert("Saved successfully.");
         onClose();
@@ -211,26 +210,26 @@ const Coursepackedit = () => {
                 mt={4}
                 isRequired
                 isInvalid={
-                  description.trim().length === 0 || description.length > 400 || description.length < 200 
+                  description.trim().length === 0 || description.length > 100 
                 }
               >
                 <FormLabel fontSize="15px">Description</FormLabel>
-                <Textarea
+                <Input
                   fontSize="15px"
                   value={description}
-                  height="150px"
+                  height="40px"
                   ref={initialRef}
                   placeholder="Description"
                   onMouseDown={(e) => valchange(true)}
                   onChange={(e) => setDescription(e.target.value)}
                 />
            <FormErrorMessage>
-                {description.trim().length === 0
-          ? "Description is required"
-          : description.length > 400
-          ? "Description cannot exceed 400 characters"
-          : "Description must be at least 200 characters"}
-                </FormErrorMessage>
+    {description.trim().length === 0
+      ? "Description is required"
+      : description.length > 100
+      ? "Description should be 100 characters or less"
+      : null}
+  </FormErrorMessage>
               </FormControl>
 
               <FormControl
@@ -240,7 +239,7 @@ const Coursepackedit = () => {
                   price.trim().length === 0 || parseFloat(price) < 0
                 }
               >
-                <FormLabel fontSize="15px">Monthly Fee</FormLabel>
+                <FormLabel fontSize="15px">Price</FormLabel>
                 <NumberInput
                   value={price}
                   precision={2}
@@ -250,14 +249,14 @@ const Coursepackedit = () => {
                   <NumberInputField
                     fontSize="15px"
                     height="40px"
-                    placeholder="Monthly Fee"
+                    placeholder="Price"
                   />
                   <NumberInputStepper>
                     <NumberIncrementStepper />
                     <NumberDecrementStepper />
                   </NumberInputStepper>
                 </NumberInput>
-                <FormErrorMessage>Monthly Fee is Required</FormErrorMessage>
+                <FormErrorMessage>Price is Required</FormErrorMessage>
               </FormControl>
 
               <FormControl
@@ -280,7 +279,28 @@ const Coursepackedit = () => {
 
 
 
-          <FormControl mt={4} >
+
+
+              <FormControl
+                mt={4}
+                isRequired
+                isInvalid={thumbnail.trim().length === 0}
+              >
+                <FormLabel fontSize="15px">Course ID</FormLabel>
+                <Input
+                  fontSize="15px"
+                  value={selectedCourseId}
+                  height="40px"
+                  ref={initialRef}
+                  placeholder="Thumbnail"
+                  onMouseDown={(e) => valchange(true)}
+                  onChange={(e) => setThumbnail(e.target.value)}
+                />
+                <FormErrorMessage>Thumbnail is required</FormErrorMessage>
+              </FormControl>
+
+
+          {/* <FormControl mt={4} >
         <FormLabel fontSize="16px">Course</FormLabel>
  <Select
   mt="10px"
@@ -301,7 +321,7 @@ const Coursepackedit = () => {
       )
     )}
 </Select>
-      </FormControl>
+      </FormControl> */}
 
 
 
@@ -348,4 +368,4 @@ const Coursepackedit = () => {
   );
 };
 
-export default Coursepackedit;
+export default Studypackedit;

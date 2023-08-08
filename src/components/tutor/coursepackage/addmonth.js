@@ -32,7 +32,8 @@ const Addmonth = ({ onClose }) => {
     const newWeek = {
       [name]: {
         tute_id: [], // Add tute_ids if any
-        video_id: [], // Add video_ids if any
+        video_id: [],
+        quiz_id: [], // Add quiz_ids if any
       },
     };
     // Make the API call to update the course with the new data
@@ -54,7 +55,7 @@ const Addmonth = ({ onClose }) => {
   return (
     <>
       <Accordion allowToggle>
-        <AccordionItem bg="white" height="30px" width={{ base: 200, xl: 400 }}>
+        <AccordionItem bg="white" height="30px" width={{ base: 398, xl: 400 }}>
           <h2>
             <AccordionButton
               bg="white"
@@ -63,7 +64,7 @@ const Addmonth = ({ onClose }) => {
               fontSize="15px"
             >
               <Box as="span" flex="1" textAlign="left">
-                <Text ml={{ base: 120, xl: 130 }}> + Add Content</Text>
+                <Text ml={{ base: 140, xl: 135 }} fontSize={{base:13,xl:15}}> + Add Content</Text>
               </Box>
             </AccordionButton>
           </h2>

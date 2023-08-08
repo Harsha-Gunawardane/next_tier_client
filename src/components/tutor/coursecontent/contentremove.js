@@ -10,18 +10,22 @@ import {
 } from '@chakra-ui/react';
 import { useDisclosure } from '@chakra-ui/react';
 import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
+import { useLocation } from "react-router-dom";
 
-const Contentremove = ({ course,month }) => {
+const Contentremove = ({ course,studypackid }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const cancelRef = React.useRef();
   const axiosPrivate = useAxiosPrivate();
+
+  const location = useLocation();
+  const id = location.pathname.split("/").pop();
 
   const handleDelete = () => {
     // Replace 'YOUR_API_ENDPOINT' with the actual URL of your backend endpoint for removing the month
 
     // Make the API call to delete the month using Axios
     axiosPrivate
-      .delete(`/tutor/course/${course}/month/${month}`)
+      .delete(`/tutor/course/${id}/${studypackid}`)
       .then((response) => {
         onClose(); // Close the modal after deleting the month
         window.location.reload();

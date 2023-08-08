@@ -26,6 +26,7 @@ import TutorDetails from "../../components/tutor/Tutordetails";
 import Fetch from "../../hooks/fetchTitle";
 import Fetcht from "../../hooks/fetchThumb";
 import Removecontent from "../../components/tutor/coursepackage/Remove";
+import { Show, Hide } from '@chakra-ui/react'
 
 const Coursepackcontent = () => {
   const [selectedId, setSelectedId] = useState(null);
@@ -176,22 +177,23 @@ const Coursepackcontent = () => {
       <SimpleGrid spacing={20} minChildWidth="250px" mt="20px">
         <Box mt="20px">
           {selectedImage && (
-            <Box width="110%" bg="white" position="sticky" top="20" zIndex="1">
+            <Box width="110%" bg="white" position="sticky" top="20" zIndex="1" ml='20px'>
               {studypackdata && (
-                <Heading fontSize="30px" mb="30px">
+                <Heading fontSize="30px" mb="30px" ml='10px' fontWeight='xl'>
                   {studypackdata.title}
                 </Heading>
               )}
               <Image
                 boxSize="60%"
-                width="100%"
-                height="350px"
+                width={{base:420,xl:700}}
+                height={{base:250,xl:350}}
                 objectFit="cover"
                 src={selectedImage}
                 alt="Course Image"
+                ml='10px'
               />
-              <Heading mt='10px'>{selectedTitle}</Heading>
-              <Text fontSize="15px" mt='10px'>{selectedDiscription}</Text>
+              <Heading mt='30px' ml='15px'>{selectedTitle}</Heading>
+              <Text fontSize="15px" mt='10px' ml='15px'>{selectedDiscription}</Text>
             </Box>
           )}
 
@@ -203,10 +205,12 @@ const Coursepackcontent = () => {
           )}
         </Box>
 
-        <Box w="90%" bg="white" p={10} ml="70px">
-          <Box mt="-45px">
+        <Box w="75%" bg="white" p={10} ml={{base:0,xl:120}} mt={{base:-20,xl:0}}>
+        <Hide below='md'>
+          <Box mt={{base:-20,xl:35}}>
             <TutorDetails></TutorDetails>
           </Box>
+          </Hide>
           <Heading fontSize="20px" mt="20px" mb="20px">
             Course Content
           </Heading>
@@ -218,7 +222,7 @@ const Coursepackcontent = () => {
             if (weekContent) {
               return (
                 <Accordion allowToggle key={index}>
-                  <AccordionItem width={{ base: 300, xl: 400 }}>
+                  <AccordionItem width={{ base: 400, xl: 400 }}>
                     <h2>
                       <AccordionButton
                         bg="#eee"
@@ -323,7 +327,7 @@ const Coursepackcontent = () => {
                                     View
                                   </Button>{" "}
                                   <Removecontent
-                                    contentId={tuteId}
+                                    contentId={tuteId} part={weekKey}
                                   ></Removecontent>
                                 </HStack>
                               </Box>

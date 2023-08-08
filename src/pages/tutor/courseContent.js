@@ -18,14 +18,15 @@ import {
 
 import CourseContent from "../../components/tutor/coursecontent/Coursecontent";
 import PaperContent from "../../components/tutor/coursecontent/Paperclasscontent";
-import Adddate from "../../components/tutor/coursecontent/Addmonth";
-import Addmonth from "../../components/tutor/coursecontent/Addmonth.js";
 import Announcement from "../../components/tutor/coursecontent/Announcement";
 import Forum from "../../components/tutor/coursecontent/Forum";
 import { Show, Hide } from '@chakra-ui/react'
 import { useParams } from "react-router-dom";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import { useLocation } from "react-router-dom";
+import AddNew from "./addstudypack";
+import Addpaper from "./addpaper";
+
 
 const Coursecontent = () => {
 
@@ -75,6 +76,23 @@ const renderCourseContent = () => {
   return <p>Loading...</p>;
 };
 
+
+
+const renderAddNew = () => {
+  if (coursedata && coursedata.title) {
+    const title = coursedata.title;
+    if (title.includes("Paper")) {
+      return <Addpaper />;
+    } else if (title.includes("Theory") || title.includes("Revision")) {
+      return <AddNew />;
+    } else {
+      return <AddNew />;
+    }
+  }
+  // If coursedata or coursedata.title is not available, you can return a loading component or a placeholder here
+  return <p>Loading...</p>;
+};
+
   return (
    <Box>
 
@@ -105,12 +123,12 @@ const renderCourseContent = () => {
 </Hide>
   <Heading fontSize='20px' mt='40px' mb='20px'>Course Content</Heading>
 
-
+  {renderAddNew()}
   {renderCourseContent()}
      
   
 
-<Addmonth></Addmonth>
+  
         </Box>
 
       

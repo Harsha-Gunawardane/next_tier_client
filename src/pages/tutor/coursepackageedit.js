@@ -112,7 +112,7 @@ const Coursepackedit = () => {
             </Heading>
             <CourseDetails></CourseDetails>
             <br></br>
-            <Heading fontSize="20px">Course Includes</Heading>
+            <Heading fontSize="20px" mb='10px'>Course Includes</Heading>
 
             <CourseInclude></CourseInclude>
 

@@ -50,7 +50,7 @@ import Studypackedit from "./pages/tutor/coursepackageedit";
 import Studypackcontent from "./pages/tutor/coursepackcontent";
 import Coursecontent from "./pages/tutor/courseContent";
 import Courseedit from "./pages/tutor/courseedit";
-import PaperclassContent from "./pages/tutor/paperclasscontent";
+
 
 // import TutorDashboard from "./pages/student/TutorDashboard";
 
@@ -75,11 +75,11 @@ import { Routes, Route } from "react-router-dom";
 import { ROLES } from "./config/roles";
 
 //Tutor Components
-import TutorDashboard from "./pages/tutor/TutorDashboard";
+// import TutorDashboard from "./pages/tutor/TutorDashboard";
 import TutorStaffs from "./pages/tutor/TutorStaffs";
 import McqsByCategory from "./pages/tutor/McqsByCategory";
 import PaperMarking from "./pages/tutor/PaperMarking";
-import CreateQuiz from "./pages/tutor/CreateQuiz";
+// import CreateQuiz from "./pages/tutor/CreateQuiz";
 import TutorQuiz from "./pages/tutor/TutorQuiz";
 import TutorQuizzes from "./pages/tutor/TutorQuizzes";
 
@@ -135,7 +135,6 @@ function App() {
               <Route path="courses/add" element={<Addcourse />} />
               <Route path="courses" element={<TCourses />} ></Route>
               <Route path='courses/content/:courseid' element={<Coursecontent />} ></Route>
-              <Route path='courses/paperclasscontent' element={<PaperclassContent />} ></Route>
               <Route path='courses/details/:courseid' element={<Courseedit />} ></Route>
               <Route path='courses/studypackcontent/:courseid' element={<Studypackcontent />} ></Route>
               <Route path='courses/studypackdetails/:courseid' element={<Studypackedit />} ></Route>
@@ -161,7 +160,7 @@ function App() {
             path="tutor"
             element={<SidebarAndHeader userRole={"teacher"} />}
           >
-            <Route index element={<TutorDashboard />} />
+            {/* <Route index element={<TutorDashboard />} /> */}
             <Route path="supportstaffs">
               <Route index element={<TutorStaffs />} />
             </Route>
@@ -172,7 +171,7 @@ function App() {
 
             <Route path="quizzes">
               <Route index element={<TutorQuizzes />} />
-              <Route path="create/:quizId" element={<CreateQuiz />} />
+              {/* <Route path="create/:quizId" element={<CreateQuiz />} /> */}
               <Route path=":quizId" element={<TutorQuiz />} />
               <Route path="category/:id" element={<McqsByCategory />}></Route>
             </Route>
