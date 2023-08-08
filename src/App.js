@@ -27,22 +27,12 @@ import InstStaffComplaintsList from "./pages/InstituteStaff/Complaints/Complaint
 import ApproveClass from "./pages/InstituteStaff/ApproveClass";
 import HallList from "./pages/InstituteStaff/HallList";
 import HallSchedule from "./pages/InstituteStaff/HallSchedule";
-<<<<<<< Updated upstream
-import InstStaffStuPayment from "./pages/InstituteStaff/StuPayment";
-import InstStaffList from "./pages/InstituteStaff/StaffList";
-import AddInstStaff from "./pages/InstituteStaff/AddInstStaff";
-import ViewPaymentHistory from "./pages/InstituteStaff/viewPaymentHistory";
-import MyProfile from "./pages/InstituteStaff/myProfile";
-import CashReceipt from "./pages/InstituteStaff/cashReceiptStaff";
-import OnlineReceipt from "./pages/InstituteStaff/onlineReceiptStaff";
-=======
 import InstStaffStuPayment from './pages/InstituteStaff/StuPayment';
 import InstStaffList from './pages/InstituteStaff/StaffList'
 import ViewPaymentHistory from './pages/InstituteStaff/viewPaymentHistory';
 import MyProfile from './pages/InstituteStaff/myProfile';
 import CashReceipt from './pages/InstituteStaff/cashReceiptStaff';
 import OnlineReceipt from './pages/InstituteStaff/onlineReceiptStaff';
->>>>>>> Stashed changes
 import StudentsList from "./pages/InstituteStaff/studentsList";
 import StudentProfile from "./pages/InstituteStaff/StudentProfile";
 import TutorsList from "./pages/InstituteStaff/tutorsList";
@@ -50,16 +40,16 @@ import TutorProfile from "./pages/InstituteStaff/TutorProfile";
 import CourseProfile from "./pages/InstituteStaff/CourseDetail";
 
 // tutor components
-import TDashboard from "./pages/tutor/dashboard";
-import TCourses from "./pages/tutor/course";
-import Tcontents from "./pages/tutor/contents";
-import Addcourse from "./pages/tutor/addcourse";
-import Addstudypack from "./pages/tutor/addcoursepack";
-import Studypackedit from "./pages/tutor/coursepackageedit";
-import Studypackcontent from "./pages/tutor/coursepackcontent";
-import Coursecontent from "./pages/tutor/courseContent";
-import Courseedit from "./pages/tutor/courseedit";
-import PaperclassContent from "./pages/tutor/paperclasscontent";
+// import TDashboard from "./pages/tutor/dashboard";
+// import TCourses from "./pages/tutor/course";
+// import Tcontents from "./pages/tutor/contents";
+// import Addcourse from "./pages/tutor/addcourse";
+// import Addstudypack from "./pages/tutor/addcoursepack";
+// import Studypackedit from "./pages/tutor/coursepackageedit";
+// import Studypackcontent from "./pages/tutor/coursepackcontent";
+// import Coursecontent from "./pages/tutor/courseContent";
+// import Courseedit from "./pages/tutor/courseedit";
+// import PaperclassContent from "./pages/tutor/paperclasscontent";
 
 // import TutorDashboard from "./pages/student/TutorDashboard";
 
@@ -84,11 +74,11 @@ import { Routes, Route } from "react-router-dom";
 import { ROLES } from "./config/roles";
 
 //Tutor Components
-import TutorDashboard from "./pages/tutor/TutorDashboard";
+// import TutorDashboard from "./pages/tutor/TutorDashboard";
 import TutorStaffs from "./pages/tutor/TutorStaffs";
 import McqsByCategory from "./pages/tutor/McqsByCategory";
 import PaperMarking from "./pages/tutor/PaperMarking";
-import CreateQuiz from "./pages/tutor/CreateQuiz";
+// import CreateQuiz from "./pages/tutor/CreateQuiz";
 import TutorQuiz from "./pages/tutor/TutorQuiz";
 import TutorQuizzes from "./pages/tutor/TutorQuizzes";
 
@@ -137,7 +127,7 @@ function App() {
             </Route>
           </Route>
 
-          <Route element={<RequireAuth allowedRoles={[ROLES.Tutor]} />}>
+          {/* <Route element={<RequireAuth allowedRoles={[ROLES.Tutor]} />}>
             <Route path='tutor' element={<SidebarAndHeader userRole={"tutor"} />}>
               <Route path="dashboard" element={<TDashboard />} />
               <Route path="content" element={<Tcontents />} />
@@ -153,7 +143,7 @@ function App() {
           
            </Route>
           
-          </Route>
+          </Route> */}
 
         <Route path='staff' element={<SidebarAndHeader userRole={"InstituteStaff"} />}>
           <Route path="dashboard" element={<InstStaffDashboard />} />
@@ -166,7 +156,7 @@ function App() {
         </Route>
 
           {/* <Route element={<RequireAuth allowedRoles={[ROLES.Tutor]} />}> */}
-          <Route
+          {/* <Route
             path="tutor"
             element={<SidebarAndHeader userRole={"teacher"} />}
           >
@@ -185,7 +175,7 @@ function App() {
               <Route path=":quizId" element={<TutorQuiz />} />
               <Route path="category/:id" element={<McqsByCategory />}></Route>
             </Route>
-          </Route>
+          </Route> */}
           {/* </Route> */}
 
           {/* <Route element={<RequireAuth allowedRoles={[ROLES.Staff]} />}> */}
@@ -204,21 +194,10 @@ function App() {
             <Route path="hall/view" element={<HallList />} />
             <Route path="stu-payment" element={<InstStaffStuPayment />} />
             <Route path="staff-list" element={<InstStaffList />} />
-<<<<<<< Updated upstream
-            <Route
-              path="staff-list/add-inst-staff"
-              element={<AddInstStaff />}
-            />
-            <Route path="payment-history" element={<ViewPaymentHistory />} />
-            <Route path="cash-receipt" element={<CashReceipt />} />
-            <Route path="online-receipt" element={<OnlineReceipt />} />
-            <Route path="stu-list" element={<StudentsList />} />
-=======
             <Route path="payment-history" element={<ViewPaymentHistory/>} />
             <Route path="cash-receipt" element={<CashReceipt/>} />
             <Route path="online-receipt" element={<OnlineReceipt/>} />
             <Route path="stu-list" element={<StudentsList/>} />
->>>>>>> Stashed changes
             <Route path="stu-profile/:id" element={<StudentProfile />} />
             <Route path="staff-list" element={<InstStaffList />} />
             <Route path="tutors-list" element={<TutorsList />} />
