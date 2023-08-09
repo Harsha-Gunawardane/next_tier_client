@@ -53,6 +53,7 @@ const rejectedData = [
     subject: 'Accounting',
     class: '2023 A/L',
     status: 'Rejected',
+    description: 'The Hall is not available at the requested time.',
   },
   {
     id: 'S115',
@@ -60,6 +61,7 @@ const rejectedData = [
     subject: 'Physics',
     class: '2025 A/L',
     status: 'Rejected',
+    description: 'The Hall is not available at the requested time.',
   },
   {
     id: 'S116',
@@ -67,6 +69,7 @@ const rejectedData = [
     subject: 'ICT',
     class: '2023 A/L',
     status: 'Rejected',
+    description: 'The Hall is not available at the requested time.',
   },
 ];
 
@@ -117,45 +120,73 @@ const viewTeacherData = [
 
 const classDetails = [ 
   {
+    id: 'S101',
     subject: 'Physics',
     teacher: 'Sujith Liyanage',
     examYear: '2023 A/L',
-    time: '9AM - 12PM',
+    startTime: '09.00 AM',
+    endTime: '11.00 AM',
+    profileImage: '/InstituteStaffAssets/avtr6.jpg',
     details: 'Adnavced Mechanics module starting. Practicals under it also discused.',
   },
   {
+    id: 'S102',
     subject: 'ICT',
     teacher: 'Ranga Gunarathna',
     examYear: '2024 A/L',
-    time: '10AM - 12PM',
+    startTime: '10.00 AM',
+    endTime: '12.00 PM',
+    profileImage: '/InstituteStaffAssets/avtr2.jpg',
     details: 'Computer Performance module starting.',
   },
   {
+    id: 'S103',
     subject: 'Chemistry',
     teacher: 'Chandrani Dias',
     examYear: '2025 A/L',
-    time: '1PM - 3PM',
+    startTime: '21.30 PM',
+    endTime: '23.30 PM',
+    profileImage: '/InstituteStaffAssets/avtr3.jpg',
     details: 'Organic chemistry module starting.',
   },
   {
+    id: 'S104',
     subject: 'Physics',
     teacher: 'Kapila Patabadige',
     examYear: '2023 A/L',
-    time: '9AM - 12PM',
+    startTime: '18.00 PM',
+    endTime: '20.30 PM',
+    profileImage: '/InstituteStaffAssets/avtr5.jpg',
     details: 'Adnavced Mechanics module starting. Practicals under it also discused.',
   },
   {
+    id: 'S105',
     subject: 'Physics',
     teacher: 'Kapila Patabadige',
     examYear: '2023 A/L',
-    time: '9AM - 12PM',
+    startTime: '20.00 PM',
+    endTime: '22.00 PM',
+    profileImage: '/InstituteStaffAssets/avtr7.jpg',
     details: 'Adnavced Mechanics module starting. Practicals under it also discused.',
   },
   {
+    id: 'S106',
     subject: 'Physics',
     teacher: 'Kapila Patabadige',
     examYear: '2023 A/L',
-    time: '9AM - 12PM',
+    startTime: '21.00 PM',
+    endTime: '22.30 PM',
+    profileImage: '/InstituteStaffAssets/avtr6.jpg',
+    details: 'Adnavced Mechanics module starting. Practicals under it also discused.',
+  },
+  {
+    id: 'S107',
+    subject: 'Chemistry',
+    teacher: 'Nimal Karunanayaka',
+    examYear: '2024 A/L',
+    startTime: '13.30 PM',
+    endTime: '16.30 PM',
+    profileImage: '/InstituteStaffAssets/avtr8.jpg',
     details: 'Adnavced Mechanics module starting. Practicals under it also discused.',
   },
 ];
@@ -211,7 +242,38 @@ const hallDetails = [
   },
 ];
 
-
+const complaintRequests =[
+  {
+    "id": 1,
+    "date": "12/07/2023",
+    "profileName": "/InstituteStaffAssets/avtr1.png",
+    "status" : "Pending",
+    "name":"Anura",
+    "email": "henryJ123@gmail.com",
+    "action":"",
+    "description":"The timetable for the Science class keeps changing without prior notice."
+  },
+  {
+    "id": 4,
+    "date": "18/07/2023",
+    "profileName": "/InstituteStaffAssets/avtr4.jpg",
+    "status" : "Pending",
+    "name":"Henry",
+    "email": "Henry@gmail.com",
+    "action":"",
+    "description":"The classroom environment during the Physics lectures is very noisy and distracting."
+  },
+  {
+    "id": 8,
+    "date": "18/07/2023",
+    "profileName": "/InstituteStaffAssets/avtr5.jpg",
+    "status" : "Pending",
+    "name":"Kamal",
+    "email": "Kamal45@gmail.com",
+    "action":"",
+    "description":"The classroom environment during the Physics lectures is very noisy and distracting."
+  },
+]
 const data = {
   viewTeacher: viewTeacherData,
   allRequests: allRequestsData,
@@ -220,6 +282,7 @@ const data = {
   rejected: rejectedData,
   classes: classDetails,
   halls: hallDetails,
+  complain : complaintRequests,
  };
 
 export default data;

@@ -1,116 +1,63 @@
-import { Progress, Stack, Heading, Flex, Tooltip } from '@chakra-ui/react';
-import ReactApexChart from 'react-apexcharts';
+import React from "react";
+import { Box, Text, Badge, Flex, Avatar } from "@chakra-ui/react";
+import data from "../../pages/InstituteStaff/data/data";
+import { Link } from "react-router-dom";
+import {
+  Table,
+  Thead,
+  Tbody,
+  Tfoot,
+  Tr,
+  Th,
+  Td,
+  TableContainer,
+} from "@chakra-ui/react";
 
 function Complain() {
-  const progressStyle = {
-    mx: 4,
-    width: "230px",
-  };
-
-  const progress1 = {
-    heading: 'Replied',
-    value: 70,
-    color: 'green', 
-  };
-
-  const progress2 = {
-    heading: 'Pending',
-    value: 20,
-    color: 'yellow', 
-  };
-
-  const progress3 = {
-    heading: 'Rejected',
-    value: 10,
-    color: 'red', 
-  };
-  const customColors = ['#3dad64', '#ebcf34', '#eb4034'];
-  // Prepare data for the donut chart
-  const chartData = {
-    series: [progress1.value, progress2.value, progress3.value],
-    options: {
-      chart: {
-        type: 'donut',
-      },
-      plotOptions: {
-        pie: {
-          donut: {
-            labels: {
-              show: true,
-              total: {
-                show: true,
-                label: 'Overall',
-                formatter: function (w) {
-                  return w.globals.seriesTotals.reduce((a, b) => a + b, 0) + '%';
-                },
-              },
-            },
-          },
-        },
-      },
-      labels: [progress1.heading, progress2.heading, progress3.heading],
-      colors: customColors,
-      legend: {
-        show: false,
-      },
-    },
-  };
-
   return (
-    <div>
-        {/* ApexCharts Donut Chart */}
-        <ReactApexChart
-        options={chartData.options}
-        series={chartData.series}
-        type="donut"
-        width="300"
-        align="center"
-      />
-
-      <Stack spacing={10} mt="15">
-        <Flex alignItems="center">
-          <Heading size="sm" ml={10} mr={10}>
-            {progress1.heading}
-          </Heading>
-          <Tooltip label={`${progress1.value}%`} aria-label="progress1">
-            <Progress
-              colorScheme={progress1.color}
-              size="md"
-              value={progress1.value}
-              style={progressStyle}
-            />
-          </Tooltip>
-        </Flex>
-
-        <Flex alignItems="center">
-          <Heading size="sm" ml={10} mr={10}>
-            {progress2.heading}
-          </Heading>
-          <Tooltip label={`${progress2.value}%`} aria-label="progress2">
-            <Progress
-              colorScheme={progress2.color}
-              size="md"
-              value={progress2.value}
-              style={progressStyle}
-            />
-          </Tooltip>
-        </Flex>
-
-        <Flex alignItems="center">
-          <Heading size="sm" ml={10} mr={10}>
-            {progress3.heading}
-          </Heading>
-          <Tooltip label={`${progress3.value}%`} aria-label="progress3">
-            <Progress
-              colorScheme={progress3.color}
-              size="md"
-              value={progress3.value}
-              style={progressStyle}
-            />
-          </Tooltip>
-        </Flex>
-      </Stack>
-    </div>
+    <Box marginTop={13} marginLeft={13}>
+      <Box>
+        <TableContainer >
+          <Table variant="simple" size="sm">
+            <Thead>
+              <Tr fontSize={13}>
+                <Th>Profile</Th>
+                <Th>Status</Th>
+                <Th>Complain</Th>
+                <Th>Date</Th>
+              </Tr>
+            </Thead>
+            <Tbody>
+              {data.complain.map((complain) => (
+                <Tr key={complain.id} >
+                  <Td>
+                    <Flex gap={4}>
+                      <Avatar src={complain.profileName} />
+                      <Text fontSize={13} marginTop={4}>
+                        {complain.name}
+                      </Text>
+                    </Flex>
+                  </Td>
+                  <Td>
+                    <Badge variant="solid" colorScheme="green">
+                      {complain.status}
+                    </Badge>
+                  </Td>
+                  <Td fontSize={13}>{complain.description}</Td>
+                  <Td fontSize={13}>{complain.date}</Td>
+                 
+                </Tr>
+              ))}
+            </Tbody>
+            <Tfoot>
+              <Box display="flex" justifyContent="center" fontSize={12} my={5}>
+                <Link to="/staff/complaints">See More....</Link>
+              </Box>
+            </Tfoot>
+          </Table>
+        </TableContainer>
+      </Box>
+    </Box>
   );
 }
 
