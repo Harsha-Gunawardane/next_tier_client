@@ -83,7 +83,7 @@ const Login = () => {
         } else if (roles.includes(ROLES.Staff)) {
             navigate("/staff/dashboard");
         } else if (roles.includes(ROLES.Tutor)) {
-          navigate("")
+          navigate("/tutor/dashboard")
         }
       } else {
         navigate(from, { replace: true });

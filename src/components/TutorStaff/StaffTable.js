@@ -1,3 +1,4 @@
+import { Card } from "@chakra-ui/react";
 import {
   Avatar,
   Badge,
@@ -11,9 +12,10 @@ import {
 } from "@mantine/core";
 
 import { IconEdit, IconPencil, IconTrash } from "@tabler/icons-react";
+import { FaPen } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
 
-export default function StaffTable({ staffs }) {
+export default function StaffTable({ staffs, handleDelete }) {
   const theme = useMantineTheme();
   const rows = staffs.map((staff) => (
     <tr key={staff.name}>
@@ -28,7 +30,7 @@ export default function StaffTable({ staffs }) {
 
       <td style={{ fontSize: "14px" }}>
         <Badge
-          color={staff.job === "Paper Marking Staff" ? "green" : "orange"}
+          color={staff.job === "Paper Marking Staff" ? "blue" : "pink"}
           variant={theme.colorScheme === "dark" ? "light" : "outline"}
         >
           {staff.job}
@@ -46,12 +48,15 @@ export default function StaffTable({ staffs }) {
       </td>
       <td style={{ fontSize: "14px" }}>
         <Group spacing={0} position="right">
-          <NavLink to="edit">
+          <NavLink to={`edit/${staff.id}`}>
             <ActionIcon>
-              <IconEdit size="1rem" stroke={1.5} />
+              <IconPencil size="1rem" stroke={1.5} />
             </ActionIcon>
           </NavLink>
-          <ActionIcon style={{ color: "red" }}>
+          <ActionIcon
+            style={{ color: "red" }}
+            onClick={() => handleDelete(staff.id)}
+          >
             <IconTrash size="1rem" stroke={1.5} />
           </ActionIcon>
         </Group>
@@ -60,23 +65,27 @@ export default function StaffTable({ staffs }) {
   ));
 
   return (
-    <ScrollArea h={500}>
-      <Table
-        sx={{ minWidth: 800 }}
-        verticalSpacing="sm"
-        horizontalSpacing="50px"
-      >
-        <thead>
-          <tr>
-            <th style={{ fontSize: "16px" }}>Employee</th>
-            <th style={{ fontSize: "16px" }}>Job title</th>
-            <th style={{ fontSize: "16px" }}>Email</th>
-            <th style={{ fontSize: "16px" }}>Phone</th>
-            <th />
-          </tr>
-        </thead>
-        <tbody>{rows}</tbody>
-      </Table>
-    </ScrollArea>
+    <Card padding="10px" margin="20px" variant="outline">
+      <ScrollArea h={500}>
+        <Table
+          sx={{ minWidth: 800 }}
+          verticalSpacing="sm"
+          horizontalSpacing="xl"
+          striped
+          highlightOnHover
+        >
+          <thead>
+            <tr>
+              <th style={{ fontSize: "16px" }}>Employee</th>
+              <th style={{ fontSize: "16px" }}>Job title</th>
+              <th style={{ fontSize: "16px" }}>Email</th>
+              <th style={{ fontSize: "16px" }}>Phone</th>
+              <th />
+            </tr>
+          </thead>
+          <tbody>{rows}</tbody>
+        </Table>
+      </ScrollArea>
+    </Card>
   );
 }
