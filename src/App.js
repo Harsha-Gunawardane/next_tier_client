@@ -131,13 +131,6 @@ function App() {
               </Route>
 
               <Route path="settings" element={<Settings />} />
-
-
-         
-            
-          
-
-
             </Route>
           </Route>
 
