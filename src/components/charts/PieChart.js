@@ -6,8 +6,8 @@ class PieChart extends React.Component {
     super(props);
 
     this.state = {
-      chartData: [],
-      chartOptions: {},
+      chartData: [44, 55, 41, 17, 15],
+      chartOptions: { labels: ["Apple", "Mango", "Orange", "Watermelon"] },
     };
   }
 

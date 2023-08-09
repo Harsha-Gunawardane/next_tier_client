@@ -10,12 +10,16 @@ import { ChakraProvider } from "@chakra-ui/react";
 import theme from "./theme/theme";
 import { SidebarProvider } from "./context/SidebarContext";
 
+// import redux store
+import store from './redux/store'
+import { Provider } from "react-redux";
+
 if (process.env.NODE_ENV !== "production") {
   disableReactDevTools();
 }
 
 ReactDOM.render(
-  <React.StrictMode>
+  <Provider store={store}>
     <ChakraProvider theme={theme}>
       <ColorModeScript initialColorMode={theme.config.initialColorMode} />
       <BrowserRouter>
@@ -28,6 +32,6 @@ ReactDOM.render(
         </AuthProvider>
       </BrowserRouter>
     </ChakraProvider>
-  </React.StrictMode >,
+  </Provider>,
   document.getElementById("root")
 );

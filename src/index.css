@@ -146,3 +146,9 @@ li {
     width: 20px;
     margin: 0 5px 2px 2px;
 }*/
+
+
+.box1:has(.box2:empty) {
+    display: none;
+    margin-bottom: 10px;
+  }
