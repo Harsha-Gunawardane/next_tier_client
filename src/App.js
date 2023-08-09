@@ -23,8 +23,10 @@ import TuteLayout from "./pages/student/components/tutes/TuteLayout";
 import TuteDashboard from "./pages/student/components/tutes/TuteDashboard";
 import TuteView from "./pages/student/components/tutes/TuteView";
 import PdfView from "./pages/student/components/tutes/PdfView";
-import ReviewQuiz from "./pages/student/ReviewQuiz";
 import Forum from "./pages/student/course/forum.js";
+import CourseLayout from "./pages/student/course/CourseLayout";
+import CourseTemp from "./pages/student/course/CourseTemp";
+import Videocontent from "./pages/student/course/Videocontent";
 
 
 // instituteStaff components
@@ -125,15 +127,14 @@ function App() {
                 path="quizzes/:subject/:mcqname/review"
                 element={<ReviewQuiz />}
               />
+
               <Route path="courses/:id" element={<CourseLayout />} >
                 <Route path="index" element={<CourseTemp />} />
                 <Route path="forum" element={<Forum />} />
               </Route>
               <Route path="content" element={<Videocontent />} />
+
               <Route path="content/watch/:id" element={<ContentWatch />} />
-              <Route path="quizzes" element={<Quizzes />} />
-              <Route path="quizzes/:subject" element={<Quizzes />} />
-              <Route path="quizzes/:subject/:mcqname/review" element={<ReviewQuiz />} />
               <Route path="quizzes/:subject/:mcqname" element={<Quiz />} />
 
               <Route path="tutes" element={<TuteLayout />}>
