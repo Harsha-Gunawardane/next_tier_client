@@ -18,21 +18,17 @@ export default function Default(props) {
         boxShadow: "0 0 0 1px rgba(0, 0, 0, 0.05)",
       }}
     >
-      <Flex
-        h="100%"
-        align={{ base: "center", xl: "center" }}
-        justifyContent={{ base: "center", xl: "center" }}
-        pt="0"
-      >
+      <Flex h="100%" align={{ base: "center", xl: "center" }} justifyContent={{ base: "center", xl: "center" }} pt="0">
         {startContent}
         <Flex h="100%" w="100%" direction={"column"}>
           <Text
             color={textColorSecondary}
             fontSize={{
-              base: "0.9rem",
+              base: "0.8rem",
+              md: "0.9rem",
+              lg: "0.9rem",
             }}
-            fontWeight={"bold"}
-          >
+            fontWeight={"bold"}>
             {name}
           </Text>
           <Flex h="100%" alignItems="center" justifyContent="center" ml="10px">
@@ -40,7 +36,8 @@ export default function Default(props) {
               <Text
                 color={textColor}
                 fontSize={{
-                  base: "2.6rem",
+                  base: "2.4rem",
+                  md: "2.5rem",
                   lg: "2.6rem",
                 }}
                 fontWeight={"semi-bold"}
@@ -51,37 +48,22 @@ export default function Default(props) {
               </Text>
               {growth ? (
                 <Flex align="center">
-                  <Text
-                    color="green.500"
-                    fontSize="xs"
-                    fontWeight="700"
-                    me="5px"
-                  >
+                  <Text color="green.500" fontSize="xs" fontWeight="700" me="5px">
                     {growth}
                   </Text>
-                  <Text
-                    color="secondaryGray.600"
-                    fontSize="xs"
-                    fontWeight="400"
-                  >
+                  <Text color="secondaryGray.600" fontSize="xs" fontWeight="400">
                     since last month
                   </Text>
                 </Flex>
               ) : null}
             </Flex>
-            <Flex
-              ms="auto"
-              w="max-content"
-              h="100%"
-              justifyContent={{ base: "center", xl: "center" }}
-              alignItems={"center"}
-            >
+            <Flex ms="auto" w="max-content" h="100%" justifyContent={{ base: "center", xl: "center" }} alignItems={"center"}>
               {endContent}
             </Flex>
           </Flex>
         </Flex>
       </Flex>
-    </Card>
+    </Card >
   );
 }
 

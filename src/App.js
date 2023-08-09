@@ -6,6 +6,7 @@ import Unauthorized from "./pages/auth/Unauthorized";
 import UserVerify from "./pages/auth/UserVerify";
 import Landing from "./pages/LandingPage/Landing";
 import ForgottenPassword from "./pages/auth/ForgottenPassword";
+// import HallList from "./pages/InstituteStaff/HallList";
 
 // import auth features
 import PersistLogin from "./features/auth/PersistLogin";
@@ -22,6 +23,9 @@ import TuteLayout from "./pages/student/components/tutes/TuteLayout";
 import TuteDashboard from "./pages/student/components/tutes/TuteDashboard";
 import TuteView from "./pages/student/components/tutes/TuteView";
 import PdfView from "./pages/student/components/tutes/PdfView";
+import ReviewQuiz from "./pages/student/ReviewQuiz";
+import Forum from "./pages/student/course/forum.js";
+
 
 // instituteStaff components
 import InstStaffDashboard from "./pages/InstituteStaff/Dashboard";
@@ -77,6 +81,7 @@ import Content from "./components/Content";
 
 import { Routes, Route } from "react-router-dom";
 import { ROLES } from "./config/roles";
+import ContentWatch from "./pages/student/contentWatch";
 
 //Tutor Components
 // import TutorDashboard from "./pages/tutor/TutorDashboard";
@@ -99,9 +104,9 @@ function App() {
         <Route path="register" element={<Register />} />
         <Route path="verify" element={<UserVerify />} />
         <Route path="forgot-password" element={<ForgottenPassword />} />
-       
 
-       
+
+
 
         {/* we want to protect these routes */}
         <Route element={<PersistLogin />}>
@@ -120,6 +125,15 @@ function App() {
                 path="quizzes/:subject/:mcqname/review"
                 element={<ReviewQuiz />}
               />
+              <Route path="courses/:id" element={<CourseLayout />} >
+                <Route path="index" element={<CourseTemp />} />
+                <Route path="forum" element={<Forum />} />
+              </Route>
+              <Route path="content" element={<Videocontent />} />
+              <Route path="content/watch/:id" element={<ContentWatch />} />
+              <Route path="quizzes" element={<Quizzes />} />
+              <Route path="quizzes/:subject" element={<Quizzes />} />
+              <Route path="quizzes/:subject/:mcqname/review" element={<ReviewQuiz />} />
               <Route path="quizzes/:subject/:mcqname" element={<Quiz />} />
 
               <Route path="tutes" element={<TuteLayout />}>
@@ -133,13 +147,13 @@ function App() {
               <Route path="settings" element={<Settings />} />
 
 
-         
-            
-          
 
 
-            </Route>
-          </Route>
+
+
+
+            </Route >
+          </Route >
 
           {/* <Route element={<RequireAuth allowedRoles={[ROLES.Tutor]} />}>
             <Route path='tutor' element={<SidebarAndHeader userRole={"tutor"} />}>
@@ -159,15 +173,15 @@ function App() {
           
           </Route> */}
 
-        <Route path='staff' element={<SidebarAndHeader userRole={"InstituteStaff"} />}>
-          <Route path="dashboard" element={<InstStaffDashboard />} />
-          <Route path="teacher" element={<ViewTeacher/>} />
-          <Route path="teacher/add" element={< AddTeacher />} />
-          <Route path="class" element={<ApproveClass/>} />
-          <Route path="profile" element={<InstStaffProfile />} />
-          <Route path="complaints" element={<InstStaffComplaintsList />} />
-          
-        </Route>
+          < Route path='staff' element={< SidebarAndHeader userRole={"InstituteStaff"} />}>
+            <Route path="dashboard" element={<InstStaffDashboard />} />
+            <Route path="teacher" element={<ViewTeacher />} />
+            <Route path="teacher/add" element={< AddTeacher />} />
+            <Route path="class" element={<ApproveClass />} />
+            <Route path="profile" element={<InstStaffProfile />} />
+            <Route path="complaints" element={<InstStaffComplaintsList />} />
+
+          </Route >
 
           {/* <Route element={<RequireAuth allowedRoles={[ROLES.Tutor]} />}> */}
           {/* <Route
@@ -208,10 +222,10 @@ function App() {
             <Route path="hall/view" element={<HallList />} />
             <Route path="stu-payment" element={<InstStaffStuPayment />} />
             <Route path="staff-list" element={<InstStaffList />} />
-            <Route path="payment-history" element={<ViewPaymentHistory/>} />
-            <Route path="cash-receipt" element={<CashReceipt/>} />
-            <Route path="online-receipt" element={<OnlineReceipt/>} />
-            <Route path="stu-list" element={<StudentsList/>} />
+            <Route path="payment-history" element={<ViewPaymentHistory />} />
+            <Route path="cash-receipt" element={<CashReceipt />} />
+            <Route path="online-receipt" element={<OnlineReceipt />} />
+            <Route path="stu-list" element={<StudentsList />} />
             <Route path="stu-profile/:id" element={<StudentProfile />} />
             <Route path="staff-list" element={<InstStaffList />} />
             <Route path="tutors-list" element={<TutorsList />} />
@@ -221,7 +235,6 @@ function App() {
               element={<CourseProfile />}
             />
           </Route>
-          {/* </Route> */}
 
           {/* </Route> */}
 
@@ -230,13 +243,13 @@ function App() {
               <Route path="profile" element={<UserProfile />} />
             </Route>
           </Route> */}
-        </Route>
+        </Route >
 
         {/* catch all */}
-        <Route path="*" element={<Missing />} />
-      </Route>
-    
-    </Routes>
+        < Route path="*" element={< Missing />} />
+      </Route >
+
+    </Routes >
   );
 }
 
