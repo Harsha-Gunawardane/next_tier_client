@@ -6,7 +6,23 @@ import { axiosPrivate } from '../../../api/axios';
 
 const LikeDislike = (props) => {
 
-    const { liked, likeCount, refid, type, ...rest } = props;
+    const {
+        liked,
+        likeCount,
+        refid,
+        type,
+        buttonStyles,
+        likeIcon,
+        likeIconLiked,
+        dislikeIcon,
+        dislikeIconDisliked,
+        iconSize = "17px",
+        bg,
+        hover,
+        buttonDivider = true,
+        ...rest
+
+    } = props;
 
     const [like, setLike] = useState();
     const [dislike, setDislike] = useState();
@@ -92,7 +108,7 @@ const LikeDislike = (props) => {
         size: "lg",
         h: "30px",
         w: "30px",
-        ...rest
+        ...buttonStyles
     }
 
 
@@ -103,28 +119,28 @@ const LikeDislike = (props) => {
             w={"max-content"}
             h={"max-content"}
             borderRadius={"20px"}
-            bg={"gray.100"}
+            bg={bg ? bg : "gray.100"}
             overflow={"hidden"}
         >
-            <Box _hover={{ bg: "gray.300" }}>
+            <Box _hover={hover ? hover : { bg: "gray.300" }}>
                 <Button
                     {...buttonProps}
-                    leftIcon={like && !dislike ? <BiSolidLike size={"17px"} /> : <BiLike size={"17px"} />}
+                    leftIcon={like && !dislike ? (!likeIconLiked ? <BiSolidLike size={iconSize} /> : likeIconLiked) : (!likeIcon ? <BiLike size={iconSize} /> : likeIcon)}
                     onClick={() => {
                         // handleReact()
                         handleLike();
                     }}
                     color={like ? "accent" : "gray.600"}
-                    borderRight={"1px solid"}
+                    borderRight={buttonDivider ? "1px solid" : "none"}
                     borderColor={"gray.400"}
                 >
                     {likes > 0 ? <Text fontSize={"0.9rem"}>{likes}</Text> : <Text fontSize={"0.9rem"}>Like</Text>}
                 </Button>
             </Box>
-            <Box _hover={{ bg: "gray.300" }}>
+            <Box _hover={hover ? hover : { bg: "gray.300" }} >
                 <IconButton
                     {...buttonProps}
-                    icon={dislike && !like ? <BiSolidDislike size={"17px"} /> : <BiDislike size={"17px"} />}
+                    icon={dislike && !like ? (!dislikeIconDisliked ? <BiSolidDislike size={iconSize} /> : dislikeIconDisliked) : (!dislikeIcon ? <BiDislike size={iconSize} /> : dislikeIcon)}
                     onClick={() => {
                         // handleReact()
                         handleDislike();

@@ -1,11 +1,13 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation, useParams } from "react-router-dom";
 import Header from "../components/Header/Header";
 import ResponsiveSidebar from "../components/Sidebar/ResponsiveSidebar";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { FaUserAlt, FaMoneyBillAlt } from "react-icons/fa";
 
 import { Box, Grid, GridItem, useDisclosure } from "@chakra-ui/react";
+import useSidebar from "../hooks/useSidebar";
+
 
 //icons
 import GridViewRoundedIcon from "@mui/icons-material/GridViewRounded";
@@ -14,11 +16,68 @@ import { FaCompass, FaUserFriends, FaListAlt, FaQuestionCircle } from "react-ico
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import ReportProblemIcon from "@mui/icons-material/ReportProblem";
 
+
+
+
+
 const SidebarAndHeader = ({ userRole }) => {
 	//get width of sidebar component and set to state
 	const { isOpen, onOpen, onClose } = useDisclosure();
 	const [hidden, setHidden] = useState(isOpen);
 	const [minimized, setMinimized] = useState({ base: false, md: true, lg: false });
+
+	const { setSidebarOptionHandler } = useSidebar();
+	const { pathname } = useLocation();
+	const params = useParams();
+	const minimizeButtonRef = useRef();
+
+
+	useEffect(() => {
+		const activeTab = findActiveTab(params);
+		console.log(activeTab);
+		setSidebarOptionHandler(activeTab);
+
+	}, [setSidebarOptionHandler]);
+
+	const startWithMinimize = [
+		"stu/content",
+		"stu/content/watch/:id"
+	]
+
+
+
+	const tabsMap = new Map([
+		//Student Routes
+		['stu/dashboard', 'dashboard'],
+		['stu/courses', 'courses'],
+		['stu/content', 'content'],
+		['stu/courses/:id/forum', 'courses'],
+
+		// More routes and active tabs...
+	]);
+
+
+
+	function getRouteWithParams(params) {
+		const route = params["*"];
+		var keys = Object.keys(params).filter((key) => key !== "*");
+		var routeWithParams = route;
+
+		keys.forEach((key) => {
+			if (key !== "*") {
+				routeWithParams = routeWithParams.replace(params[key], ":" + key);
+			}
+		});
+		console.log(routeWithParams);
+		return (routeWithParams)
+
+	}
+
+	function findActiveTab(params) {
+		return tabsMap.get(getRouteWithParams(params)) || 'dashboard';
+	}
+
+
 
 
 	const setTemplateColumns = (minimized) => {
@@ -106,42 +165,6 @@ const SidebarAndHeader = ({ userRole }) => {
 
 
 	return (
-		// <SidebarProvider>
-		// <Box
-		// 	h="100vh"
-		// 	w="100vw"
-		// 	overflowX={"hidden"}
-		// 	overflowY={"auto"}
-		// >
-		// 	{/* <Sidebar Options={Options} minimized={{ base: false, md: true, lg: false }} setSidebarWidth={setSidebarWidth} hidden={hidden} setHidden={setHidden} /> */}
-		// 	<ResponsiveSidebar Options={Options} minimized={minimized} setMinimized={setMinimized} hidden={hidden} setHidden={setHidden} open={isOpen} onOpening={onOpen} close={onClose} position={"fixed"} />
-
-		// 	<Box
-		// 		ml={{ base: "0", md: minimized.md ? "64px" : "260px", lg: minimized.lg ? "64px" : "260px" }}
-		// 		w={{ base: "100vw", md: minimized.md ? "calc(100% - 72px)" : "calc(100% - 268px)", lg: minimized.lg ? "calc(100% - 72px)" : "calc(100% - 268px)" }}
-		// 		h={"100vh"}
-		// 		transition={"all 0.5s ease"}
-		// 	>
-		// 		{/* <Header w={{ base: "100%", lg: "calc(100% - " + sidebarWidth + ")" }} hidden={hidden} setHidden={setHidden} /> */}
-		// 		<Header
-		// 			w={{ base: "100vw", md: minimized.md ? "calc(100vw - 72px)" : "calc(100vw - 268px)", lg: minimized.lg ? "calc(100vw - 72px)" : "calc(100vw - 268px)" }}
-		// 			hidden={hidden}
-		// 			setHidden={setHidden}
-		// 			right={0}
-		// 			onOpen={onOpen}
-		// 			transition={"width 0.5s ease"}
-		// 			minimized={minimized}
-		// 			setMinimized={setMinimized}
-		// 			position={"fixed"}
-		// 			mr={"8px"}
-		// 		/>
-		// 		<Flex
-		// 			pt={"64px"}
-		// 		>
-		// 			<Outlet />
-		// 		</Flex>
-		// 	</Box>
-		// </Box>
 
 		<Grid
 			templateAreas={`'sidebar main'`}
@@ -159,7 +182,17 @@ const SidebarAndHeader = ({ userRole }) => {
 			transition={"all 0.5s ease"}
 		>
 			<GridItem area="sidebar" as={"aside"} h="100vh" maxWidth={"260px"} transition={"all 0.5s ease"}>
-				<ResponsiveSidebar Options={Options} minimized={minimized} setMinimized={setMinimized} hidden={hidden} setHidden={setHidden} open={isOpen} onOpening={onOpen} close={onClose} />
+				<ResponsiveSidebar
+					Options={Options}
+					minimized={minimized}
+					setMinimized={setMinimized}
+					hidden={hidden}
+					setHidden={setHidden}
+					open={isOpen}
+					onOpening={onOpen}
+					close={onClose}
+					minimizeButtonRef={minimizeButtonRef}
+				/>
 			</GridItem>
 			<GridItem area="main" as={"main"} overflowY={"auto"} overscrollBehavior={"none"} transition={"all 0.5s ease"} sx={{ "clip-path": "inset(0 0 0 0)" }}>
 				<Header
@@ -174,7 +207,7 @@ const SidebarAndHeader = ({ userRole }) => {
 					mr={{ base: "none", md: "8px", lg: "8px" }}
 				/>
 				<Box h={"100vh"} w={"100%"} pt="64px" overflowX={"hidden"}>
-					<Outlet />
+					<Outlet context={[minimizeButtonRef, minimized]} />
 				</Box>
 			</GridItem>
 		</Grid >

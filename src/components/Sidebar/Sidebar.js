@@ -77,9 +77,9 @@ const Option = ({ icon: iconComponent, name, href, active, minimizeStatus }) => 
 	);
 };
 
-const Sidebar = ({ Options, minimized, setMinimized, full = true, hidden, setHidden, onOpen, onClose, ...rest }) => {
+const Sidebar = ({ Options, minimized, setMinimized, full = true, hidden, setHidden, onOpen, onClose, minimizeButtonRef, ...rest }) => {
 
-	const { activeTab, handleTabClick } = useContext(SidebarContext);
+	const { activeTab } = useContext(SidebarContext);
 
 	//animation
 	const show = {
@@ -106,6 +106,7 @@ const Sidebar = ({ Options, minimized, setMinimized, full = true, hidden, setHid
 			onClose();
 		}
 		else {
+			console.log(animations);
 			const status = {
 				base: minimized.base ? false : false,
 				md: minimized.md ? false : true,
@@ -175,6 +176,7 @@ const Sidebar = ({ Options, minimized, setMinimized, full = true, hidden, setHid
 				<Spacer />
 				<IconButton
 					as={motion.div}
+					ref={minimizeButtonRef}
 					variant={"outline"}
 					onClick={() => handleMinimizing()}
 					// display={{ base: "flex", md: minimized.md ? "none" : "flex", lg: minimized.lg ? "none" : "flex" }}
@@ -191,7 +193,7 @@ const Sidebar = ({ Options, minimized, setMinimized, full = true, hidden, setHid
 			<Flex direction={"column"} w={"max-content"}>
 				<Flex direction={"column"} w={"max-content"} alignItems={"center"} px={!minimized ? "30px" : "10px"} py={"30px"} gap="10px">
 					{Options.map((option, index) => (
-						<Option key={index} {...option} minimizeStatus={{ base: false, md: minimized.md ? true : false, lg: minimized.lg ? true : false }} active={activeTab == option.value ? true : false} />
+						<Option key={index} {...option} minimizeStatus={{ base: false, md: minimized.md ? true : false, lg: minimized.lg ? true : false }} active={activeTab === option.value ? true : false} />
 					))}
 				</Flex>
 

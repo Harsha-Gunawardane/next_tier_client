@@ -28,13 +28,11 @@ const MentionComment = (props) => {
         }
 
         setReplyCommentVal(newValue)
-        console.log(mentions)
         //compare mentions and mentionUsers and set the difference to mentionUsers
         setMentions(
             (prev) => {
                 if (prev.length > mentions.length) {
                     prev.forEach(mention => {
-                        console.log("inside")
                         if (!mentionUsers.find(user => user.id === mention.id)) {
                             mention.display = mention.display.slice(1)
                             setMentionUsers([...mentionUsers, mention])

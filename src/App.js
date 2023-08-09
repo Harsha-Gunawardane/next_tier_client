@@ -16,8 +16,10 @@ import RequireAuth from "./features/auth/RequireAuth";
 import Settings from "./pages/student/Settings";
 import Dashboard from "./pages/student/Dashboard";
 import Quizzes from "./pages/student/Quizzes";
-import Quiz from "./pages/student/Quiz";
+import Quiz from "./pages/student/quiz";
 import ReviewQuiz from "./pages/student/ReviewQuiz";
+import Forum from "./pages/student/course/forum.js";
+
 
 // instituteStaff components
 import InstStaffDashboard from "./pages/InstituteStaff/Dashboard";
@@ -57,6 +59,8 @@ import Mcqs from "./pages/tutor/mcq/mcqs";
 import CreateMcq from "./pages/tutor/mcq/mcqCreate";
 import EditMcq from "./pages/tutor/mcq/mcqEdit";
 import PaperMarking from "./pages/TutorStaff/paperMarking";
+import CourseTemp from "./pages/student/course/CourseTemp";
+import CourseLayout from "./pages/student/course/courseLayout";
 
 function App() {
   return (
@@ -80,6 +84,10 @@ function App() {
             >
               <Route path="dashboard" element={<Dashboard />} />
               <Route path="courses" element={<Courses />} />
+              <Route path="courses/:id" element={<CourseLayout />} >
+                <Route path="index" element={<CourseTemp />} />
+                <Route path="forum" element={<Forum />} />
+              </Route>
               <Route path="content" element={<Videocontent />} />
               <Route path="content/watch/:id" element={<ContentWatch />} />
               <Route path="quizzes" element={<Quizzes />} />

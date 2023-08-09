@@ -2,11 +2,11 @@ import { Drawer, DrawerBody, DrawerOverlay, DrawerContent } from "@chakra-ui/rea
 import Sidebar from "./Sidebar";
 
 
-const ResponsiveSidebar = ({ Options, minimized, setMinimized, full = true, hidden, setHidden, open, onOpening, close, ...rest }) => {
+const ResponsiveSidebar = ({ Options, minimized, setMinimized, full = true, hidden, setHidden, open, onOpening, close, minimizeButtonRef, ...rest }) => {
 
     return (
         <>
-            <Sidebar Options={Options} minimized={minimized} setMinimized={setMinimized} hidden={hidden} setHidden={setHidden} display={{ base: "none", md: "flex", lg: "flex" }} onClose={null} {...rest} />
+            <Sidebar Options={Options} minimized={minimized} setMinimized={setMinimized} hidden={hidden} setHidden={setHidden} display={{ base: "none", md: "flex", lg: "flex" }} onClose={null} minimizeButtonRef={minimizeButtonRef} {...rest} />
             <Drawer isOpen={open} placement="left" overFlow={"hidden"} p={0}>
                 <DrawerOverlay />
                 <DrawerContent>

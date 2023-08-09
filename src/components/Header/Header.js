@@ -44,6 +44,8 @@ const Header = ({ full = false, hidden, setHidden, onOpen, minimized, setMinimiz
 					setFName(userInfo.fName);
 					setLName(userInfo.lName);
 
+					console.log(userInfo.fName);
+
 					let keyNotUser;
 					for (const key in userInfo.userRole) {
 						if (key !== "User") {
@@ -66,7 +68,9 @@ const Header = ({ full = false, hidden, setHidden, onOpen, minimized, setMinimiz
 
 
 	return (
-		<Flex h="64px" bg="white" justifyContent={"space-between"} alignItems={"center"} zIndex={2} position={"absolute"} {...rest} >
+		<Flex h="64px" bg="white" justifyContent={"space-between"} alignItems={"center"} zIndex={2} position={"absolute"}
+			{...rest}
+		>
 			<Flex h="100%" justifyContent={"space-between"}>
 				<Flex
 					p={"4px"}

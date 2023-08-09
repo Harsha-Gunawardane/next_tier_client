@@ -6,15 +6,13 @@ import { HStack } from "@chakra-ui/react";
 import {
   SimpleGrid, Button,
 } from "@chakra-ui/react";
-import CourseInclude from "../../components/student/courseInclude";
-import CourseDetails from "../../components/student/courseDetails";
+import CourseInclude from "../../../components/student/courseInclude";
+import CourseDetails from "../../../components/student/courseDetails";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Link, useNavigate } from "react-router-dom";
 
-const Course = () => {
-
-
+const CourseTemp = () => {
 
   const { courseid } = useParams();
 
@@ -140,4 +138,4 @@ const Course = () => {
   );
 };
 
-export default Course;
+export default CourseTemp;

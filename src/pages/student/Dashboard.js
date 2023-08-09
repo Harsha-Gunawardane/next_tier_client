@@ -1,7 +1,6 @@
 import { Box, GridItem, Text, Flex, SimpleGrid, useColorModeValue } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 // import { SidebarContext } from "../../context/SidebarContext";
-import useSidebar from "../../hooks/useSidebar";
 
 //components
 import MiniStat from "../../components/Card/MiniStat";
@@ -20,11 +19,7 @@ import { FaRegCircleCheck } from "react-icons/fa6";
 const Dashboard = () => {
 	const sectionTitleFontSize = "16px"
 
-	const { setSidebarOptionHandler } = useSidebar();
 
-	useEffect(() => {
-		setSidebarOptionHandler("dashboard");
-	}, [setSidebarOptionHandler]);
 
 
 	const [continueWatchingHeight, setContinueWatchingHeight] = useState("0");
