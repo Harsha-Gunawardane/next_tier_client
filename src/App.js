@@ -17,19 +17,24 @@ import Dashboard from "./pages/student/Dashboard";
 import QuizDashboard from "./pages/student/QuizDashboard";
 import Quiz from "./pages/student/Quiz";
 import ReviewQuiz from "./pages/student/ReviewQuiz";
+import NewTute from "./pages/student/NewTute";
+import TuteLayout from "./pages/student/components/tutes/TuteLayout";
+import TuteDashboard from "./pages/student/components/tutes/TuteDashboard";
+import TuteView from "./pages/student/components/tutes/TuteView";
+import PdfView from "./pages/student/components/tutes/PdfView";
 
 // instituteStaff components
-import InstStaffDashboard from "./pages/InstituteStaff/Dashboard";
-import ViewTeacher from "./pages/InstituteStaff/ViewTeacher";
-import AddTeacher from "./pages/InstituteStaff/AddTeacher";
-import InstStaffProfile from "./pages/InstituteStaff/Profile";
-import InstStaffComplaintsList from "./pages/InstituteStaff/Complaints/ComplaintsListView";
-import ApproveClass from "./pages/InstituteStaff/ApproveClass";
-import HallList from "./pages/InstituteStaff/HallList";
-import HallSchedule from "./pages/InstituteStaff/HallSchedule";
-import InstStaffStuPayment from './pages/InstituteStaff/StuPayment';
-import InstStaffList from './pages/InstituteStaff/StaffList'
-import AddInstStaff from './pages/InstituteStaff/AddInstStaff';
+// import InstStaffDashboard from "./pages/InstituteStaff/Dashboard";
+// import ViewTeacher from "./pages/InstituteStaff/ViewTeacher";
+// import AddTeacher from "./pages/InstituteStaff/AddTeacher";
+// import InstStaffProfile from "./pages/InstituteStaff/Profile";
+// import InstStaffComplaintsList from "./pages/InstituteStaff/Complaints/ComplaintsListView";
+// import ApproveClass from "./pages/InstituteStaff/ApproveClass";
+// import HallList from "./pages/InstituteStaff/HallList";
+// import HallSchedule from "./pages/InstituteStaff/HallSchedule";
+// import InstStaffStuPayment from './pages/InstituteStaff/StuPayment';
+// import InstStaffList from './pages/InstituteStaff/StaffList'
+// import AddInstStaff from './pages/InstituteStaff/AddInstStaff';
 
 // tutor components
 // import TutorDashboard from "./pages/student/TutorDashboard";
@@ -87,6 +92,7 @@ function App() {
               <Route path="dashboard" element={<Dashboard />} />
               <Route path="courses" element={<Courses />} />
               <Route path="content" element={<Content />} />
+
               <Route path="quizzes" element={<QuizDashboard />} />
               <Route path="quizzes/:subject" element={<QuizDashboard />} />
               <Route
@@ -94,6 +100,14 @@ function App() {
                 element={<ReviewQuiz />}
               />
               <Route path="quizzes/:subject/:mcqname" element={<Quiz />} />
+
+              <Route path="tutes" element={<TuteLayout />}>
+                <Route index element={<TuteDashboard />} />
+                <Route path="new/:id" element={<NewTute />} />
+                <Route path="edit/:id" element={<NewTute />} />
+                <Route path="view/:id" element={<PdfView />} />
+                <Route path=":id" element={<TuteView />} />
+              </Route>
 
               <Route path="settings" element={<Settings />} />
             </Route>
