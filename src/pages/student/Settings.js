@@ -88,7 +88,9 @@ function Settings() {
     if (file) {
       console.log(file);
       const formData = new FormData();
-      formData.append("image", file);
+      formData.append("file", file);
+
+      console.log(formData);
 
       const response = await axiosPrivate.post(
         `${PROFILE_UPLOAD_URL}`,
@@ -116,8 +118,8 @@ function Settings() {
     />
   ) : (
     <form onSubmit={handleSubmit}>
-      <Input id="image" h={100} type="file" onChange={handleImageDrop} />
-      <FormLabel htmlFor="image">Upload image here...</FormLabel>
+      <Input id="file" h={100} type="file" onChange={handleImageDrop} />
+      <FormLabel htmlFor="file">Upload image here...</FormLabel>
 
       {/* <div style={{ display: "inline-block" }}>
         
