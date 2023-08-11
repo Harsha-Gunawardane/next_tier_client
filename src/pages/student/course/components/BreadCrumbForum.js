@@ -21,10 +21,11 @@ const BreadCrumbForum = (props) => {
         replace.forEach((item) => {
             routeArr[routeArr.indexOf(item.from)] = item.to;
         })
+        console.log(routeArr);
         return routeArr;
     }
 
-    const routeArr = getRouteArr(params, ["stu"], [{ from: ":id", to: courseTitle }]);
+    const routeArr = getRouteArr(params, ["stu"], [{ from: ":courseId", to: courseTitle }]);
 
     useEffect(() => {
         console.log(routeArr);
@@ -44,7 +45,7 @@ const BreadCrumbForum = (props) => {
 
                 return (
                     <BreadcrumbItem key={index} isCurrentPage={index === routeArr.length - 1} color={index === routeArr.length - 1 ? "gray.500" : "gray.400"} _hover={{ color: "gray.600" }}>
-                        <Link to={href} maxW={"200px"} noOfLines={1}>{capsFirst(item)}</Link>
+                        <Link to={href} maxW={"200px"} noOfLines={1}>{item}</Link>
                     </BreadcrumbItem>
                 )
             })}

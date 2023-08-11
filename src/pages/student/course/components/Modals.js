@@ -43,6 +43,8 @@ import { useEffect, useState } from "react";
 import { useToast } from "@chakra-ui/toast";
 import { DeleteIcon } from "@chakra-ui/icons"
 import { useUserInfo } from "../../../../store/user/useUserInfo"
+import { axiosPrivate } from "../../../../api/axios"
+import { useParams } from "react-router-dom"
 
 
 const PostViewModal = (props) => {
@@ -80,10 +82,11 @@ const PostViewModal = (props) => {
 
 }
 
-const MyRichTextEditor = () => {
+const MyRichTextEditor = (props) => {
+
+    const { editorHtmlContent, setEditorHtmlContent } = props
 
     const [content, setContent] = useState('')
-    const [editorHtmlContent, setEditorHtmlContent] = useState('')
 
 
     const editor = useEditor({
@@ -171,6 +174,9 @@ const PostCreateModal = (props) => {
 
     //get users first name and last name from zustand
     const { fName, lName } = useUserInfo
+    const { courseId } = useParams()
+    const [title, setTitle] = useState("")
+    const [editorHtmlContent, setEditorHtmlContent] = useState("")
 
 
     const [files, setFiles] = useState([])
@@ -180,7 +186,7 @@ const PostCreateModal = (props) => {
     useEffect(() => {
         console.log(fName)
         console.log(lName)
-    }, [])
+    }, [fName, lName])
 
 
 
@@ -200,7 +206,6 @@ const PostCreateModal = (props) => {
         handleFileUpload(e.target.files[0])
 
     }
-
 
     //drag and drop
     const handleDragEnter = (e) => {
@@ -224,6 +229,7 @@ const PostCreateModal = (props) => {
 
         handleFileUpload(e.dataTransfer.files[0])
     }
+
 
     const handleFileUpload = async (file) => {
         if (files.length > 3) {
@@ -276,11 +282,74 @@ const PostCreateModal = (props) => {
 
     }
 
-
-    //no use of input. but a button to trigger input
     const handleFileInput = () => {
         document.getElementById("fileInput").click()
     }
+
+    //send the post to the backend
+    const handleSubmit = async () => {
+        const isMounted = true
+
+        const controller = new AbortController()
+
+        //validate the form
+        if (title === "" || editorHtmlContent === "") {
+            toast({
+                title: "Empty fields",
+                description: "Please fill all the fields",
+                status: "error",
+                duration: 5000,
+                isClosable: true,
+            })
+            return
+        }
+
+
+        //create formData with attachments
+        const formData = new FormData()
+        formData.append("title", title)
+        formData.append("message", editorHtmlContent)
+        // files.forEach((file) => {
+        // formData.append("attachments", files)
+        // })
+
+        console.log(formData)
+
+
+        try {
+            const response = await axiosPrivate.post(`/courses/${courseId}/forum/posts`, formData, {
+                headers: {
+                    "Content-Type": "multipart/form-data"
+                }
+            })
+
+            if (isMounted) {
+                console.log(response.data)
+                onClose()
+                toast({
+                    title: "Post created",
+                    description: "Your post has been created",
+                    status: "success",
+                    duration: 5000,
+                    isClosable: true,
+                })
+            }
+
+        } catch (error) {
+            if (isMounted) {
+                console.log(error)
+                toast({
+                    title: "Error",
+                    description: "Something went wrong",
+                    status: "error",
+                    duration: 5000,
+                    isClosable: true,
+                })
+            }
+
+        }
+    }
+
 
 
 
@@ -326,9 +395,11 @@ const PostCreateModal = (props) => {
                                     label="Title"
                                     fontSize={"1.2rem"}
                                     size="lg"
+                                    value={title}
+                                    onChange={(e) => setTitle(e.target.value)}
                                 />
                                 <label htmlFor="description">Description</label>
-                                <MyRichTextEditor />
+                                <MyRichTextEditor editorHtmlContent={editorHtmlContent} setEditorHtmlContent={setEditorHtmlContent} />
                                 <Flex direction="column" w="100%">
                                     <label htmlFor="description">Attachments</label>
                                     <Flex direction="row" w="100%" border="1px solid" borderColor={"gray.200"} borderRadius={"5px"} p={"10px"} onDragEnter={handleDragEnter} onDragLeave={handleDragLeave} onDragOver={handleDragOver} onDrop={handleDrop} alignItems={"center"} justifyContent={"center"} cursor={"pointer"} onClick={handleFileInput} gap="20px">
@@ -368,7 +439,7 @@ const PostCreateModal = (props) => {
                     {/* cancel button */}
                     <Button variant="ghost" colorScheme="gray" mr={3} onClick={onClose}> Cancel </Button>
                     {/* submit button */}
-                    <Button colorScheme="blue" onClick={onClose}> Submit </Button>
+                    <Button colorScheme="blue" onClick={handleSubmit}> Submit </Button>
                 </ModalFooter>
             </ModalContent>
         </Modal >

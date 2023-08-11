@@ -12,8 +12,18 @@ import {
 
 import rulesImg from "../../../../assests/images/rules2.png"
 import { TfiArrowCircleRight } from "react-icons/tfi"
+import { useOutletContext } from "react-router-dom"
+import { useEffect } from "react"
 
-const RightPanel = () => {
+const RightPanel = (props) => {
+
+    const { forumDetails } = props
+    const { courseDetails } = useOutletContext
+
+    useEffect(() => {
+        console.log(forumDetails)
+    }, [])
+
 
     return (
         <Flex gap="10px" direction={"column"} w={"100%"} position={"absolute"}>
@@ -25,12 +35,12 @@ const RightPanel = () => {
                     <Image src="https://www.picsum.photos/400/100" alt="Segun Adebayo" />
                 </AspectRatio>
                 {/* forum title */}
-                <Text fontWeight={"bold"} fontSize={"20px"} color="gray.800" mt="10px" align={"left"} noOfLines={1}>Forum Title</Text>
+                <Text fontWeight={"bold"} fontSize={"20px"} color="gray.800" mt="10px" align={"left"} noOfLines={1}>{forumDetails.title}</Text>
                 {/* tutor name with avatar left and tutor qualification right bottom */}
                 <Flex width={"100%"} justifyContent={"space-between"} alignItems={"center"} direction={"row"} mt="5px" gap="10px">
                     <Avatar size={"md"} name='Ryan Florence' src='http://localhost:3500/pic.jpg' />
                     <Flex width={"100%"} justifyContent={"center"} alignItems={"flex-start"} direction={"column"} gap="0px">
-                        <Text fontWeight={"semibold"} fontSize={"14px"} color="gray.600">Samitha Rathnayake</Text>
+                        <Text fontWeight={"semibold"} fontSize={"14px"} color="gray.600">{forumDetails.course.tutor.name}</Text>
                         <Text fontWeight={"medium"} fontSize={"12px"} color="gray.600">BSc. in Physics</Text>
                     </Flex>
                 </Flex>
@@ -44,7 +54,6 @@ const RightPanel = () => {
                     p="10px"
                     gap="10px"
                     boxShadow={"rgba(0, 0, 0, 0.1) 0px 0px 5px;"}
-                    // very light classy blue modern look more light match with accent color
                     bgGradient="linear-gradient(317deg, rgba(244,240,255,0.8951913529083508) 14%, rgba(234,247,255,1) 63%) "
                     mt={"20px"}
                 // bg = "green.200"
@@ -64,13 +73,13 @@ const RightPanel = () => {
                 </Card>
                 <Flex direction={"column"} mt="20px" gap="20px" width={"100%"}>
                     <Text fontWeight={"medium"} fontSize={"16px"} color="gray.600">Whose Online</Text>
-                    <Flex justifyContent={"space-between"} alignItems={"center"} direction={"row"} gap="10px">
+                    <Flex justifyContent={"flex-start"} alignItems={"center"} direction={"row"} gap="10px">
                         <AvatarGroup size='md' max={4}>
                             <Avatar name='Ryan Florence' src='https://bit.ly/ryan-florence' />
                             <Avatar name='Segun Adebayo' src='https://bit.ly/sage-adebayo' />
-                            <Avatar name='Kent Dodds' src='https://bit.ly/kent-c-dodds' />
+                            {/* <Avatar name='Kent Dodds' src='https://bit.ly/kent-c-dodds' />
                             <Avatar name='Prosper Otemuyiwa' src='https://bit.ly/prosper-baba' />
-                            <Avatar name='Christian Nwamba' src='https://bit.ly/code-beast' />
+                            <Avatar name='Christian Nwamba' src='https://bit.ly/code-beast' /> */}
                         </AvatarGroup>
                         <Button variant="link" bg={"white"} color={"accent"} size="sm" width={"max-content"} rightIcon={<TfiArrowCircleRight />}>See All</Button>
                     </Flex>

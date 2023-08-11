@@ -44,6 +44,9 @@ const SidebarAndHeader = ({ userRole }) => {
 		"stu/content/watch/:id"
 	]
 
+	useEffect(() => {
+		console.log(minimized);
+	}, [minimized]);
 
 
 	const tabsMap = new Map([
@@ -84,9 +87,11 @@ const SidebarAndHeader = ({ userRole }) => {
 		var templateColumns = { base: "0 1fr", md: "260px 1fr", lg: "260px 1fr" };
 		if (minimized.md) {
 			templateColumns.md = "64px 1fr";
-		} else if (minimized.lg) {
+		}
+		if (minimized.lg) {
 			templateColumns.lg = "64px 1fr";
 		}
+		console.log(templateColumns);
 		return templateColumns;
 	}
 
@@ -181,7 +186,7 @@ const SidebarAndHeader = ({ userRole }) => {
 			overscrollBehaviorY={"none"}
 			transition={"all 0.5s ease"}
 		>
-			<GridItem area="sidebar" as={"aside"} h="100vh" maxWidth={"260px"} transition={"all 0.5s ease"}>
+			<GridItem area="sidebar" as={"aside"} h="100vh" maxWidth={"260px"} width={"max-content"} transition={"all 0.5s ease"}>
 				<ResponsiveSidebar
 					Options={Options}
 					minimized={minimized}

@@ -16,8 +16,15 @@ import {
     Menu,
     MenuButton,
     MenuList,
-    MenuItem
+    MenuItem,
+    CSSReset,
+    GridItem,
+    AspectRatio,
+    Image,
+    Grid,
 } from "@chakra-ui/react"
+import { PhotoProvider, PhotoView } from 'react-photo-view';
+import 'react-photo-view/dist/react-photo-view.css';
 
 import generateTimeAgoString from "../../../../utils/timesAgo";
 import LikeDislike from "../../../../components/student/ContentWatch/LikeDislike";
@@ -31,6 +38,13 @@ import { AiFillFlag } from "react-icons/ai";
 import { SlOptions, SlOptionsVertical } from "react-icons/sl";
 import { PostViewModal } from "./Modals";
 import { useEffect } from "react";
+import { RiAttachment2 } from "react-icons/ri";
+
+//custom styles
+import "./styles/postStyles.css";
+
+//images
+import pdf from "../../../../assests/images/pdf.png";
 
 const CustomLikeDislike = (props) => {
 
@@ -113,8 +127,40 @@ const Post = (props) => {
                     </Flex>
                     <Flex w="100%" direction={"column"} px="30px" gap="8px">
                         <Text textAlign={"left"} w="100%" fontSize={"1.2rem"} fontWeight={"bold"}>{post.title}</Text>
-                        <Text fontWeight={"normal"} fontSize={"0.9rem"}>{post.message}</Text>
+                        {/* <Text fontWeight={"normal"} fontSize={"0.9rem"}>{post.message}</Text> */}
+                        <CSSReset />
+                        <Box dangerouslySetInnerHTML={{ __html: post.message }} fontSize={"14px"} className="postBody" />
                     </Flex>
+                    <PhotoProvider>
+                        <SimpleGrid w="100%" columns={5} gap="5px" px="30px" >
+                            <AspectRatio ratio={1} borderRadius={"10px"} overflow={"hidden"} bg="gray.100">
+                                <Flex color={"gray.300"} flexDirection={"column"} justifyContent={"center"} alignItems={"center"} w="100%" h="100%">
+                                    <RiAttachment2 size="40px" color="gray.300" />
+                                    <Text fontSize={"0.9rem"} fontWeight={"semi-bold"} color={"gray.400"} pointer={"pointer"}>Attachments</Text>
+                                </Flex>
+                            </AspectRatio>
+                            <PhotoView key={1} src="https://bit.ly/sage-adebayo" alt="Segun Adebayo" visible={true} >
+                                <AspectRatio ratio={1} borderRadius={"10px"} overflow={"hidden"} bg="gray.100">
+                                    <Image src="https://bit.ly/sage-adebayo" alt="Segun Adebayo" objectFit="cover" />
+                                </AspectRatio>
+                            </PhotoView>
+                            <PhotoView key={2} src="https://bit.ly/sage-adebayo" alt="Segun Adebayo" visible={true} >
+                                <AspectRatio ratio={1} borderRadius={"10px"} overflow={"hidden"} bg="gray.100">
+                                    <Image src="https://bit.ly/sage-adebayo" alt="Segun Adebayo" objectFit="cover" />
+                                </AspectRatio>
+                            </PhotoView>
+                            <AspectRatio ratio={1} borderRadius={"10px"} overflow={"hidden"} bg="gray.100">
+                                <Image src={pdf} alt="Segun Adebayo" objectFit="cover" />
+                            </AspectRatio>
+                            {/* 
+                            <AspectRatio ratio={1} borderRadius={"10px"} overflow={"hidden"} bg="gray.100">
+                                <Image src="https://www.picsum.photos/400/400" alt="Segun Adebayo" objectFit="cover" maxH={"300px"} colSpan={2} />
+                            </AspectRatio>
+                            */}
+
+                        </SimpleGrid>
+                    </PhotoProvider>
+
                     <Flex w="100%" direction={"row"} justifyContent={"space-between"} alignItems={"center"} px="15px">
                         <CustomLikeDislike />
                         <Flex
@@ -155,8 +201,8 @@ const Post = (props) => {
                     </Collapse>
                     {/* </Flex> */}
                 </SimpleGrid>
-            </Flex>
-        </Box>
+            </Flex >
+        </Box >
     )
 }
 

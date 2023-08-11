@@ -1,0 +1,8 @@
+.postBody p {
+    font-size: 14px;
+}
+
+.postBody ol,
+.postBody ul {
+    padding-left: 20px;
+}

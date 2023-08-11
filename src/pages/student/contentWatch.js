@@ -59,12 +59,8 @@ const ContentWatch = () => {
 
     const [videoDetails, setVideoDetails] = useState();
     const [isLoaded, setIsLoaded] = useState(false);
-    const { setSidebarOptionHandler } = useSidebar();
     const [minimizeButtonRef] = useOutletContext();
 
-    useEffect(() => {
-        setSidebarOptionHandler("content");
-    }, [setSidebarOptionHandler]);
 
     const { id } = useParams();
     const CONTENT_INFO_URL = "/content/" + id;

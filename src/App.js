@@ -84,7 +84,7 @@ function App() {
             >
               <Route path="dashboard" element={<Dashboard />} />
               <Route path="courses" element={<Courses />} />
-              <Route path="courses/:id" element={<CourseLayout />} >
+              <Route path="courses/:courseId" element={<CourseLayout />} >
                 <Route path="index" element={<CourseTemp />} />
                 <Route path="forum" element={<Forum />} />
               </Route>

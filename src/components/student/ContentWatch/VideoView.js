@@ -27,40 +27,17 @@ const VideoView = (props) => {
 
     const playerRef = React.useRef(null);
 
-    const videoJsOptions = {
-        autoplay: true,
-        controls: true,
-        responsive: true,
-        fluid: true,
-        sources: [{
-            src: 'https://www.tutorialspoint.com/videos/sample480.mp4',
-            type: 'video/mp4'
-        }]
-    };
-
-    const handlePlayerReady = (player) => {
-        playerRef.current = player;
-
-        // You can handle player events here, for example:
-        player.on('waiting', () => {
-            videojs.log('player is waiting');
-        });
-
-        player.on('dispose', () => {
-            videojs.log('player will dispose');
-        });
-    };
-
 
     return (
         <Flex width={"100%"} height={"max-content"} justifyContent={"flex-start"} alignItems={"flex-start"} direction={"column"}>
             <AspectRatio minW="100%" ratio={16 / 9} overflow={"hidden"}>
+                <></>
                 {/* <iframe
                     title="naruto"
                     src="https://www.youtube.com/embed/QhBnZ6NPOY0"
                     allowFullScreen
                 /> */}
-                <Player
+                {/* <Player
                     src={[
                         {
                             quality: "Full HD",
@@ -93,6 +70,7 @@ const VideoView = (props) => {
                     poster="https://cdn.jsdelivr.net/gh/naptestdev/video-examples@master/poster.png"
 
                     keyboardShortcut={{
+                        play: false,
                         pause: false,
                         forward: false,
                         rewind: false,
@@ -100,7 +78,7 @@ const VideoView = (props) => {
                         mute: false,
                         subtitle: false,
                     }}
-                />
+                /> */}
                 {/* <VideoJS options={videoJsOptions} onReady={handlePlayerReady} /> */}
             </AspectRatio>
             {/* {/* <Skeleton isLoaded={isLoaded}> */}
