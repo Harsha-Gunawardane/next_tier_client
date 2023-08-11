@@ -3,7 +3,7 @@ import { Accordion } from "@mantine/core";
 import PageNameCard from "../cards/PageNameCard";
 import { Box } from "@chakra-ui/react";
 
-import "../../../../assets/css/accordion.css"
+import "../../../../assests/css/accordion.css"
 
 function FolderList({ folders }) {
   return (
@@ -19,7 +19,7 @@ function FolderList({ folders }) {
               <Accordion.Control>{folder.name}</Accordion.Control>
               <Accordion.Panel>
                 {folder.pages.map((page) => {
-                  return <PageNameCard name={page} ml={8}/>;
+                  return <PageNameCard name={page} ml={8} />;
                 })}
               </Accordion.Panel>
             </Accordion.Item>

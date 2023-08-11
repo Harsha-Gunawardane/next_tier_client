@@ -6,8 +6,8 @@ import { HStack } from "@chakra-ui/react";
 import {
   SimpleGrid, Button,
 } from "@chakra-ui/react";
-import CourseInclude from "../../../components/student/courseInclude";
-import CourseDetails from "../../../components/student/courseDetails";
+// import CourseInclude from "../../../components/student/courseInclude";
+// import CourseDetails from "../../../components/student/courseDetails";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Link, useNavigate } from "react-router-dom";
@@ -124,11 +124,11 @@ const CourseTemp = () => {
             <Button width='70%' height='30px' mt='-5px' mb='20px' ml='20px' fontSize='15px' colorScheme='blue' onClick={() => { LoadDetail(coursedata.id) }}>Buy Now</Button>
 
             <Heading fontSize='20px' >Course Details</Heading>
-            <CourseDetails></CourseDetails>
+            {/* <CourseDetails></CourseDetails> */}
             <br></br>
             <Heading fontSize='20px'>Course Includes</Heading>
 
-            <CourseInclude></CourseInclude>
+            {/* <CourseInclude></CourseInclude> */}
 
           </Box>
         </SimpleGrid>

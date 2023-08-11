@@ -5,7 +5,6 @@ import LikeDislike from './LikeDislike';
 
 import { Player } from "react-tuby";
 import "react-tuby/css/main.css";
-import CommentSection from './CommentSection';
 import { Spoiler } from '@mantine/core';
 
 import VideoJS from './VideoPlayer'

@@ -23,10 +23,11 @@ import TuteLayout from "./pages/student/components/tutes/TuteLayout";
 import TuteDashboard from "./pages/student/components/tutes/TuteDashboard";
 import TuteView from "./pages/student/components/tutes/TuteView";
 import PdfView from "./pages/student/components/tutes/PdfView";
-import Forum from "./pages/student/course/forum.js";
+import Forum from "./pages/student/course/Forum.js";
 import CourseLayout from "./pages/student/course/CourseLayout";
 import CourseTemp from "./pages/student/course/CourseTemp";
-import Videocontent from "./pages/student/course/Videocontent";
+// import Videocontent from "./pages/student/course/Videocontent";
+import ContentWatch from "./pages/student/ContentWatch";
 
 
 // instituteStaff components
@@ -83,7 +84,6 @@ import Content from "./components/Content";
 
 import { Routes, Route } from "react-router-dom";
 import { ROLES } from "./config/roles";
-import ContentWatch from "./pages/student/contentWatch";
 
 //Tutor Components
 // import TutorDashboard from "./pages/tutor/TutorDashboard";
@@ -132,7 +132,7 @@ function App() {
                 <Route path="index" element={<CourseTemp />} />
                 <Route path="forum" element={<Forum />} />
               </Route>
-              <Route path="content" element={<Videocontent />} />
+              {/* <Route path="content" element={<Videocontent />} /> */}
 
               <Route path="content/watch/:id" element={<ContentWatch />} />
               <Route path="quizzes/:subject/:mcqname" element={<Quiz />} />

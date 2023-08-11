@@ -20,13 +20,13 @@ import {
 } from "@chakra-ui/react"
 
 import generateTimeAgoString from "../../../../utils/timesAgo";
-import LikeDislike from "../../../../components/student/ContentWatch/LikeDislike";
+import LikeDislike from "../../../../components/student/contentWatch/CommentSection"
 
 //icons
 import { MdOutlineComment } from "react-icons/md"
 import { PiChatCircleBold } from "react-icons/pi"
 import { TbPinnedFilled } from "react-icons/tb"
-import CommentSection from "../../../../components/student/ContentWatch/CommentSection";
+import CommentSection from "../../../../components/student/contentWatch/CommentSection";
 import { AiFillFlag } from "react-icons/ai";
 import { SlOptions, SlOptionsVertical } from "react-icons/sl";
 import { PostViewModal } from "./Modals";

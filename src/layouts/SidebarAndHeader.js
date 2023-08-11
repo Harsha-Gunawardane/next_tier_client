@@ -12,7 +12,7 @@ import useSidebar from "../hooks/useSidebar";
 //icons
 import GridViewRoundedIcon from "@mui/icons-material/GridViewRounded";
 import { TiDocumentText } from "react-icons/ti";
-import { FaCompass, FaUserFriends, FaListAlt, FaQuestionCircle } from "react-icons/fa";
+import { FaCompass, FaUserFriends, FaListAlt, FaQuestionCircle, FaUsers } from "react-icons/fa";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import ReportProblemIcon from "@mui/icons-material/ReportProblem";
 
