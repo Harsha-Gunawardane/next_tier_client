@@ -3,7 +3,7 @@ import { Accordion } from "@mantine/core";
 import PageNameCard from "../cards/PageNameCard";
 import { Box } from "@chakra-ui/react";
 
-import "../../../../assets/css/accordion.css"
+import "../../../../assests/css/accordion.css"
 
 function FolderList({ folders }) {
   return (

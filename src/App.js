@@ -23,10 +23,10 @@ import TuteLayout from "./pages/student/components/tutes/TuteLayout";
 import TuteDashboard from "./pages/student/components/tutes/TuteDashboard";
 import TuteView from "./pages/student/components/tutes/TuteView";
 import PdfView from "./pages/student/components/tutes/PdfView";
-import Forum from "./pages/student/course/forum.js";
+import Forum from "./pages/student/course/Forum.js";
 import CourseLayout from "./pages/student/course/CourseLayout";
 import CourseTemp from "./pages/student/course/CourseTemp";
-import Videocontent from "./pages/student/course/Videocontent";
+
 
 
 // instituteStaff components
@@ -83,7 +83,7 @@ import Content from "./components/Content";
 
 import { Routes, Route } from "react-router-dom";
 import { ROLES } from "./config/roles";
-import ContentWatch from "./pages/student/contentWatch";
+import ContentWatch from "./pages/student/ContentWatch";
 
 //Tutor Components
 // import TutorDashboard from "./pages/tutor/TutorDashboard";
@@ -118,8 +118,8 @@ function App() {
               element={<SidebarAndHeader userRole={"student"} />}
             >
               <Route path="dashboard" element={<Dashboard />} />
-              <Route path="courses" element={<Courses />} />
-              <Route path="content" element={<Content />} />
+              {/* <Route path="courses" element={<Courses />} />
+              <Route path="content" element={<Content />} /> */}
 
               <Route path="quizzes" element={<QuizDashboard />} />
               <Route path="quizzes/:subject" element={<QuizDashboard />} />
@@ -128,14 +128,14 @@ function App() {
                 element={<ReviewQuiz />}
               />
 
-              <Route path="courses/:id" element={<CourseLayout />} >
+              {/* <Route path="courses/:id" element={<CourseLayout />} >
                 <Route path="index" element={<CourseTemp />} />
                 <Route path="forum" element={<Forum />} />
               </Route>
-              <Route path="content" element={<Videocontent />} />
+              <Route path="content" element={<Videocontent />} /> */}
 
-              <Route path="content/watch/:id" element={<ContentWatch />} />
-              <Route path="quizzes/:subject/:mcqname" element={<Quiz />} />
+              {/* <Route path="content/watch/:id" element={<ContentWatch />} />
+              <Route path="quizzes/:subject/:mcqname" element={<Quiz />} /> */}
 
               <Route path="tutes" element={<TuteLayout />}>
                 <Route index element={<TuteDashboard />} />
@@ -174,7 +174,7 @@ function App() {
           
           </Route> */}
 
-          < Route path='staff' element={< SidebarAndHeader userRole={"InstituteStaff"} />}>
+          {/* < Route path='staff' element={< SidebarAndHeader userRole={"InstituteStaff"} />}>
             <Route path="dashboard" element={<InstStaffDashboard />} />
             <Route path="teacher" element={<ViewTeacher />} />
             <Route path="teacher/add" element={< AddTeacher />} />
@@ -182,7 +182,7 @@ function App() {
             <Route path="profile" element={<InstStaffProfile />} />
             <Route path="complaints" element={<InstStaffComplaintsList />} />
 
-          </Route >
+          </Route > */}
 
           {/* <Route element={<RequireAuth allowedRoles={[ROLES.Tutor]} />}> */}
           {/* <Route

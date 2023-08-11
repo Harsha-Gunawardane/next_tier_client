@@ -10,7 +10,7 @@ import { AiOutlineCloudDownload } from "react-icons/ai";
 
 import { toPng } from "html-to-image";
 
-import "../../../../assets/css/textEditor.css";
+import "../../../../assests/css/textEditor.css";
 
 function ScratchPad() {
   const ref = useRef(null);

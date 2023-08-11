@@ -11,9 +11,11 @@ import {
   SimpleGrid,
   Spacer,
   Badge,
+  useToast,
 } from "@chakra-ui/react";
 import data from "./data/data.json";
 import { Link, useNavigate } from "react-router-dom";
+import profilePic from "../LandingPage/Assets/avtr9.jpg";
 import {
   Modal,
   ModalOverlay,
@@ -24,7 +26,7 @@ import {
   ModalCloseButton,
   useDisclosure,
 } from "@chakra-ui/react";
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 // import { useNavigate } from 'react-router-dom';
 import {
   FormControl,
@@ -34,13 +36,13 @@ import {
   useBreakpointValue,
   FormErrorMessage,
   InputGroup,
-  InputLeftAddon,
+  InputLeftAddon
 } from "@chakra-ui/react";
 import * as yup from "yup";
 import { useFormik } from "formik";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 
-const staffData = data.staffs;
+// const staffData = data.staffs;
 
 // Validation schema
 const validationSchema = yup.object().shape({
@@ -57,6 +59,35 @@ const validationSchema = yup.object().shape({
 });
 
 const StaffList = () => {
+  const axiosPrivate = useAxiosPrivate();
+  const [staffData, setStaffData] = useState([]); // State to hold fetched staff data
+  
+  const toast = useToast(); // Initialize useToast
+
+  useEffect(() => {
+    // Fetch staff details from the backend API
+    const fetchStaffDetails = async () => {
+      try {
+        const response = await axiosPrivate.get("/staff/staffList");
+        setStaffData(response.data);
+        
+       
+      } catch (error) {
+        console.error("Error fetching staff details:", error);
+        // Display error toast
+        toast({
+          title: "Error",
+          description: "Error fetching staff details. Please try again.",
+          status: "error",
+          duration: 3000,
+          isClosable: true,
+        });
+      }
+    };
+
+    fetchStaffDetails();
+  }, [toast]);
+
   const scrollbarStyles = `
     ::-webkit-scrollbar {
       width: 4px;
@@ -78,64 +109,7 @@ const StaffList = () => {
     }
   `;
 
-  // Calculate the counts for each filter option
-  const totalCount = staffData.length;
-  const maleCount = staffData.filter(
-    (staff) => staff.gender.toLowerCase() === "male"
-  ).length;
-  const femaleCount = staffData.filter(
-    (staff) => staff.gender.toLowerCase() === "female"
-  ).length;
-  const managerCount = staffData.filter(
-    (staff) => staff.designation.toLowerCase() === "manager"
-  ).length;
-  const staffCount = staffData.filter(
-    (staff) => staff.designation.toLowerCase() === "staff"
-  ).length;
-
-  const [searchTerm, setSearchTerm] = useState("");
-  const [sortBy, setSortBy] = useState("name");
-  const [sortOrder, setSortOrder] = useState("asc");
-  const [filterBy, setFilterBy] = useState("");
-  const [filterByGender, setFilterByGender] = useState("");
-
-  const handleSearchInputChange = (event) => {
-    setSearchTerm(event.target.value);
-  };
-
-  const handleSortByChange = (event) => {
-    setSortBy(event.target.value);
-  };
-
-  const handleSortOrderChange = (event) => {
-    setSortOrder(event.target.value);
-  };
-
-  const handleFilterByChange = (event) => {
-    setFilterBy(event.target.value);
-  };
-  const handleFilterByGenderChange = (event) => {
-    setFilterByGender(event.target.value);
-  };
-
-  const filteredStaff = staffData.filter(
-    (staff) =>
-      staff.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
-      (filterBy === "" ||
-        staff.designation.toLowerCase() === filterBy.toLowerCase()) &&
-      (filterByGender === "" ||
-        staff.gender.toLowerCase() === filterByGender.toLowerCase())
-  );
-
-  const sortedStaff = filteredStaff.sort((a, b) => {
-    let compareValue = 0;
-    if (sortBy === "name") {
-      compareValue = a.name.localeCompare(b.name);
-    } else if (sortBy === "joinedDate") {
-      compareValue = new Date(a.joinedDate) - new Date(b.joinedDate);
-    }
-    return compareValue * (sortOrder === "asc" ? 1 : -1);
-  });
+  
 
   // Initialize useNavigate hook
   const navigate = useNavigate();
@@ -143,14 +117,15 @@ const StaffList = () => {
   const handleViewProfile = (staffId) => {
     navigate(`/staff/profile/${staffId}`);
   };
-  const { isOpen, onOpen, onClose } = useDisclosure();
 
 
 
-  //Institue staff registartion from submission
-  const [isFormSubmitted, setIsFormSubmitted] = useState(false);
- 
-  const axiosPrivate = useAxiosPrivate();
+
+//Institue staff registration form submission
+const [isFormSubmitted, setIsFormSubmitted] = useState(false);
+const [isFormSuccess, setIsFormSuccess] = useState(false);
+const { isOpen, onOpen, onClose } = useDisclosure();
+  
 
   const onSubmit = async (values) => {
     setIsFormSubmitted(true);
@@ -160,12 +135,37 @@ const StaffList = () => {
       setIsFormSubmitted(false);
       const response = await axiosPrivate.post("/staff/register", values);
       console.log("Form data submitted:", response.data);
-      navigate("/staff/staff-list");
+      setIsFormSuccess(true);
+
+      // Display success toast
+      toast({
+        title: "Success",
+        description: "Form submitted successfully!",
+        status: "success",
+        duration: 3000,
+        isClosable: true,
+        position:"top"
+      });
     } catch (error) {
       console.error("Error submitting form:", error);
       setIsFormSubmitted(false);
+
+      // Display error toast
+      toast({
+        title: "Error",
+        description: "Error submitting form. Please try again.",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
     }
   };
+
+  useEffect(() => {
+    if (isFormSuccess) {
+      onClose();
+    }
+  }, [isFormSuccess, onClose]);
 
   const formik = useFormik({
     initialValues: {
@@ -278,7 +278,7 @@ const StaffList = () => {
                       </Box>
 
                       <Box mb={4}>
-                        <FormLabel>Username</FormLabel>
+                        <FormLabel>E-mail</FormLabel>
                         <FormControl
                           isInvalid={
                             formik.touched.username && formik.errors.username
@@ -299,18 +299,19 @@ const StaffList = () => {
                       <Box
                         display="flex"
                         flexDirection="column"
-                        alignItems="center"
+                        alignItems="flex-end"
                       >
                         <Box>
                           <Flex gap={3} mt={3} mb={3}>
                             <Button
-                              colorScheme="blue"
-                              type="submit"
-                              onClick={onClose}
+                            colorScheme="blue"
+                            type="submit"
+                            
+                            disabled={!formik.isValid || isFormSubmitted}
                             >
                               Submit
                             </Button>
-                            <Button onClick={onClose}>Close</Button>
+                            <Button onClick={onClose} disabled={isFormSubmitted}>Close</Button>
                           </Flex>
                         </Box>
                       </Box>
@@ -327,8 +328,8 @@ const StaffList = () => {
           <Box height="40px">
             <Input
               placeholder="Search staff"
-              value={searchTerm}
-              onChange={handleSearchInputChange}
+              // value={searchTerm}
+              // onChange={handleSearchInputChange}
               mb={["2", "0"]}
               fontSize={13}
               backgroundColor="white"
@@ -344,13 +345,14 @@ const StaffList = () => {
               </Box>
               <Box>
                 <Select
-                  value={sortBy}
-                  onChange={handleSortByChange}
+                  // value={sortBy}
+                  // onChange={handleSortByChange}
                   fontSize={13}
                   backgroundColor="white"
                 >
-                  <option value="name">Name</option>
-                  <option value="joinedDate">Joined Date</option>
+                  <option value="first_name">First Name</option>
+                  <option value="last_name">First Name</option>
+                  <option value="join_date">Joined Date</option>
                 </Select>
                 <Spacer mx="2" />
               </Box>
@@ -365,8 +367,8 @@ const StaffList = () => {
               </Box>
               <Box>
                 <Select
-                  value={sortOrder}
-                  onChange={handleSortOrderChange}
+                  // value={sortOrder}
+                  // onChange={handleSortOrderChange}
                   w="max-content"
                   fontSize={13}
                   backgroundColor="white"
@@ -387,14 +389,20 @@ const StaffList = () => {
               <Box>
                 <Select
                   fontSize={13}
-                  value={filterBy}
-                  onChange={handleFilterByChange}
+                  // value={filterBy}
+                  // onChange={handleFilterByChange}
                   w="max-content"
                   backgroundColor="white"
                 >
-                  <option value="">All-{totalCount}</option>
-                  <option value="Manager">Manager -{managerCount}</option>
-                  <option value="Staff">Staff -{staffCount}</option>
+                  <option value="">All-
+                  {/* {totalCount} */}
+                  </option>
+                  <option value="Manager">Manager -
+                  {/* {managerCount} */}
+                  </option>
+                  <option value="Staff">Staff -
+                  {/* {staffCount} */}
+                  </option>
                 </Select>
               </Box>
             </Flex>
@@ -409,14 +417,20 @@ const StaffList = () => {
               <Box>
                 <Select
                   fontSize={13}
-                  value={filterByGender}
-                  onChange={handleFilterByGenderChange}
+                  // value={filterByGender}
+                  // onChange={handleFilterByGenderChange}
                   w="max-content"
                   backgroundColor="white"
                 >
-                  <option value="">All-{totalCount}</option>
-                  <option value="Male">Male -{maleCount}</option>
-                  <option value="Female">Female - {femaleCount}</option>
+                  <option value="">All-
+                  {/* {totalCount} */}
+                  </option>
+                  <option value="Male">Male -
+                  {/* {maleCount} */}
+                  </option>
+                  <option value="Female">Female -
+                   {/* {femaleCount} */}
+                   </option>
                 </Select>
               </Box>
             </Flex>
@@ -430,7 +444,7 @@ const StaffList = () => {
           marginLeft={4}
           marginRight={4}
         >
-          {sortedStaff.map((staff) => (
+          {staffData.map((staff) => (
             <Box
               key={staff.id}
               borderWidth="1px"
@@ -444,17 +458,17 @@ const StaffList = () => {
               alignItems="center"
             >
               <Avatar
-                name={staff.name}
-                src={staff.profileImage}
+                name={`${staff.first_name} ${staff.last_name}`}
+                src={profilePic}
                 mb="2"
                 size="xl"
               />
               <Text fontWeight="bold" fontSize={13}>
-                {staff.name}
+                {staff.first_name}  {staff.last_name}
               </Text>
-              <Text fontSize={13}>{staff.gender}</Text>
-              <Text fontSize={13}>{staff.designation}</Text>
-              <Text fontSize={13}>Joined Date: {staff.joinedDate}</Text>
+              <Text fontSize={13}></Text>
+              <Text fontSize={13}>Staff</Text>
+              <Text fontSize={13}>Joined Date:  {new Date(staff.join_date).toLocaleDateString()}</Text>
               <Flex>
                 {/* <Text fontSize={13} >Account status:</Text> */}
                 {/* <Badge colorScheme={staff.acc_status === 'Disabled' ? 'red' : 'green'} >

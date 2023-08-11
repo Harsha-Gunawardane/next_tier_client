@@ -173,7 +173,7 @@ const TutorsList = () => {
               <Text fontWeight="bold" fontSize={13}>
                 {tutor.fName} {tutor.lName}
               </Text>
-              <Text fontSize={13}>{tutor.gender}</Text>
+              {/* <Text fontSize={13}>{tutor.gender}</Text> */}
               <Text fontSize={10} color="gray">{tutor.education.qualifications}</Text>
               <Text fontSize={13}>Joined Date: {tutor.joinedDate}</Text>
               <Button
