@@ -1,0 +1,13 @@
+.center-align {
+  text-align: left;
+}
+
+.tr {
+    min-width: 500px;
+    overflow-x: auto;
+}
+
+.overflowY {
+  max-height: 200px;
+  overflow-y: scroll;
+}

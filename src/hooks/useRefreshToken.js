@@ -9,7 +9,7 @@ const useRefreshToken = () => {
     const response = await axios.get("/refresh", {
       withCredentials: true,
     });
-    
+
     // decode access token to get roles
     const decoded = auth?.accessToken
       ? jwt_decode(auth.accessToken)
@@ -19,7 +19,7 @@ const useRefreshToken = () => {
 
     setAuth((prev) => {
       console.log(JSON.stringify(prev));
-      console.log(response.data.accessToken);
+      // console.log(response.data.accessToken);
       return {
         ...prev,
         roles: roles,

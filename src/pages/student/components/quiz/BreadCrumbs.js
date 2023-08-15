@@ -7,24 +7,32 @@ export default function BreadCrumbs() {
 
   let currentLink = "";
 
-  const crumbs = location.pathname.split("/")
-    .filter(crumb => crumb !== "")
-    .map(crumb => {
+  const crumbs = location.pathname
+    .split("/")
+    .filter((crumb) => crumb !== "")
+    .map((crumb) => {
       // Replace hyphens with spaces
-      const crumbWithSpaces = crumb.replace(/-/g, ' ');
+      const crumbWithSpaces = crumb.replace(/-/g, " ");
 
       // Check if the crumb contains any digits (numbers)
       const containsDigits = /\d/.test(crumbWithSpaces);
 
       // Add "#" in front of the number or use the crumb with spaces
-      const crumbWithHash = containsDigits ? `#${crumbWithSpaces}` : crumbWithSpaces;
+      const crumbWithHash = containsDigits
+        ? `#${crumbWithSpaces}`
+        : crumbWithSpaces;
 
       currentLink += `/${crumb}`;
 
       return (
         <BreadcrumbItem key={crumb} fontSize={16}>
           <Link to={currentLink}>
-            <Text color='#333333' isTruncated maxW={{ base: "50px", md: "none" }} fontSize={{ base: "13px", md: "16px" }}>
+            <Text
+              color="#333333"
+              isTruncated
+              maxW={{ base: "50px", md: "none" }}
+              fontSize={{ base: "13px", md: "16px" }}
+            >
               {crumbWithHash}
             </Text>
           </Link>
@@ -33,7 +41,12 @@ export default function BreadCrumbs() {
     });
 
   return (
-    <Breadcrumb ml={{ base: "8px", md: "10px" }} mt={5} spacing={{ base: "5px", md: "8px" }} separator={<ChevronRightIcon color="gray.500" />}>
+    <Breadcrumb
+      ml={{ base: "8px", md: "10px" }}
+      mt={5}
+      spacing={{ base: "5px", md: "8px" }}
+      separator={<ChevronRightIcon color="gray.500" />}
+    >
       {crumbs}
     </Breadcrumb>
   );
