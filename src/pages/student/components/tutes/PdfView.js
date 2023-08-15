@@ -8,7 +8,7 @@ import {
 import { useParams } from "react-router-dom";
 import pako from "pako";
 
-import "../../../../assets/css/pdfView.css";
+import "../../../../assests/css/pdfView.css";
 import useAxiosPrivate from "../../../../hooks/useAxiosPrivate";
 import { Loader } from "@mantine/core";
 

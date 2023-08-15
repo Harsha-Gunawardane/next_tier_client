@@ -45,7 +45,7 @@ import ViewPaymentHistory from "./pages/InstituteStaff/viewPaymentHistory";
 import Profile from "./pages/InstituteStaff/Profile";
 import CashReceipt from "./pages/InstituteStaff/cashReceiptStaff";
 import OnlineReceipt from "./pages/InstituteStaff/onlineReceiptStaff";
-import StudentsList from "./pages/InstituteStaff/studentsList";
+import StudentsList from "./pages/InstituteStaff/StudentsList";
 import StudentProfile from "./pages/InstituteStaff/StudentProfile";
 import TutorsList from "./pages/InstituteStaff/tutorsList";
 import TutorProfile from "./pages/InstituteStaff/TutorProfile";

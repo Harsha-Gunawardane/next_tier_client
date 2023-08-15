@@ -1,7 +1,7 @@
 import { Box } from "@chakra-ui/react";
 import { Table } from "@mantine/core";
 
-import "../../../assets/css/mantineTable.css";
+import "../../../assests/css/mantineTable.css";
 
 function UsersTable({ users }) {
   const thStyle = {
@@ -44,8 +44,8 @@ function UsersTable({ users }) {
       borderRadius={8}
       p={5}
       border={"1px solid #E2E2E2"}
-      // maxH={300}
-      // overflowY={"scroll"}
+    // maxH={300}
+    // overflowY={"scroll"}
     >
       <Table highlightOnHover className="tr">
         <thead>
