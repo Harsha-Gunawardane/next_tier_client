@@ -1,32 +1,33 @@
 import React from 'react';
-import {
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalCloseButton,
-  ModalBody,
-  ModalFooter,
-  Button,
-} from '@chakra-ui/react';
+import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, ModalFooter, Button, useBreakpointValue, Stack } from '@chakra-ui/react';
 
-function Status({ isOpen, onClose, teacher, onApprove }) {
+function Status({ isOpen, onClose, teacher, onApprove, actionType }) {
+  const modalSize = useBreakpointValue({ base: 'xs', sm: 'md', md: 'lg' });
+
+    // Determine the colorScheme based on tableType
+    const colorScheme = actionType === 'approve' ? 'green' : 'red';
+
   return (
-    <Modal isOpen={isOpen} onClose={onClose}>
+    <Modal isOpen={isOpen} onClose={onClose} size={modalSize}>
       <ModalOverlay />
       <ModalContent>
-        <ModalHeader>Confirm Approval</ModalHeader>
+        <ModalHeader>
+        {actionType === 'approve' ? `Confirm Approval` : `Confirm Rejection` }
+        </ModalHeader>
         <ModalCloseButton />
         <ModalBody>
-          Are you sure you want to approve {teacher && teacher.fullName}'s request?
+        {actionType === 'approve' && `Are you sure you want to approve ${teacher && teacher.fullName}'s request?`}
+        {actionType === 'reject' && `Are you sure you want to reject ${teacher && teacher.fullName}'s request?`}
         </ModalBody>
         <ModalFooter>
-          <Button colorScheme="green" mr={3} onClick={onApprove}>
-            Approve
-          </Button>
-          <Button variant="ghost" onClick={onClose}>
-            Cancel
-          </Button>
+          <Stack direction={['row', 'row']} spacing="2">
+            <Button colorScheme={colorScheme} flex="1" onClick={onApprove}>
+            {actionType === 'approve' ? 'Approve' : 'Reject'}
+            </Button>
+            <Button flex="1" variant="ghost" onClick={onClose}>
+              Cancel
+            </Button>
+          </Stack>
         </ModalFooter>
       </ModalContent>
     </Modal>

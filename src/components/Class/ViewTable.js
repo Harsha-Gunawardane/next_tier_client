@@ -1,5 +1,5 @@
 import { Table as ChakraTable, Thead, Tbody, Tr, Th, Td, Box } from '@chakra-ui/react';
-import { ViewIcon } from '@chakra-ui/icons';
+import { EditIcon } from '@chakra-ui/icons';
 
 function ViewTable({ data, tableType, onIconClick }) {
   const getStatusBackgroundColor = (status) => {
@@ -16,28 +16,28 @@ function ViewTable({ data, tableType, onIconClick }) {
   };
 
   return (
-    <ChakraTable>
+    <ChakraTable  variant="simple">
       <Thead>
         <Tr>
-          <Th fontSize="md" fontWeight="bold">
+          <Th fontSize="md" fontWeight="bold" textTransform="capitalize">
             ID
           </Th>
-          <Th fontSize="md" fontWeight="bold">
+          <Th fontSize="md" fontWeight="bold" textTransform="capitalize">
             Full Name
           </Th>
-          <Th fontSize="md" fontWeight="bold">
+          <Th fontSize="md" fontWeight="bold" textTransform="capitalize">
             Subject
           </Th>
-          <Th fontSize="md" fontWeight="bold">
+          <Th fontSize="md" fontWeight="bold" textTransform="capitalize">
             Class
           </Th>
           {tableType === 'allRequests' && (
-            <Th fontSize="md" fontWeight="bold">
+            <Th fontSize="md" fontWeight="bold" textTransform="capitalize">
               Status
             </Th>
           )}
           {(tableType === 'Pending' || tableType === 'Rejected') && (
-            <Th fontSize="md" fontWeight="bold">
+            <Th fontSize="md" fontWeight="bold" textTransform="capitalize">
               Action
             </Th>
           )}
@@ -67,7 +67,7 @@ function ViewTable({ data, tableType, onIconClick }) {
             {(tableType === 'Pending' || tableType === 'Rejected') && (
               <Td fontSize={13}>
                  <Box ml={6} onClick={() => onIconClick(teacher)}>
-                  <ViewIcon size={20} color="gray" />
+                  <EditIcon size={20} color="gray" />
                 </Box>
               </Td>
             )}

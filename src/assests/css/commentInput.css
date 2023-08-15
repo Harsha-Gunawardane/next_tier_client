@@ -1,0 +1,19 @@
+.commentInput,
+.commentInput--multiline {
+    height: 30px;
+    width: calc(100% - 40px);
+    border: none;
+    border-bottom: 2px solid #aaa;
+    background-color: transparent;
+    margin-bottom: 10px;
+    resize: none;
+    outline: none;
+    transition: all .5s ease;
+    caret-color: #151515;
+}
+
+.commentInput::focus {
+    border: "none" !important;
+    border-bottom: 2px solid #0080ff !important;
+    transition: all .5s ease
+}

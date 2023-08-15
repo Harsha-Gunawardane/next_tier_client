@@ -284,7 +284,7 @@
     {
       "payment_id": 5,
       "name": "Dinesh Khan",
-      "course": "Biology",
+      "course": "History",
       "studypack_id": "BI21",
       "amount": "",
       "ProfileImage": "dinesh_khan.jpg",
@@ -302,7 +302,7 @@
     {
       "payment_id": 6,
       "name": "Dinesh Khan",
-      "course": "Physics",
+      "course": "IT",
       "studypack_id": "PY45",
       "amount": "Rs. 2500",
       "ProfileImage": "dinesh_khan.jpg",
@@ -354,7 +354,7 @@
     {
       "payment_id": 9,
       "name": "Dinesh Khan",
-      "course": "Biology",
+      "course": "Physics",
       "studypack_id": "BI30",
       "amount": "",
       "ProfileImage": "dinesh_khan.jpg",
@@ -441,7 +441,7 @@
     {
       "payment_id": 14,
       "name": "Dinesh Khan",
-      "course": "Biology",
+      "course": "Science",
       "studypack_id": "BI80",
       "amount": "",
       "ProfileImage": "dinesh_khan.jpg",
@@ -506,7 +506,7 @@
       "lName": "john",
       "gender": "Female",
       "phn_num": "+94775093445",
-      "stream": "Arts",
+      "stream": "Biology",
       "College": "Ananda College,Kandy",
       "joinedDate": "05/04/2021",
       "profileImage": "/InstituteStaffAssets/prfl3.jpg",
@@ -520,7 +520,7 @@
       "lName": "Kesan",
       "gender": "Male",
       "phn_num": "+94775093445",
-      "stream": "Commerce",
+      "stream": "Biology",
       "College": "Ananda College,Kandy",
       "joinedDate": "05/04/2021",
       "profileImage": "/InstituteStaffAssets/prfl1.jpg",

@@ -49,7 +49,7 @@
 }
 
 .left .text .text1{
-    color: #0074D9;
+    color:#414141 ;
     width: 400px;
     font-size: 32px;
     font-weight: bold;
@@ -59,7 +59,7 @@
     margin-bottom: 15px;
 }
 .stu-signup-btn{
-    background-color: #F48C06;
+    background-color: #0074D9;
     border: none;
     height: 40px;
     font-size: 17px;
@@ -76,7 +76,7 @@
 }
 
 .stu-signup-btn:hover{
-    background-color: #0074D9;
+    background-color: #F48C06;
 }
 
 .hero-boxes{
