@@ -22,6 +22,7 @@ import TuteLayout from "./pages/student/components/tutes/TuteLayout";
 import TuteDashboard from "./pages/student/components/tutes/TuteDashboard";
 import TuteView from "./pages/student/components/tutes/TuteView";
 import PdfView from "./pages/student/components/tutes/PdfView";
+import StudentCourses from "./pages/student/Courses";
 
 // instituteStaff components
 import InstStaffDashboard from "./pages/InstituteStaff/Dashboard";
@@ -32,17 +33,22 @@ import InstStaffComplaintsList from "./pages/InstituteStaff/Complaints/Complaint
 import ApproveClass from "./pages/InstituteStaff/ApproveClass";
 import HallList from "./pages/InstituteStaff/HallList";
 import HallSchedule from "./pages/InstituteStaff/HallSchedule";
-import InstStaffStuPayment from './pages/InstituteStaff/StuPayment';
-import InstStaffList from './pages/InstituteStaff/StaffList'
-import ViewPaymentHistory from './pages/InstituteStaff/viewPaymentHistory';
-import MyProfile from './pages/InstituteStaff/myProfile';
-import CashReceipt from './pages/InstituteStaff/cashReceiptStaff';
-import OnlineReceipt from './pages/InstituteStaff/onlineReceiptStaff';
+import InstStaffStuPayment from "./pages/InstituteStaff/StuPayment";
+import InstStaffList from "./pages/InstituteStaff/StaffList";
+import ViewPaymentHistory from "./pages/InstituteStaff/viewPaymentHistory";
+import MyProfile from "./pages/InstituteStaff/myProfile";
+import CashReceipt from "./pages/InstituteStaff/cashReceiptStaff";
+import OnlineReceipt from "./pages/InstituteStaff/onlineReceiptStaff";
 import StudentsList from "./pages/InstituteStaff/studentsList";
 import StudentProfile from "./pages/InstituteStaff/StudentProfile";
 import TutorsList from "./pages/InstituteStaff/tutorsList";
 import TutorProfile from "./pages/InstituteStaff/TutorProfile";
 import CourseProfile from "./pages/InstituteStaff/CourseDetail";
+
+// admin components
+import AdminDashboard from "./pages/admin/Dashboard";
+import AdminsInfo from "./pages/admin/AdminsInfo";
+import AdminSetting from "./pages/admin/Settings";
 
 // tutor components
 // import TDashboard from "./pages/tutor/dashboard";
@@ -99,9 +105,6 @@ function App() {
         <Route path="register" element={<Register />} />
         <Route path="verify" element={<UserVerify />} />
         <Route path="forgot-password" element={<ForgottenPassword />} />
-       
-
-       
 
         {/* we want to protect these routes */}
         <Route element={<PersistLogin />}>
@@ -111,7 +114,8 @@ function App() {
               element={<SidebarAndHeader userRole={"student"} />}
             >
               <Route path="dashboard" element={<Dashboard />} />
-              <Route path="courses" element={<Courses />} />
+              <Route path="courses" element={<StudentCourses />} />
+              {/* <Route path="courses/:id/content" element={<Coursecontent />} /> */}
               <Route path="content" element={<Content />} />
 
               <Route path="quizzes" element={<QuizDashboard />} />
@@ -152,15 +156,28 @@ function App() {
           
           </Route> */}
 
-        <Route path='staff' element={<SidebarAndHeader userRole={"InstituteStaff"} />}>
-          <Route path="dashboard" element={<InstStaffDashboard />} />
-          <Route path="teacher" element={<ViewTeacher/>} />
-          <Route path="teacher/add" element={< AddTeacher />} />
-          <Route path="class" element={<ApproveClass/>} />
-          <Route path="profile" element={<InstStaffProfile />} />
-          <Route path="complaints" element={<InstStaffComplaintsList />} />
-          
-        </Route>
+          <Route element={<RequireAuth allowedRoles={[ROLES.Admin]} />}>
+          <Route
+            path="admin"
+            element={<SidebarAndHeader userRole={"student"} />}
+          >
+            <Route path="dashboard" element={<AdminDashboard />} />
+            <Route path="info" element={<AdminsInfo />} />
+            <Route path="settings" element={<AdminSetting />} />
+          </Route>
+          </Route>
+
+          <Route
+            path="staff"
+            element={<SidebarAndHeader userRole={"InstituteStaff"} />}
+          >
+            <Route path="dashboard" element={<InstStaffDashboard />} />
+            <Route path="teacher" element={<ViewTeacher />} />
+            <Route path="teacher/add" element={<AddTeacher />} />
+            <Route path="class" element={<ApproveClass />} />
+            <Route path="profile" element={<InstStaffProfile />} />
+            <Route path="complaints" element={<InstStaffComplaintsList />} />
+          </Route>
 
           {/* <Route element={<RequireAuth allowedRoles={[ROLES.Tutor]} />}> */}
           {/* <Route
@@ -201,10 +218,10 @@ function App() {
             <Route path="hall/view" element={<HallList />} />
             <Route path="stu-payment" element={<InstStaffStuPayment />} />
             <Route path="staff-list" element={<InstStaffList />} />
-            <Route path="payment-history" element={<ViewPaymentHistory/>} />
-            <Route path="cash-receipt" element={<CashReceipt/>} />
-            <Route path="online-receipt" element={<OnlineReceipt/>} />
-            <Route path="stu-list" element={<StudentsList/>} />
+            <Route path="payment-history" element={<ViewPaymentHistory />} />
+            <Route path="cash-receipt" element={<CashReceipt />} />
+            <Route path="online-receipt" element={<OnlineReceipt />} />
+            <Route path="stu-list" element={<StudentsList />} />
             <Route path="stu-profile/:id" element={<StudentProfile />} />
             <Route path="staff-list" element={<InstStaffList />} />
             <Route path="tutors-list" element={<TutorsList />} />
@@ -228,7 +245,6 @@ function App() {
         {/* catch all */}
         <Route path="*" element={<Missing />} />
       </Route>
-    
     </Routes>
   );
 }
