@@ -96,7 +96,15 @@ const SidebarAndHeader = ({ userRole }) => {
 		{ icon: GridViewRoundedIcon, name: "Dashboard", value: "dashboard", href: "/stu/dashboard" },
 		{ icon: TiDocumentText, name: "Courses", value: "courses", href: "/stu/courses" },
 		{ icon: FaCompass, name: "Content", value: "content", href: "/stu/content" },
+		{ icon: FaListAlt, name: "Quizzes", value: "quizzes", href: "/stu/quizzes" },
+		{ icon: FaQuestionCircle, name: "Tutes", value: "tutes", href: "/stu/tutes" },
 	];
+
+	const AdminOptions = [
+		{ icon: GridViewRoundedIcon, name: "Dashboard", value: "dashboard", href: "/admin/dashboard" },
+		{ icon: TiDocumentText, name: "Info", value: "info", href: "/admin/info" },
+		{ icon: FaCompass, name: "Settings", value: "adsettings", href: "/admin/settings" },
+	]
 
 	const TeacherOptions = [
 		{
@@ -119,9 +127,9 @@ const SidebarAndHeader = ({ userRole }) => {
 		},
 		{
 			icon: FaUserFriends,
-			name: "Support Staffs",
+			name: "Staff",
 			value: "staffs",
-			href: "/tutor/supportstaffs",
+			href: "/tutor/staffs",
 		},
 		{
 			icon: FaListAlt,
@@ -158,6 +166,9 @@ const SidebarAndHeader = ({ userRole }) => {
 			break;
 		case ('InstituteStaff'):
 			Options = InstStaffOptions
+			break;
+		case ('admin'):
+			Options = AdminOptions
 			break;
 		default:
 			Options = StuOptions;

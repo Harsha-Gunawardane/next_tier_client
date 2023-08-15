@@ -24,8 +24,8 @@ import { Show, Hide } from '@chakra-ui/react'
 import { useParams } from "react-router-dom";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import { useLocation } from "react-router-dom";
-import AddNew from "./addstudypack";
-import Addpaper from "./addpaper";
+import AddNew from "../tutor/addstudypack";
+import Addpaper from "../tutor/addpaper";
 
 
 const Coursecontent = () => {
@@ -41,24 +41,39 @@ const Coursecontent = () => {
   const location = useLocation();
   const id = location.pathname.split("/").pop();
 
+  const data = {
+    id: "eaea8414-d4ec-4d26-8882-203b4efa6419",
+    tutor_id: "0ea16776-fd8a-41a2-b753-c34ebee4e9b4",
+    title: "Physics 2025 A/L Theory",
+    description: "Physics is the branch of science that deals with the structure of matter and how the fundamental constituents of the universe interact. It studies objects ranging from the very small using quantum mechanics to the entire universe using general relativity.",
+    subject: "Physics",
+    medium: "Sinhala",
+    grade: "2025 A/L",
+    thumbnail: "abc",
+    monthly_fee: 2500,
+    hall_id: null,
+    content_ids: [
+      {
+        tute_id: [],
+        video_id: []
+      }
+    ],
+    start_date: "2023-08-15T14:09:29.444Z",
+    studypack_ids: [],
+    schedule: [
+      {
+        day: "Wednesday",
+        end_time: "10:00",
+        start_time: "08:00"
+      }
+    ]
+  }
 
 
   useEffect(() => {
-    const getcourse = async () => {
-      const controller = new AbortController();
-      try {
-        const response = await axiosPrivate.get(`/tutor/course/${id}`, {
-          signal: controller.signal,
+    setcoursedata(data);
+  }, []);
 
-        });
-        setcoursedata(response.data);
-        console.log(response.data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    getcourse();
-  }, [axiosPrivate]);
 
 
   const renderCourseContent = () => {

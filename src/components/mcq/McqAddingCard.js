@@ -11,6 +11,7 @@ import {
 } from "@chakra-ui/react";
 import { IconSearch } from "@tabler/icons-react";
 import React from "react";
+import { AiOutlineImport } from "react-icons/ai";
 import { IoIosAddCircleOutline } from "react-icons/io";
 
 export default function McqAddingCard({ handleDrawer, onOpen }) {
@@ -19,17 +20,18 @@ export default function McqAddingCard({ handleDrawer, onOpen }) {
       <Grid templateColumns="repeat(3,1fr)" gap={{ base: 3, md: 10 }}>
         <GridItem colSpan={{ base: 3, md: 2 }}>
           <FormLabel fontSize={{ base: "14px", md: "16px" }}>
-            Teleport from the Quiz Library
+            Import from the Quiz Library
           </FormLabel>
           <FormControl>
             <InputGroup borderColor="#E0E1E7">
               <InputLeftElement
                 pointerEvents="none"
                 fontSize="12px" // Decrease the font size to make the icon mdaller
-                children={<IconSearch size="1.3rem" color="gray" />}
+                children={<AiOutlineImport size="1.3rem" color="gray" />}
               />
 
               <Input
+                readOnly
                 variant="outline"
                 placeholder="Search from question library"
                 h={"40px"}
@@ -37,6 +39,7 @@ export default function McqAddingCard({ handleDrawer, onOpen }) {
                 fontSize={{ base: "14px", md: "16px" }}
                 // bg="gray.50"
                 borderRadius={"5px"}
+                paddingLeft="35px"
                 onClick={handleDrawer}
               />
             </InputGroup>
@@ -46,20 +49,20 @@ export default function McqAddingCard({ handleDrawer, onOpen }) {
           <FormLabel fontSize={{ base: "14px", md: "16px" }}>
             Create a New Question
           </FormLabel>
-            <Button
-              colorScheme="messenger"
-              variant="solid"
-              size="md"
-              width="160px"
-              onClick={onOpen}
-            >
-              <IoIosAddCircleOutline
-                size="20px"
-                color="white"
-                style={{ marginRight: "6px" }}
-              />
-              New mcq
-            </Button>
+          <Button
+            colorScheme="messenger"
+            variant="solid"
+            size="md"
+            width="160px"
+            onClick={onOpen}
+          >
+            <IoIosAddCircleOutline
+              size="20px"
+              color="white"
+              style={{ marginRight: "6px" }}
+            />
+            New mcq
+          </Button>
         </GridItem>
       </Grid>
     </Card>
