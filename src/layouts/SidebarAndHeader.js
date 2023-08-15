@@ -3,7 +3,7 @@ import Header from "../components/Header/Header";
 import ResponsiveSidebar from "../components/Sidebar/ResponsiveSidebar";
 
 import { useState, useEffect, useRef } from "react";
-import { FaUsers,FaUserAlt, FaMoneyBillAlt } from "react-icons/fa";
+import { FaUsers, FaUserAlt, FaMoneyBillAlt } from "react-icons/fa";
 
 import { Box, Grid, GridItem, useDisclosure } from "@chakra-ui/react";
 import useSidebar from "../hooks/useSidebar";
@@ -12,7 +12,7 @@ import useSidebar from "../hooks/useSidebar";
 //icons
 import GridViewRoundedIcon from "@mui/icons-material/GridViewRounded";
 import { TiDocumentText } from "react-icons/ti";
-import { FaCompass, FaUserFriends, FaListAlt, FaQuestionCircle, FaUsers } from "react-icons/fa";
+import { FaCompass, FaUserFriends, FaListAlt, FaQuestionCircle } from "react-icons/fa";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import ReportProblemIcon from "@mui/icons-material/ReportProblem";
 
@@ -140,7 +140,7 @@ const SidebarAndHeader = ({ userRole }) => {
 
 	const InstStaffOptions = [
 		{ icon: GridViewRoundedIcon, name: 'Dashboard', value: 'dashboard', href: '/staff/dashboard' },
-		{icon: TiDocumentText, name: "Class Request", value: "approveClass", href: "/staff/class"},
+		{ icon: TiDocumentText, name: "Class Request", value: "approveClass", href: "/staff/class" },
 		{ icon: ReportProblemIcon, name: 'Complaints', value: 'complaints', href: '/staff/complaints' },
 		{ icon: TiDocumentText, name: "Hall Management", value: "hallSchedule", href: "/staff/hall" },
 		{ icon: FaUserAlt, name: 'Institute Staffs', value: 'staff-list', href: '/staff/staff-list' },

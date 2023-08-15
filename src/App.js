@@ -22,20 +22,17 @@ import TuteLayout from "./pages/student/components/tutes/TuteLayout";
 import TuteDashboard from "./pages/student/components/tutes/TuteDashboard";
 import TuteView from "./pages/student/components/tutes/TuteView";
 import PdfView from "./pages/student/components/tutes/PdfView";
-<<<<<<< HEAD
 import Forum from "./pages/student/course/Forum.js";
 import CourseLayout from "./pages/student/course/CourseLayout";
 import CourseTemp from "./pages/student/course/CourseTemp";
 // import Videocontent from "./pages/student/course/Videocontent";
 import ContentWatch from "./pages/student/ContentWatch";
+import ContentPage from "./pages/student/content/ContentPage";
 
-=======
 import StudentCourses from "./pages/student/Courses";
->>>>>>> aeb5ff08cb2cd0ac85dd176b12d3932ab9640183
 
 // instituteStaff components
 import InstStaffDashboard from "./pages/InstituteStaff/Dashboard";
-import ViewTeacher from "./pages/InstituteStaff/ViewTeacher";
 import AddTeacher from "./pages/InstituteStaff/AddTeacher";
 import InstStaffProfile from "./pages/InstituteStaff/StaffProfile";
 import InstStaffComplaintsList from "./pages/InstituteStaff/Complaints/ComplaintsListView";
@@ -45,7 +42,7 @@ import HallSchedule from "./pages/InstituteStaff/HallSchedule";
 import InstStaffStuPayment from "./pages/InstituteStaff/StuPayment";
 import InstStaffList from "./pages/InstituteStaff/StaffList";
 import ViewPaymentHistory from "./pages/InstituteStaff/viewPaymentHistory";
-import MyProfile from "./pages/InstituteStaff/myProfile";
+import Profile from "./pages/InstituteStaff/Profile";
 import CashReceipt from "./pages/InstituteStaff/cashReceiptStaff";
 import OnlineReceipt from "./pages/InstituteStaff/onlineReceiptStaff";
 import StudentsList from "./pages/InstituteStaff/studentsList";
@@ -92,10 +89,6 @@ import Content from "./components/Content";
 
 import { Routes, Route } from "react-router-dom";
 import { ROLES } from "./config/roles";
-<<<<<<< HEAD
-import ContentWatch from "./pages/student/ContentWatch";
-=======
->>>>>>> aeb5ff08cb2cd0ac85dd176b12d3932ab9640183
 
 //Tutor Components
 // import TutorDashboard from "./pages/tutor/TutorDashboard";
@@ -137,7 +130,6 @@ function App() {
                 path="quizzes/:subject/:mcqname/review"
                 element={<ReviewQuiz />}
               />
-<<<<<<< HEAD
 
               <Route path="courses/:id" element={<CourseLayout />} >
                 <Route path="index" element={<CourseTemp />} />
@@ -145,8 +137,6 @@ function App() {
               </Route>
               <Route path="content" element={<ContentPage />} />
               <Route path="content/watch/:id" element={<ContentWatch />} />
-=======
->>>>>>> aeb5ff08cb2cd0ac85dd176b12d3932ab9640183
               <Route path="quizzes/:subject/:mcqname" element={<Quiz />} />
 
               <Route path="tutes" element={<TuteLayout />}>
@@ -180,14 +170,14 @@ function App() {
           </Route> */}
 
           <Route element={<RequireAuth allowedRoles={[ROLES.Admin]} />}>
-          <Route
-            path="admin"
-            element={<SidebarAndHeader userRole={"student"} />}
-          >
-            <Route path="dashboard" element={<AdminDashboard />} />
-            <Route path="info" element={<AdminsInfo />} />
-            <Route path="settings" element={<AdminSetting />} />
-          </Route>
+            <Route
+              path="admin"
+              element={<SidebarAndHeader userRole={"student"} />}
+            >
+              <Route path="dashboard" element={<AdminDashboard />} />
+              <Route path="info" element={<AdminsInfo />} />
+              <Route path="settings" element={<AdminSetting />} />
+            </Route>
           </Route>
 
           <Route
@@ -195,7 +185,7 @@ function App() {
             element={<SidebarAndHeader userRole={"InstituteStaff"} />}
           >
             <Route path="dashboard" element={<InstStaffDashboard />} />
-            <Route path="teacher" element={<ViewTeacher />} />
+            {/* <Route path="teacher" element={<ViewTeacher />} /> */}
             <Route path="teacher/add" element={<AddTeacher />} />
             <Route path="class" element={<ApproveClass />} />
             <Route path="profile" element={<InstStaffProfile />} />
@@ -231,8 +221,8 @@ function App() {
             element={<SidebarAndHeader userRole={"InstituteStaff"} />}
           >
             <Route path="dashboard" element={<InstStaffDashboard />} />
-            <Route path="my-profile" element={<MyProfile />} />
-            <Route path="teacher" element={<ViewTeacher />} />
+            {/* <Route path="my-profile" element={<MyProfile />} /> */}
+            {/* <Route path="teacher" element={<ViewTeacher />} /> */}
             <Route path="teacher/add" element={<AddTeacher />} />
             <Route path="class" element={<ApproveClass />} />
             <Route path="profile/:id" element={<InstStaffProfile />} />
