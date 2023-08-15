@@ -3,7 +3,6 @@ import {
     Box,
     Avatar,
     Text,
-    Heading,
     Divider,
     IconButton,
     Collapse,
@@ -16,23 +15,36 @@ import {
     Menu,
     MenuButton,
     MenuList,
-    MenuItem
+    MenuItem,
+    CSSReset,
+    AspectRatio,
+    Image,
 } from "@chakra-ui/react"
+import { PhotoProvider, PhotoView } from 'react-photo-view';
+import 'react-photo-view/dist/react-photo-view.css';
+
+
 
 import generateTimeAgoString from "../../../../utils/timesAgo";
-import LikeDislike from "../../../../components/student/contentWatch/CommentSection"
+import LikeDislike from "../../../../components/student/contentWatch/LikeDislike";
 
 //icons
-import { MdOutlineComment } from "react-icons/md"
 import { PiChatCircleBold } from "react-icons/pi"
 import { TbPinnedFilled } from "react-icons/tb"
 import CommentSection from "../../../../components/student/contentWatch/CommentSection";
 import { AiFillFlag } from "react-icons/ai";
 import { SlOptions, SlOptionsVertical } from "react-icons/sl";
-import { PostViewModal } from "./Modals";
 import { useEffect } from "react";
+import { RiAttachment2 } from "react-icons/ri";
+
+//custom styles
+import "./styles/postStyles.css";
+
+//images
+import pdf from "../../../../assests/images/pdf.png";
 
 const CustomLikeDislike = (props) => {
+    const { post, ...rest } = props;
 
     return (
         <LikeDislike
@@ -41,6 +53,8 @@ const CustomLikeDislike = (props) => {
             iconSize="22px"
             buttonDivider={false}
             liked={null}
+            type="post"
+            {...rest}
         />
     )
 }
@@ -69,12 +83,15 @@ const Post = (props) => {
         index,
         renderLimit = null,
         openComments = false,
+        setPdfUrl,
+        onPdfOpen,
         ...rest
     } = props;
     // const { user, title, message, posted_at, reactions, post_reactions, forum, comments, attachments } = post;
 
     //use Disclosure
     const { isOpen, onToggle, onOpen } = useDisclosure();
+
 
     useEffect(() => {
         if (openComments) {
@@ -113,10 +130,21 @@ const Post = (props) => {
                     </Flex>
                     <Flex w="100%" direction={"column"} px="30px" gap="8px">
                         <Text textAlign={"left"} w="100%" fontSize={"1.2rem"} fontWeight={"bold"}>{post.title}</Text>
-                        <Text fontWeight={"normal"} fontSize={"0.9rem"}>{post.message}</Text>
+                        {/* <Text fontWeight={"normal"} fontSize={"0.9rem"}>{post.message}</Text> */}
+                        <CSSReset />
+                        <Box dangerouslySetInnerHTML={{ __html: post.message }} fontSize={"14px"} className="postBody" />
                     </Flex>
+
+
+                    {post.attachments.length > 0 ?
+                        <PostAttachments postAttachmentList={post.attachments} setPdfUrl={setPdfUrl} onPdfOpen={onPdfOpen} />
+                        : <></>
+                    }
+
                     <Flex w="100%" direction={"row"} justifyContent={"space-between"} alignItems={"center"} px="15px">
-                        <CustomLikeDislike />
+                        <CustomLikeDislike
+                            refid={post.id}
+                        />
                         <Flex
                             justifyContent={"flex-end"}
                             alignItems={"center"}
@@ -125,7 +153,7 @@ const Post = (props) => {
                             _hover={{ color: "accent" }}
                         >
                             <Text fontSize={"0.9rem"} fontWeight={"semi-bold"} color={"gray.400"} pointer={"pointer"}>
-                                {post.reactions.comments} Comments
+                                {post._count.post_comments} Comments
                             </Text>
                             <IconButton
                                 icon={<PiChatCircleBold size="24px" fontWeight={500} />}
@@ -155,9 +183,50 @@ const Post = (props) => {
                     </Collapse>
                     {/* </Flex> */}
                 </SimpleGrid>
-            </Flex>
-        </Box>
+            </Flex >
+        </Box >
     )
 }
+
+
+const PostAttachments = (props) => {
+
+    const { postAttachmentList, setPdfUrl, onPdfOpen } = props;
+
+    return (
+
+        <PhotoProvider>
+            <SimpleGrid w="100%" columns={5} gap="5px" px="30px" >
+                <AspectRatio ratio={1} borderRadius={"10px"} overflow={"hidden"} bg="gray.100">
+                    <Flex color={"gray.300"} flexDirection={"column"} justifyContent={"center"} alignItems={"center"} w="100%" h="100%">
+                        <RiAttachment2 size="40px" color="gray.300" />
+                        <Text fontSize={"0.9rem"} fontWeight={"semi-bold"} color={"gray.400"} pointer={"pointer"}>Attachments</Text>
+                    </Flex>
+                </AspectRatio>
+                {postAttachmentList.map((attachment, index) => (
+                    attachment.type === "IMAGE" ?
+                        <AspectRatio ratio={1} borderRadius={"10px"} overflow={"hidden"} bg="gray.100" minH={"100px"} key={attachment.id}>
+                            <PhotoView key={attachment.id} src={attachment.file_path} alt="Segun Adebayo" minH={"100px"} objectFit="cover" >
+                                <Image src={attachment.file_path} alt="Segun Adebayo" objectFit="cover" />
+                            </PhotoView>
+                        </AspectRatio>
+                        :
+                        <AspectRatio ratio={1} borderRadius={"10px"} overflow={"hidden"} bg="gray.100" onClick={() => {
+                            setPdfUrl(attachment.file_path)
+                            onPdfOpen()
+                        }}
+                            key={attachment.id}
+                        >
+                            <Image src={pdf} alt="Pdf" objectFit="cover" />
+                        </AspectRatio>
+                ))}
+            </SimpleGrid>
+        </PhotoProvider>
+    )
+}
+
+//use react-pdf
+
+
 
 export default Post

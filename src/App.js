@@ -84,6 +84,7 @@ import Content from "./components/Content";
 
 import { Routes, Route } from "react-router-dom";
 import { ROLES } from "./config/roles";
+import ContentWatch from "./pages/student/ContentWatch";
 
 //Tutor Components
 // import TutorDashboard from "./pages/tutor/TutorDashboard";
@@ -132,8 +133,7 @@ function App() {
                 <Route path="index" element={<CourseTemp />} />
                 <Route path="forum" element={<Forum />} />
               </Route>
-              {/* <Route path="content" element={<Videocontent />} /> */}
-
+              <Route path="content" element={<ContentPage />} />
               <Route path="content/watch/:id" element={<ContentWatch />} />
               <Route path="quizzes/:subject/:mcqname" element={<Quiz />} />
 

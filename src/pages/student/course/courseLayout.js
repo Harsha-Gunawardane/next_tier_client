@@ -1,35 +1,12 @@
 import { Box } from "@chakra-ui/layout"
 import { Outlet } from "react-router"
+import { axiosPrivate } from "../../../api/axios"
+import { useParams } from "react-router-dom"
+import { useEffect, useState } from "react"
 
 const CourseLayout = (props) => {
 
-    // model courses {
-    //     id            String   @id @default(uuid())
-    //     tutor_id      String
-    //     title         String
-    //     description   String
-    //     subject       String
-    //     medium        String
-    //     grade         String
-    //     thumbnail     String?
-    //     monthly_fee   Int
-    //     hall_id       String
-    //     start_date    DateTime @default(now())
-    //     studypack_ids Json[]   @default([]) // [{video_id: [], tute_id: []},{video_id: [], tute_id: "tute_id"}] 
-    //     schedule      Json[]   @default([]) // [{day: "monday", start_time: "10:00", end_time: "12:00"},{day: "monday", start_time: "10:00", end_time: "12:00"}]
-
-    //     tutor                   tutor                     @relation(fields: [tutor_id], references: [tutor_id])
-    //     hall                    halls                     @relation(fields: [hall_id], references: [id])
-    //     study_pack              study_pack[]
-    //     student_enrolled_course student_enrolled_course[]
-    //     student_attendance      student_attendance[]
-    //     hall_schedule           hall_schedule[]
-    //     quiz                    quiz[]
-    //     forum                   forum[]
-    //     poll                    poll[]
-    //   }
-
-    const courseDetails = {
+    const course = {
         id: 1,
         tutor_id: 1,
         title: "2025 AL Physics",
@@ -54,9 +31,11 @@ const CourseLayout = (props) => {
 
     }
 
+    const [courseDetails, setCourseDetails] = useState(course)
+
     return (
         <Box width="100%" height={"max-content"}>
-            <Outlet context={{ courseDetails }} />
+            <Outlet context={{ courseDetails, setCourseDetails }} />
         </Box>
     )
 }
