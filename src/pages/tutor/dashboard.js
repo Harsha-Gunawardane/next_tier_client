@@ -139,7 +139,7 @@ function Dashboard() {
     <TabPanel>
       <p>two!</p>
     </TabPanel>
-  </TabPanels>
+       </TabPanels>
 </Tabs>
   </Box>
   <Box bg='white' height='350px' width='60%' ml='200px' p={10}><Calendar></Calendar></Box>
