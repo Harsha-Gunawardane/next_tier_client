@@ -54,7 +54,7 @@ import {
 
   return (
     <>
-      <Button colorScheme='red' onClick={onOpen} height='10px' fontSize='12px' p={1.5} size={10}>
+      <Button colorScheme='red' onClick={onOpen} height='20px' fontSize='12px' p={1.5} size={10}>
         Remove
       </Button>
 

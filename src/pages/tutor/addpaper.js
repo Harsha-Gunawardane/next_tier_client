@@ -18,6 +18,7 @@ import {
     ModalFooter,
     ModalBody,
     ModalCloseButton,
+    useToast
    
   } from '@chakra-ui/react'
 
@@ -40,6 +41,8 @@ const Addpaper= () => {
 
   const initialRef = React.useRef(null)
   const finalRef = React.useRef(null)
+  const toast = useToast(); 
+
 
   const form = useForm({
     initialValues: {
@@ -51,6 +54,7 @@ const Addpaper= () => {
       thumbnail: '',
       price: '',
       access_period: '',
+      type: 'NORMAL',
       
       subject_area_1: '',
       subject_area_2: '',
@@ -81,12 +85,12 @@ const Addpaper= () => {
   
                     title:
                     values.title.trim().length < 1
-                      ?  'Course Type is Required':values.title.length >25 ? 'Title Too Long' 
+                      ?  'Title is Required':values.title.length >25 ? 'Title Too Long' 
                       : null,
     
                       description:
                       values.description.trim().length < 1
-                        ? 'Language is Required' :values.description.length >200 ? 'Description Too Long' 
+                        ? 'Description is Required' :values.description.length >100 ? 'Description Must be less than 100 Characters' 
                         : null,
 
                         // course_id:
@@ -108,10 +112,15 @@ const Addpaper= () => {
             ?  'Subject is Required'
             : null,
   
-            thumbnail:
-            values.thumbnail.trim().length < 1
-              ?  'Course Type is Required'
-              : null,
+            // thumbnail:
+            // values.thumbnail.trim().length < 1
+            //   ?  'Thumbnail is Required'
+            //   : null,
+
+              subject_area_1:
+              values.subject_area_1.trim().length < 1
+                ?  'At least 1 subject area is Required'
+                : null,
 
             
                 
@@ -123,17 +132,29 @@ const Addpaper= () => {
       return {
      
 
-        price:
-        values.price.length < 1 ? "Price is Required" : null,
+        price: values.price.length < 1
+  ? "Price is Required"
+  : values.price >= 50000
+  ? "Price must be less than 50000"
+  : null,
 
-         days:
-        values.days.length < 1 ? "Day is Required" : null,
+  days: values.days.length < 1
+  ? "Day is Required"
+  : parseInt(values.days) >= 365
+  ? "Days must be less than 366 days"
+  : null,
 
-        months:
-        values.months.length < 1 ? "Month is Required" : null,
+  months: values.months.length < 1
+  ? "Month is Required"
+  : parseInt(values.months) >= 12
+  ? "Month must be less than 12 months"
+  : null,
 
-        years:
-        values.years.length < 1 ? "Year is Required" : null,
+        years: values.years.length < 1
+        ? "Year is Required"
+        : parseInt(values.years) >= 3
+        ? "Year must be less than 3 years"
+        : null,
 
             
       };
@@ -220,20 +241,37 @@ const handleSubmit = async (event) => {
 
       console.log('Studypack content_ids updated with default values:', studypackUpdateResponse);
 
+      localStorage.setItem('formSubmitted', 'true');
+
+      // Reload the page
+      window.location.reload();
     } catch (error) {
       console.error('Error sending data:', error);
     }
   }
 };
+ 
 
+const formSubmitted = localStorage.getItem('formSubmitted');
 
+if (formSubmitted === 'true') {
+  // Show the toast notification
+  // toast({
+  //   title: 'Form submitted successfully!',
+  //   status: 'success',
+  //   duration: 3000,
+  //   isClosable: true,
+  // });
+
+  // Remove the key from local storage
+}
   
 
   return (
 
 <>
 
-<Button  fontSize='15px' width={{base:400,xl:700}} height='35px'  onClick={onOpen} >+Add Content</Button>
+<Button  fontSize='15px' width={{base:400,xl:700}} height='35px' bg='white' border='2px dotted black' onClick={onOpen} >+Add Paper</Button>
      
    
 
@@ -264,9 +302,9 @@ const handleSubmit = async (event) => {
     <Box bg='white' width='90%' ml='5%' p={5}>
    
       <Stepper active={active} breakpoint="sm">
-        <Stepper.Step  description="Profile settings">
+        <Stepper.Step  description="Basic Details">
 
-        <TextInput label="Title" placeholder="Title" {...form.getInputProps('title')} h='50px' mb='60px'
+        <TextInput label="Title" placeholder="Title" {...form.getInputProps('title')} h='50px' mb='30px' mt='10px'
              styles={{
               input: { // Styles for the input element
                
@@ -312,7 +350,7 @@ const handleSubmit = async (event) => {
 
    
 
-        <Stepper.Step  description="Personal information">
+        <Stepper.Step  description="Subject Details">
 
         <TextInput label="Subject" placeholder="Subject" {...form.getInputProps('subject')} h='50px' mb='10px'
              styles={{
@@ -335,7 +373,7 @@ const handleSubmit = async (event) => {
            
             <HStack spacing='50px' >
 
-            <TextInput label="Subject Areas" placeholder="Subject area" {...form.getInputProps('subject_area_1')} h='50px' mb='30px'
+            <TextInput label="Subject Areas" placeholder="Subject area" {...form.getInputProps('subject_area_1')} h='50px' mb='10px'
              styles={{
               input: { // Styles for the input element
                
@@ -353,7 +391,7 @@ const handleSubmit = async (event) => {
            
             }} />
             
-        <TextInput label="" placeholder="Subject area" {...form.getInputProps('subject_area_2')} h='50px' mb='30px' mt='60px'
+        <TextInput label="" placeholder="Subject area" {...form.getInputProps('subject_area_2')} h='50px' mb='10px' mt='60px'
              styles={{
               input: { // Styles for the input element
                
@@ -415,7 +453,7 @@ const handleSubmit = async (event) => {
 
 
 
-            <TextInput label="Thumbnail" placeholder="Thumbnail" {...form.getInputProps('thumbnail')} h='50px' mb='60px'
+            {/* <TextInput label="Thumbnail" placeholder="Thumbnail" {...form.getInputProps('thumbnail')} h='50px' mb='60px'
              styles={{
               input: { // Styles for the input element
                
@@ -431,7 +469,7 @@ const handleSubmit = async (event) => {
                 marginBottom: '5px',
               },
            
-            }} />
+            }} /> */}
     
 
         </Stepper.Step>
@@ -446,6 +484,7 @@ const handleSubmit = async (event) => {
                 defaultValue={18}
                 placeholder="Price"
                 label="Price"
+               
                 onKeyPress={(event) => {
                   const isNumber = /[0-9]/.test(event.key);
                   if (!isNumber) {
@@ -573,14 +612,14 @@ const handleSubmit = async (event) => {
                   mb="20px"
                 ></Heading>
                 <Box>
-                <UnorderedList>
+                {/* <UnorderedList>
                 <ListItem>
                   <HStack spacing="100px">
                   <Box width="150px">
-                      <Text>Title:</Text>
+                      <Text fontSize='13px'>Title:</Text>
                     </Box>
                     <Box width="200px">
-                      <Text  color='grey'>
+                      <Text  color='grey' fontSize='13px'>
                       {form.values.title}
                       </Text>
                     </Box>
@@ -590,10 +629,10 @@ const handleSubmit = async (event) => {
                   <ListItem>
                   <HStack spacing="100px" mt='10px'>
                   <Box width="150px">
-                      <Text>Description:</Text>
+                      <Text fontSize='13px'>Description:</Text>
                     </Box>
                     <Box width="200px">
-                      <Text  color='grey'> {form.values.description}</Text>
+                      <Text  color='grey' fontSize='13px'> {form.values.description}</Text>
                     </Box>
                   </HStack>
                   </ListItem>
@@ -601,10 +640,10 @@ const handleSubmit = async (event) => {
                   <ListItem>
                   <HStack spacing="100px" mt='10px'>
                   <Box width="150px">
-                      <Text>Subject:</Text>
+                      <Text fontSize='13px'>Subject:</Text>
                     </Box>
                     <Box width="200px">
-                      <Text  color='grey'> {form.values.subject}</Text>
+                      <Text  color='grey'fontSize='13px'> {form.values.subject}</Text>
                     </Box>
                   </HStack>
                   </ListItem>
@@ -612,10 +651,10 @@ const handleSubmit = async (event) => {
                   <ListItem>
                   <HStack spacing="100px" mt='10px'>
                   <Box width="150px">
-                      <Text>Subject Areas:</Text>
+                      <Text fontSize='13px'>Subject Areas:</Text>
                     </Box>
                     <Box width="200px">
-                    <Text color="grey">
+                    <Text color="grey" fontSize='13px'>
           {form.values.subject_area_1}
           {form.values.subject_area_2 && `, ${form.values.subject_area_2}`}
           {form.values.subject_area_3 && `, ${form.values.subject_area_3}`}
@@ -630,10 +669,10 @@ const handleSubmit = async (event) => {
                   <ListItem>
                   <HStack spacing="100px" mt='10px'>
                   <Box width="150px">
-                      <Text>Price:</Text>
+                      <Text fontSize='13px'>Price:</Text>
                     </Box>
                     <Box width="200px">
-                      <Text color='grey'> {form.values.price}</Text>
+                      <Text color='grey' fontSize='13px'> {form.values.price}</Text>
                     </Box>
                   </HStack>
                   </ListItem>
@@ -649,13 +688,13 @@ const handleSubmit = async (event) => {
                   </HStack>
                   </ListItem> */}
 
-                  <ListItem>
+                  {/* <ListItem>
                   <HStack spacing="100px" mt='10px'>
                   <Box width="150px">
-                      <Text>Access Period:</Text>
+                      <Text fontSize='13px'>Access Period:</Text>
                     </Box>
                     <Box width="200px">
-                      <Text color='grey'>Days:{form.values.days}    Months:{form.values.months}    Years:{form.values.years}</Text>
+                      <Text color='grey' fontSize='13px'>Days:{form.values.days}    Months:{form.values.months}    Years:{form.values.years}</Text>
                  
                     </Box>
                   </HStack>
@@ -666,7 +705,7 @@ const handleSubmit = async (event) => {
 
 
              
-      </UnorderedList>
+      </UnorderedList>  */}
                 </Box>
                 
               </Box>
@@ -675,12 +714,12 @@ const handleSubmit = async (event) => {
 
       <Group position="right" mt="xl">
         {active !== 0 && (
-          <Button variant="default" onClick={prevStep}>
+          <Button variant="default" onClick={prevStep} fontSize='12px' colorScheme="blue">
             Back
           </Button>
         )}
-        {active !== 3 && <Button onClick={nextStep}>Next step</Button>}
-        {active === 3 && <Button type='submit'>Submit</Button>}
+        {active !== 3 && <Button onClick={nextStep} fontSize='12px' colorScheme="blue">Next step</Button>}
+        {active === 3 && <Button type='submit' fontSize='12px' colorScheme="blue">Submit</Button>}
       </Group>
     </Box>
     </form>

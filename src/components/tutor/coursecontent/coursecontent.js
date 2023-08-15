@@ -14,8 +14,8 @@ import { SmallAddIcon } from "@chakra-ui/icons";
 import { ChakraProvider, Button, Image } from "@chakra-ui/react";
 import { Tabs, TabList, TabPanels, Tab, TabPanel, Box } from "@chakra-ui/react";
 
-import Addcoursecontent from "./Addcoursecontent.js";
-import Addcoursedoccontent from "./Addcoursedoccontent.js";
+import Addcoursecontent from "./Addweekcoursecontent.js";
+import Addcoursedoccontent from "./Addweekdoccontent.js";
 import Addcoursequiz from "./Addcoursequiz.js";
 import Remove from "./Coursecontentremove.js";
 import Removecontent from "./Contentremove.js";
@@ -31,6 +31,7 @@ const CourseContent = ({ course }) => {
   const axiosPrivate = useAxiosPrivate();
   const location = useLocation();
   const id = location.pathname.split("/").pop();
+  const [selectedWeekTab, setSelectedWeekTab] = useState(0);
 
   const [monthToDelete, setMonthToDelete] = useState("");
   const [studyPackDetails, setStudyPackDetails] = useState({});
@@ -104,6 +105,7 @@ const CourseContent = ({ course }) => {
             Object.keys(content)[0]
           ].video_id.map(async (videoId) => {
             const videoInfo = await getContentInfo(videoId);
+            console.log(videoInfo);
             return { ...videoInfo, type: "video" };
           });
 
@@ -138,6 +140,8 @@ const CourseContent = ({ course }) => {
     }
   }, [studyPackDetails]);
 
+  
+
   return (
     <ChakraProvider>
       <Accordion allowToggle>
@@ -151,13 +155,17 @@ const CourseContent = ({ course }) => {
                 borderRadius="5px"
                 height="50px"
               >
-                <Removecontent studypackid={studyPack.id}></Removecontent>
+                
                 <Box as="span" flex="1" textAlign="left" height="30px">
                   <Heading p={1} ml="20px" fontSize="15px">
                     {studyPack.title}
                   </Heading>
                 </Box>
-                <Editstudypack course={studyPack.id}></Editstudypack>
+              <Box mr='10px'>
+                <Editstudypack course={studyPack.id} ></Editstudypack> </Box>
+                <Box mr='10px'>
+                <Removecontent studypackid={studyPack.id}></Removecontent>
+                </Box>
                 <AccordionIcon />
               </AccordionButton>
 
@@ -165,7 +173,13 @@ const CourseContent = ({ course }) => {
                 <Tabs variant="soft-rounded" colorScheme="blue">
                   <TabList>
                     {studyPack.content_ids.map((content, contentIndex) => (
-                      <Tab key={contentIndex} height="15px">
+                 <Tab
+                 key={contentIndex}
+                 height="15px"
+                 onClick={() => setSelectedWeekTab(contentIndex + 1)}
+                 // Always set the first tab (Week 1) as active
+                 className={contentIndex === 0 || selectedWeekTab === contentIndex + 1 ? 'active-tab' : ''}
+               >
                         <Text fontSize="12px">{`Week ${
                           contentIndex + 1
                         }`}</Text>
@@ -174,7 +188,10 @@ const CourseContent = ({ course }) => {
                   </TabList>
 
                   <TabPanels>
+
                     {studyPack.content_ids.map((content, contentIndex) => (
+
+                      
                       <TabPanel key={contentIndex}>
                         {/* Video Content */}
 
@@ -183,33 +200,30 @@ const CourseContent = ({ course }) => {
                             <Text fontSize="15px">Video Content</Text>
                           </Box>
                           <Box>
-                            <Addcoursecontent></Addcoursecontent>
+                            <Addcoursecontent studypackId={studyPack.id}  dynamicWeek={`week${selectedWeekTab}`}></Addcoursecontent>
                           </Box>
                         </HStack>
 
-                        {content &&
-                          content[Object.keys(content)[0]].video_id &&
-                          content[Object.keys(content)[0]].video_id.length >
-                            0 && (
-                            <HStack spacing={{ base: 220, xl: 300 }}>
-                              {/* ... (other components) */}
-                              {content[Object.keys(content)[0]].video_id.map(
-                                (videoId, videoIndex) => {
-                                  const videoInfo = videoInfoArray.find(
-                                    (info) => info.videoId === videoId
-                                  );
-                                  if (!videoInfo) {
-                                    return null;
-                                  }
+                        {content[Object.keys(content)[0]].video_id &&
+  content[Object.keys(content)[0]].video_id.length > 0 && (
 
-                                  return (
+  <Box>
+  
+  {content[Object.keys(content)[0]].video_id.map((videoId, videoIndex) => {
+    const videoInfo = videoInfoArray.find(info => info.videoId === videoId);
+    console.log(videoInfo);
+    if (!videoInfo) {
+      return null;
+    }
+      
+                              return (
                                     <Box
                                       bg="#F0F8FF"
                                       mt="4px"
                                       className="box1"
                                       key={videoIndex}
                                     >
-                                      <HStack spacing={{ base: 90, xl: 330 }}>
+                                      <HStack spacing={{ base: 90, xl: 300 }}>
                                         <Box p={2} width="210px">
                                           <HStack>
                                             <Image
@@ -240,7 +254,7 @@ const CourseContent = ({ course }) => {
                                             </Button>{" "}
                                             <Remove
                                               contentId={videoId}
-                                              part={`week2`}
+                                              part={`week${selectedWeekTab}`}
                                               studypackId={studyPack.id}
                                             />
                                           </HStack>
@@ -250,7 +264,7 @@ const CourseContent = ({ course }) => {
                                   );
                                 }
                               )}
-                            </HStack>
+                            </Box>
                           )}
 
                         {/* Document Content */}
@@ -261,7 +275,7 @@ const CourseContent = ({ course }) => {
                                 <Text fontSize="15px">Document Content</Text>
                               </Box>
                               <Box>
-                                <Addcoursedoccontent />
+                                <Addcoursedoccontent studypackId={studyPack.id}  dynamicWeek={`week${selectedWeekTab}`} />
                               </Box>
                             </HStack>
                           
@@ -282,7 +296,7 @@ const CourseContent = ({ course }) => {
                                 className="box1"
                                 key={tuteIndex}
                               >
-                                <HStack spacing={{ base: 90, xl: 330 }}>
+                                <HStack spacing={{ base: 90, xl: 300 }}>
                                   <Box p={2} width="210px">
                                     <HStack>
                                       <Image
@@ -308,6 +322,7 @@ const CourseContent = ({ course }) => {
                                       <Remove
                                         contentId={tuteId}
                                         studypackId={studyPack.id}
+                                        part={`week${selectedWeekTab}`}
                                       />
                                     </HStack>
                                   </Box>
@@ -370,6 +385,7 @@ const CourseContent = ({ course }) => {
                                       <Remove
                                         contentId={quizId}
                                         studypackId={studyPack.id}
+                                        part={`week${selectedWeekTab}`}
                                       />
                                     </HStack>
                                   </Box>

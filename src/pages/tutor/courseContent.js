@@ -100,7 +100,7 @@ const renderAddNew = () => {
 
  <Box w="130%" bg="white" p={10} borderRadius="10px" ml="10px">
  {coursedata &&
- <Heading fontSize='30px' mb='30px'>{coursedata.title}</Heading>
+ <Heading fontSize='27px' mb='30px' fontWeight='xl'>{coursedata.title}</Heading>
  }
  <Hide below='md'>
  <SimpleGrid spacing={2} minChildWidth="250px">
@@ -110,6 +110,7 @@ const renderAddNew = () => {
       src={coursedata.thumbnail}
       alt='Green double couch with wooden legs'
       height={{base:120,xl:150}}
+      width='260px'
       
       
     />
@@ -121,7 +122,7 @@ const renderAddNew = () => {
    } </Box>
  </SimpleGrid>
 </Hide>
-  <Heading fontSize='20px' mt='40px' mb='20px'>Course Content</Heading>
+  <Heading fontSize='20px' mt='40px' mb='20px' fontWeight='xl'>Course Content</Heading>
 
   {renderAddNew()}
   {renderCourseContent()}

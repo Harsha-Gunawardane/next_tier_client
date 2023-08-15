@@ -1,5 +1,5 @@
 import React from "react";
-import { Flex, AccordionPanel, Text, Accordion, AccordionButton, AccordionIcon, AccordionItem, HStack, Heading } from '@chakra-ui/react'
+import { Flex,Link, AccordionPanel, Text, Accordion, AccordionButton, AccordionIcon, AccordionItem, HStack, Heading } from '@chakra-ui/react'
 import { SmallAddIcon } from '@chakra-ui/icons'
 import { ChakraProvider, Button, Image } from '@chakra-ui/react'
 import { Tabs, TabList, TabPanels, Tab, TabPanel, Box } from '@chakra-ui/react'
@@ -9,6 +9,7 @@ import Addcoursedoccontent from "./Addcoursedoccontent.js";
 import Addcoursequiz from "./Addcoursequiz.js";
 import Remove from "./Papercontentremove.js";
 import Removecontent from "./Contentremove.js";
+import Editstudypack from "./Studypackedit.js";
 import { useNavigate, useLocation } from "react-router-dom";
 import "../../../index.css"
 import { useEffect, useState } from "react";
@@ -27,6 +28,8 @@ const CourseContent = () => {
   const [monthToDelete, setMonthToDelete] = useState("");
   const [studyPackDetails, setStudyPackDetails] = useState({});
   const [contentDetails, setContentDetails] = useState([]);
+
+ 
 
 
   useEffect(() => {
@@ -52,8 +55,8 @@ const CourseContent = () => {
           const contentIds = allStudyPackDetails
           .flatMap(studyPack => studyPack.content_ids)
           .flatMap(content => [
-            ...content.video_id.map(videoId => ({ id: videoId, type: 'video' })),
-            ...content.tute_id.map(tuteId => ({ id: tuteId, type: 'document' })),
+            ...content.video_id.map(videoId => ({ id: videoId, type: 'VIDEO' })),
+            ...content.tute_id.map(tuteId => ({ id: tuteId, type: 'TUTE' })),
           ]);
         
         const contentDetailsResponse = await Promise.all(
@@ -82,6 +85,12 @@ const CourseContent = () => {
     return content ? content.thumbnail : ""; // Replace with actual property name
   };
 
+
+  const LoadDetail = (id) => {
+    navigate("/tutor/courses/content/analyze/" + id);
+  };
+
+
   return (
     <ChakraProvider>
       <Accordion allowToggle>
@@ -95,11 +104,21 @@ const CourseContent = () => {
                 borderRadius="5px"
                 height="50px"
               >
-                <Removecontent studypackid={studyPack.id}></Removecontent>
+               
                 <Box as="span" flex="1" textAlign="left" height="30px">
                   <Heading p={1} ml="20px" fontSize="15px">
                     {studyPack.title}
                   </Heading>
+                </Box>
+                <Box mr='10px'>
+               
+                <Button fontSize='10px' height='20px'  onClick={() => {
+                            LoadDetail(studyPack.id);
+                          }}>Analyze</Button></Box>
+                <Box mr='10px'>
+                <Editstudypack course={studyPack.id} ></Editstudypack> </Box>
+                <Box mr='10px'>
+                <Removecontent studypackid={studyPack.id}></Removecontent>
                 </Box>
                 <AccordionIcon />
               </AccordionButton>
@@ -111,7 +130,7 @@ const CourseContent = () => {
             <Text fontSize="15px">Video Content</Text>
           </Box>
           <Box>
-            <Addcoursecontent></Addcoursecontent>
+            <Addcoursecontent studypackId={studyPack.id}></Addcoursecontent>
           </Box>
         </HStack>
                 {/* Video Content */}
@@ -160,7 +179,7 @@ const CourseContent = () => {
             <Text fontSize="15px">Document Content</Text>
           </Box>
           <Box>
-            <Addcoursedoccontent></Addcoursedoccontent>
+            <Addcoursedoccontent studypackId={studyPack.id}></Addcoursedoccontent>
           </Box>
         </HStack>
 

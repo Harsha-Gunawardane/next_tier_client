@@ -64,7 +64,7 @@ const Addmonth = ({ onClose }) => {
               fontSize="15px"
             >
               <Box as="span" flex="1" textAlign="left">
-                <Text ml={{ base: 140, xl: 135 }} fontSize={{base:13,xl:15}}> + Add Content</Text>
+                <Text ml={{ base: 140, xl: 135 }} fontSize={{base:13,xl:15}}> + Add New</Text>
               </Box>
             </AccordionButton>
           </h2>

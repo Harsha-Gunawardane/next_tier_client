@@ -122,8 +122,7 @@ const Studypackedit = ({ course}) => {
     const isFormValid =
     title.trim().length !== 0 &&
     description.trim().length !== 0 &&
-    description.length >= 200 &&
-    description.length <= 400 &&
+    description.length <= 100 &&
     price.trim().length !== 0 &&
     !isNaN(price) &&
     parseFloat(price) >= 0 &&
@@ -176,7 +175,7 @@ const Studypackedit = ({ course}) => {
 
   return (
     <>
-      <Button fontSize="12px" colorScheme="blue" height="30px" onClick={onOpen}>
+      <Button fontSize="10px" colorScheme="blue" height="20px" onClick={onOpen}>
         Edit
       </Button>
 
@@ -281,7 +280,7 @@ const Studypackedit = ({ course}) => {
 
 
 
-              <FormControl
+              {/* <FormControl
                 mt={4}
                 isRequired
                 isInvalid={thumbnail.trim().length === 0}
@@ -297,7 +296,7 @@ const Studypackedit = ({ course}) => {
                   onChange={(e) => setThumbnail(e.target.value)}
                 />
                 <FormErrorMessage>Thumbnail is required</FormErrorMessage>
-              </FormControl>
+              </FormControl> */}
 
 
           {/* <FormControl mt={4} >
