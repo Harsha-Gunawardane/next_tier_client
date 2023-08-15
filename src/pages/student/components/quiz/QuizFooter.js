@@ -7,7 +7,7 @@ import {
   moveNextQuestion,
   movePrevQuestion,
   resetQuiz
-} from "../../../../hooks/fetchQuestions";
+} from "../../../../hooks/reduxReducers/fetchQuestions";
 import ModalLayout from "../../../../components/ModalLayout";
 import useAxiosPrivate from "../../../../hooks/useAxiosPrivate";
 

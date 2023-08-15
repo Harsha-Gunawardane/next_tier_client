@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import Card from "../cards/Card";
 import ModalLayout from "../../../../components/ModalLayout";
 import NumberInput from "../NumberInput";
-import { initializeQuiz, resetQuiz } from "../../../../hooks/fetchQuestions";
+import { initializeQuiz, resetQuiz } from "../../../../hooks/reduxReducers/fetchQuestions";
 import formatTime from "../../../../utils/timeFormat";
 
 function StartQuizModal({ isOpen, handleCloseModal, subject }) {

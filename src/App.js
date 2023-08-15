@@ -77,9 +77,11 @@ import { ROLES } from "./config/roles";
 
 //Tutor Components
 // import TutorDashboard from "./pages/tutor/TutorDashboard";
+// import TutorDashboard from "./pages/tutor/TutorDashboard";
 import TutorStaffs from "./pages/tutor/TutorStaffs";
 import McqsByCategory from "./pages/tutor/McqsByCategory";
 import PaperMarking from "./pages/tutor/PaperMarking";
+// import CreateQuiz from "./pages/tutor/CreateQuiz";
 // import CreateQuiz from "./pages/tutor/CreateQuiz";
 import TutorQuiz from "./pages/tutor/TutorQuiz";
 import TutorQuizzes from "./pages/tutor/TutorQuizzes";
