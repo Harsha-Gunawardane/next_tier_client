@@ -19,12 +19,12 @@ const Remove = ({  contentId,part }) => {
   const axiosPrivate = useAxiosPrivate();
 
   const location = useLocation();
-  const courseId = location.pathname.split("/").pop();
+  const studentpackId = location.pathname.split("/").pop();
 
   const handleDelete = () => {
     // Replace 'YOUR_API_ENDPOINT' with the actual URL of your backend endpoint for removing the content
     axiosPrivate
-      .delete(`/tutor/studypack/removecontent/${courseId}/${part}/${contentId}`)
+      .delete(`/tutor/studypack/removecontent/${studentpackId}/${part}/${contentId}`)
       .then((response) => {
         console.log(`Tute ID ${contentId} removed successfully from study pack!`);
         onClose(); // Close the modal after removing the content
@@ -37,8 +37,8 @@ const Remove = ({  contentId,part }) => {
 
   return (
     <>
-      <Button colorScheme='red' onClick={onOpen} height='5px' fontSize='12px' p={1.5} size={10}>
-        -
+      <Button colorScheme='red' onClick={onOpen} height='20px' fontSize='10px' p={1.5} size={10}>
+        Remove
       </Button>
 
       <AlertDialog isOpen={isOpen} leastDestructiveRef={cancelRef} onClose={onClose}>

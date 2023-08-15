@@ -15,7 +15,7 @@ export default function McqCategoriesTab() {
   useEffect(() => {
     const getCategories = async () => {
       try {
-        const response = await axiosPrivate.get("/categories");
+        const response = await axiosPrivate.get("/tutor/categories");
         setCategories(response.data);
       } catch (error) {
         console.log(error.response.data);
@@ -53,7 +53,7 @@ export default function McqCategoriesTab() {
             category.title.toLowerCase().includes(search.toLowerCase())
           )
           .map((category) => (
-            <NavLink to={`category/${category.id}`}>
+            <NavLink key={category.id} to={`category/${category.id}`}>
               <McqCategoryCards category={category} />
             </NavLink>
           ))}

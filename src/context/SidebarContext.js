@@ -27,10 +27,12 @@ const SidebarProvider = ({ children }) => {
 
 	const handleTabClick = (tab) => {
 		setActiveTab(tab);
+		console.log(activeTab);
 	};
 
 	const setSidebarOption = (activeOption) => {
 		setActiveTab(activeOption);
+		console.log(activeTab);
 	};
 
 	const handleSidebarToggle = () => {

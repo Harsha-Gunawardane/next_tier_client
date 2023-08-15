@@ -284,7 +284,7 @@
     {
       "payment_id": 5,
       "name": "Dinesh Khan",
-      "course": "History",
+      "course": "Biology",
       "studypack_id": "BI21",
       "amount": "",
       "ProfileImage": "dinesh_khan.jpg",
@@ -302,7 +302,7 @@
     {
       "payment_id": 6,
       "name": "Dinesh Khan",
-      "course": "IT",
+      "course": "Physics",
       "studypack_id": "PY45",
       "amount": "Rs. 2500",
       "ProfileImage": "dinesh_khan.jpg",
@@ -354,7 +354,7 @@
     {
       "payment_id": 9,
       "name": "Dinesh Khan",
-      "course": "Physics",
+      "course": "Biology",
       "studypack_id": "BI30",
       "amount": "",
       "ProfileImage": "dinesh_khan.jpg",
@@ -441,7 +441,7 @@
     {
       "payment_id": 14,
       "name": "Dinesh Khan",
-      "course": "Science",
+      "course": "Biology",
       "studypack_id": "BI80",
       "amount": "",
       "ProfileImage": "dinesh_khan.jpg",
@@ -506,7 +506,7 @@
       "lName": "john",
       "gender": "Female",
       "phn_num": "+94775093445",
-      "stream": "Biology",
+      "stream": "Arts",
       "College": "Ananda College,Kandy",
       "joinedDate": "05/04/2021",
       "profileImage": "/InstituteStaffAssets/prfl3.jpg",
@@ -520,7 +520,7 @@
       "lName": "Kesan",
       "gender": "Male",
       "phn_num": "+94775093445",
-      "stream": "Biology",
+      "stream": "Commerce",
       "College": "Ananda College,Kandy",
       "joinedDate": "05/04/2021",
       "profileImage": "/InstituteStaffAssets/prfl1.jpg",
@@ -627,6 +627,7 @@
               }
             ]
           }
+          
         ]
       },
       {
@@ -726,6 +727,427 @@
             ]
           }
         ]
+      },
+      {
+        "tutor_id": 3,
+        "fName": "John",
+        "lName": "Doe",
+        "gender":"Female",
+        "joinedDate":"04/07/2012",
+        "subjects":["Physics","Chemistry"],
+        "dob": "01/01/1990",
+        "email": "john.doe@example.com",
+        "phn_num": "+94775093445",
+        "address": "123, Main Street, City",
+        "profileImage": "/InstituteStaffAssets/avtr7.jpg",
+        "education": {
+          "school": "University of Colombo School of Computing",
+          "medium": "English",
+          "qualifications": "BSc (Hons) in Information Systems"
+        },
+        "courses": [
+          {
+            "course_id": 1,
+            "course_name": "Biology Theory",
+            "price": "Rs. 3500",
+            "CourseImage":"/InstituteStaffAssets/CourseImage.png",
+            "name":"John Doe",
+            "course_description":"Color harmony and color theory offer some formulas that we can use to start our color palettes its an important foundation to understand and I’ve done a video all about color harmony and color theory here our channel. But creating beautiful color palettes isn’t only about these formulas, it’s also about subtleties of balancing hue, tint, tone, shade and temperature.",
+            "study_packs": [
+              {
+                "study_pack_id": 1,
+                "name": "Study Pack 1",
+                "description": "Study materials for Biology Theory"
+              },
+              {
+                "study_pack_id": 2,
+                "name": "Study Pack 2",
+                "description": "Advanced study materials for Biology Theory"
+              }
+            ],
+            "enrolled_students": [
+              {
+                "stu_id": 1,
+                "fName": "Dinesh",
+                "lName": "Khan",
+                "gender": "Male",
+                "phn_num": "+94775093445",
+                "stream": "Biology",
+                "joinedDate": "05/04/2021",
+                "College": "Ananda College,Kandy",
+                "Medium": "English",
+                "NIC": "986665745V",
+                "profileImage": "/path/to/student/profileImage.jpg"
+              },
+              {
+                "stu_id": 2,
+                "fName": "Alisha",
+                "lName": "Kaiar",
+                "gender": "Female",
+                "phn_num": "+94775093445",
+                "stream": "Mathematics",
+                "College": "Ananda College,Kandy",
+                "joinedDate": "05/04/2021",
+                "Medium": "English",
+                "NIC": "986665748V",
+                "profileImage": "/path/to/student/profileImage.jpg"
+              }
+            ]
+          },
+          {
+            "course_id": 2,
+            "course_name": "Chemistry Theory",
+            "price": "Rs. 3500",
+            "name":"John Doe",
+            "CourseImage":"/InstituteStaffAssets/CourseImage.png",
+            "course_description":"Color harmony and color theory offer some formulas that we can use to start our color palettes its an important foundation to understand and I’ve done a video all about color harmony and color theory here our channel. But creating beautiful color palettes isn’t only about these formulas, it’s also about subtleties of balancing hue, tint, tone, shade and temperature.",
+            "study_packs": [
+              {
+                "study_pack_id": 3,
+                "name": "Study Pack 3",
+                "description": "Study materials for Chemistry Theory"
+              }
+            ],
+            "enrolled_students": [
+              {
+                "stu_id": 1,
+                "fName": "Dinesh",
+                "lName": "Khan",
+                "gender": "Male",
+                "phn_num": "+94775093445",
+                "stream": "Biology",
+                "joinedDate": "05/04/2021",
+                "College": "Ananda College,Kandy",
+                "Medium": "English",
+                "NIC": "986665745V",
+                "profileImage": "/path/to/student/profileImage.jpg"
+              }
+            ]
+          }
+          
+        ]
+      },
+      {
+        "tutor_id": 5,
+        "fName": "Allen",
+        "lName": "Doe",
+        "gender":"Female",
+        "joinedDate":"04/07/2012",
+        "subjects":["Physics","Chemistry"],
+        "dob": "01/01/1990",
+        "email": "john.doe@example.com",
+        "phn_num": "+94775093445",
+        "address": "123, Main Street, City",
+        "profileImage": "/InstituteStaffAssets/avtr8.jpg",
+        "education": {
+          "school": "University of Colombo School of Computing",
+          "medium": "English",
+          "qualifications": "BSc (Hons) in Information Systems"
+        },
+        "courses": [
+          {
+            "course_id": 1,
+            "course_name": "Biology Theory",
+            "price": "Rs. 3500",
+            "CourseImage":"/InstituteStaffAssets/CourseImage.png",
+            "name":"John Doe",
+            "course_description":"Color harmony and color theory offer some formulas that we can use to start our color palettes its an important foundation to understand and I’ve done a video all about color harmony and color theory here our channel. But creating beautiful color palettes isn’t only about these formulas, it’s also about subtleties of balancing hue, tint, tone, shade and temperature.",
+            "study_packs": [
+              {
+                "study_pack_id": 1,
+                "name": "Study Pack 1",
+                "description": "Study materials for Biology Theory"
+              },
+              {
+                "study_pack_id": 2,
+                "name": "Study Pack 2",
+                "description": "Advanced study materials for Biology Theory"
+              }
+            ],
+            "enrolled_students": [
+              {
+                "stu_id": 1,
+                "fName": "Dinesh",
+                "lName": "Khan",
+                "gender": "Male",
+                "phn_num": "+94775093445",
+                "stream": "Biology",
+                "joinedDate": "05/04/2021",
+                "College": "Ananda College,Kandy",
+                "Medium": "English",
+                "NIC": "986665745V",
+                "profileImage": "/path/to/student/profileImage.jpg"
+              },
+              {
+                "stu_id": 2,
+                "fName": "Alisha",
+                "lName": "Kaiar",
+                "gender": "Female",
+                "phn_num": "+94775093445",
+                "stream": "Mathematics",
+                "College": "Ananda College,Kandy",
+                "joinedDate": "05/04/2021",
+                "Medium": "English",
+                "NIC": "986665748V",
+                "profileImage": "/path/to/student/profileImage.jpg"
+              }
+            ]
+          },
+          {
+            "course_id": 2,
+            "course_name": "Chemistry Theory",
+            "price": "Rs. 3500",
+            "name":"John Doe",
+            "CourseImage":"/InstituteStaffAssets/CourseImage.png",
+            "course_description":"Color harmony and color theory offer some formulas that we can use to start our color palettes its an important foundation to understand and I’ve done a video all about color harmony and color theory here our channel. But creating beautiful color palettes isn’t only about these formulas, it’s also about subtleties of balancing hue, tint, tone, shade and temperature.",
+            "study_packs": [
+              {
+                "study_pack_id": 3,
+                "name": "Study Pack 3",
+                "description": "Study materials for Chemistry Theory"
+              }
+            ],
+            "enrolled_students": [
+              {
+                "stu_id": 1,
+                "fName": "Dinesh",
+                "lName": "Khan",
+                "gender": "Male",
+                "phn_num": "+94775093445",
+                "stream": "Biology",
+                "joinedDate": "05/04/2021",
+                "College": "Ananda College,Kandy",
+                "Medium": "English",
+                "NIC": "986665745V",
+                "profileImage": "/path/to/student/profileImage.jpg"
+              }
+            ]
+          }
+          
+        ]
+      },
+      {
+        "tutor_id": 6,
+        "fName": "Katherine",
+        "lName": "Smith",
+        "gender":"Female",
+        "joinedDate":"04/07/2012",
+        "subjects":["Physics","Chemistry"],
+        "dob": "01/01/1990",
+        "email": "john.doe@example.com",
+        "phn_num": "+94775093445",
+        "address": "123, Main Street, City",
+        "profileImage": "/InstituteStaffAssets/avtr5.jpg",
+        "education": {
+          "school": "University of Colombo School of Computing",
+          "medium": "English",
+          "qualifications": "BSc (Hons) in Information Systems"
+        },
+        "courses": [
+          {
+            "course_id": 1,
+            "course_name": "Biology Theory",
+            "price": "Rs. 3500",
+            "CourseImage":"/InstituteStaffAssets/CourseImage.png",
+            "name":"John Doe",
+            "course_description":"Color harmony and color theory offer some formulas that we can use to start our color palettes its an important foundation to understand and I’ve done a video all about color harmony and color theory here our channel. But creating beautiful color palettes isn’t only about these formulas, it’s also about subtleties of balancing hue, tint, tone, shade and temperature.",
+            "study_packs": [
+              {
+                "study_pack_id": 1,
+                "name": "Study Pack 1",
+                "description": "Study materials for Biology Theory"
+              },
+              {
+                "study_pack_id": 2,
+                "name": "Study Pack 2",
+                "description": "Advanced study materials for Biology Theory"
+              }
+            ],
+            "enrolled_students": [
+              {
+                "stu_id": 1,
+                "fName": "Dinesh",
+                "lName": "Khan",
+                "gender": "Male",
+                "phn_num": "+94775093445",
+                "stream": "Biology",
+                "joinedDate": "05/04/2021",
+                "College": "Ananda College,Kandy",
+                "Medium": "English",
+                "NIC": "986665745V",
+                "profileImage": "/path/to/student/profileImage.jpg"
+              },
+              {
+                "stu_id": 2,
+                "fName": "Alisha",
+                "lName": "Kaiar",
+                "gender": "Female",
+                "phn_num": "+94775093445",
+                "stream": "Mathematics",
+                "College": "Ananda College,Kandy",
+                "joinedDate": "05/04/2021",
+                "Medium": "English",
+                "NIC": "986665748V",
+                "profileImage": "/path/to/student/profileImage.jpg"
+              }
+            ]
+          },
+          {
+            "course_id": 2,
+            "course_name": "Chemistry Theory",
+            "price": "Rs. 3500",
+            "name":"John Doe",
+            "CourseImage":"/InstituteStaffAssets/CourseImage.png",
+            "course_description":"Color harmony and color theory offer some formulas that we can use to start our color palettes its an important foundation to understand and I’ve done a video all about color harmony and color theory here our channel. But creating beautiful color palettes isn’t only about these formulas, it’s also about subtleties of balancing hue, tint, tone, shade and temperature.",
+            "study_packs": [
+              {
+                "study_pack_id": 3,
+                "name": "Study Pack 3",
+                "description": "Study materials for Chemistry Theory"
+              }
+            ],
+            "enrolled_students": [
+              {
+                "stu_id": 1,
+                "fName": "Dinesh",
+                "lName": "Khan",
+                "gender": "Male",
+                "phn_num": "+94775093445",
+                "stream": "Biology",
+                "joinedDate": "05/04/2021",
+                "College": "Ananda College,Kandy",
+                "Medium": "English",
+                "NIC": "986665745V",
+                "profileImage": "/path/to/student/profileImage.jpg"
+              }
+            ]
+          }
+          
+        ]
+      }
+    ],
+    "Coursepayments": [
+      {
+        "payment_id": 1,
+        "name": "Dinesh Khan",
+      
+        "studypack_id": "PHY23",
+       
+        "ProfileImage":"/InstituteStaffAssets/prfl1.jpg",
+      
+        "payment_type": "Online",
+        
+        "purchased_date": "8/15/2023",
+      
+        "expire_at": "2024-07-07"
+       
+        
+        
+       
+      },
+      {
+        "payment_id": 2,
+        "name": "Elen Helen",
+       
+        "studypack_id": "PHY90",
+       
+        "ProfileImage":"/InstituteStaffAssets/prfl6.jpeg",
+      
+        "payment_type": "Physical",
+        
+        "purchased_date": "8/15/2023",
+      
+        "expire_at": "2024-07-07"
+      },
+  
+      {
+        "payment_id": 3,
+        "name": "Martin elen",
+       
+        "studypack_id": "PHY21",
+       
+        "ProfileImage":"/InstituteStaffAssets/prfl3.jpg",
+      
+        "payment_type": "Physical",
+        
+        "purchased_date": "3/15/2023",
+      
+        "expire_at": "2024-07-07"
+      },
+      {
+        "payment_id": 4,
+        "name": "Haidy elen",
+       
+        "studypack_id": "PHY20",
+       
+        "ProfileImage":"/InstituteStaffAssets/prfl4.jpg",
+      
+        "payment_type": "Physical",
+        
+        "purchased_date": "8/15/2023",
+      
+        "expire_at": "2024-07-07"
+      },
+      {
+        "payment_id": 5,
+        "name": "Fasrin doe",
+       
+        "studypack_id": "PHY38",
+       
+        "ProfileImage":"/InstituteStaffAssets/prfl8.jpg",
+      
+        "payment_type": "Online",
+        
+        "purchased_date": "15/8/2023",
+      
+        "expire_at": "2024-07-07"
+      },
+      {
+        "payment_id": 6,
+        "name": "Yoshini hae",
+       
+        "studypack_id": "PHY21",
+       
+        "ProfileImage":"/InstituteStaffAssets/prfl6.jpeg",
+      
+        "payment_type": "Online",
+        
+        "purchased_date": "10/15/2023",
+      
+        "expire_at": "2024-07-07"
+      },
+      
+      {
+        "payment_id": 7,
+        "name": "Paeto elen",
+       
+        "studypack_id": "PHY23",
+       
+        "ProfileImage":"/InstituteStaffAssets/prfl3.jpg",
+      
+        "payment_type": "Physical",
+        
+        "purchased_date": "8/15/2023",
+      
+        "expire_at": "2024-07-07"
+
+      },
+      
+      
+      {
+        "payment_id": 8,
+        "name": "Gardo patel",
+       
+        "studypack_id": "PHY12",
+       
+        "ProfileImage":"/InstituteStaffAssets/prfl7.jpg",
+      
+        "payment_type": "Physical",
+        
+        "purchased_date": "1/9/2023",
+      
+        "expire_at": "2024-07-07"
+
       }
     ]
 }

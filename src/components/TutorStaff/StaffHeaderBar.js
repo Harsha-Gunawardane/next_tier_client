@@ -18,7 +18,7 @@ import { IoIosAddCircleOutline } from "react-icons/io";
 
 // import { Form } from "react-router-dom";
 
-export default function StaffHeaderBar({ search, setSearch, onOpen }) {
+export default function StaffHeaderBar({ search, setSearch, onOpen}) {
 
   // const staffs = useStaffStore((state) => state.staffs);
 
@@ -42,6 +42,7 @@ export default function StaffHeaderBar({ search, setSearch, onOpen }) {
             <Input
               variant="outline"
               placeholder="Search by name"
+              paddingLeft="35px"
               h={"40px"}
               size="sm"
               fontSize={{ base: "14px", sm: "16px" }}
@@ -73,7 +74,6 @@ export default function StaffHeaderBar({ search, setSearch, onOpen }) {
               pointerEvents="none"
               fontSize="12px"
               children={<FaUserFriends size="1.2rem" color="gray" />}
-              paddingRight="7px"
             />
 
             <Input
@@ -81,6 +81,7 @@ export default function StaffHeaderBar({ search, setSearch, onOpen }) {
               placeholder="All Staff"
               variant="outline"
               color="gray"
+              paddingLeft="40px"
               fontSize="14px"
               h={"40px"}
               size="sm"

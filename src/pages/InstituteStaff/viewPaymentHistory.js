@@ -22,7 +22,7 @@ import data from "./data/data.json";
 import { Link } from 'react-router-dom';
 const payments = data.Payments;
 
-function ViewPaymentHistory() {
+function viewPaymentHistory() {
   const scrollbarStyles = `
     ::-webkit-scrollbar {
       width: 4px;
@@ -214,4 +214,4 @@ function ViewPaymentHistory() {
   )
 }
 
-export default ViewPaymentHistory
+export default viewPaymentHistory

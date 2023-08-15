@@ -1,15 +1,21 @@
 import { useContext, useEffect } from "react";
 import useSidebar from "../hooks/useSidebar";
-import { useOutletContext } from "react-router-dom";
-import { useBreakpointValue } from "@chakra-ui/media-query";
 
 export default function Courses() {
 
+<<<<<<< HEAD
     const [minimizeButtonRef] = useOutletContext();
 
     useEffect(() => {
         minimizeButtonRef.current.click()
     }, [])
+=======
+    const { setSidebarOptionHandler } = useSidebar();
+
+    // useEffect(() => {
+    setSidebarOptionHandler("courses")
+    // });
+>>>>>>> 215282dcc017b8e1c4fe65308641349a7e51efb4
 
     return (
         <div>

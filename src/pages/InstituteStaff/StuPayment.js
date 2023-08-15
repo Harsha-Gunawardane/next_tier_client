@@ -71,12 +71,107 @@ function StuPayment() {
 
       <Grid templateColumns="repeat(8, 1fr)" gap={6} marginBottom={5}>
         {/** Left Panel */}
+         {/** Right Panel */}
+         <GridItem
+          colSpan={{ base: 8, lg: 6, xl: 6 }}
+          h={{ base: '78vh', lg: '78vh' }}
+        >
+          <Input
+            width={300}
+            placeholder="Search for Courses"
+            backgroundColor='#ffffff'
+            marginLeft={4} marginBottom={5}
+            value={searchTerm}
+            onChange={handleSearchChange} />
+
+          <Tabs colorScheme="blue" backgroundColor="#ffffff" border="0.05px solid #DAE6F0" borderRadius={15} marginLeft={4} height='73vh' overflowY='scroll'>
+            <TabList gap={10} marginLeft={5}>
+              <Tab fontSize={13} fontWeight='medium'>Pending</Tab>
+              <Tab fontSize={13} fontWeight='medium'>Expired</Tab>
+            </TabList>
+            <TabPanels>
+              <TabPanel>
+                <SimpleGrid p="10px" columns={4} spacing={10} minChildWidth="250px">
+                  {pendingPayments.map((payment) => (
+                    <CourseCardComponent
+                      key={payment.payment_id}
+                      props={{
+                        title1: payment.course,
+                        title2: "Study Pack ID",
+                        avatar: payment.ProfileImageTutor,
+                        name: payment.tutor,
+                        description: payment.description,
+                        monthly_fee: payment.monthly_fee,
+                        Courseimg: payment.Courseimg,
+                        buttonText: "Make Payment",
+                        onButtonClick: onOpen,
+                        borderColor: "#DAE6F0",
+                        borderRadius: 15,
+                        badgeContent: `Expire date: ${payment.purchased_date}`,
+                        colorBadge1: "red",
+                        colorBadge2: "green",
+                        fontWeight: "bold",
+                        studypackID: payment.studypack_id
+                      }}
+                    />
+                  ))}
+                </SimpleGrid>
+              </TabPanel>
+              <TabPanel>
+                <SimpleGrid p="10px" columns={4} spacing={10} minChildWidth="250px">
+                  {expiredPayments.map((payment) => (
+                    <CourseCardComponent
+                      key={payment.payment_id}
+                      props={{
+                        title1: payment.course,
+                        title2: "Study Pack ID",
+                        avatar: payment.ProfileImageTutor,
+                        name: payment.tutor,
+                        description: payment.description,
+                        monthly_fee: payment.monthly_fee,
+                        Courseimg: payment.Courseimg,
+                        buttonText: "Purchase",
+                        onButtonClick: onOpen,
+                        borderColor: "#DAE6F0",
+                        borderRadius: 15,
+                        badgeContent: `Expired date: ${payment.expire_at}`,
+                        colorBadge1: "red",
+                        colorBadge2: "gray",
+                        fontWeight: "bold",
+                        studypackID: payment.studypack_id
+                      }}
+                    />
+                  ))}
+                </SimpleGrid>
+              </TabPanel>
+            </TabPanels>
+
+            {/* Modal */}
+            <Modal isOpen={isOpen} onClose={onClose} isCentered={true}>
+              <ModalOverlay />
+              <ModalContent>
+                <ModalCloseButton />
+                <ModalBody marginTop={4} marginBottom={2}>
+                  <Text fontSize={15}>Are you sure you want to make the payment?</Text>
+                </ModalBody>
+                <ModalFooter>
+                  <Button colorScheme="gray" mr={3} onClick={onClose} size="sm">
+                    Close
+                  </Button>
+                  <Link to="/staff/cash-receipt"><Button colorScheme="blue" mr={3}  type='submit' size="sm">
+                    Yes
+                  </Button></Link>
+                </ModalFooter>
+              </ModalContent>
+            </Modal>
+          </Tabs>
+        </GridItem>
         <GridItem
           w="100%"
           h={{ base: '78vh', lg: '78vh' }}
           as="aside"
           colSpan={{ base: 8, lg: 2, xl: 2 }}
-          marginLeft={4}
+          paddingRight={4}
           borderRadius={15}
         >
           <Flex justify="space-between" border="0.05px solid #DAE6F0" bg="#ffffff" borderRadius={15} height={200}>
@@ -190,101 +285,7 @@ function StuPayment() {
           </Box>
         </GridItem>
 
-        {/** Right Panel */}
-        <GridItem
-          colSpan={{ base: 8, lg: 6, xl: 6 }}
-          h={{ base: '78vh', lg: '78vh' }}
-        >
-          <Input
-            width={300}
-            placeholder="Search for Courses"
-            backgroundColor='#ffffff'
-            marginLeft={4} marginBottom={5}
-            value={searchTerm}
-            onChange={handleSearchChange} />
-
-          <Tabs colorScheme="blue" backgroundColor="#ffffff" marginRight={5} border="0.05px solid #DAE6F0" borderRadius={15} marginLeft={4} height='73vh' overflowY='scroll'>
-            <TabList gap={10} marginLeft={5}>
-              <Tab fontSize={13} fontWeight='medium'>Pending</Tab>
-              <Tab fontSize={13} fontWeight='medium'>Expired</Tab>
-            </TabList>
-            <TabPanels>
-              <TabPanel>
-                <SimpleGrid p="10px" columns={4} spacing={10} minChildWidth="250px">
-                  {pendingPayments.map((payment) => (
-                    <CourseCardComponent
-                      key={payment.payment_id}
-                      props={{
-                        title1: payment.course,
-                        title2: "Study Pack ID",
-                        avatar: payment.ProfileImageTutor,
-                        name: payment.tutor,
-                        description: payment.description,
-                        monthly_fee: payment.monthly_fee,
-                        Courseimg: payment.Courseimg,
-                        buttonText: "Make Payment",
-                        onButtonClick: onOpen,
-                        borderColor: "#DAE6F0",
-                        borderRadius: 15,
-                        badgeContent: `Expire date: ${payment.purchased_date}`,
-                        colorBadge1: "red",
-                        colorBadge2: "green",
-                        fontWeight: "bold",
-                        studypackID: payment.studypack_id
-                      }}
-                    />
-                  ))}
-                </SimpleGrid>
-              </TabPanel>
-              <TabPanel>
-                <SimpleGrid p="10px" columns={4} spacing={10} minChildWidth="250px">
-                  {expiredPayments.map((payment) => (
-                    <CourseCardComponent
-                      key={payment.payment_id}
-                      props={{
-                        title1: payment.course,
-                        title2: "Study Pack ID",
-                        avatar: payment.ProfileImageTutor,
-                        name: payment.tutor,
-                        description: payment.description,
-                        monthly_fee: payment.monthly_fee,
-                        Courseimg: payment.Courseimg,
-                        buttonText: "Purchase",
-                        onButtonClick: onOpen,
-                        borderColor: "#DAE6F0",
-                        borderRadius: 15,
-                        badgeContent: `Expired date: ${payment.expire_at}`,
-                        colorBadge1: "red",
-                        colorBadge2: "gray",
-                        fontWeight: "bold",
-                        studypackID: payment.studypack_id
-                      }}
-                    />
-                  ))}
-                </SimpleGrid>
-              </TabPanel>
-            </TabPanels>
-
-            {/* Modal */}
-            <Modal isOpen={isOpen} onClose={onClose} isCentered={true}>
-              <ModalOverlay />
-              <ModalContent>
-                <ModalCloseButton />
-                <ModalBody marginTop={4} marginBottom={2}>
-                  <Text fontSize={15}>Are you sure you want to make the payment?</Text>
-                </ModalBody>
-                <ModalFooter>
-                  <Button colorScheme="gray" mr={3} onClick={onClose} size="sm">
-                    Close
-                  </Button>
-                  <Link to="/staff/cash-receipt"><Button colorScheme="blue" mr={3}  type='submit' size="sm">
-                    Yes
-                  </Button></Link>
-                </ModalFooter>
-              </ModalContent>
-            </Modal>
-          </Tabs>
-        </GridItem>
+       
       </Grid>
     </div>
   );

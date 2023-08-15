@@ -41,6 +41,7 @@ import HallList from "./pages/InstituteStaff/HallList";
 import HallSchedule from "./pages/InstituteStaff/HallSchedule";
 import InstStaffStuPayment from "./pages/InstituteStaff/StuPayment";
 import InstStaffList from "./pages/InstituteStaff/StaffList";
+import AddInstStaff from "./pages/InstituteStaff/AddInstStaff";
 import ViewPaymentHistory from "./pages/InstituteStaff/viewPaymentHistory";
 import Profile from "./pages/InstituteStaff/Profile";
 import CashReceipt from "./pages/InstituteStaff/cashReceiptStaff";
@@ -51,22 +52,18 @@ import TutorsList from "./pages/InstituteStaff/tutorsList";
 import TutorProfile from "./pages/InstituteStaff/TutorProfile";
 import CourseProfile from "./pages/InstituteStaff/CourseDetail";
 
-// admin components
-import AdminDashboard from "./pages/admin/Dashboard";
-import AdminsInfo from "./pages/admin/AdminsInfo";
-import AdminSetting from "./pages/admin/Settings";
-
 // tutor components
-// import TDashboard from "./pages/tutor/dashboard";
-// import TCourses from "./pages/tutor/course";
-// import Tcontents from "./pages/tutor/contents";
-// import Addcourse from "./pages/tutor/addcourse";
-// import Addstudypack from "./pages/tutor/addcoursepack";
-// import Studypackedit from "./pages/tutor/coursepackageedit";
-// import Studypackcontent from "./pages/tutor/coursepackcontent";
-// import Coursecontent from "./pages/tutor/courseContent";
-// import Courseedit from "./pages/tutor/courseedit";
-// import PaperclassContent from "./pages/tutor/paperclasscontent";
+import TDashboard from "./pages/tutor/dashboard";
+import TCourses from "./pages/tutor/course";
+import Tcontents from "./pages/tutor/contents";
+import Addcourse from "./pages/tutor/addcourse";
+import Addstudypack from "./pages/tutor/addcoursepack";
+import Studypackedit from "./pages/tutor/coursepackageedit";
+import Studypackcontent from "./pages/tutor/coursepackcontent";
+import Coursecontent from "./pages/tutor/courseContent";
+import Courseedit from "./pages/tutor/courseedit";
+import PaperAnalyze from "./pages/tutor/quizAnalyze";
+
 
 // import TutorDashboard from "./pages/student/TutorDashboard";
 
@@ -112,6 +109,9 @@ function App() {
         <Route path="verify" element={<UserVerify />} />
         <Route path="forgot-password" element={<ForgottenPassword />} />
 
+
+
+
         {/* we want to protect these routes */}
         <Route element={<PersistLogin />}>
           <Route element={<RequireAuth allowedRoles={[ROLES.Student]} />}>
@@ -120,10 +120,8 @@ function App() {
               element={<SidebarAndHeader userRole={"student"} />}
             >
               <Route path="dashboard" element={<Dashboard />} />
-              <Route path="courses" element={<StudentCourses />} />
-              {/* <Route path="courses/:id/content" element={<Coursecontent />} /> */}
+              <Route path="courses" element={<Courses />} />
               <Route path="content" element={<Content />} />
-
               <Route path="quizzes" element={<QuizDashboard />} />
               <Route path="quizzes/:subject" element={<QuizDashboard />} />
               <Route
@@ -139,34 +137,33 @@ function App() {
               <Route path="content/watch/:id" element={<ContentWatch />} />
               <Route path="quizzes/:subject/:mcqname" element={<Quiz />} />
 
-              <Route path="tutes" element={<TuteLayout />}>
-                <Route index element={<TuteDashboard />} />
-                <Route path="new/:id" element={<NewTute />} />
-                <Route path="edit/:id" element={<NewTute />} />
-                <Route path="view/:id" element={<PdfView />} />
-                <Route path=":id" element={<TuteView />} />
-              </Route>
-
               <Route path="settings" element={<Settings />} />
+
+
+
+
+
+
+
             </Route>
           </Route>
 
-          {/* <Route element={<RequireAuth allowedRoles={[ROLES.Tutor]} />}>
-            <Route path='tutor' element={<SidebarAndHeader userRole={"tutor"} />}>
+          <Route element={<RequireAuth allowedRoles={[ROLES.Tutor]} />}>
+            <Route path='tutor' element={<SidebarAndHeader userRole={"teacher"} />}>
               <Route path="dashboard" element={<TDashboard />} />
               <Route path="content" element={<Tcontents />} />
               <Route path="courses/add" element={<Addcourse />} />
               <Route path="courses" element={<TCourses />} ></Route>
               <Route path='courses/content/:courseid' element={<Coursecontent />} ></Route>
-              <Route path='courses/paperclasscontent' element={<PaperclassContent />} ></Route>
               <Route path='courses/details/:courseid' element={<Courseedit />} ></Route>
+              <Route path='courses/content/analyze/:studypackid' element={<PaperAnalyze />} ></Route>
               <Route path='courses/studypackcontent/:courseid' element={<Studypackcontent />} ></Route>
               <Route path='courses/studypackdetails/:courseid' element={<Studypackedit />} ></Route>
-              <Route path="courses/addstudypack" element={<Addstudypack/>} />
-     
-          
-           </Route>
-          
+              <Route path="courses/addstudypack" element={<Addstudypack />} />
+
+
+            </Route>
+
           </Route> */}
 
           <Route element={<RequireAuth allowedRoles={[ROLES.Admin]} />}>
@@ -180,40 +177,30 @@ function App() {
             </Route>
           </Route>
 
-          <Route
-            path="staff"
-            element={<SidebarAndHeader userRole={"InstituteStaff"} />}
-          >
-            <Route path="dashboard" element={<InstStaffDashboard />} />
-            {/* <Route path="teacher" element={<ViewTeacher />} /> */}
-            <Route path="teacher/add" element={<AddTeacher />} />
-            <Route path="class" element={<ApproveClass />} />
-            <Route path="profile" element={<InstStaffProfile />} />
-            <Route path="complaints" element={<InstStaffComplaintsList />} />
+
+
+          <Route element={<RequireAuth allowedRoles={[ROLES.Tutor]} />}>
+            <Route
+              path="tutor"
+              element={<SidebarAndHeader userRole={"teacher"} />}
+            >
+              {/* <Route index element={<TutorDashboard />} /> */}
+              <Route path="supportstaffs">
+                <Route index element={<TutorStaffs />} />
+              </Route>
+
+              <Route path="papers">
+                <Route path="marking" element={<PaperMarking />} />
+              </Route>
+
+              <Route path="quizzes">
+                <Route index element={<TutorQuizzes />} />
+                {/* <Route path="create/:quizId" element={<CreateQuiz />} /> */}
+                <Route path=":quizId" element={<TutorQuiz />} />
+                <Route path="category/:id" element={<McqsByCategory />}></Route>
+              </Route>
+            </Route>
           </Route>
-
-          {/* <Route element={<RequireAuth allowedRoles={[ROLES.Tutor]} />}> */}
-          {/* <Route
-            path="tutor"
-            element={<SidebarAndHeader userRole={"teacher"} />}
-          >
-            <Route index element={<TutorDashboard />} />
-            <Route path="supportstaffs">
-              <Route index element={<TutorStaffs />} />
-            </Route>
-
-            <Route path="papers">
-              <Route path="marking" element={<PaperMarking />} />
-            </Route>
-
-            <Route path="quizzes">
-              <Route index element={<TutorQuizzes />} />
-              <Route path="create/:quizId" element={<CreateQuiz />} />
-              <Route path=":quizId" element={<TutorQuiz />} />
-              <Route path="category/:id" element={<McqsByCategory />}></Route>
-            </Route>
-          </Route> */}
-          {/* </Route> */}
 
           {/* <Route element={<RequireAuth allowedRoles={[ROLES.Staff]} />}> */}
           <Route
@@ -231,11 +218,16 @@ function App() {
             <Route path="hall/view" element={<HallList />} />
             <Route path="stu-payment" element={<InstStaffStuPayment />} />
             <Route path="staff-list" element={<InstStaffList />} />
+            <Route
+              path="staff-list/add-inst-staff"
+              element={<AddInstStaff />}
+            />
             <Route path="payment-history" element={<ViewPaymentHistory />} />
             <Route path="cash-receipt" element={<CashReceipt />} />
             <Route path="online-receipt" element={<OnlineReceipt />} />
             <Route path="stu-list" element={<StudentsList />} />
             <Route path="stu-profile/:id" element={<StudentProfile />} />
+            <Route path="add-staff" element={<AddInstStaff />} />
             <Route path="staff-list" element={<InstStaffList />} />
             <Route path="tutors-list" element={<TutorsList />} />
             <Route path="tutor-profile/:id" element={<TutorProfile />} />
@@ -258,6 +250,7 @@ function App() {
         {/* catch all */}
         <Route path="*" element={<Missing />} />
       </Route>
+
     </Routes>
   );
 }

@@ -12,28 +12,26 @@ import {
 } from "@mantine/core";
 
 import { IconEdit, IconPencil, IconTrash } from "@tabler/icons-react";
-import { FaPen } from "react-icons/fa";
-import { NavLink } from "react-router-dom";
 
-export default function StaffTable({ staffs, handleDelete }) {
+export default function StaffTable({ staffs, handleDelete, handleEdit }) {
   const theme = useMantineTheme();
   const rows = staffs.map((staff) => (
-    <tr key={staff.name}>
+    <tr key={staff.id}>
       <td style={{ fontSize: "14px" }}>
         <Group spacing="sm">
-          <Avatar size={30} src={staff.avatar} radius={30} />
+          <Avatar size={20} src={staff.profile_picture} radius={30} />
           <Text fz="sm" fw={500}>
-            {staff.name}
+            {`${staff.first_name} ${staff.last_name}`}
           </Text>
         </Group>
       </td>
 
       <td style={{ fontSize: "14px" }}>
         <Badge
-          color={staff.job === "Paper Marking Staff" ? "blue" : "pink"}
+          color={staff.staff_title === "Paper Marking Staff" ? "blue" : "pink"}
           variant={theme.colorScheme === "dark" ? "light" : "outline"}
         >
-          {staff.job}
+          {staff.staff_title}
         </Badge>
       </td>
       <td style={{ fontSize: "14px" }}>
@@ -43,16 +41,14 @@ export default function StaffTable({ staffs, handleDelete }) {
       </td>
       <td style={{ fontSize: "14px" }}>
         <Text fz="sm" c="dimmed">
-          {staff.phone}
+          {staff.phone_number}
         </Text>
       </td>
       <td style={{ fontSize: "14px" }}>
         <Group spacing={0} position="right">
-          <NavLink to={`edit/${staff.id}`}>
-            <ActionIcon>
-              <IconPencil size="1rem" stroke={1.5} />
-            </ActionIcon>
-          </NavLink>
+          <ActionIcon onClick={() => handleEdit(staff.id)}>
+            <IconPencil size="1rem" stroke={1.5} />
+          </ActionIcon>
           <ActionIcon
             style={{ color: "red" }}
             onClick={() => handleDelete(staff.id)}

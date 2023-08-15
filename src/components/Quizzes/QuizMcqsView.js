@@ -12,7 +12,7 @@ import {
   SimpleGrid,
   Text,
 } from "@chakra-ui/react";
-import { ActionIcon, Space } from "@mantine/core";
+import { ActionIcon } from "@mantine/core";
 
 import { IconPencil, IconTrash } from "@tabler/icons-react";
 import { NavLink } from "react-router-dom";
@@ -65,16 +65,16 @@ export default function QuizMcqsView({ mcqs, handleDeleteMcq }) {
                 maxWidth="1100px"
                 fontSize="12px"
               >
-                <FormLabel fontWeight="400">{mcq.choice1}</FormLabel>
-                <FormLabel fontWeight="400">{mcq.choice2}</FormLabel>
-                <FormLabel fontWeight="400">{mcq.choice3}</FormLabel>
-                <FormLabel fontWeight="400">{mcq.choice4}</FormLabel>
-                <FormLabel fontWeight="400">{mcq.choice5}</FormLabel>
+                {mcq.choices.map((choice) => (
+                  <FormLabel fontWeight="400">{choice}</FormLabel>
+                ))}
               </SimpleGrid>
             </Card>
 
             <Card variant="outline" padding="10px" mb="5px">
-              <FormLabel fontWeight="400">Answer: {mcq.answer}</FormLabel>
+              <FormLabel fontWeight="400">
+                Answer: {mcq.choices[mcq.correct_answer]}
+              </FormLabel>
             </Card>
 
             <Card variant="outline" padding="10px">
