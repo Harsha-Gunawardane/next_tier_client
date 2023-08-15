@@ -31,7 +31,6 @@ import CourseTemp from "./pages/student/course/CourseTemp";
 
 // instituteStaff components
 import InstStaffDashboard from "./pages/InstituteStaff/Dashboard";
-import ViewTeacher from "./pages/InstituteStaff/ViewTeacher";
 import AddTeacher from "./pages/InstituteStaff/AddTeacher";
 import InstStaffProfile from "./pages/InstituteStaff/StaffProfile";
 import InstStaffComplaintsList from "./pages/InstituteStaff/Complaints/ComplaintsListView";
@@ -214,7 +213,6 @@ function App() {
           >
             <Route path="dashboard" element={<InstStaffDashboard />} />
             <Route path="my-profile" element={<MyProfile />} />
-            <Route path="teacher" element={<ViewTeacher />} />
             <Route path="teacher/add" element={<AddTeacher />} />
             <Route path="class" element={<ApproveClass />} />
             <Route path="profile/:id" element={<InstStaffProfile />} />
