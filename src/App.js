@@ -64,6 +64,11 @@ import Coursecontent from "./pages/tutor/courseContent";
 import Courseedit from "./pages/tutor/courseedit";
 import PaperAnalyze from "./pages/tutor/quizAnalyze";
 
+// admin components
+import AdminDashboard from "./pages/admin/Dashboard";
+import AdminsInfo from "./pages/admin/AdminsInfo";
+import AdminSetting from "./pages/admin/Settings";
+
 
 // import TutorDashboard from "./pages/student/TutorDashboard";
 
@@ -164,7 +169,7 @@ function App() {
 
             </Route>
 
-          </Route> */}
+          </Route>
 
           <Route element={<RequireAuth allowedRoles={[ROLES.Admin]} />}>
             <Route
