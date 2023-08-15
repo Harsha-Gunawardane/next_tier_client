@@ -14,13 +14,18 @@ const ModalLayout = ({
   footer,
   handleCloseModal,
   isCloseable = true,
-  size = "lg"
 }) => {
   return (
     <Modal
       isOpen={isOpen}
       onClose={handleCloseModal}
-      size={size}
+      size={{
+        base: "sm",
+        sm: "lg",
+        md: "lg",
+        lg: "lg",
+        xl: "lg",
+      }}
       closeOnOverlayClick={isCloseable}
     >
       <ModalOverlay />

@@ -15,7 +15,7 @@ import useAxiosPrivate from "../../../../hooks/useAxiosPrivate";
 
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 
-const STUDENT_INFO_URL = "/user/info";
+const STUDENT_INFO_URL = "/stu/info";
 
 const SecurityInfo = () => {
   const toast = useToast();
@@ -94,10 +94,6 @@ const SecurityInfo = () => {
           isClosable: true,
           position: "top-right",
         });
-      } finally {
-        setCurrentPwd("")
-        setNewPwd("")
-        setConfirmPwd("")
       }
     }
   };

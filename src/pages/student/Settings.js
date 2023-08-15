@@ -7,8 +7,6 @@ import {
   Flex,
   Image,
   useToast,
-  Input,
-  FormLabel,
 } from "@chakra-ui/react";
 import { AddIcon } from "@chakra-ui/icons";
 
@@ -16,6 +14,7 @@ import PersonalInfo from "./components/settings/PersonalInfo";
 import GuardianInfo from "./components/settings/GuardianInfo";
 import SecurityInfo from "./components/settings/SecurityInfo";
 
+import Profile from "../../assests/images/profile.jpg";
 import ModalLayout from "../../components/ModalLayout";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import { useStudentInfo } from "../../store/student/useStudentInfo";
@@ -23,40 +22,18 @@ import useSidebar from "../../hooks/useSidebar";
 
 const STUDENT_INFO_URL = "/stu/info";
 const PROFILE_UPLOAD_URL = "/user/profile-image";
-const BASE_URL = "http://localhost:3500";
 
 function Settings() {
   const toast = useToast();
   const axiosPrivate = useAxiosPrivate();
   const { setSidebarOptionHandler } = useSidebar();
 
-  const {
-    fName,
-    lName,
-    phoneNo,
-    address,
-    college,
-    stream,
-    medium,
-    dob,
-    profile,
-    setFName,
-    setLName,
-    setPhoneNo,
-    setAddress,
-    setCollege,
-    setStream,
-    setMedium,
-    setDob,
-    setProfile,
-  } = useStudentInfo();
-
   useEffect(() => {
     setSidebarOptionHandler("settings");
   }, [setSidebarOptionHandler]);
 
+
   const [isOpen, setIsOpen] = useState(false);
-  const [file, setFile] = useState(null);
   const [selectedImage, setSelectedImage] = useState(null);
 
   const handleCloseModal = () => {
@@ -67,126 +44,119 @@ function Settings() {
     setIsOpen(true);
   };
 
-  const handleImageDrop = (event) => {
-    event.preventDefault();
+  const handleUpload = async () => {
+    try {
+      if (!selectedImage) {
+        toast({
+          title: "No file selected",
+          status: "error",
+          isClosable: true,
+          position: "top-right",
+        });
+        console.log("No file selected");
+        return;
+      }
 
-    console.log(event.target);
-    const selectedFile = event.target.files[0];
-    setFile(selectedFile);
-    setSelectedImage(URL.createObjectURL(selectedFile));
-  };
-  const clearImage = (event) => {
-    event.preventDefault();
-
-    setSelectedImage(null);
-    setFile(null);
-  };
-
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-
-    if (file) {
-      console.log(file);
       const formData = new FormData();
-      formData.append("file", file);
+      formData.append("image", selectedImage);
 
-      console.log(formData);
+      console.log(formData, selectedImage);
+      const response = await axiosPrivate.post(PROFILE_UPLOAD_URL, formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
 
-      const response = await axiosPrivate.post(
-        `${PROFILE_UPLOAD_URL}`,
-        formData,
-        {
-          headers: { "Content-Type": "multipart/form-data" },
-        }
-      );
-      setProfile(response.data?.profile);
-      console.log(response.data);
+      console.log(response.data); // handle the response from the server
 
-      setFile(null);
       setSelectedImage(null);
       handleCloseModal();
+    } catch (error) {
+      console.error(error);
     }
   };
 
-  console.log(file);
+  const handleImageDrop = (event) => {
+    event.preventDefault();
+    const imageFile = event.dataTransfer.files[0];
+    setSelectedImage(URL.createObjectURL(imageFile));
+    // setSelectedImage(imageFile)
+  };
+
   const modalTitle = "Upload Profile Image";
-  const modalBody = selectedImage ? (
-    <Image
-      src={selectedImage}
-      alt="Selected Image"
-      style={{ maxWidth: "100%" }}
-    />
-  ) : (
-    <form onSubmit={handleSubmit}>
-      <Input id="file" h={100} type="file" onChange={handleImageDrop} />
-      <FormLabel htmlFor="file">Upload image here...</FormLabel>
-
-      {/* <div style={{ display: "inline-block" }}>
-        
-        <Input
-          type="file"
-          display="none"
-          onChange={handleImageDrop}
-          id="image"
+  const modalBody = (
+    <>
+      {selectedImage ? (
+        <img
+          src={selectedImage}
+          alt="Selected Image"
+          style={{ maxWidth: "100%" }}
         />
-        
-        <label htmlFor="image">
-
-          <Flex w={250} justifyContent="center" border='1px solid black'>
-            <Box
-              style={{
-                width: "300px",
-                height: "200px",
-                border: "2px dashed gray",
-                borderRadius: "4px",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                cursor: "pointer",
-              }}
-              onDrop={handleImageDrop}
-              onDragOver={(event) => event.preventDefault()}
-            >
-              <Box display="flex" justifyContent="center">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  width="48"
-                  height="48"
-                >
-                  <path d="M12 5v14M5 12l7-7 7 7" />
-                </svg>
-                <Text>Click here to add image...</Text>
-              </Box>
+      ) : (
+        <form>
+          <Box
+            style={{
+              width: "100%",
+              height: "200px",
+              border: "2px dashed gray",
+              borderRadius: "4px",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              cursor: "pointer",
+            }}
+            onDrop={handleImageDrop}
+            onDragOver={(event) => event.preventDefault()}
+          >
+            <Box display="flex" justifyContent="center">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                width="48"
+                height="48"
+              >
+                <path d="M12 5v14M5 12l7-7 7 7" />
+              </svg>
+              <Text>Upload your image here</Text>
             </Box>
-          </Flex>
-        </label>
-      </div> */}
-
-    </form>
+          </Box>
+        </form>
+      )}
+    </>
   );
 
   const modalFooter = (
     <>
-      <Button
-        type="submit"
-        color="white"
-        bg="#0074D9"
-        mr={3}
-        onClick={handleSubmit}
-      >
+      <Button color="white" bg="#0074D9" mr={3} onClick={handleUpload}>
         Save
       </Button>
-      <Button variant="ghost" onClick={clearImage}>
+      <Button variant="ghost" onClick={() => setSelectedImage(null)}>
         Clear
       </Button>
     </>
   );
+
+  const {
+    fName,
+    lName,
+    phoneNo,
+    address,
+    college,
+    stream,
+    medium,
+    dob,
+    setFName,
+    setLName,
+    setPhoneNo,
+    setAddress,
+    setCollege,
+    setStream,
+    setMedium,
+    setDob,
+  } = useStudentInfo();
 
   useEffect(() => {
     const getUserInfo = async () => {
@@ -207,9 +177,6 @@ function Settings() {
         setMedium(studentInfo.medium);
         setStream(studentInfo.stream);
         setDob(studentInfo.dob);
-        setProfile(studentInfo.profile);
-
-        console.log(profile);
       } catch (error) {
         console.log(error);
       }
@@ -237,7 +204,7 @@ function Settings() {
           <Box ml={5} w={200} h={200} position="relative">
             <Image
               borderRadius={10}
-              src={profile}
+              src={Profile}
               w="100%"
               h="100%"
               objectFit="cover"

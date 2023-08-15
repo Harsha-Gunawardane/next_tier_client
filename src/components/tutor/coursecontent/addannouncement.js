@@ -104,9 +104,10 @@ const Addannouncement = () => {
         placement='right'
         onClose={onClose}
         finalFocusRef={btnRef}
+      
       >
         <DrawerOverlay />
-        <DrawerContent>
+        <DrawerContent width='700px'>
           <DrawerCloseButton />
           <DrawerHeader fontSize='20px'>Add Announcement</DrawerHeader>
 

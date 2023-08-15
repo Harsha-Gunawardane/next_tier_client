@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { CSSReset, Flex } from "@chakra-ui/react";
 import "react-date-range/dist/styles.css"; // main style file
 import "react-date-range/dist/theme/default.css"; // theme css file
 import { Calendar } from "react-date-range";
-import "../../assests/css/calendarcustom.css"
-import { format } from "date-fns";
+import "../../assets/css/calendarcustom.css"
+import moment from "moment";
+import { format, isWeekend } from "date-fns";
 import isEventDay from "../../utils/isEventDay";
 
 //days of this month 2023 july

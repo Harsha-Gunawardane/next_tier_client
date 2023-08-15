@@ -24,7 +24,7 @@ import BreadCrumbs from "./components/quiz/BreadCrumbs";
 import {
   clickOnQuestion,
   useFetchReviewQuestions,
-} from "../../hooks/reduxReducers/fetchReviewQuestions";
+} from "../../hooks/fetchReviewQuestions";
 import ResultCard from "./components/cards/ResultCard";
 import Loading from "../../components/skeleton/Loading";
 import SearchBar from "./components/SearchBar";

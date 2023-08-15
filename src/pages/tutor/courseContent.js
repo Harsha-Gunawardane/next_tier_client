@@ -18,14 +18,15 @@ import {
 
 import CourseContent from "../../components/tutor/coursecontent/Coursecontent";
 import PaperContent from "../../components/tutor/coursecontent/Paperclasscontent";
-import Adddate from "../../components/tutor/coursecontent/Addmonth";
-import Addmonth from "../../components/tutor/coursecontent/Addmonth.js";
 import Announcement from "../../components/tutor/coursecontent/Announcement";
 import Forum from "../../components/tutor/coursecontent/Forum";
 import { Show, Hide } from '@chakra-ui/react'
 import { useParams } from "react-router-dom";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import { useLocation } from "react-router-dom";
+import AddNew from "./addstudypack";
+import Addpaper from "./addpaper";
+
 
 const Coursecontent = () => {
 
@@ -75,6 +76,23 @@ const renderCourseContent = () => {
   return <p>Loading...</p>;
 };
 
+
+
+const renderAddNew = () => {
+  if (coursedata && coursedata.title) {
+    const title = coursedata.title;
+    if (title.includes("Paper")) {
+      return <Addpaper />;
+    } else if (title.includes("Theory") || title.includes("Revision")) {
+      return <AddNew />;
+    } else {
+      return <AddNew />;
+    }
+  }
+  // If coursedata or coursedata.title is not available, you can return a loading component or a placeholder here
+  return <p>Loading...</p>;
+};
+
   return (
    <Box>
 
@@ -82,7 +100,7 @@ const renderCourseContent = () => {
 
  <Box w="130%" bg="white" p={10} borderRadius="10px" ml="10px">
  {coursedata &&
- <Heading fontSize='30px' mb='30px'>{coursedata.title}</Heading>
+ <Heading fontSize='27px' mb='30px' fontWeight='xl'>{coursedata.title}</Heading>
  }
  <Hide below='md'>
  <SimpleGrid spacing={2} minChildWidth="250px">
@@ -92,6 +110,7 @@ const renderCourseContent = () => {
       src={coursedata.thumbnail}
       alt='Green double couch with wooden legs'
       height={{base:120,xl:150}}
+      width='260px'
       
       
     />
@@ -103,14 +122,14 @@ const renderCourseContent = () => {
    } </Box>
  </SimpleGrid>
 </Hide>
-  <Heading fontSize='20px' mt='40px' mb='20px'>Course Content</Heading>
+  <Heading fontSize='20px' mt='40px' mb='20px' fontWeight='xl'>Course Content</Heading>
 
-
+  {renderAddNew()}
   {renderCourseContent()}
      
   
 
-<Addmonth></Addmonth>
+  
         </Box>
 
       

@@ -1,8 +1,0 @@
-.mentions_main textarea {
-    border: 1px solid #a0a0a0 !important;
-}
-
-.mentions_main textarea:focus {
-    border: 1px solid #0074d9 !important;
-    outline: none !important;
-}

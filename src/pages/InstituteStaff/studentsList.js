@@ -96,13 +96,13 @@ function StudentsList() {
   };
 
   return (
-    <Box backgroundColor="white" width="100%">
-      {/* <Box>
+    <Box backgroundColor="#F9F9F9" width="100%">
+      <Box>
         <Text>Students List</Text>
-      </Box> */}
-      {/* <SimpleGrid p="10px" columns={5} ml={4} mr={4} minChildWidth={200}> */}
+      </Box>
+      <SimpleGrid p="10px" columns={5} ml={4} mr={4} minChildWidth={200}>
         {/* Search Box */}
-        {/* <Box height="40px">
+        <Box height="40px">
           <Input
             width="300px"
             placeholder="Search for students"
@@ -112,9 +112,9 @@ function StudentsList() {
             fontSize={13}
             backgroundColor="white"
           />
-        </Box> */}
+        </Box>
         {/* Sort and Filter Options */}
-        {/* <Box height="40px">
+        <Box height="40px">
           <Flex paddingLeft={7}>
             <Box>
               <Text mr="2" fontSize={13} marginTop={2}>
@@ -135,9 +135,9 @@ function StudentsList() {
               <Spacer mx="2" />
             </Box>
           </Flex>
-        </Box> */}
+        </Box>
 
-        {/* <Box height="40px">
+        <Box height="40px">
           <Flex paddingLeft={7} paddingRight={0}>
             <Box>
               <Text mr="2" fontSize={13} marginTop={2}>
@@ -157,9 +157,9 @@ function StudentsList() {
               </Select>
             </Box>
           </Flex>
-        </Box> */}
+        </Box>
 
-        {/* <Box height="40px">
+        <Box height="40px">
           <Flex>
             <Box>
               <Text mr="2" fontSize={13} marginTop={2}>
@@ -180,9 +180,9 @@ function StudentsList() {
               </Select>
             </Box>
           </Flex>
-        </Box> */}
+        </Box>
 
-        {/* <Box height="40px" overflowX="hidden">
+        <Box height="40px" overflowX="hidden">
           <Flex>
             <Box>
               <Text mr="2" fontSize={13} marginTop={2}>
@@ -210,17 +210,17 @@ function StudentsList() {
             </Box>
           </Flex>
         </Box>
-      </SimpleGrid> */}
+      </SimpleGrid>
 
       {/* Student List */}
       <Box
         width="100%"
         height="79.2vh"
-        // overflowY="scroll"
-        // css={scrollbarStyles}
+        overflowY="scroll"
+        css={scrollbarStyles}
       >
         <SimpleGrid
-          columns={[1, 2, 3,4]}
+          columns={[1, 2, 3, 4, 5]}
           spacing="6"
           marginLeft={4}
           marginRight={4}

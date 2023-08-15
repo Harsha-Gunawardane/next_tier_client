@@ -84,8 +84,6 @@ const Login = () => {
             navigate("/staff/dashboard");
         } else if (roles.includes(ROLES.Tutor)) {
           navigate("/tutor/dashboard")
-        } else if (roles.includes(ROLES.Admin)) {
-          navigate("/admin/dashboard")
         }
       } else {
         navigate(from, { replace: true });
@@ -164,7 +162,7 @@ const Login = () => {
                   fontStyle="Roboto"
                   htmlFor="username"
                 >
-                  Username or email address:
+                  Username or Register ID :
                 </FormLabel>
                 <Input
                   type="text"
@@ -178,7 +176,7 @@ const Login = () => {
                   h={9}
                   bg="#eeeeee"
                   border="none"
-                  placeholder="Enter username or email address"
+                  placeholder="Enter username or register ID"
                   fontSize={14}
                 />
                 {/* <FormHelperText>We'll never share your email.</FormHelperText> */}

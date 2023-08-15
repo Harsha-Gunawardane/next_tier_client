@@ -1,269 +1,91 @@
 import {
-  Heading,
-  SimpleGrid,
-  Card,
-  CardBody,
-  Textarea,
-  CardHeader,
-  Flex,
-  Box,
-  Text,
-  Link,
-  Image,
-  Input,
-  TabList,
-  Tab,
-  Tabs,
-  Icon,
-  TabPanel,
-  TabPanels,
-  Button,
-  Avatar,
-  useDisclosure,
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalFooter,
-  ModalBody,
-  ModalCloseButton,
-  FormControl,
-  FormLabel,
-  useToast,
-} from "@chakra-ui/react";
-
-import { useState, useEffect } from "react";
-import React from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-// import data from "../data/data.json";
-import { SearchIcon, EditIcon, ViewIcon } from "@chakra-ui/icons";
-import {
-  Table,
-  Thead,
-  Tbody,
-  Tfoot,
-  Tr,
-  Th,
-  Td,
-  TableCaption,
-  TableContainer,
-} from "@chakra-ui/react";
-import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
-import allComplaints from "./Assets/AllComplaints.png";
-import pending from "./Assets/pendingcomplaints.png";
-import resolved from "./Assets/completedComplaints.png";
-import ignored from "./Assets/removedcomplaints.png";
-
-function ComplaintsListView() {
-  // const complaints = data.complaints;
-  // const complaintstable = data.complaintstable;
-  const toast = useToast();
-  const [selectedComplaint, setSelectedComplaint] = useState(null);
-  const [isOpen, setIsOpen] = useState(false);
-  const [formData, setFormData] = useState({ action: "" });
-  const [complaints, setComplaints] = useState([]);
-  const axiosPrivate = useAxiosPrivate();
-
-  const [searchQuery, setSearchQuery] = useState("");
-  const [filteredComplaints, setFilteredComplaints] = useState([]);
-
-  //complaints count
-  const [complaintCounts, setComplaintCounts] = useState({
-    ignoredCount: 0,
-    pendingCount: 0,
-    resolvedCount: 0,
-  });
-
-
-  useEffect(() => {
-    // Fetch complaints from the backend API
-    axiosPrivate
-      .get("/staff/complaints")
-      .then((response) => {
-        const allComplaints = response.data;
-
-        // Filter complaints based on search query
-        const filtered = allComplaints.filter(
-          (complaint) =>
-            complaint.user.first_name
-              .toLowerCase()
-              .includes(searchQuery.toLowerCase()) ||
-            complaint.user.last_name
-              .toLowerCase()
-              .includes(searchQuery.toLowerCase())
-        );
-
-        // Update filtered complaints
-        setFilteredComplaints(filtered);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  }, [searchQuery]);
-
-  useEffect(() => {
-    // Fetch complaints from the backend API
-    axiosPrivate
-      .get("/staff/complaints")
-      .then((response) => {
-        const allComplaints = response.data;
-
-        const ignoredCount = allComplaints.filter(
-          (complaint) => complaint.status === "IGNORED"
-        ).length;
-        const pendingCount = allComplaints.filter(
-          (complaint) => complaint.status === "PENDING"
-        ).length;
-        const resolvedCount = allComplaints.filter(
-          (complaint) => complaint.status === "RESOLVED"
-        ).length;
-
-        setComplaintCounts({
-          ignoredCount,
-          pendingCount,
-          resolvedCount,
-        });
-
-        setComplaints(allComplaints);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  }, []);
-  const handleOpenModal = (complaintrow) => {
-    setSelectedComplaint(complaintrow);
-    setFormData({ action: complaintrow.action || "" });
-    setIsOpen(true);
-  };
-
-  const handleCloseModal = () => {
-    setSelectedComplaint(null);
-    setIsOpen(false);
-  };
-
-  const handleChange = (e) => {
-    setFormData({ ...formData, action: e.target.value });
-  };
-
-  const handleEditSubmit = () => {
-
-    if (!formData.action) {
-      toast({
-        title: "Action is required",
-        status: "error",
-        isClosable: true,
-        position: "top",
-      });
-      return; // Stop the function if action is empty
-    }
-
-    const updatedComplaint = {
-      ...selectedComplaint,
-      action: formData.action,
-      status: "RESOLVED",
+    Heading, SimpleGrid, Card, CardBody, Textarea, CardHeader, Flex, Box, Text, Link, Image, Input, TabList, Tab, Tabs, Icon, TabPanel, TabPanels, Button, Avatar,
+    useDisclosure,
+    Modal,
+    ModalOverlay,
+    ModalContent,
+    ModalHeader,
+    ModalFooter,
+    ModalBody,
+    ModalCloseButton,
+    FormControl,
+    FormLabel,
+  
+  } from '@chakra-ui/react';
+  
+  import { useState } from 'react';
+  import React from 'react'
+  import data from '../data/data.json';
+  import { SearchIcon, EditIcon, ViewIcon } from '@chakra-ui/icons';
+  import {
+    Table,
+    Thead,
+    Tbody,
+    Tfoot,
+    Tr,
+    Th,
+    Td,
+    TableCaption,
+    TableContainer
+  } from '@chakra-ui/react'
+  
+  
+  
+  function ComplaintsListView() {
+    const complaints = data.complaints;
+    const complaintstable = data.complaintstable;
+    const [selectedComplaint, setSelectedComplaint] = useState(null);
+    const [isOpen, setIsOpen] = useState(false);
+    const [formData, setFormData] = useState({ action: '' });
+  
+    const handleOpenModal = (complaintrow) => {
+      setSelectedComplaint(complaintrow);
+      setFormData({ action: complaintrow.action || '' });
+      setIsOpen(true);
     };
-    // Make API call to update complaint
-    axiosPrivate
-      .put(`/staff/complaints/edit/${selectedComplaint.id}`, {
-        action: formData.action,
-      })
-      .then((response) => {
-        setComplaints((prevComplaints) =>
-          prevComplaints.map((complaint) =>
-            complaint.id === updatedComplaint.id ? updatedComplaint : complaint
-          )
-        );
-        handleCloseModal();
-        toast({
-          title: "Complaint updated successfully",
-          status: "success",
-          isClosable: true,
-          position: "top-right",
-        });
-      })
-      .catch((error) => {
-        console.error(error);
-        toast({
-          title: "An error occured",
-          status: "error",
-          isClosable: true,
-          position: "top-right",
-        });
-      });
-  };
-
-  const handleIgnoreSubmit = () => {
-
-    if (formData.action) {
-      toast({
-        title: "Action should be empty",
-        status: "error",
-        isClosable: true,
-        position: "top",
-      });
-      return; // Stop the function if action is not empty
-    }
-
-    const updatedComplaint = { ...selectedComplaint, status: "IGNORED" };
-    // Make API call to ignore complaint
-    axiosPrivate
-      .put(`/staff/complaints/ignore/${selectedComplaint.id}`)
-      .then((response) => {
-        setComplaints((prevComplaints) =>
-          prevComplaints.map((complaint) =>
-            complaint.id === updatedComplaint.id ? updatedComplaint : complaint
-          )
-        );
-        handleCloseModal();
-        toast({
-          title: "Complaint Ignored successfully",
-          status: "success",
-          isClosable: true,
-          position: "top-right",
-        });
-      })
-      .catch((error) => {
-        console.error(error);
-        toast({
-          title: "An error occured",
-          status: "error",
-          isClosable: true,
-          position: "top-right",
-        });
-      });
-  };
-
-  const [
-    selectedComplaintForViewResolved,
-    setSelectedComplaintForViewResolved,
-  ] = useState(null);
-  const [isViewModalOpenResolved, setIsViewModalOpenResolved] = useState(false);
-
-  const handleOpenViewModalResolved = (complaintrow) => {
-    setSelectedComplaintForViewResolved(complaintrow);
-    setIsViewModalOpenResolved(true);
-  };
-
-  const handleCloseViewModalResolved = () => {
-    setSelectedComplaintForViewResolved(null);
-    setIsViewModalOpenResolved(false);
-  };
+  
+    const handleCloseModal = () => {
+      setSelectedComplaint(null);
+      setIsOpen(false);
+    };
+  
+    const handleChange = (e) => {
+      setFormData({ ...formData, [e.target.name]: e.target.value });
+    };
+  
+    const handleSubmit = () => {
+      console.log(formData);
+      handleCloseModal();
+    };
+  //Resolved
+    const [selectedComplaintForViewResolved, setSelectedComplaintForViewResolved] = useState(null);
+    const [isViewModalOpenResolved, setIsViewModalOpenResolved] = useState(false);
+  
+    const handleOpenViewModalResolved = (complaintrow) => {
+      setSelectedComplaintForViewResolved(complaintrow);
+      setIsViewModalOpenResolved(true);
+    };
+  
+    const handleCloseViewModalResolved = () => {
+      setSelectedComplaintForViewResolved(null);
+      setIsViewModalOpenResolved(false);
+    };
   //Ignored
-  const [selectedComplaintForViewIgnored, setSelectedComplaintForViewIgnored] =
-    useState(null);
-  const [isViewModalOpenIgnored, setIsViewModalOpenIgnored] = useState(false);
-
-  const handleOpenViewModalIgnored = (complaintrow) => {
-    setSelectedComplaintForViewIgnored(complaintrow);
-    setIsViewModalOpenIgnored(true);
-  };
-
-  const handleCloseViewModalIgnored = () => {
-    setSelectedComplaintForViewIgnored(null);
-    setIsViewModalOpenIgnored(false);
-  };
-
-  const scrollbarStyles = `
+    const [selectedComplaintForViewIgnored, setSelectedComplaintForViewIgnored] = useState(null);
+    const [isViewModalOpenIgnored, setIsViewModalOpenIgnored] = useState(false);
+  
+    const handleOpenViewModalIgnored = (complaintrow) => {
+      setSelectedComplaintForViewIgnored(complaintrow);
+      setIsViewModalOpenIgnored(true);
+    };
+  
+    const handleCloseViewModalIgnored = () => {
+      setSelectedComplaintForViewIgnored(null);
+      setIsViewModalOpenIgnored(false);
+    };
+  
+  
+    const scrollbarStyles = `
     ::-webkit-scrollbar {
       width: 4px;
       height:8px;
@@ -282,185 +104,93 @@ function ComplaintsListView() {
       background-color: #555;
     }
   `;
-
-  return (
-    <div style={{ backgroundColor: "#F9F9F9", width: "100%" }}>
-      <Heading marginLeft={13} fontSize={20} marginTop={13} color="#242424">
-        Complaints
-      </Heading>
-      <SimpleGrid
-        p="10px"
-        columns={4}
-        spacing={20}
-        minChildWidth="250px"
-        ml={13}
-        mr={13}
-      >
-        <Box height="92px" shadow="base" bg="white" borderRadius={15}>
-          <Box>
-            <Text fontSize="16px" fontWeight="bold" pl={4} pt={2}>
-              All Complaints
-            </Text>
-          </Box>
-          <Box>
-            <Flex justify="space-around">
-              <Box pt={3}>
-                <Text fontSize="22px"> {complaints.length}</Text>
-              </Box>
-              <Box>
-                <Image
-                  src={allComplaints}
-                  width="40px"
-                  height="40px"
-                  mt={1}
-                ></Image>
-              </Box>
+  
+  
+    return (
+      <div style={{ 'backgroundColor': '#F9F9F9','width':'100%' }}>
+        <Heading marginLeft={13} fontSize={20} marginTop={13} color="#242424">Complaints</Heading>
+        <SimpleGrid p="10px" columns={4} spacing={10} minChildWidth="250px">
+          {complaints && complaints.map((complaint, index) => (
+            <Card key={complaint.id}
+              size='sm'
+              variant='outline'
+              borderRadius={15}
+            //    marginLeft={index === 0 ? 20 : 0}
+            //  marginRight={index === complaints.length - 1 ? 20 : 0}
+            //   width={200} 
+            >
+              <CardHeader>
+                <Box>
+                  <Heading fontSize={15} color='#4D4C4C' textAlign='center' >{complaint.title}</Heading>
+                </Box>
+              </CardHeader>
+              <CardBody color='#4D4C4C'>
+                <Flex justify='space-around'>
+  
+                  <Text fontSize={20} fontWeight='bold' paddingLeft={5}>{complaint.count}</Text>
+                  <Box>
+                    <Image src={complaint.img} width={37} height={37} />
+                  </Box>
+                </Flex>
+              </CardBody>
+            </Card>
+          ))}
+        </SimpleGrid>
+  
+        <SimpleGrid column={1} >
+          <Box marginLeft={13} marginTop={13}>
+            <Flex gap={13}>
+              {/* <Box bg="Orange" width={33} height={33} borderRadius={5}>
+                <Icon as={SearchIcon} boxSize={6} color="gray.500" marginLeft={1.5} marginTop={1.5} />
+              </Box> */}
+              <Input width={300} placeholder="Search" backgroundColor='#ffffff' />
             </Flex>
           </Box>
-        </Box>
-
-        <Box height="92px" shadow="base" bg="white" borderRadius={15}>
-          <Box>
-            <Text fontSize="16px" fontWeight="bold" pl={4} pt={2}>
-              Resolved Complaints
-            </Text>
-          </Box>
-          <Box>
-            <Flex justify="space-around">
-              <Box pt={3}>
-                <Text fontSize="22px">{complaintCounts.resolvedCount}</Text>
-              </Box>
-              <Box>
-                <Image src={resolved} width="40px" height="40px" mt={1}></Image>
-              </Box>
-            </Flex>
-          </Box>
-        </Box>
-
-        <Box height="92px" shadow="base" bg="white" borderRadius={15}>
-          <Box>
-            <Text fontSize="16px" fontWeight="bold" pl={4} pt={2}>
-              Pending Complaints
-            </Text>
-          </Box>
-          <Box>
-            <Flex justify="space-around">
-              <Box pt={3}>
-                <Text fontSize="22px"> {complaintCounts.pendingCount}</Text>
-              </Box>
-              <Box>
-                <Image src={pending} width="40px" height="40px" mt={1}></Image>
-              </Box>
-            </Flex>
-          </Box>
-        </Box>
-
-        <Box height="92px" shadow="base" bg="white" borderRadius={15}>
-          <Box>
-            <Text fontSize="16px" fontWeight="bold" pl={4} pt={2}>
-              Ignored Complaints
-            </Text>
-          </Box>
-          <Box>
-            <Flex justify="space-around">
-              <Box pt={3}>
-                <Text fontSize="22px">{complaintCounts.ignoredCount}</Text>
-              </Box>
-              <Box>
-                <Image src={ignored} width="40px" height="40px" mt={1}></Image>
-              </Box>
-            </Flex>
-          </Box>
-        </Box>
-      </SimpleGrid>
-
-      <SimpleGrid column={1}>
-        <Box marginLeft={13} marginTop={13}>
-          <Input
-            width={300}
-            placeholder="Search for users"
-            backgroundColor="#ffffff"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-          />
-        </Box>
-        <Box marginTop={13} marginLeft={13}>
-          <Tabs
-            colorScheme="blue"
-            backgroundColor="#ffffff"
-            marginRight={5}
-            border="0.05px solid #DAE6F0"
-            borderRadius={15}
-          >
-            <TabList gap={10} marginLeft={5}>
-              <Tab fontSize={13} fontWeight="medium">
-                All
-              </Tab>
-              <Tab fontSize={13} fontWeight="medium">
-                Resolved
-              </Tab>
-              <Tab fontSize={13} fontWeight="medium">
-                Pending
-              </Tab>
-              <Tab fontSize={13} fontWeight="medium">
-                Removed
-              </Tab>
-            </TabList>
-            <TabPanels>
-              <TabPanel>
-                <Box height="380px" overflowY="scroll" css={scrollbarStyles}>
-                  <TableContainer>
-                    <Table variant="simple">
-                      <TableCaption>All complaints</TableCaption>
-                      <Thead>
-                        <Tr fontSize={13}>
-                          <Th>Date</Th>
-                          <Th>Profile</Th>
-                          <Th>Status</Th>
-
-                          {/* <Th >Action</Th> */}
-                        </Tr>
-                      </Thead>
-                      <Tbody>
-                        {filteredComplaints
-                          .sort(
-                            (a, b) =>
-                              new Date(b.posted_at) - new Date(a.posted_at)
-                          ) // Sort in descending order
-                          .map((complaintrow) => (
+          <Box marginTop={13} marginLeft={13}>
+  
+            <Tabs colorScheme="blue" backgroundColor="#ffffff" marginRight={5} border="0.05px solid #DAE6F0" borderRadius={15}>
+              <TabList gap={10} marginLeft={5}>
+                <Tab fontSize={13} fontWeight='medium'>All</Tab>
+                <Tab fontSize={13} fontWeight='medium'>Resolved</Tab>
+                <Tab fontSize={13} fontWeight='medium'>Pending</Tab>
+                <Tab fontSize={13} fontWeight='medium'>Removed</Tab>
+              </TabList>
+              <TabPanels>
+  
+  
+                <TabPanel>
+                  <Box height="380px" overflowY="scroll" css={scrollbarStyles}>
+                    <TableContainer>
+                      <Table variant="simple">
+                        <TableCaption>All complaints</TableCaption>
+                        <Thead >
+                          <Tr fontSize={13}>
+                            <Th >Date</Th>
+                            <Th >Profile</Th>
+                            <Th >Status</Th>
+                            {/* <Th >Action</Th> */}
+                          </Tr>
+                        </Thead>
+                        <Tbody>
+                          {complaintstable.map((complaintrow) => (
                             <Tr key={complaintrow.id}>
-                              <Td fontSize={13}>
-                                {new Date(
-                                  complaintrow.posted_at
-                                ).toLocaleDateString()}
-                              </Td>
-                              <Td>
+                              <Td fontSize={13}>{complaintrow.date}</Td>
+                              <Td >
                                 <Flex gap={4}>
-                                  <Avatar
-                                    src={complaintrow.user.profile_picture}
-                                  />
-                                  <Text fontSize={13} marginTop={4}>
-                                    {complaintrow.user.first_name}{" "}
-                                    {complaintrow.user.last_name}
-                                  </Text>
+                                  <Avatar src={complaintrow.profileName} />
+                                  <Text fontSize={13} marginTop={4}>{complaintrow.name}</Text>
                                 </Flex>
                               </Td>
                               <Td paddingLeft={-14}>
                                 <Text
-                                  textAlign="center"
-                                  width="120px"
+                                  textAlign='center'
+                                  width='120px'
                                   fontSize={13}
                                   color="white"
                                   borderRadius={15}
                                   px={2}
                                   py={1}
-                                  bg={
-                                    complaintrow.status === "PENDING"
-                                      ? "red.500"
-                                      : complaintrow.status === "RESOLVED"
-                                      ? "green.500"
-                                      : "gray.500"
-                                  }
+                                  bg={complaintrow.status === "Pending" ? "red.500" : complaintrow.status === "Resolved" ? "green.500" : "gray.500"}
                                 >
                                   {complaintrow.status}
                                 </Text>

@@ -1,7 +1,7 @@
-import { Flex, Text } from "@chakra-ui/react";
+import { Box, Flex, GridItem, Heading, SimpleGrid, Text } from "@chakra-ui/react";
 import Card from "../Card/Card";
 import EventList from "./EventList";
-import CalenderMan from "./CalendarMan";
+import Calender from "./Calender";
 
 const UpcommingClasses = (props) => {
 	const { ...rest } = props;
@@ -18,10 +18,10 @@ const UpcommingClasses = (props) => {
 	];
 
 	return (
-		<Card h={{ base: "680px", md: "340px", lg: "340px" }} p="5px" {...rest} >
-			<Flex h={"100%"} direction={{ base: "column", md: "row", lg: "row" }} >
+		<Card h={{ base: "680px", lg: "340px" }} p="5px" {...rest} >
+			<Flex h={"100%"} direction={{ base: "column", lg: "row" }} >
 				<Flex p="0" borderRight={{ base: "none", lg: "solid 1px" }} borderBottom={{ base: "solid 1px", lg: "none" }} borderColor={{ base: "gray.100", lg: "gray.100" }} w={{ base: "100%", lg: "50%" }} h="full" direction={"column"} alignItems="center" justifyContent="center">
-					<CalenderMan />
+					<Calender />
 				</Flex>
 				<Flex w={{ base: "100%", lg: "50%" }} overflow={"hidden"} direction={"column"}>
 					<Flex mx="10px" my="5px" justifyContent={"space-between"} alignItems={"center"}>
