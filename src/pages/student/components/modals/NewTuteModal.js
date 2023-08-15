@@ -158,7 +158,7 @@ function NewTuteModal({ isOpen, handleCloseModal }) {
             use atleast 3 characters
           </FormHelperText>
 
-          <Divider mt={10} mb={5} />
+          {/* <Divider mt={10} mb={5} />
           <Flex justifyContent={"center"}>
             <Text fontSize={13} color={"#444444"}>
               You can upload your tute as well.
@@ -190,9 +190,9 @@ function NewTuteModal({ isOpen, handleCloseModal }) {
               w="95%"
               onChange={onChangeFile}
             />
-          </Flex>
+          </Flex> */}
 
-          <Button type="submit">Upload</Button>
+          {/* <Button type="submit">Upload</Button> */}
         </FormControl>
       </form>
     </>
@@ -201,7 +201,7 @@ function NewTuteModal({ isOpen, handleCloseModal }) {
   const modalfooter = (
     <Flex pr={9}>
       <Button
-        // onClick={handleSUbmit}
+        onClick={handleSubmit}
         cursor="pointer"
         pl={5}
         pr={5}
