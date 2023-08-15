@@ -1,10 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Box,
   Text,
   Avatar,
   SimpleGrid,
-  Button,
   Tabs,
   Tab,
   TabList,
@@ -12,6 +11,7 @@ import {
   TabPanels,
 } from "@chakra-ui/react";
 import data from "../../pages/InstituteStaff/data/data";
+import ClassDetails from "./ClassDetails";
 
 function getCurrentTime() {
   const now = new Date();
@@ -46,6 +46,19 @@ function Classes() {
     }
   `;
 
+  const [modalOpen, setModalOpen] = useState(false);
+  const [selectedClass, setSelectedClass] = useState(null);
+
+  const openModal = (classItem) => {
+    setSelectedClass(classItem);
+    setModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setSelectedClass(null);
+    setModalOpen(false);
+  };
+
   const currentTime = getCurrentTime();
 
   const doneClasses = data.classes.filter(
@@ -67,8 +80,8 @@ function Classes() {
   );
   return (
     <Box width="100%">
-      <Tabs mx="20px" my="10px" border="0.05px solid #DAE6F0" borderRadius={15}>
-        <TabList gap={10} marginLeft={5}>
+      <Tabs mx="5px" my="7px" border="0.05px solid #DAE6F0" borderRadius={15} bg="white">
+        <TabList gap={8} marginLeft={5}>
           <Tab fontSize={13} fontWeight="medium">
             Ongoing
           </Tab>
@@ -79,88 +92,45 @@ function Classes() {
             Done
           </Tab>
         </TabList>
-        <TabPanels height="36vh" overflowY="scroll" css={scrollbarStyles}>
+        <TabPanels height="35vh" overflowY="scroll" css={scrollbarStyles}>
           <TabPanel>
             <SimpleGrid
               columns={[1, 2, 3, 5]}
               spacing="6"
-              marginLeft={4}
-              marginRight={4}
+              px={[2, 4]}
             >
               {ongoingClasses.map((classItem, id) => (
-                <Box
+                  <Box
                   key={classItem.id}
                   borderWidth="1px"
                   borderRadius="lg"
-                  p="4"
+                  p="2" 
                   shadow="md"
                   bg="white"
-                  mb="1"
+                  mb="4" 
                   display="flex"
                   flexDirection="column"
                   alignItems="center"
-                >
-                  <Avatar src={classItem.profileImage} mb="2" size="xl" />
-                  <Text fontWeight="bold" fontSize={13}>
-                    {classItem.teacher}
-                  </Text>
-                  <Text fontSize={13}>
-                    {" "}
-                    {` ${classItem.subject} (${classItem.examYear})`}
-                  </Text>
-                  <Text fontSize={13}>
-                    {" "}
-                    {` ${classItem.startTime} - ${classItem.endTime}`}
-                  </Text>
-                  <Button size="sm" colorScheme="blue" marginTop={2}>
-                    View Course
-                  </Button>
-                </Box>
-              ))}
-            </SimpleGrid>
-          </TabPanel>
-          <TabPanel>
-            <SimpleGrid
-              columns={[1, 2, 3, 5]}
-              spacing="6"
-              marginLeft={4}
-              marginRight={4}
-            >
-              {pendingClasses.map((classItem, id) => (
-                <Box
-                  key={classItem.id}
-                  borderWidth="1px"
-                  borderRadius="lg"
-                  p="4"
-                  shadow="md"
-                  bg="white"
-                  mb="1"
-                  display="flex"
-                  flexDirection="column"
-                  alignItems="center"
+                  width="100%" 
+                  maxW="300px"
+                  onClick={() => openModal(classItem)}
                 >
                   <Avatar
                     src={classItem.profileImage}
-                    mb="2"
-                    height={100}
-                    width={140}
+                    my="5"
+                    height={["60px", "80px", "100px"]} 
+                    width={["80px", "100px", "120px"]}
                     borderRadius={5}
                   />
-                  <Text fontWeight="bold" fontSize={13}>
+                  <Text fontWeight="bold" fontSize={["13px", "13px", "14px"]}> 
                     {classItem.teacher}
                   </Text>
-                  <Text fontSize={13}>
-                    {" "}
-                    {` ${classItem.subject} (${classItem.examYear})`}
+                  <Text fontSize={["12px", "12px", "12px"]}> 
+                    {` ${classItem.class}`}
                   </Text>
-                  <Text fontSize={13}>
-                    {" "}
+                  <Text fontSize={["12px", "12px", "12px"]}> 
                     {` ${classItem.startTime} - ${classItem.endTime}`}
                   </Text>
-
-                  <Button size="sm" colorScheme="blue" marginTop={2}>
-                    View Course
-                  </Button>
                 </Box>
               ))}
             </SimpleGrid>
@@ -169,43 +139,94 @@ function Classes() {
             <SimpleGrid
               columns={[1, 2, 3, 5]}
               spacing="6"
-              marginLeft={4}
-              marginRight={4}
+              px={[2, 4]}
             >
-              {doneClasses.map((classItem, id) => (
-                <Box
-                  key={classItem.id}
-                  borderWidth="1px"
-                  borderRadius="lg"
-                  p="4"
-                  shadow="md"
-                  bg="white"
-                  mb="1"
-                  display="flex"
-                  flexDirection="column"
-                  alignItems="center"
-                >
-                  <Avatar src={classItem.profileImage} mb="2" size="xl" />
-                  <Text fontWeight="bold" fontSize={13}>
-                    {classItem.teacher}
-                  </Text>
-                  <Text fontSize={13}>
-                    {" "}
-                    {` ${classItem.subject} (${classItem.examYear})`}
-                  </Text>
-                  <Text fontSize={13}>
-                    {" "}
-                    {` ${classItem.startTime} - ${classItem.endTime}`}
-                  </Text>
-                  <Button size="sm" colorScheme="blue" marginTop={2}>
-                    View Course
-                  </Button>
-                </Box>
+              {pendingClasses.map((classItem, id) => (
+                 <Box
+                 key={classItem.id}
+                 borderWidth="1px"
+                 borderRadius="lg"
+                 p="2" 
+                 shadow="md"
+                 bg="white"
+                 mb="4" 
+                 display="flex"
+                 flexDirection="column"
+                 alignItems="center"
+                 width="100%" 
+                 maxW="300px" 
+                 onClick={() => openModal(classItem)}
+               >
+                 <Avatar
+                   src={classItem.profileImage}
+                   my="5"
+                   height={["60px", "80px", "100px"]} 
+                   width={["80px", "100px", "120px"]} 
+                   borderRadius={5}
+                 />
+                 <Text fontWeight="bold" fontSize={["13px", "13px", "14px"]}> 
+                   {classItem.teacher}
+                 </Text>
+                 <Text fontSize={["12px", "12px", "12px"]}> 
+                   {` ${classItem.class}`}
+                 </Text>
+                 <Text fontSize={["12px", "12px", "12px"]}> 
+                   {` ${classItem.startTime} - ${classItem.endTime}`}
+                 </Text>
+               </Box>
               ))}
             </SimpleGrid>
           </TabPanel>
+          <TabPanel>
+            <SimpleGrid
+              columns={[1, 2, 3, 5]}
+              spacing="6"
+             px={[2, 4]}
+            >
+              {doneClasses.map((classItem, id) => (
+                <Box
+                key={classItem.id}
+                borderWidth="1px"
+                borderRadius="lg"
+                p="2" 
+                shadow="md"
+                bg="white"
+                mb="4" 
+                display="flex"
+                flexDirection="column"
+                alignItems="center"
+                width="100%" 
+                maxW="300px"
+                onClick={() => openModal(classItem)}
+              >
+                <Avatar
+                  src={classItem.profileImage}
+                  my="5"
+                  height={["60px", "80px", "100px"]} 
+                  width={["80px", "100px", "120px"]} 
+                  borderRadius={5}
+                />
+                <Text fontWeight="bold" fontSize={["13px", "13px", "14px"]}> 
+                  {classItem.teacher}
+                </Text>
+                <Text fontSize={["12px", "12px", "12px"]}> 
+                  {` ${classItem.class}`}
+                </Text>
+                <Text fontSize={["12px", "12px", "12px"]}> 
+                  {` ${classItem.startTime} - ${classItem.endTime}`}
+                </Text>
+              </Box>
+              ))}
+            </SimpleGrid>
+          </TabPanel>
+          <ClassDetails
+        isOpen={modalOpen}
+        onClose={closeModal}
+        classItem={selectedClass}
+      />
         </TabPanels>
       </Tabs>
+      
     </Box>
   );
 }

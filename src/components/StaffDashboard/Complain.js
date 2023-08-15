@@ -21,10 +21,10 @@ function Complain() {
           <Table variant="simple" size="sm">
             <Thead>
               <Tr fontSize={13}>
-                <Th>Profile</Th>
-                <Th>Status</Th>
-                <Th>Complain</Th>
-                <Th>Date</Th>
+                <Th textTransform="capitalize">Profile</Th>
+                <Th textTransform="capitalize">Status</Th>
+                <Th textTransform="capitalize">Complain</Th>
+                <Th textTransform="capitalize">Date</Th>
               </Tr>
             </Thead>
             <Tbody>
