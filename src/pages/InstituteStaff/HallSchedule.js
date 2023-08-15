@@ -163,7 +163,7 @@ function HallSchedule() {
   };
   
   return (
-    <Box width="100%"  mx={{ base: "2", md: "10" }}>
+    <Box width="100%"  mx={{ base: "2", md: "10" }} mr={30}>
       <Flex  direction={["column", "row"]}
           justify={["flex-start", "space-between"]}
           align={["flex-start", "center"]}
@@ -175,12 +175,12 @@ function HallSchedule() {
         </Heading>
 
         <NavLink to="view">
-          <Button size={{ base: "sm", md: "md" }} sx={ButtonStyles}>
+          <Button size={{ base: "sm", md: "md" }} sx={ButtonStyles} mr={10}>
             View Hall Details
           </Button>
         </NavLink>
       </Flex>
-      <Box mt="5" display="flex" justifyContent="center">
+      <Box mt="5" display="flex" justifyContent="center" mr={20}>
       <DragAndDropCalendar
         localizer={localizer}
         events={events}

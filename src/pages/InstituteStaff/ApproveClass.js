@@ -50,7 +50,7 @@ function ApproveClass() {
       </Flex>
 
       <SimpleGrid column={1} >
-      <Tabs position="relative"  z-index="1" colorScheme="blue" backgroundColor="#ffffff" marginX={5} border="0.05px solid #DAE6F0" borderRadius={15}>
+      <Tabs position="relative"  z-index="1" colorScheme="blue" backgroundColor="#ffffff" marginX={5} border="0.05px solid #DAE6F0" borderRadius={15} mr={10}>
         <TabList gap={15} marginLeft={5}>
           <Tab fontSize={13}>All Requests</Tab>
           <Tab fontSize={13}>Approved</Tab>

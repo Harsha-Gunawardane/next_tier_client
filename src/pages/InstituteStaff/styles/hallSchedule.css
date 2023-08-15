@@ -1,6 +1,7 @@
 .rbc-month-view {
     border-radius: 15px;
     overflow: hidden; 
+    margin-right: 10px;
   }
 
   .rbc-month-view .rbc-off-range-bg {
