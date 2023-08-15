@@ -14,6 +14,12 @@ const useAxiosPrivate = () => {
                 if (!config.headers['Authorization']) {
                     config.headers['Authorization'] = `Bearer ${auth?.accessToken}`;
                 }
+
+                //check if content type is other than application/json and if so, don't stringify
+                // if (config.headers['Content-Type'] !== 'multipart/form-data') {
+                //     config.headers['Content-Type'] = 'multipart/form-data';
+                // }
+
                 return config;
             }, (error) => Promise.reject(error)
         );

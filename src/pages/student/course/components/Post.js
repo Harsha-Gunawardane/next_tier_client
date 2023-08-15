@@ -3,7 +3,6 @@ import {
     Box,
     Avatar,
     Text,
-    Heading,
     Divider,
     IconButton,
     Collapse,
@@ -18,25 +17,23 @@ import {
     MenuList,
     MenuItem,
     CSSReset,
-    GridItem,
     AspectRatio,
     Image,
-    Grid,
 } from "@chakra-ui/react"
 import { PhotoProvider, PhotoView } from 'react-photo-view';
 import 'react-photo-view/dist/react-photo-view.css';
 
+
+
 import generateTimeAgoString from "../../../../utils/timesAgo";
-import LikeDislike from "../../../../components/student/ContentWatch/LikeDislike";
+import LikeDislike from "../../../../components/student/contentWatch/LikeDislike";
 
 //icons
-import { MdOutlineComment } from "react-icons/md"
 import { PiChatCircleBold } from "react-icons/pi"
 import { TbPinnedFilled } from "react-icons/tb"
-import CommentSection from "../../../../components/student/ContentWatch/CommentSection";
+import CommentSection from "../../../../components/student/contentWatch/CommentSection";
 import { AiFillFlag } from "react-icons/ai";
 import { SlOptions, SlOptionsVertical } from "react-icons/sl";
-import { PostViewModal } from "./Modals";
 import { useEffect } from "react";
 import { RiAttachment2 } from "react-icons/ri";
 
@@ -47,6 +44,7 @@ import "./styles/postStyles.css";
 import pdf from "../../../../assests/images/pdf.png";
 
 const CustomLikeDislike = (props) => {
+    const { post, ...rest } = props;
 
     return (
         <LikeDislike
@@ -55,6 +53,8 @@ const CustomLikeDislike = (props) => {
             iconSize="22px"
             buttonDivider={false}
             liked={null}
+            type="post"
+            {...rest}
         />
     )
 }
@@ -83,12 +83,15 @@ const Post = (props) => {
         index,
         renderLimit = null,
         openComments = false,
+        setPdfUrl,
+        onPdfOpen,
         ...rest
     } = props;
     // const { user, title, message, posted_at, reactions, post_reactions, forum, comments, attachments } = post;
 
     //use Disclosure
     const { isOpen, onToggle, onOpen } = useDisclosure();
+
 
     useEffect(() => {
         if (openComments) {
@@ -131,38 +134,17 @@ const Post = (props) => {
                         <CSSReset />
                         <Box dangerouslySetInnerHTML={{ __html: post.message }} fontSize={"14px"} className="postBody" />
                     </Flex>
-                    <PhotoProvider>
-                        <SimpleGrid w="100%" columns={5} gap="5px" px="30px" >
-                            <AspectRatio ratio={1} borderRadius={"10px"} overflow={"hidden"} bg="gray.100">
-                                <Flex color={"gray.300"} flexDirection={"column"} justifyContent={"center"} alignItems={"center"} w="100%" h="100%">
-                                    <RiAttachment2 size="40px" color="gray.300" />
-                                    <Text fontSize={"0.9rem"} fontWeight={"semi-bold"} color={"gray.400"} pointer={"pointer"}>Attachments</Text>
-                                </Flex>
-                            </AspectRatio>
-                            <PhotoView key={1} src="https://bit.ly/sage-adebayo" alt="Segun Adebayo" visible={true} >
-                                <AspectRatio ratio={1} borderRadius={"10px"} overflow={"hidden"} bg="gray.100">
-                                    <Image src="https://bit.ly/sage-adebayo" alt="Segun Adebayo" objectFit="cover" />
-                                </AspectRatio>
-                            </PhotoView>
-                            <PhotoView key={2} src="https://bit.ly/sage-adebayo" alt="Segun Adebayo" visible={true} >
-                                <AspectRatio ratio={1} borderRadius={"10px"} overflow={"hidden"} bg="gray.100">
-                                    <Image src="https://bit.ly/sage-adebayo" alt="Segun Adebayo" objectFit="cover" />
-                                </AspectRatio>
-                            </PhotoView>
-                            <AspectRatio ratio={1} borderRadius={"10px"} overflow={"hidden"} bg="gray.100">
-                                <Image src={pdf} alt="Segun Adebayo" objectFit="cover" />
-                            </AspectRatio>
-                            {/* 
-                            <AspectRatio ratio={1} borderRadius={"10px"} overflow={"hidden"} bg="gray.100">
-                                <Image src="https://www.picsum.photos/400/400" alt="Segun Adebayo" objectFit="cover" maxH={"300px"} colSpan={2} />
-                            </AspectRatio>
-                            */}
 
-                        </SimpleGrid>
-                    </PhotoProvider>
+
+                    {post.attachments.length > 0 ?
+                        <PostAttachments postAttachmentList={post.attachments} setPdfUrl={setPdfUrl} onPdfOpen={onPdfOpen} />
+                        : <></>
+                    }
 
                     <Flex w="100%" direction={"row"} justifyContent={"space-between"} alignItems={"center"} px="15px">
-                        <CustomLikeDislike />
+                        <CustomLikeDislike
+                            refid={post.id}
+                        />
                         <Flex
                             justifyContent={"flex-end"}
                             alignItems={"center"}
@@ -171,7 +153,7 @@ const Post = (props) => {
                             _hover={{ color: "accent" }}
                         >
                             <Text fontSize={"0.9rem"} fontWeight={"semi-bold"} color={"gray.400"} pointer={"pointer"}>
-                                {post.reactions.comments} Comments
+                                {post._count.post_comments} Comments
                             </Text>
                             <IconButton
                                 icon={<PiChatCircleBold size="24px" fontWeight={500} />}
@@ -205,5 +187,46 @@ const Post = (props) => {
         </Box >
     )
 }
+
+
+const PostAttachments = (props) => {
+
+    const { postAttachmentList, setPdfUrl, onPdfOpen } = props;
+
+    return (
+
+        <PhotoProvider>
+            <SimpleGrid w="100%" columns={5} gap="5px" px="30px" >
+                <AspectRatio ratio={1} borderRadius={"10px"} overflow={"hidden"} bg="gray.100">
+                    <Flex color={"gray.300"} flexDirection={"column"} justifyContent={"center"} alignItems={"center"} w="100%" h="100%">
+                        <RiAttachment2 size="40px" color="gray.300" />
+                        <Text fontSize={"0.9rem"} fontWeight={"semi-bold"} color={"gray.400"} pointer={"pointer"}>Attachments</Text>
+                    </Flex>
+                </AspectRatio>
+                {postAttachmentList.map((attachment, index) => (
+                    attachment.type === "IMAGE" ?
+                        <AspectRatio ratio={1} borderRadius={"10px"} overflow={"hidden"} bg="gray.100" minH={"100px"} key={attachment.id}>
+                            <PhotoView key={attachment.id} src={attachment.file_path} alt="Segun Adebayo" minH={"100px"} objectFit="cover" >
+                                <Image src={attachment.file_path} alt="Segun Adebayo" objectFit="cover" />
+                            </PhotoView>
+                        </AspectRatio>
+                        :
+                        <AspectRatio ratio={1} borderRadius={"10px"} overflow={"hidden"} bg="gray.100" onClick={() => {
+                            setPdfUrl(attachment.file_path)
+                            onPdfOpen()
+                        }}
+                            key={attachment.id}
+                        >
+                            <Image src={pdf} alt="Pdf" objectFit="cover" />
+                        </AspectRatio>
+                ))}
+            </SimpleGrid>
+        </PhotoProvider>
+    )
+}
+
+//use react-pdf
+
+
 
 export default Post

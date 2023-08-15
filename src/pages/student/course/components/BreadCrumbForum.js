@@ -1,4 +1,4 @@
-import { Breadcrumb, BreadcrumbItem } from "@chakra-ui/react"
+import { Breadcrumb, BreadcrumbItem, Text } from "@chakra-ui/react"
 import { ChevronRightIcon } from "@chakra-ui/icons"
 import getRouteWithParams from "../../../../utils/getRouteWithParams";
 import { useEffect } from "react";
@@ -21,15 +21,11 @@ const BreadCrumbForum = (props) => {
         replace.forEach((item) => {
             routeArr[routeArr.indexOf(item.from)] = item.to;
         })
-        console.log(routeArr);
         return routeArr;
     }
 
     const routeArr = getRouteArr(params, ["stu"], [{ from: ":courseId", to: courseTitle }]);
 
-    useEffect(() => {
-        console.log(routeArr);
-    }, [routeArr])
 
     var href = "/stu";
 
@@ -45,7 +41,11 @@ const BreadCrumbForum = (props) => {
 
                 return (
                     <BreadcrumbItem key={index} isCurrentPage={index === routeArr.length - 1} color={index === routeArr.length - 1 ? "gray.500" : "gray.400"} _hover={{ color: "gray.600" }}>
-                        <Link to={href} maxW={"200px"} noOfLines={1}>{item}</Link>
+                        <Link to={href} >
+                            <Text noOfLines={1} maxW={"200px"}>
+                                {item}
+                            </Text>
+                        </Link>
                     </BreadcrumbItem>
                 )
             })}

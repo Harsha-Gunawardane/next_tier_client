@@ -75,12 +75,24 @@ const LikeDislike = (props) => {
             const formData = new FormData()
             formData.append("islike", JSON.stringify(reaction))
 
-            var REACTION_API = `/${type}/${refid}/react`
-            console.log(REACTION_API)
-            console.log(type)
+
+            var REACTION_API;
+
+            switch (type) {
+                case "post":
+                    //query params
+                    REACTION_API = `/courses/forum/posts/react?post_id=${refid}`
+                    break;
+                default:
+                    REACTION_API = `/${type}/${refid}/react`
+                    break;
+            }
+
+
+
+
             const response = await axiosPrivate.post(REACTION_API, formData, {
                 signal: controller.signal,
-                content_type: "multipart/form-data"
             })
 
             const commentReaction = response.data ? response.data : null

@@ -33,7 +33,7 @@ import HallSchedule from "./pages/InstituteStaff/HallSchedule";
 import InstStaffStuPayment from './pages/InstituteStaff/StuPayment';
 import InstStaffList from './pages/InstituteStaff/StaffList'
 import AddInstStaff from './pages/InstituteStaff/AddInstStaff';
-import Videocontent from "./pages/student/content";
+// import Videocontent from "./pages/student/content";
 
 // tutor components
 // import TutorDashboard from "./pages/student/TutorDashboard";
@@ -48,7 +48,7 @@ import Content from "./components/Content";
 
 import { Routes, Route } from "react-router-dom";
 import { ROLES } from "./config/roles";
-import ContentWatch from "./pages/student/contentWatch";
+import ContentWatch from "./pages/student/ContentWatch";
 
 //Tutor Components
 import TutorDashboard from "./pages/tutor/TutorDashboard";
@@ -61,6 +61,7 @@ import EditMcq from "./pages/tutor/mcq/mcqEdit";
 import PaperMarking from "./pages/TutorStaff/paperMarking";
 import CourseTemp from "./pages/student/course/CourseTemp";
 import CourseLayout from "./pages/student/course/courseLayout";
+import ContentPage from "./pages/student/content/ContentPage";
 
 function App() {
   return (
@@ -88,7 +89,7 @@ function App() {
                 <Route path="index" element={<CourseTemp />} />
                 <Route path="forum" element={<Forum />} />
               </Route>
-              <Route path="content" element={<Videocontent />} />
+              <Route path="content" element={<ContentPage />} />
               <Route path="content/watch/:id" element={<ContentWatch />} />
               <Route path="quizzes" element={<Quizzes />} />
               <Route path="quizzes/:subject" element={<Quizzes />} />

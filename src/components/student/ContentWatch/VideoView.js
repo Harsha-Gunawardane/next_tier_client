@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { Flex, AspectRatio, Text, Avatar, Skeleton, Button, Collapse, Divider, useDisclosure } from '@chakra-ui/react';
 import generateTimeAgoString from '../../../utils/timesAgo';
-import LikeDislike from './LikeDislike';
+import LikeDislike from "./LikeDislike";
 
 import { Player } from "react-tuby";
 import "react-tuby/css/main.css";
-import CommentSection from './CommentSection';
 import { Spoiler } from '@mantine/core';
 
 import VideoJS from './VideoPlayer'
 import videojs from 'video.js'
+import VideoPlayer from './VideoPlayer';
+
+import ReactHlsPlayer from "react-hls-player";
 
 
 
@@ -28,45 +30,15 @@ const VideoView = (props) => {
     const playerRef = React.useRef(null);
 
 
+    const videoUrl = "https://cdn.glitch.me/cbf2cfb4-aa52-4a1f-a73c-461eef3d38e8/1080.mp4"
+
     return (
         <Flex width={"100%"} height={"max-content"} justifyContent={"flex-start"} alignItems={"flex-start"} direction={"column"}>
             <AspectRatio minW="100%" ratio={16 / 9} overflow={"hidden"}>
-                <></>
-                {/* <iframe
-                    title="naruto"
-                    src="https://www.youtube.com/embed/QhBnZ6NPOY0"
-                    allowFullScreen
-                /> */}
-                {/* <Player
-                    src={[
-                        {
-                            quality: "Full HD",
-                            url:
-                                "https://cdn.glitch.me/cbf2cfb4-aa52-4a1f-a73c-461eef3d38e8/1080.mp4",
-                        },
-                        {
-                            quality: 720,
-                            url: "https://cdn.glitch.me/cbf2cfb4-aa52-4a1f-a73c-461eef3d38e8/720.mp4",
-                        },
-                        {
-                            quality: 480,
-                            url: "https://cdn.glitch.me/cbf2cfb4-aa52-4a1f-a73c-461eef3d38e8/480.mp4",
-                        },
-                    ]}
-                    subtitles={[
-                        {
-                            lang: "en",
-                            language: "English",
-                            url:
-                                "https://cdn.jsdelivr.net/gh/naptestdev/video-examples@master/en.vtt",
-                        },
-                        {
-                            lang: "fr",
-                            language: "French",
-                            url:
-                                "https://cdn.jsdelivr.net/gh/naptestdev/video-examples@master/fr.vtt",
-                        },
-                    ]}
+
+                <Player
+                    src={"http://localhost:3500/video/1691992995998-372376720/hls"}
+
                     poster="https://cdn.jsdelivr.net/gh/naptestdev/video-examples@master/poster.png"
 
                     keyboardShortcut={{
@@ -78,10 +50,11 @@ const VideoView = (props) => {
                         mute: false,
                         subtitle: false,
                     }}
-                /> */}
-                {/* <VideoJS options={videoJsOptions} onReady={handlePlayerReady} /> */}
+                >
+                    {(ref, props) => <ReactHlsPlayer playerRef={ref} {...props} width={"100%"} />}
+
+                </Player>
             </AspectRatio>
-            {/* {/* <Skeleton isLoaded={isLoaded}> */}
 
             <Flex w={"100%"} mt="5px" px="5px" color={"#3f3f3f"}>
                 <Text w={"100%"} fontSize={"1.2rem"} fontWeight={"bold"}>{videoDetails.title}</Text>
