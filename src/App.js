@@ -40,13 +40,13 @@ import HallList from "./pages/InstituteStaff/HallList";
 import HallSchedule from "./pages/InstituteStaff/HallSchedule";
 import InstStaffStuPayment from './pages/InstituteStaff/StuPayment';
 import InstStaffList from './pages/InstituteStaff/StaffList'
-import ViewPaymentHistory from './pages/InstituteStaff/viewPaymentHistory';
-import MyProfile from './pages/InstituteStaff/myProfile';
-import CashReceipt from './pages/InstituteStaff/cashReceiptStaff';
-import OnlineReceipt from './pages/InstituteStaff/onlineReceiptStaff';
-import StudentsList from "./pages/InstituteStaff/studentsList";
+import ViewPaymentHistory from './pages/InstituteStaff/ViewPaymentHistory';
+import MyProfile from './pages/InstituteStaff/Profile';
+import CashReceipt from './pages/InstituteStaff/CashReceiptStaff';
+import OnlineReceipt from './pages/InstituteStaff/OnlineReceiptStaff';
+import StudentsList from "./pages/InstituteStaff/StudentsList";
 import StudentProfile from "./pages/InstituteStaff/StudentProfile";
-import TutorsList from "./pages/InstituteStaff/tutorsList";
+import TutorsList from "./pages/InstituteStaff/TutorsList";
 import TutorProfile from "./pages/InstituteStaff/TutorProfile";
 import CourseProfile from "./pages/InstituteStaff/CourseDetail";
 

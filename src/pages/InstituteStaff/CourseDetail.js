@@ -17,7 +17,7 @@ import data from "./data/data.json";
 import { TimeIcon } from "@chakra-ui/icons";
 import { FaMoneyBillAlt } from "react-icons/fa";
 import { Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react';
-import StudentsList from "./studentsList";
+import StudentsList from "./StudentsList";
 
 function CourseDetail() {
   const { id } = useParams();
@@ -56,16 +56,39 @@ function CourseDetail() {
 
   return (
     <Box backgroundColor="#F9F9F9" width="100%">
-      <Grid templateColumns="repeat(8, 1fr)" gap={6} marginBottom={5}>
+      <Text fontWeight="bold" fontSize="16px" mb={1}>
+              {course.course_name} - {course.name}
+            </Text>
+      <Grid templateColumns="repeat(8, 1fr)" gap={3} marginBottom={5}>
+      <GridItem
+          colSpan={{ base: 8, lg: 6, xl: 6 }}
+          h={{ base: "78vh", lg: "78vh" }}
+        
+          ml={4}
+        >
+           <Tabs colorScheme="blue" backgroundColor="#ffffff"  border="0.05px solid #DAE6F0" borderRadius={10}  height='87vh' overflowY='scroll' css={scrollbarStyles}>
+            <TabList gap={10} marginLeft={5}>
+              <Tab fontSize={13} fontWeight='medium'>Enrolled Studnets</Tab>
+              <Tab fontSize={13} fontWeight='medium'>Payment details</Tab>
+            </TabList>
+            <TabPanels>
+                <TabPanel>
+                  <StudentsList></StudentsList>
+                </TabPanel>
+                <TabPanel></TabPanel>
+            </TabPanels>
+            </Tabs>
+          
+        </GridItem>
         <GridItem
           w="100%"
           h={{ base: "85vh", lg: "85vh" }}
           colSpan={{ base: 8, lg: 2, xl: 2 }}
-          marginLeft={4}
+        
           borderRadius={15}
-          mt={4}
+         
         >
-            <Box bg="white" padding={3} borderRadius={10} border="0.05px solid #DAE6F0" height="88vh">
+            <Box bg="white" padding={3} borderRadius={10} border="0.05px solid #DAE6F0" height="87vh" mr={4}>
           <Box>
             <Text fontWeight="bold" fontSize="16px" mt={3} mb={4}>
               {course.course_name} - {course.name}
@@ -106,25 +129,7 @@ function CourseDetail() {
           </SimpleGrid>
           </Box>
         </GridItem>
-        <GridItem
-          colSpan={{ base: 8, lg: 6, xl: 6 }}
-          h={{ base: "78vh", lg: "78vh" }}
-          mt={4}
-        >
-           <Tabs colorScheme="blue" backgroundColor="#ffffff" marginRight={5} border="0.05px solid #DAE6F0" borderRadius={10} marginLeft={4} height='88vh' overflowY='scroll' css={scrollbarStyles}>
-            <TabList gap={10} marginLeft={5}>
-              <Tab fontSize={13} fontWeight='medium'>Enrolled Studnets</Tab>
-              <Tab fontSize={13} fontWeight='medium'>Payment details</Tab>
-            </TabList>
-            <TabPanels>
-                <TabPanel>
-                  <StudentsList></StudentsList>
-                </TabPanel>
-                <TabPanel></TabPanel>
-            </TabPanels>
-            </Tabs>
-          
-        </GridItem>
+        
       </Grid>
     </Box>
   );
