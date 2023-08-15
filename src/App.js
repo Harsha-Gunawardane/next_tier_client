@@ -213,7 +213,6 @@ function App() {
           >
             <Route path="dashboard" element={<InstStaffDashboard />} />
             <Route path="my-profile" element={<MyProfile />} />
-            <Route path="teacher/add" element={<AddTeacher />} />
             <Route path="class" element={<ApproveClass />} />
             <Route path="profile/:id" element={<InstStaffProfile />} />
             <Route path="complaints" element={<InstStaffComplaintsList />} />
@@ -228,6 +227,7 @@ function App() {
             <Route path="stu-profile/:id" element={<StudentProfile />} />
             <Route path="staff-list" element={<InstStaffList />} />
             <Route path="tutors-list" element={<TutorsList />} />
+            <Route path="tutors-list/add" element={<AddTeacher />} />
             <Route path="tutor-profile/:id" element={<TutorProfile />} />
             <Route
               path="tutor-profile/:id/course/:id"
