@@ -108,13 +108,13 @@ function App() {
             {/* </Route> */}
           </Route>
 
-          {/* <Route element={<RequireAuth allowedRoles={[ROLES.Tutor]} />}> */}
+          <Route element={<RequireAuth allowedRoles={[ROLES.Tutor]} />}>
           <Route
             path="tutor"
             element={<SidebarAndHeader userRole={"teacher"} />}
           >
             <Route index element={<TutorDashboard />} />
-            <Route path="supportstaffs">
+            <Route path="staffs">
               <Route index element={<TutorStaffs />} />
             </Route>
 
@@ -129,7 +129,7 @@ function App() {
               <Route path="category/:id" element={<McqsByCategory />}></Route>
             </Route>
           </Route>
-          {/* </Route> */}
+          </Route>
 
           {/* <Route element={<RequireAuth allowedRoles={[ROLES.Staff]} />}> */}
           <Route

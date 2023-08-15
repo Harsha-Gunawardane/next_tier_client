@@ -1,31 +1,27 @@
-
-import { Card, Flex, FormLabel, SimpleGrid, Spacer } from "@chakra-ui/react";
-import { Accordion, ActionIcon, Box } from "@mantine/core";
+import { Card, Flex, FormLabel, Spacer } from "@chakra-ui/react";
+import { Accordion, ActionIcon, Box, SimpleGrid } from "@mantine/core";
 
 import { IconPencil, IconTrash } from "@tabler/icons-react";
-import { NavLink } from "react-router-dom";
 
-export default function McqsView({ mcqs, handleDeleteMcq }) {
+export default function McqsView({ mcqs, handleDelete, handleEdit }) {
+  console.log(mcqs);
   return (
     <Accordion
       variant="separated"
-      defaultValue="customization"
       chevronPosition="left"
       m="20px"
       style={{ overflow: "auto", maxHeight: "330px" }}
     >
       {mcqs.map((mcq) => (
-        <Accordion.Item value={mcq.question} key={mcq.id}>
+        <Accordion.Item key={mcq.id} value={mcq.question}>
           <Box sx={{ display: "flex", alignItems: "center" }}>
             <Accordion.Control>{mcq.question}</Accordion.Control>
-            <ActionIcon >
-              <NavLink to={`${mcq.id}/edit`}>
-                <IconPencil size="1rem" stroke={1.3} />
-              </NavLink>
+            <ActionIcon onClick={() => handleEdit(mcq.id)}>
+              <IconPencil size="1rem" stroke={1.3} />
             </ActionIcon>
             <ActionIcon
               style={{ color: "red" }}
-              onClick={() => handleDeleteMcq(mcq.id)}
+              onClick={() => handleDelete(mcq.id)}
             >
               <IconTrash size="1rem" stroke={1.3} />
             </ActionIcon>
@@ -38,29 +34,35 @@ export default function McqsView({ mcqs, handleDeleteMcq }) {
             </Flex>
 
             <Card variant="outline" padding="10px" mb="5px">
-              <FormLabel fontWeight="400">Choices:</FormLabel>
-
-              <SimpleGrid
-                minChildWidth="500px"
-                maxWidth="1100px"
-                fontSize="12px"
-              >
-                <FormLabel fontWeight="400">{mcq.choice1}</FormLabel>
-                <FormLabel fontWeight="400">{mcq.choice2}</FormLabel>
-                <FormLabel fontWeight="400">{mcq.choice3}</FormLabel>
-                <FormLabel fontWeight="400">{mcq.choice4}</FormLabel>
-                <FormLabel fontWeight="400">{mcq.choice5}</FormLabel>
+              <FormLabel>Answer Choices</FormLabel>
+              <SimpleGrid cols={2} mb="xs" spacing="xs" verticalSpacing="xs">
+                {mcq.options.map((choice) => (
+                  <Card
+                    // variant="outline"
+                    shadow="md"
+                    padding="5px"
+                    paddingLeft="10px"
+                    margin="2px"
+                    fontWeight="400"
+                  >
+                    {choice}
+                  </Card>
+                ))}
               </SimpleGrid>
             </Card>
 
             <Card variant="outline" padding="10px" mb="5px">
-              <FormLabel fontWeight="400">Answer: {mcq.answer}</FormLabel>
+              <FormLabel>Correct Answer</FormLabel>
+              <Card shadow="md" padding="5px" mb="5px" paddingLeft="15px">
+                {mcq.options[mcq.correct_answer]}
+              </Card>
             </Card>
 
-            <Card variant="outline" padding="10px">
-              <FormLabel fontWeight="400">
-                Explanation : {mcq.explanation}
-              </FormLabel>
+            <Card variant="outline" padding="10px" mb="5px">
+              <FormLabel>Explanation</FormLabel>
+              <Card shadow="md" padding="10px">
+                {mcq.explanation}
+              </Card>
             </Card>
           </Accordion.Panel>
         </Accordion.Item>

@@ -58,7 +58,7 @@ const SidebarAndHeader = ({ userRole }) => {
       icon: FaUserFriends,
       name: "Support Staffs",
       value: "staffs",
-      href: "/tutor/supportstaffs",
+      href: "/tutor/staffs",
     },
     {
       icon: FaListAlt,

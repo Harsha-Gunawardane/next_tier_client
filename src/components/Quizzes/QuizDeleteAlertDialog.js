@@ -1,4 +1,4 @@
-import { Button, useDisclosure } from "@chakra-ui/react";
+import { Button } from "@chakra-ui/react";
 import { useRef } from "react";
 
 import {
@@ -8,32 +8,32 @@ import {
   AlertDialogHeader,
   AlertDialogContent,
   AlertDialogOverlay,
-  AlertDialogCloseButton,
 } from "@chakra-ui/react";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
+import { useNavigate } from "react-router-dom";
 
-export default function StaffDeleteAlertDialog({
+export default function QuizDeleteAlertDialog({
   isOpen,
   onClose,
-  handleDelete,
-  staffIdToDelete,
-  staffs,
-  setStaffs,
+  quizIdToDelete,
+  quizzes,
+  setQuizzes,
 }) {
   const axiosPrivate = useAxiosPrivate();
+  const navigate = useNavigate();
 
   const cancelRef = useRef();
 
   const handleConfirmDelete = async () => {
     try {
-      await axiosPrivate.delete(`/tutor/staffs/${staffIdToDelete}`);
+      await axiosPrivate.delete(`/tutor/quizzes/${quizIdToDelete}`);
 
-      const updatedStaffList = staffs.filter(
-        (staff) => staff.id !== staffIdToDelete
-      );
-      setStaffs(updatedStaffList);
+      const updatedQuizList = quizzes.filter((quiz) => quiz.id !== quizIdToDelete);
+      setQuizzes(updatedQuizList);
 
       onClose(); // Close the dialog after successful deletion
+      navigate("/tutor/quizzes")
+
     } catch (err) {
       console.log(`Error: ${err.message}`);
       onClose(); // Close the dialog even if there's an error
@@ -50,7 +50,7 @@ export default function StaffDeleteAlertDialog({
         <AlertDialogOverlay>
           <AlertDialogContent>
             <AlertDialogHeader fontSize="lg" fontWeight="bold">
-              Remove staff
+              Remove mcq
             </AlertDialogHeader>
 
             <AlertDialogBody>

@@ -8,7 +8,7 @@ import {
   ModalCloseButton,
 } from "@chakra-ui/react";
 
-export default function ModalPopupCommon({
+export default function StaffModalPopup({
   isOpen,
   onOpen,
   onClose,

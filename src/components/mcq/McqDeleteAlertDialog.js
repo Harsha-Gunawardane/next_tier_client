@@ -8,17 +8,17 @@ import {
   AlertDialogHeader,
   AlertDialogContent,
   AlertDialogOverlay,
-  AlertDialogCloseButton,
 } from "@chakra-ui/react";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 
-export default function StaffDeleteAlertDialog({
+export default function McqDeleteAlertDialog({
   isOpen,
   onClose,
   handleDelete,
-  staffIdToDelete,
-  staffs,
-  setStaffs,
+  mcqIdToDelete,
+  mcqs,
+  setMcqs,
+  setQuiz,
 }) {
   const axiosPrivate = useAxiosPrivate();
 
@@ -26,12 +26,18 @@ export default function StaffDeleteAlertDialog({
 
   const handleConfirmDelete = async () => {
     try {
-      await axiosPrivate.delete(`/tutor/staffs/${staffIdToDelete}`);
+      await axiosPrivate.delete(`/tutor/mcqs/${mcqIdToDelete}`);
 
-      const updatedStaffList = staffs.filter(
-        (staff) => staff.id !== staffIdToDelete
-      );
-      setStaffs(updatedStaffList);
+      const updatedMcqList = mcqs.filter((mcq) => mcq.id !== mcqIdToDelete);
+      setMcqs(updatedMcqList);
+
+       setQuiz((prevQuiz) => ({
+         ...prevQuiz,
+         number_of_questions: prevQuiz.number_of_questions - 1,
+         question_ids: prevQuiz.question_ids.filter(
+           (id) => id !== mcqIdToDelete
+         ),
+       }));
 
       onClose(); // Close the dialog after successful deletion
     } catch (err) {
@@ -50,7 +56,7 @@ export default function StaffDeleteAlertDialog({
         <AlertDialogOverlay>
           <AlertDialogContent>
             <AlertDialogHeader fontSize="lg" fontWeight="bold">
-              Remove staff
+              Remove mcq
             </AlertDialogHeader>
 
             <AlertDialogBody>
