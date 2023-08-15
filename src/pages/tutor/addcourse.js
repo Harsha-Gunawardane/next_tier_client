@@ -51,6 +51,13 @@ const Addcourse = () => {
       monthly_fee: "",
       type: "",
       start_date: "",
+      // content_ids: [
+      //   {
+      //     tute_id: [],
+      //     video_id: [],
+      //   },
+      // ],
+ 
     },
 
     validate: (values) => {
@@ -179,11 +186,24 @@ const Addcourse = () => {
           }, // Convert the schedule object into an array to match the expected format
         };
 
-        console.log(updatedFormValues);
+        // console.log(updatedFormValues);
+
+        // const defaultContentIds = [
+        //   {
+        //     tute_id: [],
+        //     video_id: [],
+        //   }
+        // ];
+
+
+        const finalFormValues = {
+          ...updatedFormValues,
+          // content_ids: form.values.content_ids,
+        };
 
         const response = await axiosPrivate.post(
           "/tutor/course",
-          updatedFormValues
+          finalFormValues
         );
 
         console.log("Form data submitted successfully!");

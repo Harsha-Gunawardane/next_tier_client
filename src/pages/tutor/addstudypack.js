@@ -1,14 +1,27 @@
 import React from "react";
 import { MantineProvider, Textarea } from '@mantine/core';
 import { useState,useEffect } from 'react';
-import { Stepper, Button, Group, TextInput, PasswordInput, NumberInput,Code,Select,Radio,FileInput } from '@mantine/core';
+import { Stepper,  Group, TextInput, PasswordInput, NumberInput,Code,Select,Radio,FileInput } from '@mantine/core';
 import { useForm } from '@mantine/form';
-import { Box,Text,Heading, HStack,ListItem,UnorderedList } from '@chakra-ui/react'
+import { Box,Text,Heading, Button, HStack,ListItem,UnorderedList } from '@chakra-ui/react'
 import { Link, useNavigate } from "react-router-dom";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
+import { useDisclosure } from '@chakra-ui/react'
+import { useLocation } from "react-router-dom";
+
+import {
+    Modal,
+    ModalOverlay,
+    ModalContent,
+    ModalHeader,
+    ModalFooter,
+    ModalBody,
+    ModalCloseButton,
+   
+  } from '@chakra-ui/react'
 
 
-const Addcoursepack= () => {
+const Addstudypack= () => {
 
 
   const navigate = useNavigate();
@@ -16,6 +29,16 @@ const Addcoursepack= () => {
   const [coursesdata, setCoursesData] = useState(null);
 
   const [active, setActive] = useState(0);
+  const location = useLocation();
+  let id = location.pathname.split("/").pop();
+
+
+  
+  const { isOpen, onOpen, onClose } = useDisclosure()
+  const [value, setValue] = React.useState('1')
+
+  const initialRef = React.useRef(null)
+  const finalRef = React.useRef(null)
 
   const form = useForm({
     initialValues: {
@@ -27,7 +50,7 @@ const Addcoursepack= () => {
       thumbnail: '',
       price: '',
       access_period: '',
-      type: 'PAID',
+      type: 'NORMAL',
       
       subject_area_1: '',
       subject_area_2: '',
@@ -35,11 +58,10 @@ const Addcoursepack= () => {
       subject_area_4: '',
       
    
-      course_id:'',
+      course_id:id,
      years:'',
      days:'',
      months:'',
-    
     
       
 
@@ -59,18 +81,18 @@ const Addcoursepack= () => {
   
                     title:
                     values.title.trim().length < 1
-                      ?  'Course Type is Required':values.title.length >25 ? 'Title must be less than 100 characters ' 
+                      ?  'Title is Required':values.title.length >25 ? 'Title should be less than 25 Characters' 
                       : null,
     
                       description:
                       values.description.trim().length < 1
-                        ? 'Language is Required' :values.description.length >200 ? 'Description must be less than 200 characters' 
+                        ? 'Language is Required' :values.description.length >100 ? 'Description should be less than 100 Characters' 
                         : null,
 
-                        course_id:
-                        values.course_id.trim().length < 1
-                          ?  'Course Type is Required'
-                          : null,
+                        // course_id:
+                        // values.course_id.trim().length < 1
+                        //   ?  'Course Type is Required'
+                        //   : null,
     
 
 
@@ -83,7 +105,7 @@ const Addcoursepack= () => {
        
           subject:
           values.subject.trim().length < 1
-            ?  'Subject is Required'
+            ?  'Subject is Required':values.subject.length >25 ? 'Subject should be less than 25 Characters' 
             : null,
   
             thumbnail:
@@ -102,28 +124,28 @@ const Addcoursepack= () => {
      
 
         price: values.price.length < 1
-  ? "Price is Required"
-  : values.price >= 50000
-  ? "Price must be less than 50000"
-  : null,
+        ? "Price is Required"
+        : values.price >= 50000
+        ? "Price must be less than 50000"
+        : null,
 
         days: values.days.length < 1
-  ? "Day is Required"
-  : parseInt(values.days) >= 365
-  ? "Days must be less than 366 days"
-  : null,
-
-  months: values.months.length < 1
-  ? "Month is Required"
-  : parseInt(values.months) >= 12
-  ? "Month must be less than 12 months"
-  : null,
-
-        years: values.years.length < 1
-        ? "Year is Required"
-        : parseInt(values.years) >= 3
-        ? "Year must be less than 3 years"
+        ? "Day is Required"
+        : parseInt(values.days) >= 365
+        ? "Days must be less than 366 days"
         : null,
+      
+        months: values.months.length < 1
+        ? "Month is Required"
+        : parseInt(values.months) >= 12
+        ? "Month must be less than 12 months"
+        : null,
+      
+              years: values.years.length < 1
+              ? "Year is Required"
+              : parseInt(values.years) >= 3
+              ? "Year must be less than 3 years"
+              : null,
 
             
       };
@@ -143,97 +165,163 @@ const Addcoursepack= () => {
 
 
 
-  useEffect(() => {
-    const getCourses = async () => {
-      const controller = new AbortController();
-      try {
-        const response = await axiosPrivate.get(`/tutor/course`, {
-          signal: controller.signal,
-        });
-        setCoursesData(response.data);
-        console.log(response.data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    getCourses();
-  }, [axiosPrivate]); 
+//   useEffect(() => {
+//     const getCourses = async () => {
+//       const controller = new AbortController();
+//       try {
+//         const response = await axiosPrivate.get(`/tutor/course`, {
+//           signal: controller.signal,
+//         });
+//         setCoursesData(response.data);
+//         console.log(response.data);
+//       } catch (error) {
+//         console.log(error);
+//       }
+//     };
+//     getCourses();
+//   }, [axiosPrivate]); 
 
 
 
+const handleSubmit = async (event) => {
+  event.preventDefault();
+  const controller = new AbortController();
 
-  const handleSubmit = async (event) => {
-    
-    event.preventDefault();
-    const controller = new AbortController();
-  
-   
-    if (!form.validate().hasErrors) {
-      try {
-        console.log(form.values);
+  if (!form.validate().hasErrors) {
+    try {
+      console.log(form.values);
 
-        const subjectAreas = [
-          form.values.subject_area_1,
-          form.values.subject_area_2,
-          form.values.subject_area_3,
-          form.values.subject_area_4,
-        ];
+      const subjectAreas = [
+        form.values.subject_area_1,
+        form.values.subject_area_2,
+        form.values.subject_area_3,
+        form.values.subject_area_4,
+      ];
 
-        // const access_period = [
-        //   form.values.years,
-        //   form.values.months,
-        //   form.values.days,
-         
-        // ];
+      const updatedFormValues = {
+        ...form.values,
+        subject_areas: subjectAreas.filter((area) => area.trim().length > 0),
+        subject_area_1: undefined,
+        subject_area_2: undefined,
+        subject_area_3: undefined,
+        subject_area_4: undefined,
+        access_period: {
+          days: form.values.days,
+          months: form.values.months,
+          years: form.values.years,
+        },
+      };
 
-        const updatedFormValues = {
-          ...form.values,
-          subject_areas: subjectAreas.filter((area) => area.trim().length > 0),
-          // Remove the individual subject area fields from the updatedFormValues object
-          subject_area_1: undefined,
-          subject_area_2: undefined,
-          subject_area_3: undefined,
-          subject_area_4: undefined,
+      console.log(updatedFormValues);
 
-          access_period: {
-            days: form.values.days,
-            months: form.values.months,
-            years: form.values.years,
+      // Step 1: Create a new entry in the studypack table
+      const response = await axiosPrivate.post("/tutor/studypack", updatedFormValues);
+      const studypackId = response.data.id; // Assuming the response contains the created studypack ID
+
+      console.log('Studypack created with ID:', studypackId);
+
+      // Step 2: Update the course entry by adding the studypack ID to the studypack array
+      const courseId = id;
+      const courseUpdateData = {
+        studypack_ids: [studypackId],
+      };
+
+      const courseResponse = await axiosPrivate.put(`/tutor/course/studypack/${courseId}`, courseUpdateData);
+
+      console.log('Course updated with new studypack ID:', studypackId);
+
+      // Step 3: Get the existing price value from the studypack entry
+      const existingStudypack = await axiosPrivate.get(`/tutor/studypack/${studypackId}`);
+      const existingPrice = existingStudypack.data.price;
+
+      // Step 4: Set default content_ids up to week 4 while preserving the existing price
+      const defaultContentIds = [
+        {
+          week1: {
+            tute_id: [],
+            video_id: [],
+            quiz_id: [],
           },
-       
-        };
+        },
+        {
+          week2: {
+            tute_id: [],
+            video_id: [],
+            quiz_id: [],
+          },
+        },
+        {
+          week3: {
+            tute_id: [],
+            video_id: [],
+            quiz_id: [],
+          },
+        },
+        {
+          week4: {
+            tute_id: [],
+            video_id: [],
+            quiz_id: [],
+          },
+        },
+      ];
 
-        console.log(updatedFormValues);
-      
-        const response = await axiosPrivate.post("/tutor/studypack", updatedFormValues);
-     
-        console.log('Form data submitted successfully!');
-        const newCourseId = response.data.id;
-  
-       
-        navigate("/tutor/courses/studypackdetails/" + newCourseId);
-      } catch (error) {
-     
-        console.error('Error sending data:', error);
-      }
+      const studypackUpdateData = {
+        content_ids: defaultContentIds,
+        price: existingPrice, // Preserve the existing price
+      };
+
+      const studypackUpdateResponse = await axiosPrivate.put(`/tutor/studypack/${studypackId}`, studypackUpdateData);
+
+      console.log('Studypack content_ids updated with default values:', studypackUpdateResponse);
+
+    } catch (error) {
+      console.error('Error sending data:', error);
     }
-  };
-
-
-  if (coursesdata === null) {
-    return <div>Loading...</div>;
   }
+};
 
+
+
+
+
+//   if (coursesdata === null) {
+//     return <div>Loading...</div>;
+//   }
+
+
+
+
+
+
+  
 
   return (
 
+<>
 
+    <Button  fontSize='15px' width={{base:400,xl:700}} height='35px'  bg='white' border='2px dotted black' onClick={onOpen} >+Add Content</Button>
+     
+   
 
-    
+      <Modal
+   
+        initialFocusRef={initialRef}
+        finalFocusRef={finalRef}
+        isOpen={isOpen}
+        onClose={onClose}
+        size="xl" 
+      >
+        <ModalOverlay />
+        <ModalContent  >
+          <ModalHeader>Add New Study Pack</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody pb={1}>
+
   
 
 
-    <Box width='100%' p={10} >
+    <Box width='100%' p={1} >
     
    
 
@@ -242,9 +330,9 @@ const Addcoursepack= () => {
            
 
     <Box bg='white' width='90%' ml='5%' p={5}>
-      <Heading ml={{base:200,xl:350}} fontSize='25px' mb='30px' colorScheme="blue">Study Pack Registration</Heading>
+   
       <Stepper active={active} breakpoint="sm">
-        <Stepper.Step label="First step" description="Profile settings">
+        <Stepper.Step  description="Basic Details">
 
         <TextInput label="Title" placeholder="Title" {...form.getInputProps('title')} h='50px' mb='60px'
              styles={{
@@ -253,7 +341,7 @@ const Addcoursepack= () => {
                 color: 'black',
                 borderRadius: '8px',
                 padding: '10px',
-                height:'60px',
+                height:'40px',
               },
               label: { // Styles for the label element
                 fontSize: '16px',
@@ -270,7 +358,7 @@ const Addcoursepack= () => {
             color: 'black',
             borderRadius: '8px',
             padding: '10px',
-            height:'160px',
+            height:'120px',
           },
           label: { // Styles for the label element
             fontSize: '16px',
@@ -279,31 +367,26 @@ const Addcoursepack= () => {
           },
        
         }}/>
- <Select
-        label="Course"
-        mt='10px'
-        placeholder="course"
-        {...form.getInputProps("course_id")}
-        // Update data array to include the course ID as the value property
-        data={coursesdata.map((course) => ({
-          value: course.id,
-          label: course.title,
-        }))}
-        styles={{
-          input: { // Styles for the input element
+
+
+
+        
+{/* <TextInput label="Course ID" placeholder="course ID" {...form.getInputProps('course_id')} h='50px' mb='60px'
+             styles={{
+              input: { // Styles for the input element
+               
+                color: 'black',
+                borderRadius: '8px',
+                padding: '10px',
+                height:'40px',
+              },
+              label: { // Styles for the label element
+                fontSize: '16px',
+                fontWeight: 'bold',
+                marginBottom: '5px',
+              },
            
-            color: 'black',
-            borderRadius: '8px',
-            padding: '10px',
-            height:'60px',
-          },
-          label: { // Styles for the label element
-            fontSize: '16px',
-            fontWeight: 'bold',
-            marginBottom: '5px',
-          },
-       
-        }} />
+            }} /> */}
         
 
 
@@ -313,16 +396,16 @@ const Addcoursepack= () => {
 
    
 
-        <Stepper.Step label="Second step" description="Personal information">
+        <Stepper.Step  description="Subject Details">
 
-        <TextInput label="Subject" placeholder="Subject" {...form.getInputProps('subject')} h='50px' mb='60px'
+        <TextInput label="Subject" placeholder="Subject" {...form.getInputProps('subject')} h='50px' mb='30px'
              styles={{
               input: { // Styles for the input element
                
                 color: 'black',
                 borderRadius: '8px',
                 padding: '10px',
-                height:'60px',
+                height:'40px',
               },
               label: { // Styles for the label element
                 fontSize: '16px',
@@ -336,15 +419,15 @@ const Addcoursepack= () => {
            
             <HStack spacing='50px'>
 
-            <TextInput label="Subject Areas" placeholder="Subject area" {...form.getInputProps('subject_area_1')} h='50px' mb='60px'
+            <TextInput label="Subject Areas" placeholder="Subject area" {...form.getInputProps('subject_area_1')} h='50px' mb='10px'
              styles={{
               input: { // Styles for the input element
                
                 color: 'black',
                 borderRadius: '8px',
                 padding: '10px',
-                height:'60px',
-                width:'400px',
+                height:'40px',
+                width:'180px',
               },
               label: { // Styles for the label element
                 fontSize: '16px',
@@ -354,15 +437,15 @@ const Addcoursepack= () => {
            
             }} />
             
-        <TextInput label="" placeholder="Subject area" {...form.getInputProps('subject_area_2')} h='50px' mb='60px' mt='60px'
+        <TextInput label="" placeholder="Subject area" {...form.getInputProps('subject_area_2')} h='50px' mb='10px' mt='60px'
              styles={{
               input: { // Styles for the input element
                
                 color: 'black',
                 borderRadius: '8px',
                 padding: '10px',
-                height:'60px',
-                width:'400px',
+                height:'40px',
+                width:'180px',
               },
               label: { // Styles for the label element
                 fontSize: '16px',
@@ -377,15 +460,15 @@ const Addcoursepack= () => {
             </HStack>
 
             <HStack spacing='50px'>
-            <TextInput label="" placeholder="Subject area" {...form.getInputProps('subject_area_3')} h='50px' mb='60px'
+            <TextInput label="" placeholder="Subject area" {...form.getInputProps('subject_area_3')} h='50px' mb='30px'
              styles={{
               input: { // Styles for the input element
                
                 color: 'black',
                 borderRadius: '8px',
                 padding: '10px',
-                height:'60px',
-                width:'400px',
+                height:'40px',
+                width:'180px',
               },
               label: { // Styles for the label element
                 fontSize: '16px',
@@ -395,15 +478,15 @@ const Addcoursepack= () => {
            
             }} />
 
-<TextInput label="" placeholder="Subject Area" {...form.getInputProps('subject_area_4')} h='50px' mb='60px'
+<TextInput label="" placeholder="Subject Area" {...form.getInputProps('subject_area_4')} h='50px' mb='30px'
              styles={{
               input: { // Styles for the input element
                
                 color: 'black',
                 borderRadius: '8px',
                 padding: '10px',
-                height:'60px',
-                width:'400px',
+                height:'40px',
+                width:'180px',
               },
               label: { // Styles for the label element
                 fontSize: '16px',
@@ -416,14 +499,14 @@ const Addcoursepack= () => {
 
 
 
-            <TextInput label="Thumbnail" placeholder="Thumbnail" {...form.getInputProps('thumbnail')} h='50px' mb='60px'
+            <TextInput label="Thumbnail" placeholder="Thumbnail" {...form.getInputProps('thumbnail')} h='50px' mb='30px'
              styles={{
               input: { // Styles for the input element
                
                 color: 'black',
                 borderRadius: '8px',
                 padding: '10px',
-                height:'60px',
+                height:'40px',
               
               },
               label: { // Styles for the label element
@@ -439,7 +522,7 @@ const Addcoursepack= () => {
 
 
 
-        <Stepper.Step label="Final step" description="Social media">
+        <Stepper.Step  description="Social media">
 
        
         <NumberInput
@@ -460,7 +543,7 @@ const Addcoursepack= () => {
                     color: "black",
                     borderRadius: "8px",
                     padding: "10px",
-                    height: "60px",
+                    height: "40px",
                   },
                   label: {
                     // Styles for the label element
@@ -487,7 +570,7 @@ const Addcoursepack= () => {
                     color: "black",
                     borderRadius: "8px",
                     padding: "10px",
-                    height: "60px",
+                    height: "40px",
                     width:'100%'
                   },
                   label: {
@@ -513,7 +596,7 @@ const Addcoursepack= () => {
                     color: "black",
                     borderRadius: "8px",
                     padding: "10px",
-                    height: "60px",
+                    height: "40px",
                     width:'100%'
                   },
                   label: {
@@ -539,7 +622,7 @@ const Addcoursepack= () => {
                     color: "black",
                     borderRadius: "8px",
                     padding: "10px",
-                    height: "60px",
+                    height: "40px",
                     width:'100%'
                   },
                   label: {
@@ -574,14 +657,14 @@ const Addcoursepack= () => {
                   mb="20px"
                 ></Heading>
                 <Box>
-                <UnorderedList>
+                {/* <UnorderedList>
                 <ListItem>
                   <HStack spacing="100px">
                   <Box width="150px">
-                      <Text>Title:</Text>
+                      <Text fontSize='15px'>Title:</Text>
                     </Box>
                     <Box width="200px">
-                      <Text  color='grey'>
+                      <Text  color='grey' fontSize='14px'>
                       {form.values.title}
                       </Text>
                     </Box>
@@ -591,10 +674,10 @@ const Addcoursepack= () => {
                   <ListItem>
                   <HStack spacing="100px" mt='10px'>
                   <Box width="150px">
-                      <Text>Description:</Text>
+                      <Text fontSize='15px'>Description:</Text>
                     </Box>
                     <Box width="200px">
-                      <Text  color='grey'> {form.values.description}</Text>
+                      <Text  color='grey' fontSize='14px'> {form.values.description}</Text>
                     </Box>
                   </HStack>
                   </ListItem>
@@ -602,10 +685,10 @@ const Addcoursepack= () => {
                   <ListItem>
                   <HStack spacing="100px" mt='10px'>
                   <Box width="150px">
-                      <Text>Subject:</Text>
+                      <Text fontSize='15px'>Subject:</Text>
                     </Box>
                     <Box width="200px">
-                      <Text  color='grey'> {form.values.subject}</Text>
+                      <Text  color='grey' fontSize='14px'> {form.values.subject}</Text>
                     </Box>
                   </HStack>
                   </ListItem>
@@ -613,10 +696,10 @@ const Addcoursepack= () => {
                   <ListItem>
                   <HStack spacing="100px" mt='10px'>
                   <Box width="150px">
-                      <Text>Subject Areas:</Text>
+                      <Text fontSize='15px'>Subject Areas:</Text>
                     </Box>
                     <Box width="200px">
-                    <Text color="grey">
+                    <Text color="grey" fontSize='14px'>
           {form.values.subject_area_1}
           {form.values.subject_area_2 && `, ${form.values.subject_area_2}`}
           {form.values.subject_area_3 && `, ${form.values.subject_area_3}`}
@@ -631,15 +714,15 @@ const Addcoursepack= () => {
                   <ListItem>
                   <HStack spacing="100px" mt='10px'>
                   <Box width="150px">
-                      <Text>Price:</Text>
+                      <Text fontSize='15px'>Price:</Text>
                     </Box>
                     <Box width="200px">
-                      <Text color='grey'> {form.values.price}</Text>
+                      <Text color='grey' fontSize='14px'> {form.values.price}</Text>
                     </Box>
                   </HStack>
                   </ListItem>
 
-                  <ListItem>
+                  {/* <ListItem>
                   <HStack spacing="100px" mt='10px'>
                   <Box width="150px">
                       <Text>Course:</Text>
@@ -648,15 +731,15 @@ const Addcoursepack= () => {
                       <Text color='grey'>{coursesdata.find((course) => course.id === form.values.course_id)?.title}</Text>
                     </Box>
                   </HStack>
-                  </ListItem>
+                  </ListItem> */}
 
-                  <ListItem>
+                  {/* <ListItem>
                   <HStack spacing="100px" mt='10px'>
                   <Box width="150px">
-                      <Text>Access Period:</Text>
+                      <Text fontSize='15px'>Access Period:</Text>
                     </Box>
                     <Box width="200px">
-                      <Text color='grey'>Days:{form.values.days}    Months:{form.values.months}    Years:{form.values.years}</Text>
+                      <Text color='grey' fontSize='14px'>Days:{form.values.days}    Months:{form.values.months}    Years:{form.values.years}</Text>
                  
                     </Box>
                   </HStack>
@@ -667,7 +750,7 @@ const Addcoursepack= () => {
 
 
              
-      </UnorderedList>
+      </UnorderedList> */} 
                 </Box>
                 
               </Box>
@@ -676,18 +759,28 @@ const Addcoursepack= () => {
 
       <Group position="right" mt="xl">
         {active !== 0 && (
-          <Button variant="default" onClick={prevStep}>
+          <Button variant="default" onClick={prevStep} fontSize='12px' colorScheme="blue">
             Back
           </Button>
         )}
-        {active !== 3 && <Button onClick={nextStep}>Next step</Button>}
-        {active === 3 && <Button type='submit'>Submit</Button>}
+        {active !== 3 && <Button onClick={nextStep} fontSize='12px' colorScheme="blue">Next step</Button>}
+        {active === 3 && <Button type='submit' fontSize='12px' colorScheme="blue">Submit</Button>}
       </Group>
     </Box>
     </form>
     </Box>
     
+
+    </ModalBody>
+
+          <ModalFooter>
+        
+         
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+      </>
   );
 }
 
-export default Addcoursepack;
+export default Addstudypack;

@@ -23,7 +23,7 @@ import {
 
 
 
-const Addcoursecontent = ({ studypackId }) => {
+const Addcoursecontent = ({ studypackId ,dynamicWeek}) => {
 
   const { isOpen, onOpen, onClose } = useDisclosure()
 
@@ -37,6 +37,9 @@ const Addcoursecontent = ({ studypackId }) => {
   const axiosPrivate = useAxiosPrivate();
 
 
+ 
+
+ 
 
   useEffect(() => {
     const getCourses = async () => {
@@ -66,6 +69,8 @@ const Addcoursecontent = ({ studypackId }) => {
     }
   };
 
+ 
+
   const [existingVideoIds, setExistingVideoIds] = useState([]); 
   const [price, setPrice] = useState([]); 
 
@@ -77,16 +82,16 @@ const Addcoursecontent = ({ studypackId }) => {
         const contentIds = response.data.content_ids;
   
         // Extract video_ids from content_ids array
-        const videoIds = contentIds.map((item) => item.video_id).flat();
+        const videoIds = contentIds.find(content => content.week1)?.week1?.video_id || [];
   
         // Set existing video IDs
         setExistingVideoIds(videoIds);
   
         // Set price
-        setPrice(response.data.price); // Assuming 'price' is a state variable
+        setPrice(response.data.price);
   
         console.log(videoIds);
-        console.log(response.data.price); // Log the price
+        console.log(response.data.price);
       } catch (error) {
         console.log(error);
       }
@@ -97,36 +102,51 @@ const Addcoursecontent = ({ studypackId }) => {
   
 
 
+
+  const [selectedVideoIds, setSelectedVideoIds] = useState(existingVideoIds);
+  const [selectedPrice, setSelectedPrice] = useState(price);
+
+
+
+
   const handleSave = async (event) => {
-  
     // event.preventDefault();
+
     try {
-      const selectedVideoIds = selectedItems.map((index) => videoContent[index].id);
-      const updatedVideoIds = [...existingVideoIds, ...selectedVideoIds];
-  
       // Fetch the existing content_ids structure
       const response = await axiosPrivate.get(`/tutor/studypack/${studypackId}`);
       const existingContentIds = response.data.content_ids;
-  
-      // Modify the existing content_ids structure with the updated video IDs
-      const updatedContentIds = [
-        {
-          tute_id: existingContentIds[0].tute_id, // Keep the existing tute_id array
-          video_id: updatedVideoIds, // Update the video_id array with new values
-        },
-      ];
-  
+      const price = response.data.price;
+
+      // Find the content object for the dynamic week
+      const dynamicWeekContent = existingContentIds.find(content => content[dynamicWeek]);
+
+      if (dynamicWeekContent) {
+        // Get the existing video IDs in the dynamic week
+        const existingDynamicWeekVideoIds = dynamicWeekContent[dynamicWeek].video_id;
+
+        // Add selected content IDs to the existing video IDs
+        const updatedVideoIds = [...existingDynamicWeekVideoIds, ...selectedItems.map(index => videoContent[index].id)];
+
+        // Update the dynamic week's video_id array
+        dynamicWeekContent[dynamicWeek].video_id = updatedVideoIds;
+      }
+
       // Update the studypack with the modified content_ids structure and the price
       await axiosPrivate.put(`/tutor/studypack/${studypackId}`, {
-        content_ids: updatedContentIds,
-        price: price, // Pass the price to the API call
+        content_ids: existingContentIds,
+        price: price,
       });
-  
-      // onClose(); // Close the modal after saving
+
+      onClose(); // Close the modal after saving
     } catch (error) {
       console.log(error);
     }
   };
+  
+  
+  
+  
   
 
 

@@ -1,617 +1,410 @@
 import React from "react";
-import { Flex,AccordionPanel,Text,Accordion,AccordionButton,AccordionIcon,AccordionItem,HStack,Heading} from '@chakra-ui/react'
-import { SmallAddIcon} from '@chakra-ui/icons'
-import { ChakraProvider,Button,Image } from '@chakra-ui/react'
-import { Tabs, TabList, TabPanels, Tab, TabPanel,Box } from '@chakra-ui/react'
+import {
+  Flex,
+  AccordionPanel,
+  Text,
+  Accordion,
+  AccordionButton,
+  AccordionIcon,
+  AccordionItem,
+  HStack,
+  Heading,
+} from "@chakra-ui/react";
+import { SmallAddIcon } from "@chakra-ui/icons";
+import { ChakraProvider, Button, Image } from "@chakra-ui/react";
+import { Tabs, TabList, TabPanels, Tab, TabPanel, Box } from "@chakra-ui/react";
 
-import Addcoursecontent from "./Addcoursecontent.js";
-import Addcoursedoccontent from "./Addcoursedoccontent.js";
+import Addcoursecontent from "./Addweekcoursecontent.js";
+import Addcoursedoccontent from "./Addweekdoccontent.js";
 import Addcoursequiz from "./Addcoursequiz.js";
 import Remove from "./Coursecontentremove.js";
 import Removecontent from "./Contentremove.js";
-import { useNavigate,useLocation } from "react-router-dom";
-import "../../../index.css"
+import Editstudypack from "./Studypackedit.js";
+import { useNavigate, useLocation } from "react-router-dom";
+import "../../../index.css";
 import { useEffect, useState } from "react";
 import useAxiosPrivate from "../../../hooks/useAxiosPrivate.js";
 
+const CourseContent = ({ course }) => {
+  const [coursesdata, setCoursesData] = useState(null);
+  const navigate = useNavigate();
+  const axiosPrivate = useAxiosPrivate();
+  const location = useLocation();
+  const id = location.pathname.split("/").pop();
+  const [selectedWeekTab, setSelectedWeekTab] = useState(0);
 
+  const [monthToDelete, setMonthToDelete] = useState("");
+  const [studyPackDetails, setStudyPackDetails] = useState({});
+  const [videoInfoArray, setVideoInfoArray] = useState([]);
 
+  useEffect(() => {
+    const getCourses = async () => {
+      const controller = new AbortController();
+      try {
+        const response = await axiosPrivate.get(`/tutor/course/${id}`, {
+          signal: controller.signal,
+        });
+        setCoursesData(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getCourses();
+  }, [axiosPrivate]);
 
-
-const CourseContent = ({ course })=> {
-   
-
-
-
-
-    const [coursesdata, setCoursesData] = useState(null);
-    const navigate = useNavigate();
-    const axiosPrivate = useAxiosPrivate();
-    const location = useLocation();
-    const id = location.pathname.split("/").pop();
-
-
-
-  const [monthToDelete, setMonthToDelete] = useState(''); // Initialize with an empty value
-
-  // Handle changes to the dynamic month value
-  const handleMonthChange = (selectedMonth) => {
-    setMonthToDelete(selectedMonth);
-  };
-  
-
-
-  
-  
-    useEffect(() => {
-      const getCourses = async () => {
-        const controller = new AbortController();
+  useEffect(() => {
+    if (coursesdata && coursesdata.studypack_ids.length > 0) {
+      const fetchStudyPackDetails = async () => {
         try {
-          const response = await axiosPrivate.get(`/tutor/course/${id}`, {
-            signal: controller.signal,
-          });
-          setCoursesData(response.data);
-          console.log(response.data);
+          const allStudyPackDetails = await Promise.all(
+            coursesdata.studypack_ids.map(async (studyPackId) => {
+              const response = await axiosPrivate.get(
+                `/tutor/studypack/${studyPackId}`
+              );
+              return response.data;
+            })
+          );
+          const studyPackMap = allStudyPackDetails.reduce((map, studyPack) => {
+            map[studyPack.id] = studyPack;
+            return map;
+          }, {});
+          setStudyPackDetails(studyPackMap);
         } catch (error) {
-          console.log(error);
+          console.error("Error fetching study pack details:", error);
         }
       };
-      getCourses();
-    }, [axiosPrivate]);
 
-    const months = coursesdata
-    ? coursesdata.studypack_ids.map((monthData) => {
-        return Object.keys(monthData)[0];
-      })
-    : [];
-
-   
-
-    return (
-      <ChakraProvider>
-        <Accordion allowToggle>
-          {months.map((month, index) => {
-            const monthData = coursesdata.studypack_ids[index][month];
-            const week1Data = monthData.week1 || {}; 
-            // Get the week1 data for the current month
-            const week2Data = monthData.week2 || {}; 
-            const week3Data = monthData.week3 || {}; 
-            const week4Data = monthData.week4 || {}; 
-
-            // Extract the video IDs and tute IDs for week1
-            const videoIds = week1Data.video_id || [];
-            const tuteIds = week1Data.tute_id || [];
-
-                   // Extract the video IDs and tute IDs for week2
-                   const videoIds2 = week2Data.video_id || [];
-                   const tuteIds2 = week2Data.tute_id || [];
-
-                          // Extract the video IDs and tute IDs for week3
-            const videoIds3 = week3Data.video_id || [];
-            const tuteIds3 = week3Data.tute_id || [];
-
-                   // Extract the video IDs and tute IDs for week4
-                   const videoIds4 = week4Data.video_id || [];
-                   const tuteIds4 = week4Data.tute_id || [];
-  
-            return (
-              <AccordionItem key={index} width={{ base: 400, xl: 700 }}>
-                <h2>
-                  <AccordionButton
-                    bg="#eee"
-                    border="2px solid white"
-                    borderRadius="5px"
-                    height="50px"
-                  >
-                    <Removecontent course={id} month={month} onMonthChange={handleMonthChange}></Removecontent>
-                    <Box as="span" flex="1" textAlign="left" height="30px">
-                      <Heading p={1} ml="20px" fontSize="15px">
-                        {month}
-                      </Heading>
-                    </Box>
-                    <AccordionIcon />
-                  </AccordionButton>
-                </h2>
-                <AccordionPanel pb={4} bg="white">
-                 
-
-
-                <br></br>
-<Tabs variant='soft-rounded' colorScheme='blue'>
-  <TabList>
-    <Tab height='15px'><Text fontSize='12px'>Week1</Text></Tab>
-    <Tab height='15px'><Text fontSize='12px'>Week 2</Text></Tab>
-    <Tab height='15px'><Text fontSize='12px'>Week 3</Text></Tab>
-    <Tab height='15px'><Text fontSize='12px'>Week 4</Text></Tab>
-  </TabList>
-  <TabPanels>
-
-
-
-  <TabPanel>
-
-    
-    <HStack spacing={{base:220,xl:300}}>
-    <Box width='600px' ><Text fontSize='15px'>Video Content</Text></Box>
-  <Box> <Addcoursecontent></Addcoursecontent></Box>       
-  </HStack>
-
-
-  <Box bg='#F0F8FF'mt='4px' className="box1" >
-  <HStack spacing={{base:90,xl:330}}>
-  <Box p={2}  width='210px'><HStack>  <Image
-            boxSize="50%"
-            width={{base:70,xl:70}}
-            height='50px'
-            objectFit="cover"
-        
-          
-          />
-         <Box ><Text fontSize='14px' className="box2">{videoIds.join(', ')}</Text></Box> 
-          </HStack></Box> 
-  <Box width='90px' ml='5px' mt='-5px' > <HStack><Button fontSize='12px' height='20px' >View</Button> <Remove></Remove></HStack></Box>
-
-
-  </HStack>
-</Box>
-
-<HStack  spacing={{base:220,xl:300}} mt='10px' >
-  <Box width='600px' ><Text fontSize='15px'>Document Content</Text></Box>
-  <Box> <Addcoursedoccontent></Addcoursedoccontent></Box>   
-  </HStack>
-
-  <Box bg='#F0F8FF'mt='4px' className="box1" >
-  <HStack spacing={{base:90,xl:330}}>
-  <Box p={2}  width='210px'><HStack>  <Image
-            boxSize="50%"
-            width={{base:70,xl:70}}
-            height='50px'
-            objectFit="cover"
-        
-          
-          />
-         <Box ><Text fontSize='14px' className="box2"> {tuteIds.join(', ')}</Text></Box> 
-          </HStack></Box> 
-  <Box width='90px' ml='5px' mt='-5px' > <HStack><Button fontSize='12px' height='20px' >View</Button> <Remove></Remove></HStack></Box>
-
-
-  </HStack>
-</Box>
-
-
-
-
-<HStack  spacing={{base:220,xl:300}}  mt='10px' >
-<Box width='600px' ><Text fontSize='15px'>Quizes</Text></Box>
-  <Box> <Addcoursequiz></Addcoursequiz></Box>     
-  </HStack>
-
-  <Box bg='#F0F8FF'mt='4px' className="box1" >
-  <HStack spacing={{base:90,xl:330}}>
-  <Box p={2}  width='210px'><HStack>  <Image
-            boxSize="50%"
-            width={{base:70,xl:70}}
-            height='50px'
-            objectFit="cover"
-       
-          
-          />
-         <Box ><Text fontSize='14px' className="box2"></Text></Box> 
-          </HStack></Box> 
-  <Box width='90px' ml='5px' mt='-5px' > <HStack><Button fontSize='12px' height='20px' >View</Button> <Remove></Remove></HStack></Box>
-
-
-  </HStack>
-</Box>
-   
-    </TabPanel>
-
-
-
-
-
-
-
-
-
-
-    <TabPanel>
-
-    
-<HStack spacing={{base:220,xl:300}}>
-<Box width='600px' ><Text fontSize='15px'>Video Content</Text></Box>
-<Box> <Addcoursecontent></Addcoursecontent></Box>       
-</HStack>
-
-
-<Box bg='#F0F8FF'mt='4px' className="box1" >
-<HStack spacing={{base:90,xl:330}}>
-<Box p={2}  width='210px'><HStack>  <Image
-        boxSize="50%"
-        width={{base:70,xl:70}}
-        height='50px'
-        objectFit="cover"
-    
-      
-      />
-     <Box ><Text fontSize='14px' className="box2">{videoIds2.join(', ')}</Text></Box> 
-      </HStack></Box> 
-<Box width='90px' ml='5px' mt='-5px' > <HStack><Button fontSize='12px' height='20px' >View</Button> <Remove></Remove></HStack></Box>
-
-
-</HStack>
-</Box>
-
-<HStack  spacing={{base:220,xl:300}} mt='10px' >
-<Box width='600px' ><Text fontSize='15px'>Document Content</Text></Box>
-<Box> <Addcoursedoccontent></Addcoursedoccontent></Box>   
-</HStack>
-
-<Box bg='#F0F8FF'mt='4px' className="box1" >
-<HStack spacing={{base:90,xl:330}}>
-<Box p={2}  width='210px'><HStack>  <Image
-        boxSize="50%"
-        width={{base:70,xl:70}}
-        height='50px'
-        objectFit="cover"
-    
-      
-      />
-     <Box ><Text fontSize='14px' className="box2"> {tuteIds2.join(', ')}</Text></Box> 
-      </HStack></Box> 
-<Box width='90px' ml='5px' mt='-5px' > <HStack><Button fontSize='12px' height='20px' >View</Button> <Remove></Remove></HStack></Box>
-
-
-</HStack>
-</Box>
-
-
-
-
-<HStack  spacing={{base:220,xl:300}}  mt='10px' >
-<Box width='600px' ><Text fontSize='15px'>Quizes</Text></Box>
-<Box> <Addcoursequiz></Addcoursequiz></Box>     
-</HStack>
-
-<Box bg='#F0F8FF'mt='4px' className="box1" >
-<HStack spacing={{base:90,xl:330}}>
-<Box p={2}  width='210px'><HStack>  <Image
-        boxSize="50%"
-        width={{base:70,xl:70}}
-        height='50px'
-        objectFit="cover"
-   
-      
-      />
-     <Box ><Text fontSize='14px' className="box2"></Text></Box> 
-      </HStack></Box> 
-<Box width='90px' ml='5px' mt='-5px' > <HStack><Button fontSize='12px' height='20px' >View</Button> <Remove></Remove></HStack></Box>
-
-
-</HStack>
-</Box>
-
-</TabPanel>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<TabPanel>
-
-    
-<HStack spacing={{base:220,xl:300}}>
-<Box width='600px' ><Text fontSize='15px'>Video Content</Text></Box>
-<Box> <Addcoursecontent></Addcoursecontent></Box>       
-</HStack>
-
-
-<Box bg='#F0F8FF'mt='4px' className="box1" >
-<HStack spacing={{base:90,xl:330}}>
-<Box p={2}  width='210px'><HStack>  <Image
-        boxSize="50%"
-        width={{base:70,xl:70}}
-        height='50px'
-        objectFit="cover"
-    
-      
-      />
-     <Box ><Text fontSize='14px' className="box2">{videoIds3.join(', ')}</Text></Box> 
-      </HStack></Box> 
-<Box width='90px' ml='5px' mt='-5px' > <HStack><Button fontSize='12px' height='20px' >View</Button> <Remove></Remove></HStack></Box>
-
-
-</HStack>
-</Box>
-
-<HStack  spacing={{base:220,xl:300}} mt='10px' >
-<Box width='600px' ><Text fontSize='15px'>Document Content</Text></Box>
-<Box> <Addcoursedoccontent></Addcoursedoccontent></Box>   
-</HStack>
-
-<Box bg='#F0F8FF'mt='4px' className="box1" >
-<HStack spacing={{base:90,xl:330}}>
-<Box p={2}  width='210px'><HStack>  <Image
-        boxSize="50%"
-        width={{base:70,xl:70}}
-        height='50px'
-        objectFit="cover"
-    
-      
-      />
-     <Box ><Text fontSize='14px' className="box2"> {tuteIds3.join(', ')}</Text></Box> 
-      </HStack></Box> 
-<Box width='90px' ml='5px' mt='-5px' > <HStack><Button fontSize='12px' height='20px' >View</Button> <Remove></Remove></HStack></Box>
-
-
-</HStack>
-</Box>
-
-
-
-
-<HStack  spacing={{base:220,xl:300}}  mt='10px' >
-<Box width='600px' ><Text fontSize='15px'>Quizes</Text></Box>
-<Box> <Addcoursequiz></Addcoursequiz></Box>     
-</HStack>
-
-<Box bg='#F0F8FF'mt='4px' className="box1" >
-<HStack spacing={{base:90,xl:330}}>
-<Box p={2}  width='210px'><HStack>  <Image
-        boxSize="50%"
-        width={{base:70,xl:70}}
-        height='50px'
-        objectFit="cover"
-   
-      
-      />
-     <Box ><Text fontSize='14px' className="box2"></Text></Box> 
-      </HStack></Box> 
-<Box width='90px' ml='5px' mt='-5px' > <HStack><Button fontSize='12px' height='20px' >View</Button> <Remove></Remove></HStack></Box>
-
-
-</HStack>
-</Box>
-
-</TabPanel>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<TabPanel>
-
-    
-<HStack spacing={{base:220,xl:300}}>
-<Box width='600px' ><Text fontSize='15px'>Video Content</Text></Box>
-<Box> <Addcoursecontent></Addcoursecontent></Box>       
-</HStack>
-
-
-<Box bg='#F0F8FF'mt='4px' className="box1" >
-<HStack spacing={{base:90,xl:330}}>
-<Box p={2}  width='210px'><HStack>  <Image
-        boxSize="50%"
-        width={{base:70,xl:70}}
-        height='50px'
-        objectFit="cover"
-    
-      
-      />
-     <Box ><Text fontSize='14px' className="box2">{videoIds4.join(', ')}</Text></Box> 
-      </HStack></Box> 
-<Box width='90px' ml='5px' mt='-5px' > <HStack><Button fontSize='12px' height='20px' >View</Button> <Remove></Remove></HStack></Box>
-
-
-</HStack>
-</Box>
-
-<HStack  spacing={{base:220,xl:300}} mt='10px' >
-<Box width='600px' ><Text fontSize='15px'>Document Content</Text></Box>
-<Box> <Addcoursedoccontent></Addcoursedoccontent></Box>   
-</HStack>
-
-<Box bg='#F0F8FF'mt='4px' className="box1" >
-<HStack spacing={{base:90,xl:330}}>
-<Box p={2}  width='210px'><HStack>  <Image
-        boxSize="50%"
-        width={{base:70,xl:70}}
-        height='50px'
-        objectFit="cover"
-    
-      
-      />
-     <Box ><Text fontSize='14px' className="box2"> {tuteIds4.join(', ')}</Text></Box> 
-      </HStack></Box> 
-<Box width='90px' ml='5px' mt='-5px' > <HStack><Button fontSize='12px' height='20px' >View</Button> <Remove></Remove></HStack></Box>
-
-
-</HStack>
-</Box>
-
-
-
-
-<HStack  spacing={{base:220,xl:300}}  mt='10px' >
-<Box width='600px' ><Text fontSize='15px'>Quizes</Text></Box>
-<Box> <Addcoursequiz></Addcoursequiz></Box>     
-</HStack>
-
-<Box bg='#F0F8FF'mt='4px' className="box1" >
-<HStack spacing={{base:90,xl:330}}>
-<Box p={2}  width='210px'><HStack>  <Image
-        boxSize="50%"
-        width={{base:70,xl:70}}
-        height='50px'
-        objectFit="cover"
-   
-      
-      />
-     <Box ><Text fontSize='14px' className="box2"></Text></Box> 
-      </HStack></Box> 
-<Box width='90px' ml='5px' mt='-5px' > <HStack><Button fontSize='12px' height='20px' >View</Button> <Remove></Remove></HStack></Box>
-
-
-</HStack>
-</Box>
-
-</TabPanel>
-    
-  </TabPanels>
-</Tabs>
-                </AccordionPanel>
-              </AccordionItem>
-            );
-          })}
-        </Accordion>
-      </ChakraProvider>
-    );
+      fetchStudyPackDetails();
+    }
+  }, [coursesdata]);
+
+  const getContentInfo = async (contentId) => {
+    try {
+      const response = await axiosPrivate.get(`/tutor/content/${contentId}`);
+      const content = response.data;
+      return {
+        title: content.title,
+        thumbnail: content.thumbnail,
+        videoId: content.id,
+      };
+    } catch (error) {
+      console.error("Error fetching content details:", error);
+      return {
+        title: "",
+        thumbnail: "",
+        videoId: "",
+      };
+    }
   };
 
+  useEffect(() => {
+    const fetchVideoInfo = async (studyPack) => {
+      const videoInfoArray = await Promise.all(
+        studyPack.content_ids.flatMap((content) => {
+          const videoInfoPromises = content[
+            Object.keys(content)[0]
+          ].video_id.map(async (videoId) => {
+            const videoInfo = await getContentInfo(videoId);
+            console.log(videoInfo);
+            return { ...videoInfo, type: "video" };
+          });
+
+          const tuteInfoPromises = content[Object.keys(content)[0]].tute_id.map(
+            async (tuteId) => {
+              const tuteInfo = await getContentInfo(tuteId);
+              return { ...tuteInfo, type: "tute" };
+            }
+          );
+
+          const quizInfoPromises = content[Object.keys(content)[0]].quiz_id.map(
+            async (quizId) => {
+              const quizInfo = await getContentInfo(quizId);
+              return { ...quizInfo, type: "quiz" };
+            }
+          );
+
+          return [
+            ...videoInfoPromises,
+            ...tuteInfoPromises,
+            ...quizInfoPromises,
+          ];
+        })
+      );
+      setVideoInfoArray(videoInfoArray);
+    };
+
+    if (Object.keys(studyPackDetails).length > 0) {
+      Object.keys(studyPackDetails).forEach((studyPackKey) => {
+        fetchVideoInfo(studyPackDetails[studyPackKey]);
+      });
+    }
+  }, [studyPackDetails]);
+
   
+
+  return (
+    <ChakraProvider>
+      <Accordion allowToggle>
+        {Object.keys(studyPackDetails).map((studyPackKey, index) => {
+          const studyPack = studyPackDetails[studyPackKey];
+          return (
+            <AccordionItem key={index} width={{ base: 400, xl: 700 }}>
+              <AccordionButton
+                bg="#eee"
+                border="2px solid white"
+                borderRadius="5px"
+                height="50px"
+              >
+                
+                <Box as="span" flex="1" textAlign="left" height="30px">
+                  <Heading p={1} ml="20px" fontSize="15px">
+                    {studyPack.title}
+                  </Heading>
+                </Box>
+              <Box mr='10px'>
+                <Editstudypack course={studyPack.id} ></Editstudypack> </Box>
+                <Box mr='10px'>
+                <Removecontent studypackid={studyPack.id}></Removecontent>
+                </Box>
+                <AccordionIcon />
+              </AccordionButton>
+
+              <AccordionPanel pb={4} bg="white">
+                <Tabs variant="soft-rounded" colorScheme="blue">
+                  <TabList>
+                    {studyPack.content_ids.map((content, contentIndex) => (
+                 <Tab
+                 key={contentIndex}
+                 height="15px"
+                 onClick={() => setSelectedWeekTab(contentIndex + 1)}
+                 // Always set the first tab (Week 1) as active
+                 className={contentIndex === 0 || selectedWeekTab === contentIndex + 1 ? 'active-tab' : ''}
+               >
+                        <Text fontSize="12px">{`Week ${
+                          contentIndex + 1
+                        }`}</Text>
+                      </Tab>
+                    ))}
+                  </TabList>
+
+                  <TabPanels>
+
+                    {studyPack.content_ids.map((content, contentIndex) => (
+
+                      
+                      <TabPanel key={contentIndex}>
+                        {/* Video Content */}
+
+                        <HStack spacing={{ base: 220, xl: 300 }} mt="10px">
+                          <Box width="600px">
+                            <Text fontSize="15px">Video Content</Text>
+                          </Box>
+                          <Box>
+                            <Addcoursecontent studypackId={studyPack.id}  dynamicWeek={`week${selectedWeekTab}`}></Addcoursecontent>
+                          </Box>
+                        </HStack>
+
+                        {content[Object.keys(content)[0]].video_id &&
+  content[Object.keys(content)[0]].video_id.length > 0 && (
+
+  <Box>
   
-  
-  
-  
+  {content[Object.keys(content)[0]].video_id.map((videoId, videoIndex) => {
+    const videoInfo = videoInfoArray.find(info => info.videoId === videoId);
+    console.log(videoInfo);
+    if (!videoInfo) {
+      return null;
+    }
+      
+                              return (
+                                    <Box
+                                      bg="#F0F8FF"
+                                      mt="4px"
+                                      className="box1"
+                                      key={videoIndex}
+                                    >
+                                      <HStack spacing={{ base: 90, xl: 300 }}>
+                                        <Box p={2} width="210px">
+                                          <HStack>
+                                            <Image
+                                              boxSize="50%"
+                                              width={{ base: 70, xl: 70 }}
+                                              height="50px"
+                                              objectFit="cover"
+                                              src={videoInfo.thumbnail}
+                                            />
+                                            <Box>
+                                              <Text
+                                                fontSize="14px"
+                                                className="box2"
+                                              >
+                                                {videoInfo.title}
+                                              </Text>
+                                            </Box>
+                                          </HStack>
+                                        </Box>
 
-<Accordion allowToggle>
-  <AccordionItem width={{base:400,xl:700}}>
-    <h2>
- 
-      <AccordionButton bg='#eee' border='2px solid white' borderRadius='5px' height='50px' ><Removecontent></Removecontent>
-        <Box as="span" flex='1' textAlign='left'  height='30px'>
-        <Heading p={1} ml='20px' fontSize='15px'>{}</Heading>
-        </Box>
-        <AccordionIcon />
-      </AccordionButton>
-     
-    </h2>
-    <AccordionPanel pb={4} bg='white'>
-<br></br>
-<Tabs variant='soft-rounded' colorScheme='blue'>
-  <TabList>
-    <Tab height='15px'><Text fontSize='12px'>Week1</Text></Tab>
-    <Tab height='15px'><Text fontSize='12px'>Week 2</Text></Tab>
-    <Tab height='15px'><Text fontSize='12px'>Week 3</Text></Tab>
-    <Tab height='15px'><Text fontSize='12px'>Week 4</Text></Tab>
-  </TabList>
-  <TabPanels>
+                                        <Box width="90px" ml="5px" mt="-5px">
+                                          <HStack>
+                                            <Button
+                                              fontSize="12px"
+                                              height="20px"
+                                            >
+                                              View
+                                            </Button>{" "}
+                                            <Remove
+                                              contentId={videoId}
+                                              part={`week${selectedWeekTab}`}
+                                              studypackId={studyPack.id}
+                                            />
+                                          </HStack>
+                                        </Box>
+                                      </HStack>
+                                    </Box>
+                                  );
+                                }
+                              )}
+                            </Box>
+                          )}
 
+                        {/* Document Content */}
 
+                    
+                            <HStack spacing={{ base: 220, xl: 300 }} mt="10px">
+                              <Box width="600px">
+                                <Text fontSize="15px">Document Content</Text>
+                              </Box>
+                              <Box>
+                                <Addcoursedoccontent studypackId={studyPack.id}  dynamicWeek={`week${selectedWeekTab}`} />
+                              </Box>
+                            </HStack>
+                          
 
+                        {content[Object.keys(content)[0]].tute_id.map(
+                          (tuteId, tuteIndex) => {
+                            const tuteInfo = videoInfoArray.find(
+                              (info) => info.videoId === tuteId
+                            );
+                            if (!tuteInfo) {
+                              return null;
+                            }
 
+                            return (
+                              <Box
+                                bg="#F0F8FF"
+                                mt="4px"
+                                className="box1"
+                                key={tuteIndex}
+                              >
+                                <HStack spacing={{ base: 90, xl: 300 }}>
+                                  <Box p={2} width="210px">
+                                    <HStack>
+                                      <Image
+                                        boxSize="50%"
+                                        width={{ base: 70, xl: 70 }}
+                                        height="50px"
+                                        objectFit="cover"
+                                        src={tuteInfo.thumbnail}
+                                      />
+                                      <Box>
+                                        <Text fontSize="14px" className="box2">
+                                          {tuteInfo.title}
+                                        </Text>
+                                      </Box>
+                                    </HStack>
+                                  </Box>
 
+                                  <Box width="90px" ml="5px" mt="-5px">
+                                    <HStack>
+                                      <Button fontSize="12px" height="20px">
+                                        View
+                                      </Button>{" "}
+                                      <Remove
+                                        contentId={tuteId}
+                                        studypackId={studyPack.id}
+                                        part={`week${selectedWeekTab}`}
+                                      />
+                                    </HStack>
+                                  </Box>
+                                </HStack>
+                              </Box>
+                            );
+                          }
+                        )}
 
-  <TabPanel>
-    
-    <HStack spacing={{base:220,xl:510}}>
-  <Text fontSize='15px'>Video Content</Text>
-  <Box> <Addcoursecontent></Addcoursecontent></Box>       
-  </HStack>
+                        {/* Quiz Content */}
+                  
+                            <HStack spacing={{ base: 220, xl: 300 }} mt="10px">
+                              <Box width="600px">
+                                <Text fontSize="15px">Quiz Content</Text>
+                              </Box>
+                              <Box>
+                                <Addcoursequiz />
+                              </Box>
+                            </HStack>
+                       
+                        {content[Object.keys(content)[0]].quiz_id.map(
+                          (quizId, quizIndex) => {
+                            const quizInfo = videoInfoArray.find(
+                              (info) => info.videoId === quizId
+                            );
+                            if (!quizInfo || quizInfo.type !== "quiz") {
+                              return null;
+                            }
 
+                            return (
+                              <Box
+                                bg="#F0F8FF"
+                                mt="4px"
+                                className="box1"
+                                key={quizIndex}
+                              >
+                                <HStack spacing={{ base: 90, xl: 330 }}>
+                                  <Box p={2} width="210px">
+                                    <HStack>
+                                      <Image
+                                        boxSize="50%"
+                                        width={{ base: 70, xl: 70 }}
+                                        height="50px"
+                                        objectFit="cover"
+                                        src={quizInfo.thumbnail}
+                                      />
+                                      <Box>
+                                        <Text fontSize="14px" className="box2">
+                                          {quizInfo.title}
+                                        </Text>
+                                      </Box>
+                                    </HStack>
+                                  </Box>
 
-  <Box bg='#F0F8FF'mt='4px' className="box1" >
-  <HStack spacing={{base:90,xl:330}}>
-  <Box p={2}  width='210px'><HStack>  <Image
-            boxSize="50%"
-            width={{base:70,xl:70}}
-            height='50px'
-            objectFit="cover"
-        
-          
-          />
-         <Box ><Text fontSize='14px' className="box2"></Text></Box> 
-          </HStack></Box> 
-  <Box width='90px' ml='5px' mt='-5px' > <HStack><Button fontSize='12px' height='20px' >View</Button> <Remove></Remove></HStack></Box>
-
-
-  </HStack>
-</Box>
-
-<HStack  spacing='480px' mt='10px' >
-  <Text fontSize='15px'>Document Content</Text>
-  <Box> <Addcoursedoccontent></Addcoursedoccontent></Box>   
-  </HStack>
-
-  <Box bg='#F0F8FF'mt='4px' className="box1" >
-  <HStack spacing={{base:90,xl:330}}>
-  <Box p={2}  width='210px'><HStack>  <Image
-            boxSize="50%"
-            width={{base:70,xl:70}}
-            height='50px'
-            objectFit="cover"
-        
-          
-          />
-         <Box ><Text fontSize='14px' className="box2"></Text></Box> 
-          </HStack></Box> 
-  <Box width='90px' ml='5px' mt='-5px' > <HStack><Button fontSize='12px' height='20px' >View</Button> <Remove></Remove></HStack></Box>
-
-
-  </HStack>
-</Box>
-
-
-
-
-<HStack  spacing='520px'  mt='10px' >
-  <Text fontSize='15px'>Quiz Content</Text>
-  <Box> <Addcoursequiz></Addcoursequiz></Box>     
-  </HStack>
-
-  <Box bg='#F0F8FF'mt='4px' className="box1" >
-  <HStack spacing={{base:90,xl:330}}>
-  <Box p={2}  width='210px'><HStack>  <Image
-            boxSize="50%"
-            width={{base:70,xl:70}}
-            height='50px'
-            objectFit="cover"
-       
-          
-          />
-         <Box ><Text fontSize='14px' className="box2"></Text></Box> 
-          </HStack></Box> 
-  <Box width='90px' ml='5px' mt='-5px' > <HStack><Button fontSize='12px' height='20px' >View</Button> <Remove></Remove></HStack></Box>
-
-
-  </HStack>
-</Box>
-   
-    </TabPanel>
-
-
-  </TabPanels>
-</Tabs>
-
-    
-    </AccordionPanel>
-  </AccordionItem>
-
-
-</Accordion>
-
-
-
-// </ChakraProvider>
-   
-//   );
-// };
+                                  <Box width="90px" ml="5px" mt="-5px">
+                                    <HStack>
+                                      <Button fontSize="12px" height="20px">
+                                        View
+                                      </Button>{" "}
+                                      <Remove
+                                        contentId={quizId}
+                                        studypackId={studyPack.id}
+                                        part={`week${selectedWeekTab}`}
+                                      />
+                                    </HStack>
+                                  </Box>
+                                </HStack>
+                              </Box>
+                            );
+                          }
+                        )}
+                      </TabPanel>
+                    ))}
+                  </TabPanels>
+                </Tabs>
+              </AccordionPanel>
+            </AccordionItem>
+          );
+        })}
+      </Accordion>
+    </ChakraProvider>
+  );
+};
 
 export default CourseContent;

@@ -4,18 +4,18 @@ import { SmallAddIcon } from '@chakra-ui/icons'
 import { ChakraProvider, Button, Image } from '@chakra-ui/react'
 import { Tabs, TabList, TabPanels, Tab, TabPanel, Box } from '@chakra-ui/react'
 
-import Addcoursecontent from "./Addcoursecontent.js";
-import Addcoursedoccontent from "./Addcoursedoccontent.js";
-import Addcoursequiz from "./Addcoursequiz.js";
-import Remove from "./Papercontentremove.js";
-import Removecontent from "./Contentremove.js";
-import Editstudypack from "./Studypackedit.js";
+
+import Addcoursedoccontent from "./Adddoc.js";
+
+// import Remove from "./Papercontentremove.js";
+
+
 import { useNavigate, useLocation } from "react-router-dom";
 import "../../../index.css"
 import { useEffect, useState } from "react";
 import useAxiosPrivate from "../../../hooks/useAxiosPrivate.js";
 
-const CourseContent = () => {
+const CourseIncludedoc = () => {
 
 
 
@@ -41,7 +41,7 @@ const CourseContent = () => {
         if (courseResponse.data && courseResponse.data.studypack_ids.length > 0) {
           const allStudyPackDetails = await Promise.all(
             courseResponse.data.studypack_ids.map(async (studyPackId) => {
-              const studyPackResponse = await axiosPrivate.get(`/tutor/studypack/${studyPackId}`);
+              const studyPackResponse = await axiosPrivate.get(`/tutor/course/${id}`);
               return studyPackResponse.data;
             })
           );
@@ -86,10 +86,6 @@ const CourseContent = () => {
   };
 
 
-  const LoadDetail = (id) => {
-    navigate("/tutor/courses/content/analyze/" + id);
-  };
-
 
   return (
     <ChakraProvider>
@@ -97,7 +93,7 @@ const CourseContent = () => {
         {Object.keys(studyPackDetails).map((studyPackKey, index) => {
           const studyPack = studyPackDetails[studyPackKey];
           return (
-            <AccordionItem key={index} width={{ base: 400, xl: 700 }}>
+            <AccordionItem key={index} width={{ base: 300, xl: 400 }}>
               <AccordionButton
                 bg="#eee"
                 border="2px solid white"
@@ -107,39 +103,33 @@ const CourseContent = () => {
                
                 <Box as="span" flex="1" textAlign="left" height="30px">
                   <Heading p={1} ml="20px" fontSize="15px">
-                    {studyPack.title}
+                    Tute Contents
                   </Heading>
                 </Box>
+             
                 <Box mr='10px'>
-               
-                <Button fontSize='10px' height='20px'  onClick={() => {
-                            LoadDetail(studyPack.id);
-                          }}>Analyze</Button></Box>
+                 </Box>
                 <Box mr='10px'>
-                <Editstudypack course={studyPack.id} ></Editstudypack> </Box>
-                <Box mr='10px'>
-                <Removecontent studypackid={studyPack.id}></Removecontent>
+             
                 </Box>
                 <AccordionIcon />
               </AccordionButton>
 
               <AccordionPanel pb={4} bg="white">
 
-              <HStack spacing={{ base: 220, xl: 300 }}>
-          <Box width="600px">
-            <Text fontSize="15px">Video Content</Text>
-          </Box>
+              <HStack spacing={{ base: 40, xl: 100 }}>
+        
           <Box>
-            <Addcoursecontent studypackId={studyPack.id}></Addcoursecontent>
+            <Addcoursedoccontent studypackId={id}></Addcoursedoccontent>
           </Box>
         </HStack>
                 {/* Video Content */}
                 {studyPack.content_ids.map((content, contentIndex) => (
                   <Box key={contentIndex} mt="20px">
-                    {content && content.video_id && content.video_id.length > 0 && (
+                    {content && content.tute_id && content.tute_id.length > 0 && (
                       <Box mt="10px">
-                        {content.video_id.map((videoId, videoIndex) => (
-                          <Box bg="#F0F8FF" mt="4px" className="box1" key={videoIndex}>
+                        {content.tute_id.map((tuteId, tuteIndex) => (
+                          <Box bg="#F0F8FF" mt="4px" className="box1" key={tuteIndex}>
                             <HStack spacing={{ base: 90, xl: 330 }}>
                               <Box p={2} width="210px">
                                 <HStack>
@@ -148,11 +138,11 @@ const CourseContent = () => {
                                     width={{ base: 70, xl: 70 }}
                                     height="50px"
                                     objectFit="cover"
-                                    src={getContentThumbnail(videoId)}
+                                    src={getContentThumbnail(tuteId)}
                                   />
                                   <Box>
                                     <Text fontSize="14px" className="box2">
-                                      {getContentTitle(videoId)}
+                                      {getContentTitle(tuteId)}
                                     </Text>
                                   </Box>
                                 </HStack>
@@ -162,7 +152,7 @@ const CourseContent = () => {
                                   <Button fontSize="12px" height="20px">
                                     View
                                   </Button>{" "}
-                                  <Remove contentId={videoId} part={studyPack.id}></Remove>
+                                  {/* <Remove contentId={videoId} part={studyPack.id}></Remove> */}
                                 </HStack>
                               </Box>
                             </HStack>
@@ -174,7 +164,7 @@ const CourseContent = () => {
                     {/* Document Content */}
                     
 
-<HStack spacing={{ base: 220, xl: 300 }} mt='10px'>
+{/* <HStack spacing={{ base: 220, xl: 300 }} mt='10px'>
           <Box width="600px">
             <Text fontSize="15px">Document Content</Text>
           </Box>
@@ -211,14 +201,14 @@ const CourseContent = () => {
               <Button fontSize="12px" height="20px">
                 View
               </Button>{" "}
-              <Remove contentId={tuteId} part={studyPack.id}></Remove>
-            </HStack>
+              {/* <Remove contentId={tuteId} part={studyPack.id}></Remove> */}
+            {/* </HStack>
           </Box>
         </HStack>
       </Box>
     ))}
   </Box>
-)}
+)} */} 
                     
                     
 
@@ -235,4 +225,4 @@ const CourseContent = () => {
   );
 };
 
-export default CourseContent;
+export default CourseIncludedoc;
