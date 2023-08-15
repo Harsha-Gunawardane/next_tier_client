@@ -9,7 +9,7 @@ import CountdownTimer from "./components/quiz/CountdownTimer";
 import QuizNumberList from "./components/quiz/QuizNumberList";
 
 // import custom hook
-import { useFetchQuestions } from "../../hooks/reduxReducers/fetchQuestions";
+import { useFetchQuestions } from "../../hooks/fetchQuestions";
 import BreadCrumbs from "./components/quiz/BreadCrumbs";
 import QuizErrorModal from "./components/modals/QuizErrorModal";
 import Loading from "../../components/skeleton/Loading";

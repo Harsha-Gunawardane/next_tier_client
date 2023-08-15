@@ -1,104 +1,108 @@
-import { Box, SimpleGrid, GridItem, Flex, Text } from "@chakra-ui/react";
-import Classes from "../../components/StaffDashboard/Class";
+import { Box, SimpleGrid, Heading, Card, CardHeader, Flex, Text } from "@chakra-ui/react";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUser } from '@fortawesome/free-solid-svg-icons';
+import { faChalkboardUser } from "@fortawesome/free-solid-svg-icons";
+import { faBuildingColumns } from "@fortawesome/free-solid-svg-icons";
+import { faChalkboard } from "@fortawesome/free-solid-svg-icons";
 import Complain from "../../components/StaffDashboard/Complain";
-import Payment from "../../components/StaffDashboard/Payment";
-import MiniStat from "../../components/Card/MiniStat";
-import MiniStatCardIcon from "../../components/icons/MiniStatCardIcon";
-
-//icons
-import { BiBook } from "react-icons/bi";
-import { FaChalkboardUser, FaLaptop } from "react-icons/fa6";
-import { BiUser, BiChalkboard } from "react-icons/bi";
+import BarChart from "../../components/StaffDashboard/BarChart";
+import LineChart from "../../components/StaffDashboard/LineChart";
+import Classes from "../../components/StaffDashboard/Class";
 
 function Dashboard() {
-  return (
-    <Box pl={[0, 5, 5]} pr={[0, 5, 5]} backgroundColor="#F9F9F9" width="100%">
-      <Text fontSize="18px" fontWeight="bold" padding="10px 25px 5px 0">
-        {" "}
-        Dashboard{" "}
-      </Text>
+  const customColors = ["red", "green", "blue", "purple", "black"];
 
-      <SimpleGrid
-        columns={{ base: 2, md: 2, lg: 5 }}
-        px={"5px"}
-        gridRowGap={"10px"}
-        gap={"10px"}
-      >
-        <GridItem colSpan={{ base: 1, md: 1, lg: 1 }}>
-          <MiniStat
-            name="Registerd Students"
-            value="550"
-            endContent={<MiniStatCardIcon color={"blue"} icon={BiUser} />}
-          />
-        </GridItem>
-        <GridItem colSpan={{ base: 1, md: 1, lg: 1 }}>
-          <MiniStat
-            name="Teachers"
-            value="25"
-            endContent={
-              <MiniStatCardIcon color={"green"} icon={FaChalkboardUser} />
-            }
-          />
-        </GridItem>
-        <GridItem colSpan={{ base: 1, md: 1, lg: 1 }}>
-          <MiniStat
-            name=" Staff"
-            value="110"
-            endContent={<MiniStatCardIcon color={"red"} icon={FaLaptop} />}
-          />
-        </GridItem>
-        <GridItem colSpan={{ base: 1, md: 1, lg: 1 }}>
-          <MiniStat
-            name="Classes"
-            value="50"
-            endContent={
-              <MiniStatCardIcon color={"purple"} icon={BiChalkboard} />
-            }
-          />
-        </GridItem>
-        <GridItem
-          colSpan={{ base: 1, md: 1, lg: 1 }}
-          display={{ base: "none", lg: "block" }}
-        >
-          <MiniStat
-            name="Available Halls"
-            value="15"
-            endContent={<MiniStatCardIcon color={"orange"} icon={BiBook} />}
-          />
-          {/* <CardT /> */}
-        </GridItem>
+  return (
+    <Box pl={[0, 5, 5]} pr={[0, 5, 5]}>
+     <Text fontSize="18px" fontWeight="bold" padding="10px 25px 5px 0"> Dashboard </Text>
+
+      <SimpleGrid columns={[1, 2, 5]} spacing={5} pl={[0, 7, 7]} mb="3" mr="3">
+        <Card>
+          <Box boxSize="100%" _hover={{ transform: "scale(1.1)" }}>
+            <CardHeader>
+              <Flex alignItems="center">
+                <Box borderRadius="50%" bg="red.100" p={2}>
+                  <FontAwesomeIcon icon={faUser} color={customColors[0]} size="lg" />
+                </Box>
+                <Text fontSize="18px" fontWeight="bold" ml={6}>Students<br />550</Text>
+              </Flex>
+            </CardHeader>
+          </Box>
+        </Card>
+        <Card>
+          <Box boxSize="100%" _hover={{ transform: "scale(1.1)" }}>
+            <CardHeader>
+              <Flex alignItems="center">
+                <Box borderRadius="50%" bg="green.100" p={2}>
+                  <FontAwesomeIcon icon={faChalkboardUser} color={customColors[1]} size="lg" />
+                </Box>
+                <Text fontSize="18px" fontWeight="bold" ml={6}> Teachers<br /> 25</Text>
+              </Flex>
+            </CardHeader>
+          </Box>
+        </Card>
+        <Card>
+          <Box boxSize="100%" _hover={{ transform: "scale(1.1)" }}>
+            <CardHeader>
+              <Flex alignItems="center">
+                <Box borderRadius="50%" bg="blue.100" p={2}>
+                  <FontAwesomeIcon icon={faBuildingColumns} color={customColors[2]} size="lg" />
+                </Box>
+                <Text fontSize="18px" fontWeight="bold" ml={6}> Staff<br />10</Text>
+              </Flex>
+            </CardHeader>
+          </Box>
+        </Card>
+        <Card>
+          <Box boxSize="100%" _hover={{ transform: "scale(1.1)" }}>
+            <CardHeader>
+              <Flex alignItems="center">
+                <Box borderRadius="50%" bg="green.100" p={2}>
+                  <FontAwesomeIcon icon={faChalkboard} color={customColors[1]} size="lg" />
+                </Box>
+                <Text fontSize="18px" fontWeight="bold" ml={6}> Classes<br />50 </Text>
+              </Flex>
+            </CardHeader>
+          </Box>
+        </Card>
+        <Card>
+          <Box boxSize="100%" _hover={{ transform: "scale(1.1)" }}>
+            <CardHeader>
+              <Flex alignItems="center">
+                <Box borderRadius="50%" bg="yellow.100" p={2}>
+                  <FontAwesomeIcon icon={faBuildingColumns} color={customColors[4]} size="lg" />
+                </Box>
+                <Text fontSize="18px" fontWeight="bold" ml={6}> Halls<br />15</Text>
+              </Flex>
+            </CardHeader>
+          </Box>
+        </Card>
       </SimpleGrid>
 
-      {/* Dashboard Content*/}
-      <SimpleGrid columns={[1, 2, 4]} spacing={5} px={[5, 10, 25]} mt={5}>
-        {/* Classes Summary Today */}
-        <Box gridColumn={{ base: "span 1", md: "span 3", lg: "span 4" }}>
-          <Text fontSize={16} fontWeight={"600"} mb="5px">
-            Classes Summary Today
-          </Text>
+      <SimpleGrid columns={[1, 2, 3]} spacing={3} pr={[0, 10, 25,]} >
+      <Box bg="white" gridRow="span 2"  border="1px" borderColor="gray.100" borderRadius="md">
+          <Heading as="h1" size="md" mb="1" mt="5" ml="5">Complain Status</Heading>
+          <Complain />
+        </Box>
+        <Box bg="white" height="280px" border="1px" borderColor="gray.100" borderRadius="md">
+          <Heading as="h1" size="md" mb="1" mt="5" ml="5">Income Report</Heading>
+          <BarChart />
+        </Box>
 
-          <Box height="41vh">
-            <Classes />
-          </Box>
+       
+        <Box bg="white" gridRow="span 2" border="1px" borderColor="gray.100" borderRadius="md">
+          <Heading as="h1" size="md" mb="1" mt="5" ml="5">
+          Classes for Today
+          </Heading>
+          <Classes />
         </Box>
-        {/* Complain Status */}
-        <Box gridColumn={{ base: "span 1", md: "span 2", lg: "span 3" }}>
-          <Text fontSize={16} fontWeight={"600"} mb="10px">
-            Complain Status
-          </Text>
-          <Box bg="white" border="1px" borderColor="gray.100" borderRadius="md">
-            <Complain />
-          </Box>
+        <Box bg="white" height="230px" border="1px" borderColor="gray.100" borderRadius="md">
+          <Heading as="h1" size="md" mb="1" mt="5" ml="5">Attendance Overview</Heading>
+          <LineChart />
         </Box>
-        {/* Physical Class Payment */}
-        <Box gridColumn={{ base: "span 1", md: "span 1", lg: "span 1" }}>
-          <Text fontSize={16} fontWeight={"600"} mb="10px">
-            Physical Class Payment
-          </Text>
-          <Box>
-            <Payment />
-          </Box>
-        </Box>
+
+       
+
       </SimpleGrid>
     </Box>
   );

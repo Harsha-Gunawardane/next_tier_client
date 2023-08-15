@@ -3,7 +3,10 @@ import {
   Box,
   IconButton,
   useBreakpointValue,
+  Stack,
   Heading,
+  Text,
+  Container,
   Image,
   Flex,
   AspectRatio,
@@ -15,7 +18,7 @@ import { MdOutlineKeyboardArrowLeft, MdOutlineKeyboardArrowRight } from 'react-i
 import Slider from 'react-slick';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import "../../assests/css/carousel.css"
+import "../../assets/css/carousel.css"
 
 // Settings for the slider
 const settings = {
@@ -102,7 +105,7 @@ export default function Carousel() {
               height={'100%'}
             >
               {/* This is the block you need to change, to customize the caption */}
-              <Flex h="100%" w="100%" flexDirection={"column"} justifyContent={"center"} alignItems={"center"} gap="10px" key={index}>
+              <Flex h="100%" w="100%" flexDirection={"column"} justifyContent={"center"} alignItems={"center"} gap="10px">
                 <AspectRatio minW="100%" ratio={16 / 9} overflow={"hidden"} borderRadius={"10px"}>
                   <Image src={card.image} alt="image" objectFit={"cover"} />
                 </AspectRatio>

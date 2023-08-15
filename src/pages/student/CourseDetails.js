@@ -24,7 +24,7 @@ import { useLocation } from "react-router-dom";
 import { Switch, FormControl, FormLabel } from "@chakra-ui/react";
 
 
-const CourseDetails = () => {
+const Coursedetails = () => {
 
 
   
@@ -178,4 +178,4 @@ const CourseDetails = () => {
   );
 };
 
-export default CourseDetails;
+export default Coursedetails;

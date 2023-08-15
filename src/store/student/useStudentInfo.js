@@ -14,7 +14,6 @@ export const useStudentInfo = create()(
         college: "",
         phoneNo: "",
         NIC: "",
-        profile: "",
 
         setFName: (value) => set(() => ({ fName: value })),
         setLName: (value) => set(() => ({ lName: value })),
@@ -24,8 +23,7 @@ export const useStudentInfo = create()(
         setStream: (value) => set(() => ({ stream: value })),
         setCollege: (value) => set(() => ({ college: value })),
         setPhoneNo: (value) => set(() => ({ phoneNo: value })),
-        setNIC: (value) => set(() => ({ NIC: value })),
-        setProfile: (value) => set(() => ({ profile: value })),
+        setNIC: (value) => set(() => ({ NIC: value }))
       }),
       { name: "studentInfo" }
     )

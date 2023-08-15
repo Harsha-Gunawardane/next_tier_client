@@ -1,21 +1,27 @@
 // Chakra imports
-import { Box, Button, Flex, Icon, useColorModeValue, Select } from "@chakra-ui/react";
+import { Box, Button, Flex, Icon, Text, useColorModeValue, Select } from "@chakra-ui/react";
 // Custom components
 import Card from "../Card/Card";
 import LineChart from "../charts/LineChart";
 import React from "react";
+import { IoCheckmarkCircle } from "react-icons/io5";
+import { MdBarChart, MdOutlineCalendarToday } from "react-icons/md";
 // Assets
+import { RiArrowUpSFill } from "react-icons/ri";
 import { lineChartDataGrades, lineChartOptionsGrades } from "./data";
 import { FiCalendar } from "react-icons/fi";
-import { MdBarChart } from "react-icons/md";
 
 export default function GradeAnalysis(props) {
 	const { ...rest } = props;
 
+	// Chakra Color Mode
+
+	const textColorSecondary = useColorModeValue("secondaryGray.600", "white");
+	const boxBg = useColorModeValue("secondaryGray.300", "whiteAlpha.100");
 	const iconColor = useColorModeValue("accent", "white");
 	const bgButton = useColorModeValue("gray.100", "whiteAlpha.100");
 	const bgHover = useColorModeValue({ bg: "accent", color: "white" }, { bg: "whiteAlpha.50", color: "black" });
-
+	const bgFocus = useColorModeValue({ bg: "white" }, { bg: "whiteAlpha.100" });
 	return (
 		<Card justifyContent="center" align="center" direction="column" w="100%" mb="0px" {...rest} p="10px" h="340px">
 			<Flex justifyContent="space-between" w="100%" px={"10px"}>

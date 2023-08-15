@@ -12,11 +12,7 @@ import {
   Input,
   Stack,
   Button,
-  useBreakpointValue,
 } from "@chakra-ui/react";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
-import { format } from "date-fns";
 
 function Event({ isOpen, onClose, event }) {
   const [isEditing, setIsEditing] = useState(false);
@@ -35,38 +31,26 @@ function Event({ isOpen, onClose, event }) {
     });
   };
 
-  const handleDateChange = (date, fieldName) => {
-    setUpdatedEvent({
-      ...updatedEvent,
-      [fieldName]: date,
-    });
-  };
-
   const handleEditButtonClick = () => {
     setIsEditing(!isEditing);
   };
 
   const handleCancelChanges = () => {
-    setUpdatedEvent(event);
-    setIsEditing(false);
+    setUpdatedEvent(event); // Revert the changes by setting the updatedEvent back to the original event
+    setIsEditing(false); 
   };
 
   const handleSaveChanges = () => {
     // Perform any necessary actions to save the updated event data
-    console.log("Updated Event:", {
-      ...updatedEvent,
-      start: updatedEvent.start.toISOString(),
-      end: updatedEvent.end.toISOString(),
-    });
+    console.log("Updated Event:", updatedEvent);
 
     setIsEditing(false);
+
     onClose();
   };
 
-  const modalSize = useBreakpointValue({ base: "sm", md: "md", lg: "lg" });
-
   return (
-    <Modal isOpen={isOpen} onClose={onClose} size={modalSize}>
+    <Modal isOpen={isOpen} onClose={onClose} size="lg">
       <ModalOverlay />
       <ModalContent>
         <ModalHeader>
@@ -85,13 +69,6 @@ function Event({ isOpen, onClose, event }) {
                 />
               </FormControl>
               <FormControl>
-                <FormLabel>Date</FormLabel>
-                <DatePicker
-                  selected={new Date(updatedEvent.start)}
-                  onChange={(date) => handleDateChange(date, "start")}
-                />
-              </FormControl>
-              <FormControl>
                 <FormLabel>Hall No</FormLabel>
                 <Input
                   name="hall"
@@ -99,29 +76,20 @@ function Event({ isOpen, onClose, event }) {
                   onChange={handleInputChange}
                 />
               </FormControl>
-
               <FormControl>
                 <FormLabel>Start Time</FormLabel>
-                <DatePicker
-                  selected={new Date(updatedEvent.start)}
-                  onChange={(date) => handleDateChange(date, "start")}
-                  showTimeSelect
-                  showTimeSelectOnly
-                  timeIntervals={15}
-                  timeFormat="h:mm aa"
-                  dateFormat="HH:mm"
+                <Input
+                  name="start"
+                  value={new Date(updatedEvent.start).toLocaleTimeString()}
+                  onChange={handleInputChange}
                 />
               </FormControl>
               <FormControl>
                 <FormLabel>End Time</FormLabel>
-                <DatePicker
-                  selected={new Date(updatedEvent.end)}
-                  onChange={(date) => handleDateChange(date, "end")}
-                  showTimeSelect
-                  showTimeSelectOnly
-                  timeIntervals={15}
-                  timeFormat="h:mm aa"
-                  dateFormat="HH:mm"
+                <Input
+                  name="end"
+                  value={new Date(updatedEvent.end).toLocaleTimeString()}
+                  onChange={handleInputChange}
                 />
               </FormControl>
             </Stack>
@@ -134,27 +102,16 @@ function Event({ isOpen, onClose, event }) {
                 <Input value={event.teacher} isReadOnly />
               </FormControl>
               <FormControl>
-                <FormLabel>Date</FormLabel>
-                <Input value={format(new Date(event.start), "MM/dd/yyyy")} isReadOnly />
-              </FormControl>
-              <FormControl>
                 <FormLabel>Hall No</FormLabel>
                 <Input value={event.hall} isReadOnly />
               </FormControl>
-
               <FormControl>
                 <FormLabel>Start Time</FormLabel>
-                <Input
-                  value={format(new Date(event.start), "HH:mm aa")}
-                  isReadOnly
-                />
+                <Input value={new Date(event.start).toLocaleTimeString()} isReadOnly />
               </FormControl>
               <FormControl>
                 <FormLabel>End Time</FormLabel>
-                <Input
-                  value={format(new Date(event.end), "HH:mm aa")}
-                  isReadOnly
-                />
+                <Input value={new Date(event.end).toLocaleTimeString()} isReadOnly />
               </FormControl>
             </Stack>
           )}

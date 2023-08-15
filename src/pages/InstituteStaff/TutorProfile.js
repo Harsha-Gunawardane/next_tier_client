@@ -120,13 +120,6 @@ navigate(`/staff/tutor-profile/${tutorId}/course/${courseID}`);
             variant="enclosed"
           >
             <TabList>
-            <Tab
-                fontSize={14}
-                fontWeight="bold"
-                _selected={{ color: "white", bg: "blue.500" }}
-              >
-                Courses
-              </Tab>
               <Tab
                 fontSize={14}
                 fontWeight="bold"
@@ -143,92 +136,15 @@ navigate(`/staff/tutor-profile/${tutorId}/course/${courseID}`);
               >
                 Educational Background
               </Tab>
-              
+              <Tab
+                fontSize={14}
+                fontWeight="bold"
+                _selected={{ color: "white", bg: "blue.500" }}
+              >
+                Courses
+              </Tab>
             </TabList>
             <TabPanels>
-            <TabPanel>
-                {/* <SimpleGrid columns={1}>
-                  <Box mb={4}>
-                    <Flex>
-                      <Text fontSize="small" mt="10px">
-                        Subjects taken:
-                      </Text>
-                      <Flex mt="2" flexWrap="wrap">
-                        {tutorData.subjects.map((subject, index) => (
-                          <Badge
-                            key={index}
-                            colorScheme={
-                              subject === "Physics"
-                                ? "red"
-                                : subject === "Mathematics"
-                                ? "green"
-                                : subject === "Chemistry"
-                                ? "teal"
-                                : "orange"
-                            }
-                            fontSize="small"
-                            variant="solid"
-                            ml={3}
-                          >
-                            {subject}
-                          </Badge>
-                        ))}
-                      </Flex>
-                    </Flex>
-                  </Box>
-                </SimpleGrid> */}
-                {/* More Info */}
-                {/* <Text fontSize={14} mt={3} mb={2} fontWeight="bold">More Information</Text> */}
-                <SimpleGrid
-                  p="10px"
-                  columns={{ base: 1, lg: 3, xl: 3 }}
-                  spacing={10}
-                >
-                  {tutorData.courses.map((course) => (
-                    <Box
-                      minChildWidth="250px"
-                      borderColor="#C4C4C4"
-                      bg="white"
-                      borderRadius={10}
-                    >
-                      <Box padding={0}>
-                        <Image
-                          src={course.CourseImage}
-                          width="100%"
-                          alt="Course Image"
-                        />
-                      </Box>
-
-                      <Stack mt="4" spacing="3">
-                        <Box>
-                          <Heading size="md" fontSize={20} paddingLeft={4}>
-                            {course.course_name}
-                          </Heading>
-                        </Box>
-
-                        <Divider></Divider>
-                        <Flex gap={3} marginLeft={4}>
-                          <Box>
-                            <Text fontSize={11}>{course.price} per month</Text>
-                          </Box>
-                        </Flex>
-                      </Stack>
-
-                      <Box padding={0} paddingTop={3}>
-                        <Button
-                          width="100%"
-                          colorScheme="blue"
-                          borderTopRightRadius={0}
-                          borderTopLeftRadius={0}
-                          onClick={() => handleViewProfile(tutorData.tutor_id,course.course_id)}
-                        >
-                          View Course
-                        </Button>
-                      </Box>
-                    </Box>
-                  ))}
-                </SimpleGrid>
-              </TabPanel>
               <TabPanel>
                 <SimpleGrid columns={1} minChildWidth={300}>
                   <Box borderRadius={15} p={5}>
@@ -340,7 +256,89 @@ navigate(`/staff/tutor-profile/${tutorId}/course/${courseID}`);
                   </Box>
                 </SimpleGrid>
               </TabPanel>
-              
+              <TabPanel>
+                <SimpleGrid columns={1}>
+                  <Box mb={4}>
+                    <Flex>
+                      <Text fontSize="small" mt="10px">
+                        Subjects taken:
+                      </Text>
+                      <Flex mt="2" flexWrap="wrap">
+                        {tutorData.subjects.map((subject, index) => (
+                          <Badge
+                            key={index}
+                            colorScheme={
+                              subject === "Physics"
+                                ? "red"
+                                : subject === "Mathematics"
+                                ? "green"
+                                : subject === "Chemistry"
+                                ? "teal"
+                                : "orange"
+                            }
+                            fontSize="small"
+                            variant="solid"
+                            ml={3}
+                          >
+                            {subject}
+                          </Badge>
+                        ))}
+                      </Flex>
+                    </Flex>
+                  </Box>
+                </SimpleGrid>
+                {/* More Info */}
+                {/* <Text fontSize={14} mt={3} mb={2} fontWeight="bold">More Information</Text> */}
+                <SimpleGrid
+                  p="10px"
+                  columns={{ base: 1, lg: 3, xl: 3 }}
+                  spacing={10}
+                >
+                  {tutorData.courses.map((course) => (
+                    <Box
+                      minChildWidth="250px"
+                      borderColor="#C4C4C4"
+                      bg="white"
+                      borderRadius={10}
+                    >
+                      <Box padding={0}>
+                        <Image
+                          src={course.CourseImage}
+                          width="100%"
+                          alt="Course Image"
+                        />
+                      </Box>
+
+                      <Stack mt="4" spacing="3">
+                        <Box>
+                          <Heading size="md" fontSize={20} paddingLeft={4}>
+                            {course.course_name}
+                          </Heading>
+                        </Box>
+
+                        <Divider></Divider>
+                        <Flex gap={3} marginLeft={4}>
+                          <Box>
+                            <Text fontSize={11}>{course.price} per month</Text>
+                          </Box>
+                        </Flex>
+                      </Stack>
+
+                      <Box padding={0} paddingTop={3}>
+                        <Button
+                          width="100%"
+                          colorScheme="blue"
+                          borderTopRightRadius={0}
+                          borderTopLeftRadius={0}
+                          onClick={() => handleViewProfile(tutorData.tutor_id,course.course_id)}
+                        >
+                          View Course
+                        </Button>
+                      </Box>
+                    </Box>
+                  ))}
+                </SimpleGrid>
+              </TabPanel>
             </TabPanels>
           </Tabs>
         </GridItem>

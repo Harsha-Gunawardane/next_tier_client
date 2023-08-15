@@ -1,9 +1,10 @@
 // Chakra imports
-import { Flex, Text, useColorModeValue } from "@chakra-ui/react";
+import { Box, Flex, Icon, Image, Link, Text, useColorModeValue } from "@chakra-ui/react";
 // Custom components
 import Card from "../Card/Card";
 import React from "react";
 // Assets
+import { MdEdit } from "react-icons/md";
 import dateText from "../../utils/dateText";
 
 export default function Event(props) {
@@ -11,8 +12,8 @@ export default function Event(props) {
 	// Chakra Color Mode
 	const textColorPrimary = useColorModeValue("gray.900", "white");
 	const textColorSecondary = "gray.600";
-	const bg = useColorModeValue(color + ".50", "navy.700");
-	const bgLine = useColorModeValue(color + ".300", "gray.700");
+	const bg = useColorModeValue(color + ".100", "navy.700");
+	const bgLine = useColorModeValue(color + ".400", "gray.700");
 	return (
 		<Card bgColor={bg} w="100%" p="5px" {...rest} >
 			<Flex gap="8px">
