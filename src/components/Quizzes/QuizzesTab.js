@@ -3,10 +3,29 @@ import React from 'react'
 import QuizCard from './QuizCard';
 import QuizzesHeaderBar from './QuizzesHeaderBar';
 
+import { useEffect, useState } from "react";
+
+import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import { NavLink } from 'react-router-dom';
 
-function QuizzesTab({ onOpen, quizzes, search, setSearch }) {
-  
+function QuizzesTab({onOpen}) {
+
+  const axiosPrivate = useAxiosPrivate();
+  const [quizzes, setQuizzes] = useState([]);
+  const [search, setSearch] = useState("");
+
+  useEffect(() => {
+    const getQuizzes = async () => {
+      try {
+        const response = await axiosPrivate.get("/quizzes");
+        setQuizzes(response.data);
+      } catch (error) {
+        console.log(error.response.data);
+      }
+    };
+
+    getQuizzes();
+  }, []);
 
   return (
     <>
@@ -31,7 +50,7 @@ function QuizzesTab({ onOpen, quizzes, search, setSearch }) {
             quiz.title.toLowerCase().includes(search.toLowerCase())
           )
           .map((quiz) => (
-            <NavLink key={quiz.id} to={`${quiz.id}`}>
+            <NavLink to={`${quiz.id}`}>
               <QuizCard quiz={quiz} />
             </NavLink>
           ))}

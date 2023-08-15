@@ -9,7 +9,7 @@ import {
   Icon,
   Select,
   Spacer,
-  Input,
+  Input
 } from "@chakra-ui/react";
 import React from "react";
 import { useParams } from "react-router-dom";
@@ -17,6 +17,7 @@ import data from "./data/data.json";
 import { TimeIcon } from "@chakra-ui/icons";
 import { FaMoneyBillAlt } from "react-icons/fa";
 import { Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react';
+import StudentsList from "./StudentsList";
 
 function CourseDetail() {
   const { id } = useParams();
@@ -32,18 +33,62 @@ function CourseDetail() {
     return <div>Course not found</div>;
   }
 
+  const scrollbarStyles = `
+    ::-webkit-scrollbar {
+      width: 4px;
+      height: 8px;
+      border-radius: 10px;
+      background-color: #f5f5f5;
+      margin-left: 2px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background-color: #888;
+      border-radius: 8px;
+      border: 1px solid white;
+      height: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background-color: #555;
+    }
+  `;
+
   return (
     <Box backgroundColor="#F9F9F9" width="100%">
-      <Grid templateColumns="repeat(8, 1fr)" gap={6} marginBottom={5}>
+      <Text fontWeight="bold" fontSize="16px" mb={1}>
+              {course.course_name} - {course.name}
+            </Text>
+      <Grid templateColumns="repeat(8, 1fr)" gap={3} marginBottom={5}>
+      <GridItem
+          colSpan={{ base: 8, lg: 6, xl: 6 }}
+          h={{ base: "78vh", lg: "78vh" }}
+        
+          ml={4}
+        >
+           <Tabs colorScheme="blue" backgroundColor="#ffffff"  border="0.05px solid #DAE6F0" borderRadius={10}  height='87vh' overflowY='scroll' css={scrollbarStyles}>
+            <TabList gap={10} marginLeft={5}>
+              <Tab fontSize={13} fontWeight='medium'>Enrolled Studnets</Tab>
+              <Tab fontSize={13} fontWeight='medium'>Payment details</Tab>
+            </TabList>
+            <TabPanels>
+                <TabPanel>
+                  <StudentsList></StudentsList>
+                </TabPanel>
+                <TabPanel></TabPanel>
+            </TabPanels>
+            </Tabs>
+          
+        </GridItem>
         <GridItem
           w="100%"
           h={{ base: "85vh", lg: "85vh" }}
           colSpan={{ base: 8, lg: 2, xl: 2 }}
-          marginLeft={4}
+        
           borderRadius={15}
-          mt={4}
+         
         >
-            <Box bg="white" padding={3} borderRadius={10} border="0.05px solid #DAE6F0" height="88vh">
+            <Box bg="white" padding={3} borderRadius={10} border="0.05px solid #DAE6F0" height="87vh" mr={4}>
           <Box>
             <Text fontWeight="bold" fontSize="16px" mt={3} mb={4}>
               {course.course_name} - {course.name}
@@ -84,101 +129,7 @@ function CourseDetail() {
           </SimpleGrid>
           </Box>
         </GridItem>
-        <GridItem
-          colSpan={{ base: 8, lg: 6, xl: 6 }}
-          h={{ base: "78vh", lg: "78vh" }}
-          mt={4}
-        >
-           <Tabs colorScheme="blue" backgroundColor="#ffffff" marginRight={5} border="0.05px solid #DAE6F0" borderRadius={10} marginLeft={4} height='88vh' overflowY='scroll'>
-            <TabList gap={10} marginLeft={5}>
-              <Tab fontSize={13} fontWeight='medium'>Enrolled Studnets</Tab>
-              <Tab fontSize={13} fontWeight='medium'>Payment details</Tab>
-            </TabList>
-            <TabPanels>
-                <TabPanel><SimpleGrid p="10px" columns={5} ml={3} mr={4} minChildWidth={200}>
-        {/* Search Box */}
-        <Box height="40px">
-          <Input
-            width="250px"
-            placeholder="Search for students"
-           
-            mb={["2", "0"]}
-            fontSize={13}
-            backgroundColor="white"
-          />
-        </Box>
-        {/* Sort and Filter Options */}
-        <Box height="40px">
-          <Flex paddingLeft={8}>
-            <Box>
-              <Text mr="2" fontSize={13} marginTop={2}>
-                Sort By:
-              </Text>
-            </Box>
-            <Box>
-              <Select
-                fontSize={13}
-                backgroundColor="white"
-               
-              >
-                <option value="fName">First Name</option>
-                <option value="lName">Last Name</option>
-                <option value="joinedDate">Joined Date</option>
-              </Select>
-              <Spacer mx="2" />
-            </Box>
-          </Flex>
-        </Box>
-
-        <Box height="40px">
-          <Flex paddingLeft={7} paddingRight={0}>
-            <Box>
-              <Text mr="2" fontSize={13} marginTop={2}>
-                Sort Order:
-              </Text>
-            </Box>
-            <Box>
-              <Select
-                fontSize={13}
-                backgroundColor="white"
-              
-                w="max-content"
-              >
-                <option value="asc">Ascending</option>
-                <option value="desc">Descending</option>
-              </Select>
-            </Box>
-          </Flex>
-        </Box>
-
-        <Box height="40px">
-          <Flex>
-            <Box>
-              <Text mr="2" fontSize={13} marginTop={2}>
-                Gender:
-              </Text>
-            </Box>
-            <Box>
-              <Select
-                fontSize={13}
-                w="max-content"
-                backgroundColor="white"
-               
-              >
-                <option value="">All </option>
-                <option value="Male">Male </option>
-                <option value="Female">Female </option>
-              </Select>
-            </Box>
-          </Flex>
-        </Box>
-
         
-      </SimpleGrid></TabPanel>
-            </TabPanels>
-            </Tabs>
-          
-        </GridItem>
       </Grid>
     </Box>
   );

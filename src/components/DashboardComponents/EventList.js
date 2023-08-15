@@ -1,9 +1,8 @@
 // Chakra imports
-import { Flex, Text, useColorModeValue } from "@chakra-ui/react";
+import { Flex } from "@chakra-ui/react";
 
 // Custom components
-import Card from "../Card/Card";
-import React, { useEffect } from "react";
+import React from "react";
 import Event from "./Event.js";
 
 export default function EventList(props) {

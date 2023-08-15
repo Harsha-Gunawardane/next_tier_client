@@ -16,17 +16,16 @@ import {
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import { useLocation } from "react-router-dom";
 
-
+import Addmonth from "../../components/tutor/coursepackage/Addmonth.js";
 import Addcontent from "../../components/tutor/coursepackage/Addmonth.js";
 import Remove from "../../components/tutor/coursepackage/Contentremove";
-import Addcoursedoccontent from "../../components/tutor/coursepackage/Adddoc";
-import Addcoursequiz from "../../components/tutor/coursepackage/Addquiz";
-import Addcoursecontent from "../../components/tutor/coursepackage/Addvideo";
+import Addcoursedoccontent from "../../components/tutor/coursecontent/Addcoursedoccontent";
+import Addcoursequiz from "../../components/tutor/coursecontent/Addcoursequiz";
+import Addcoursecontent from "../../components/tutor/coursecontent/Addcoursecontent";
 import TutorDetails from "../../components/tutor/Tutordetails";
 import Fetch from "../../hooks/fetchTitle";
 import Fetcht from "../../hooks/fetchThumb";
 import Removecontent from "../../components/tutor/coursepackage/Remove";
-import { Show, Hide } from '@chakra-ui/react'
 
 const Coursepackcontent = () => {
   const [selectedId, setSelectedId] = useState(null);
@@ -177,23 +176,22 @@ const Coursepackcontent = () => {
       <SimpleGrid spacing={20} minChildWidth="250px" mt="20px">
         <Box mt="20px">
           {selectedImage && (
-            <Box width="110%" bg="white" position="sticky" top="20" zIndex="1" ml='20px'>
+            <Box width="110%" bg="white" position="sticky" top="20" zIndex="1">
               {studypackdata && (
-                <Heading fontSize="30px" mb="30px" ml='10px' fontWeight='xl'>
+                <Heading fontSize="30px" mb="30px">
                   {studypackdata.title}
                 </Heading>
               )}
               <Image
                 boxSize="60%"
-                width={{base:420,xl:700}}
-                height={{base:250,xl:350}}
+                width="100%"
+                height="350px"
                 objectFit="cover"
                 src={selectedImage}
                 alt="Course Image"
-                ml='10px'
               />
-              <Heading mt='30px' ml='15px'>{selectedTitle}</Heading>
-              <Text fontSize="15px" mt='10px' ml='15px'>{selectedDiscription}</Text>
+              <Heading mt='10px'>{selectedTitle}</Heading>
+              <Text fontSize="15px" mt='10px'>{selectedDiscription}</Text>
             </Box>
           )}
 
@@ -205,12 +203,10 @@ const Coursepackcontent = () => {
           )}
         </Box>
 
-        <Box w="75%" bg="white" p={10} ml={{base:0,xl:120}} mt={{base:-20,xl:0}}>
-        <Hide below='md'>
-          <Box mt={{base:-20,xl:35}}>
+        <Box w="90%" bg="white" p={10} ml="70px">
+          <Box mt="-45px">
             <TutorDetails></TutorDetails>
           </Box>
-          </Hide>
           <Heading fontSize="20px" mt="20px" mb="20px">
             Course Content
           </Heading>
@@ -222,7 +218,7 @@ const Coursepackcontent = () => {
             if (weekContent) {
               return (
                 <Accordion allowToggle key={index}>
-                  <AccordionItem width={{ base: 400, xl: 400 }}>
+                  <AccordionItem width={{ base: 300, xl: 400 }}>
                     <h2>
                       <AccordionButton
                         bg="#eee"
@@ -230,13 +226,12 @@ const Coursepackcontent = () => {
                         borderRadius="5px"
                         height="50px"
                       >
-                       
+                        <Remove  course={id} month={weekKey}></Remove>
                         <Box as="span" flex="1" textAlign="left" height="30px">
                           <Heading p={1} ml="20px" fontSize="15px">
                             {weekKey}
                           </Heading>
                         </Box>
-                        <Remove  course={id} month={weekKey}></Remove>
                         <AccordionIcon />
                       </AccordionButton>
                     </h2>
@@ -247,7 +242,7 @@ const Coursepackcontent = () => {
                         <Text fontSize="15px">Video Content</Text>
                         <Box>
                           {" "}
-                          <Addcoursecontent dynamicWeek={weekKey} studypackId={id} />
+                          <Addcoursecontent />
                         </Box>
                       </HStack>
 
@@ -268,7 +263,7 @@ const Coursepackcontent = () => {
                               <Box width="60px" ml="10px" mt="-5px">
                                 <HStack>
                                   <Button
-                                    fontSize="10px"
+                                    fontSize="12px"
                                     height="20px"
                                     onClick={() =>
                                       handleViewClick({
@@ -294,7 +289,7 @@ const Coursepackcontent = () => {
                         <Text fontSize="15px">Tute Content</Text>
                         <Box>
                           {" "}
-                          <Addcoursedoccontent  dynamicWeek={weekKey} studypackId={id} ></Addcoursedoccontent>
+                          <Addcoursedoccontent></Addcoursedoccontent>
                         </Box>
                       </HStack>
                       {weekContent.tute_id &&
@@ -314,7 +309,7 @@ const Coursepackcontent = () => {
                               <Box width="60px" ml="10px" mt="-5px">
                                 <HStack>
                                   <Button
-                                    fontSize="10px"
+                                    fontSize="12px"
                                     height="20px"
                                     onClick={() =>
                                       handleViewClickdoc({
@@ -328,7 +323,7 @@ const Coursepackcontent = () => {
                                     View
                                   </Button>{" "}
                                   <Removecontent
-                                    contentId={tuteId} part={weekKey}
+                                    contentId={tuteId}
                                   ></Removecontent>
                                 </HStack>
                               </Box>
@@ -343,7 +338,7 @@ const Coursepackcontent = () => {
                           <Addcoursedoccontent></Addcoursedoccontent>
                         </Box>
                       </HStack>
-                      {/* {weekContent.tute_id &&
+                      {weekContent.tute_id &&
                         weekContent.tute_id.map((tuteId, tuteIndex) => (
                           <Box bg="#F0F8FF" mt="4px" className="box1">
                             <HStack spacing="50px">
@@ -380,11 +375,11 @@ const Coursepackcontent = () => {
                                     View
                                   </Button>{" "}
                                   {/* Remove component */}
-                                {/* </HStack>
+                                </HStack>
                               </Box>
                             </HStack>
                           </Box>
-                        ))} */} 
+                        ))}
 
                       {/* Similar blocks for Quiz content */}
                       {/* ... (Add similar code for Quiz content) */}

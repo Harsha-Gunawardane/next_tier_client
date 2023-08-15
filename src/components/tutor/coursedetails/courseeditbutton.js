@@ -5,7 +5,6 @@ import {
   FormControl,
   FormLabel,
   Input,
-  Textarea
 } from "@chakra-ui/react";
 import {
   Modal,
@@ -25,13 +24,8 @@ import {
   NumberInputStepper,
   NumberIncrementStepper,
   NumberDecrementStepper,
-  useToast,
- 
-  
 } from "@chakra-ui/react";
-import { TimeInput } from "@mantine/dates";
 import { Select } from "@chakra-ui/react";
-import ReactTimePicker from "react-time-picker";
 
 const Courseeditbutton = () => {
   const axiosPrivate = useAxiosPrivate();
@@ -41,20 +35,15 @@ const Courseeditbutton = () => {
   const [description, setDescription] = useState("");
   const [monthly_fee, setMonthlyFee] = useState("");
   const [thumbnail, setThumbnail] = useState("");
-  // const [subject, setSubject] = useState("");
+  const [subject, setSubject] = useState("");
   const [medium, setMedium] = useState("");
-  // const [type, setType] = useState("");
-  const [day, setDay] = useState("");
-  const [startTime, setStartTime] = useState("");
-  const [endTime, setEndTime] = useState("");
-  const [schedule, setSchedule] = useState("");
+  const [type, setType] = useState("");
   const [grade, setGrade] = useState("");
   const [validation, valchange] = useState(false);
-  const toast = useToast(); 
 
-  // const generateTitle = () => {
-  //   return `${subject} ${grade} ${type}`;
-  // };
+  const generateTitle = () => {
+    return `${subject} ${grade} ${type}`;
+  };
 
   useEffect(() => {
     const getCourses = async () => {
@@ -70,20 +59,10 @@ const Courseeditbutton = () => {
         setDescription(courseData.description);
         setMonthlyFee(courseData.monthly_fee.toString());
         setThumbnail(courseData.thumbnail); // Convert to string if necessary
-       
+        setSubject(courseData.subject);
         setMedium(courseData.medium);
-       
-       
-        setSchedule(courseData.schedule);
-
-        if (courseData.schedule.length > 0) {
-          const initialSchedule = courseData.schedule[0];
-          setDay(initialSchedule.day);
-          setStartTime(initialSchedule.start_time);
-          setEndTime(initialSchedule.end_time);
-        }
-
-
+        setType(courseData.type);
+        setGrade(courseData.grade);
       } catch (error) {
         console.log(error);
       }
@@ -91,15 +70,15 @@ const Courseeditbutton = () => {
     getCourses();
   }, [axiosPrivate, courseid]);
 
-  // useEffect(() => {
-  //   setTitle(generateTitle());
-  // }, [subject, grade, type]);
+  useEffect(() => {
+    setTitle(generateTitle());
+  }, [subject, grade, type]);
 
-  // useEffect(() => {
-  //   // Extract the last word from the title (assuming title is in the format "Subject Grade Type")
-  //   const lastWord = title.split(" ").pop();
-  //   setType(lastWord);
-  // }, [title]);
+  useEffect(() => {
+    // Extract the last word from the title (assuming title is in the format "Subject Grade Type")
+    const lastWord = title.split(" ").pop();
+    setType(lastWord);
+  }, [title]);
 
   const [val, setValidation] = useState(false);
 
@@ -140,13 +119,13 @@ const Courseeditbutton = () => {
     const isFormValid =
       title.trim().length !== 0 &&
       description.trim().length !== 0 &&
-      description.length >= 100 &&
-      description.length <= 300 &&
+      description.length >= 200 &&
+      description.length <= 400 &&
       monthly_fee.trim().length !== 0 &&
       !isNaN(monthly_fee) &&
       parseFloat(monthly_fee) >= 0 &&
       thumbnail.trim().length !== 0 &&
-      // subject.trim().length !== 0 &&
+      subject.trim().length !== 0 &&
       isGradeValid;
   
     if (!isFormValid) {
@@ -159,42 +138,22 @@ const Courseeditbutton = () => {
       description,
       monthly_fee,
       thumbnail,
+      subject,
       medium,
-      schedule: [
-        {
-          day: day,
-          start_time: startTime,
-          end_time: endTime,
-        },
-        // Add other schedule items if applicable
-      ],
+      type,
+      grade,
     };
   
     axiosPrivate
       .put(`/tutor/course/${courseid}`, coursedata)
       .then((response) => {
-        localStorage.setItem("courseUpdated", "true");
-
-        // Reload the window
+        alert("Saved successfully.");
+        onClose();
         window.location.reload();
       })
       .catch((error) => {
-        console.error('Error Updating Course:', error);
+        console.log(error.message);
       });
-  };
-
-  // Check if a study pack was removed and show the toast accordingly
-  const isStudyPackRemoved = localStorage.getItem("courseUpdated");
-  if (isStudyPackRemoved) {
-    localStorage.removeItem("courseUpdated");
-    toast({
-      title: "Course Details Updated",
-      description: "The Course details has been updated successfully.",
-      status: "success",
-      duration: 5000,
-      isClosable: true,
-      position: "top",
-    });
   };
 
 
@@ -231,7 +190,6 @@ const Courseeditbutton = () => {
                   placeholder="Title"
                   onMouseDown={(e) => valchange(true)}
                   onChange={(e) => setTitle(e.target.value)}
-                    readOnly 
                 />
                 <FormErrorMessage>Title is required</FormErrorMessage>
               </FormControl>
@@ -244,10 +202,10 @@ const Courseeditbutton = () => {
                 }
               >
                 <FormLabel fontSize="15px">Description</FormLabel>
-                <Textarea
+                <Input
                   fontSize="15px"
                   value={description}
-                  height="120px"
+                  height="40px"
                   ref={initialRef}
                   placeholder="Description"
                   onMouseDown={(e) => valchange(true)}
@@ -257,8 +215,8 @@ const Courseeditbutton = () => {
                 {description.trim().length === 0
           ? "Description is required"
           : description.length > 400
-          ? "Description cannot exceed 300 characters"
-          : "Description must be at least 100 characters"}
+          ? "Description cannot exceed 400 characters"
+          : "Description must be at least 200 characters"}
                 </FormErrorMessage>
               </FormControl>
 
@@ -266,7 +224,7 @@ const Courseeditbutton = () => {
                 mt={4}
                 isRequired
                 isInvalid={
-                  monthly_fee.trim().length === 0 || parseFloat(monthly_fee) < 0 || parseFloat(monthly_fee) > 50000
+                  monthly_fee.trim().length === 0 || parseFloat(monthly_fee) < 0
                 }
               >
                 <FormLabel fontSize="15px">Monthly Fee</FormLabel>
@@ -409,66 +367,6 @@ const Courseeditbutton = () => {
 
                 <FormErrorMessage>Medium is Required</FormErrorMessage>
               </FormControl>
-
-
-
-
-              <FormControl mt={4} isRequired>
-  <FormLabel fontSize="15px">Day</FormLabel>
-  <Select
-    fontSize="15px"
-    value={day}
-    height="40px"
-    ref={initialRef}
-
-    onMouseDown={(e) => valchange(true)}
-    onChange={(e) => setDay(e.target.value)}
-  >
-    <option value="Monday">Monday</option>
-    <option value="Tuesday">Tuesday</option>
-    <option value="Wednesday">Wednesday</option>
-    <option value="Thurseday">Thurseday</option>
-    <option value="Friday">Friday</option>
-    <option value="Saturday">Saturday</option>
-    <option value="Sunday">Sunday</option>
-    {/* Add other days here */}
-  </Select>
-  <FormErrorMessage>Day is required</FormErrorMessage>
-</FormControl>
-
-
-<FormControl mt={4} isRequired>
-  <FormLabel fontSize="15px">Start Time</FormLabel>
-  <Input
-    value={startTime}
-    onChange={(e) => setStartTime(e.target.value)}
-    type="time"
-    fontSize="15px"
-    height="40px"
-    ref={initialRef}
-    placeholder="Start Time"
-    onMouseDown={(e) => valchange(true)}
-  />
-  <FormErrorMessage>Start Time is required</FormErrorMessage>
-</FormControl>
-
-<FormControl mt={4} isRequired>
-  <FormLabel fontSize="15px">End Time</FormLabel>
-  <Input
-    value={endTime}
-    onChange={(e) => setEndTime(e.target.value)}
-    type="time"
-    fontSize="15px"
-    height="40px"
-    ref={initialRef}
-    placeholder="End Time"
-    onMouseDown={(e) => valchange(true)}
-  />
-  <FormErrorMessage>End Time is required</FormErrorMessage>
-</FormControl>
-
-
-
             </ModalBody>
 
             <ModalFooter>

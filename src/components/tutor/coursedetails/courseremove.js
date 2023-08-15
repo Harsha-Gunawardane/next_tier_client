@@ -6,8 +6,7 @@ import {
     AlertDialogContent,
     AlertDialogOverlay,
     AlertDialogCloseButton,
-    Button,
-    useToast
+    Button
   } from '@chakra-ui/react'
 
   import React from "react";
@@ -26,7 +25,6 @@ const Courseremove = (props) => {
     const axiosPrivate = useAxiosPrivate();
     const navigate = useNavigate();
     const { courseid } = useParams();
-    const toast = useToast(); 
 
     const handleRemoveCourse = () => {
       // Show a confirmation dialog before proceeding with deletion
@@ -34,32 +32,16 @@ const Courseremove = (props) => {
         axiosPrivate
           .delete(`/tutor/course/${courseid}`) // Use '/courses/:id' to match the server route
           .then((response) => {
+            alert("Course removed successfully.");
+            onClose();
             // Optionally, you can navigate to a different page after deletion
-         // Change the path to the desired destination after deletion
-            // localStorage.setItem("courseremoved", "true");
-            window.location.reload();
-            navigate("/tutor/courses"); 
-        
+            navigate("/tutor/courses"); // Change the path to the desired destination after deletion
           })
           .catch((error) => {
-            console.error('Error Removing Course:', error);
+            console.log(error.message);
           });
-      };
-    
-      // Check if a study pack was removed and show the toast accordingly
-    //   const isStudyPackRemoved = localStorage.getItem("courseremoved");
-    //   if (isStudyPackRemoved) {
-    //     localStorage.removeItem("courseremoved");
-    //     toast({
-    //       title: "Course Removed Successfully",
-    //       description: "The Course has been removed successfully.",
-    //       status: "success",
-    //       duration: 5000,
-    //       isClosable: true,
-    //       position: "top",
-    //     });
       
-    // };
+    };
       
         return (
           <>
@@ -80,7 +62,7 @@ const Courseremove = (props) => {
             </AlertDialogHeader>
 
             <AlertDialogBody>
-              Are you sure you want to Remove this course? You can't undo this action afterwards.
+              Are you sure? You can't undo this action afterwards.
             </AlertDialogBody>
 
             <AlertDialogFooter>

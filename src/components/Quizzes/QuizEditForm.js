@@ -14,19 +14,31 @@ import { useState } from "react";
 export default function QuizEditForm({ quiz, onClose }) {
   const axiosPrivate = useAxiosPrivate();
 
-  const [subjectAreas, setSubjectAreas] = useState(quiz.subject_areas);
+  // console.log(quiz.subject_areas);
+  // console.log(quiz.subject);
+
+  //Convert subject area array to lowercase
+  const subject_areas = quiz.subject_areas.map((element) =>
+    element.toLowerCase()
+  );
+
+  const subjectAreasData = quiz.subject_areas.map((subject_area) => ({
+    value: subject_area.toLowerCase(),
+    label: subject_area,
+  }));
+  const [subjectAreas, setSubjectAreas] = useState(subjectAreasData);
+
 
   const [subject, setSubject] = useState([
     { value: quiz.subject, label: quiz.subject },
   ]);
 
 
-
   const form = useForm({
     initialValues: {
       title: quiz.title,
-      subject: quiz.subject,
-      subject_areas: subjectAreas,
+      subject: "",
+      subject_areas: "",
       number_of_questions: quiz.number_of_questions,
     },
 
@@ -55,7 +67,11 @@ export default function QuizEditForm({ quiz, onClose }) {
   return (
     <>
       <form onSubmit={handleSubmit}>
-        <TextInput required label="Title" {...form.getInputProps("title")} />
+        <TextInput
+          required
+          label="Title"
+          {...form.getInputProps("title")}
+        />
         <SimpleGrid cols={2} mt="md">
           <Select
             required
@@ -71,7 +87,6 @@ export default function QuizEditForm({ quiz, onClose }) {
               return item;
             }}
             defaultValue={quiz.subject}
-            {...form.getInputProps("subject")}
           />
           <NumberInput
             required
@@ -92,11 +107,11 @@ export default function QuizEditForm({ quiz, onClose }) {
             setSubjectAreas((current) => [...current, item]);
             return item;
           }}
-          defaultValue={subjectAreas}
-          {...form.getInputProps("subject_areas")}
+          defaultValue={subject_areas}
         />
         <Group position="right" mt="md">
-          <Button onClick={onClose}>Cancel</Button>
+          <Button
+          onClick={onClose}>Cancel</Button>
           <Button type="submit">Save</Button>
         </Group>
       </form>

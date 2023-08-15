@@ -4,32 +4,27 @@ import {
   Button,
   Group,
   TextInput,
+  PasswordInput,
+  Code,
   SimpleGrid,
   Radio,
+  createStyles,
+  rem,
   Card,
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { DateInput } from "@mantine/dates";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
-
-import dayjs from "dayjs";
+import { useNavigate } from "react-router-dom";
 
 // regex patterns
 const NAMING_REGEX = /^[a-zA-Z]{3,18}$/;
 const PHONENO_REGEX = /^\d{9}$/;
-const NIC_REGEX = /^(?:\d{9}[Vv]|\d{11}(?![Vv]))$/;
-const EMAIL_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
-
-
-export default function NewStaffStepper({ setStaffs, staffs, onClose }) {
+export default function NewStaffStepper() {
   const [active, setActive] = useState(0);
   const axiosPrivate = useAxiosPrivate();
-
-  // Calculate birthdate ranges for age 20 and 60
-  const today = new Date();
-  const minBirthdate = dayjs(today).subtract(60, "year").toDate();
-  const maxBirthdate = dayjs(today).subtract(18, "year").toDate();
+  const navigate = useNavigate();
 
   const form = useForm({
     initialValues: {
@@ -47,53 +42,23 @@ export default function NewStaffStepper({ setStaffs, staffs, onClose }) {
       if (active === 0) {
         return {
           first_name:
-            values.first_name.trim().length < 3
-              ? "Name must include at least 3 characters"
+            values.first_name.trim().length < 2
+              ? "Name must include at least 2 characters"
               : NAMING_REGEX.test(values.first_name)
               ? null
               : "Invalid Name",
-          last_name:
-            values.last_name.trim().length < 3
-              ? "Name must include at least 3 characters"
-              : NAMING_REGEX.test(values.last_name)
-              ? null
-              : "Invalid Name",
-          NIC:
-            values.NIC.trim().length < 10
-              ? "NIC must include at least 10 characters"
-              : NIC_REGEX.test(values.NIC)
-              ? null
-              : "Invalid NIC",
-          DOB: !values.DOB ? "DOB is required" : null,
+          // last_name:
+          //   values.last_name.trim().length < 2
+          //     ? "Name must include at least 2 characters"
+          //     : NAMING_REGEX.test(values.last_name)
+          //     ? null
+          //     : "Invalid Name",
         };
       }
 
       if (active === 1) {
         return {
-          address:
-            values.address.trim().length < 5
-              ? "Address must include at least 5 characters"
-              : null,
-          phone_number:
-            values.phone_number.trim().length < 9
-              ? "Phone number must include at least 9 characters"
-              : PHONENO_REGEX.test(values.phone_number)
-              ? null
-              : "Invalid Phone number",
-          email:
-            !values.email
-              ? "Email is required"
-              : EMAIL_REGEX.test(values.email)
-              ? null
-              : "Invalid Email",
-        };
-      }
-      if (active === 2) {
-        return {
-          staff_title:
-            !values.staff_title
-              ? "Staff title is required"
-              : null,
+          // email: /^\S+@\S+$/.test(values.email) ? null : "Invalid email",
         };
       }
 
@@ -119,45 +84,23 @@ export default function NewStaffStepper({ setStaffs, staffs, onClose }) {
       try {
         console.log(form.values);
 
-        const response = await axiosPrivate.post(
-          "/tutor/staffs",
-          JSON.stringify({
-            first_name: form.values.first_name,
-            last_name: form.values.last_name,
-            NIC: form.values.NIC,
-            DOB: form.values.DOB,
-            address: form.values.address,
-            phone_number: "+94" + form.values.phone_number,
-            email: form.values.email,
-            staff_title: form.values.staff_title,
-          }),
-          {
-            headers: { "Content-Type": "application/json" },
-            withCredentials: true,
-          }
-        );
-
-        console.log(JSON.stringify(response?.data));
-
-
-        //Added to state
-        const newStaff = {
-          id: staffs.length + 1,
-          first_name: form.values.first_name,
-          last_name: form.values.last_name,
-          NIC: form.values.NIC,
-          DOB: form.values.DOB,
-          address: form.values.address,
-          phone_number: "+94 " + form.values.phone_number,
-          email: form.values.email,
-          staff_title: form.values.staff_title,
+        //  Create a new object containing all form values and the added date
+        const updatedFormValues = {
+          ...form.values,
+          joined_date: new Date().toLocaleDateString(),
         };
-        setStaffs([...staffs, newStaff]);
 
+        console.log(updatedFormValues);
 
-        onClose();
+        //   const response = await axiosPrivate.post(
+        //     "tutor/staffs",
+        //     updatedFormValues
+        //   );
 
         console.log("Form data submitted successfully!");
+
+        window.location.reload();
+        //   navigate("/tutor/staffs");
       } catch (error) {
         console.error("Error sending data:", error);
       }
@@ -169,7 +112,7 @@ export default function NewStaffStepper({ setStaffs, staffs, onClose }) {
       <form onSubmit={handleSubmit}>
         <Stepper active={active} breakpoint="sm">
           <Stepper.Step label="First step" description="Personal info">
-            <SimpleGrid cols={2} mt="sm">
+            <SimpleGrid cols={2} mt="sm" >
               <TextInput
                 required
                 label="First name"
@@ -192,12 +135,8 @@ export default function NewStaffStepper({ setStaffs, staffs, onClose }) {
               />
               <DateInput
                 required
-                clearable
                 label="Birthday"
                 placeholder="Birthday"
-                valueFormat="YYYY MMM DD"
-                minDate={minBirthdate}
-                maxDate={maxBirthdate}
                 {...form.getInputProps("DOB")}
               />
             </SimpleGrid>
@@ -213,7 +152,6 @@ export default function NewStaffStepper({ setStaffs, staffs, onClose }) {
               />
               <TextInput
                 required
-                icon={<span style={{ fontSize: "13px" }}>+94</span>}
                 label="Contact"
                 placeholder="Contact"
                 {...form.getInputProps("phone_number")}
@@ -238,13 +176,10 @@ export default function NewStaffStepper({ setStaffs, staffs, onClose }) {
             >
               <Group mt="xs">
                 <Radio
-                  value="Cls Supporting Staff"
+                  value="classSupportingStaff"
                   label="Class Supporting Staff"
                 />
-                <Radio
-                  value="Paper Marking Staff"
-                  label="Paper Marking Staff"
-                />
+                <Radio value="paperMarkingStaff" label="Paper Marking Staff" />
               </Group>
             </Radio.Group>
           </Stepper.Step>
@@ -253,68 +188,67 @@ export default function NewStaffStepper({ setStaffs, staffs, onClose }) {
             <Card>
               <SimpleGrid cols={2}>
                 <TextInput
-                  readOnly
+                  disabled
                   label="First Name"
                   defaultValue={form.values.first_name}
                 />
                 <TextInput
-                  readOnly
+                  disabled
                   label="Last Name"
                   defaultValue={form.values.last_name}
                 />
               </SimpleGrid>
               <SimpleGrid cols={2} mt="sm">
                 <TextInput
-                  readOnly
+                  disabled
                   label="NIC"
                   placeholder="NIC"
-                  defaultValue={form.values.NIC}
+                  {...form.getInputProps("NIC")}
                 />
                 <DateInput
-                  readOnly
-                  clearable
+                  disabled
                   label="Birthday"
                   placeholder="Birthday"
-                  valueFormat="YYYY MMM DD"
-                  defaultValue={form.values.DOB}
+                  {...form.getInputProps("DOB")}
                 />
               </SimpleGrid>
               <SimpleGrid cols={2} mt="sm">
                 <TextInput
-                  readOnly
+                  disabled
                   label="Address"
                   placeholder="Address"
-                  defaultValue={form.values.address}
+                  {...form.getInputProps("address")}
                 />
                 <TextInput
-                  readOnly
+                  disabled
                   label="Contact"
                   placeholder="Contact"
-                  defaultValue={form.values.phone_number}
+                  {...form.getInputProps("phone_number")}
                 />
               </SimpleGrid>
               <TextInput
-                readOnly
+                disabled
                 mt="sm"
                 label="Email"
                 placeholder="Email"
-                defaultValue={form.values.email}
+                {...form.getInputProps("email")}
               />
               <Radio.Group
+                disabled
                 name="staff_title"
                 label="Choose Staff Title"
                 mt="md"
-                defaultValue={form.values.staff_title}
+                {...form.getInputProps("staff_title")}
               >
                 <Group mt="xs">
                   <Radio
                     disabled
-                    value="Cls Supporting Staff"
+                    value="classSupportingStaff"
                     label="Class Supporting Staff"
                   />
                   <Radio
                     disabled
-                    value="Paper Marking Staff"
+                    value="paperMarkingStaff"
                     label="Paper Marking Staff"
                   />
                 </Group>

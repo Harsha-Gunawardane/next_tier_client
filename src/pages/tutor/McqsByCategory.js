@@ -1,4 +1,4 @@
-import { Box, Button, Card, Grid, GridItem, useDisclosure } from "@chakra-ui/react";
+import { Box, Button, Card, Grid, GridItem } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { NavLink, useParams } from "react-router-dom";
 
@@ -10,14 +10,10 @@ import McqsHeaderBar from "../../components/mcq/McqsHeaderBar";
 import BreadCrumbs from "../../components/BreadCrumbs/BreadCrumbs";
 import CategoryInsideCard from "../../components/mcq/CategoryInsideCard";
 import DonutChartCategory from "../../components/mcq/DonutChartCategory";
-import ModalPopupCommon from "../../components/Quizzes/ModalPopupCommon";
-import NewMcqStepper from "../../components/Quizzes/NewMcqStepper";
-import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 
 export default function McqsByCategory() {
 
   const { id } = useParams();
-  const useAxiosPrivate = useAxiosPrivate();
 
   const handleDeleteMcq = (id) =>{
 
@@ -26,17 +22,11 @@ export default function McqsByCategory() {
   const [mcqs, setMcqs] = useState([]);
   const [search, setSearch] = useState("");
 
-  const {
-    isOpen: isNewMcqPopupOpen,
-    onOpen: onNewMcqPopupOpen,
-    onClose: onNewMcqPopupClose,
-  } = useDisclosure();
-
    useEffect(() => {
 
      const getMcqs = async () => {
        try {
-         const response = await useAxiosPrivate.get("/tutor/mcqs");
+         const response = await api.get("/mcqs");
          setMcqs(response.data);
        } catch (error) {
          console.log(error.response.data);
@@ -47,18 +37,9 @@ export default function McqsByCategory() {
    }, []);
 
   
-
-  
   return (
     <Box width="100%">
       <BreadCrumbs />
-      <ModalPopupCommon
-        isOpen={isNewMcqPopupOpen}
-        onOpen={onNewMcqPopupOpen}
-        onClose={onNewMcqPopupClose}
-        modalHeader={"Create a question"}
-        modalBody={<NewMcqStepper />}
-      />
       <Grid
         margin={{ base: "10px 10px", sm: "20px auto" }}
         templateColumns="repeat(3, 1fr)"
@@ -69,20 +50,12 @@ export default function McqsByCategory() {
           <CategoryInsideCard />
         </GridItem>
         <GridItem colSpan={{ base: 3, sm: 1 }}>
-          <Card
-            variant="outline"
-            height={{ base: "80px", sm: "150px" }}
-            display={{ base: "none", md: "block" }}
-          >
+          <Card variant="outline" height={{ base: "80px", sm: "150px" }} display={{base:"none" ,md:"block"}}>
             <DonutChartCategory />
           </Card>
         </GridItem>
       </Grid>
-      <McqsHeaderBar
-        search={search}
-        setSearch={setSearch}
-        onOpen={onNewMcqPopupOpen}
-      />
+      <McqsHeaderBar search={search} setSearch={setSearch} />
 
       <McqsView
         mcqs={mcqs.filter((mcq) =>

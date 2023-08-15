@@ -25,7 +25,6 @@ const Coursepackcontent = (id) => {
   navigate("/tutor/courses/studypackcontent/" + id);
 }
  
-
 useEffect(() => {
   const getStudyPack = async () => {
     const controller = new AbortController();
@@ -33,39 +32,36 @@ useEffect(() => {
       const response = await axiosPrivate.get(`/tutor/studypack`, {
         signal: controller.signal,
       });
-
-      // Filter courses with type "PAID"
-      const paidCourses = response.data.filter((course) => course.type === "PAID");
-
-      setCoursesData(paidCourses);
+      setCoursesData(response.data);
       console.log(response.data);
     } catch (error) {
       console.log(error);
     }
   };
   getStudyPack();
+  fetchCourseTitles();
 }, [axiosPrivate]); 
 
 
 
 
-// const fetchCourseTitles = async () => {
-//   const controller = new AbortController();
-//   try {
-//     const response = await axiosPrivate.get(`/tutor/course`, {
-//       signal: controller.signal,
-//     });
+const fetchCourseTitles = async () => {
+  const controller = new AbortController();
+  try {
+    const response = await axiosPrivate.get(`/tutor/course`, {
+      signal: controller.signal,
+    });
 
-//     const courseTitleMap = {};
-//     response.data.forEach((course) => {
-//       courseTitleMap[course.id] = course.title;
-//     });
+    const courseTitleMap = {};
+    response.data.forEach((course) => {
+      courseTitleMap[course.id] = course.title;
+    });
 
-//     setCourseTitles(courseTitleMap);
-//   } catch (error) {
-//     console.log(error);
-//   }
-// };
+    setCourseTitles(courseTitleMap);
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 
 const handleSearch = (searchTerm) => {
@@ -99,7 +95,6 @@ const handleSearch = (searchTerm) => {
       src={item.thumbnail}
     
       borderRadius='lg'
-      height='210px' width='100%'
       
     />
     <Stack mt='6' spacing='3'>
@@ -107,19 +102,18 @@ const handleSearch = (searchTerm) => {
       <Text color='black' fontSize='12px' >
       <CalendarIcon></CalendarIcon> 10h 20min
       </Text>
-      <HStack mt='-5px'>
       <Text color='black' fontSize='12px' >
       <TimeIcon></TimeIcon> Rs.{item.price}
       </Text>
-    
-      {/* <Text color='black'  fontSize='12px' mt='5px' >
+      <HStack mt='-5px'>
+      <Text color='black'  fontSize='12px' mt='5px' >
       <TimeIcon></TimeIcon>  {courseTitles[item.course_id]}
-      </Text> */}
+      </Text>
 
       <IconButton onClick={() => { LoadDetail(item.id) }} 
   bg='white'
   aria-label='Search database'
-  ml='240px'
+  ml='180px'
   mt='-2px'
   height='20px'
   width='1%'

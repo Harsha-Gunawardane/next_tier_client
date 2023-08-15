@@ -8,6 +8,15 @@ import { Link, useNavigate } from "react-router-dom";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 
 
+
+
+
+
+
+
+
+
+
 const Addcoursepack= () => {
 
 
@@ -27,7 +36,6 @@ const Addcoursepack= () => {
       thumbnail: '',
       price: '',
       access_period: '',
-      type: 'PAID',
       
       subject_area_1: '',
       subject_area_2: '',
@@ -39,7 +47,6 @@ const Addcoursepack= () => {
      years:'',
      days:'',
      months:'',
-    
     
       
 
@@ -59,12 +66,12 @@ const Addcoursepack= () => {
   
                     title:
                     values.title.trim().length < 1
-                      ?  'Course Type is Required':values.title.length >25 ? 'Title must be less than 100 characters ' 
+                      ?  'Course Type is Required':values.title.length >25 ? 'Title Too Long' 
                       : null,
     
                       description:
                       values.description.trim().length < 1
-                        ? 'Language is Required' :values.description.length >200 ? 'Description must be less than 200 characters' 
+                        ? 'Language is Required' :values.description.length >200 ? 'Description Too Long' 
                         : null,
 
                         course_id:
@@ -101,29 +108,17 @@ const Addcoursepack= () => {
       return {
      
 
-        price: values.price.length < 1
-  ? "Price is Required"
-  : values.price >= 50000
-  ? "Price must be less than 50000"
-  : null,
+        price:
+        values.price.length < 1 ? "Price is Required" : null,
 
-        days: values.days.length < 1
-  ? "Day is Required"
-  : parseInt(values.days) >= 365
-  ? "Days must be less than 366 days"
-  : null,
+         days:
+        values.days.length < 1 ? "Day is Required" : null,
 
-  months: values.months.length < 1
-  ? "Month is Required"
-  : parseInt(values.months) >= 12
-  ? "Month must be less than 12 months"
-  : null,
+        months:
+        values.months.length < 1 ? "Month is Required" : null,
 
-        years: values.years.length < 1
-        ? "Year is Required"
-        : parseInt(values.years) >= 3
-        ? "Year must be less than 3 years"
-        : null,
+        years:
+        values.years.length < 1 ? "Year is Required" : null,
 
             
       };

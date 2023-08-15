@@ -7,36 +7,15 @@ import QuizzesTab from "../../components/Quizzes/QuizzesTab";
 import McqCategoriesTab from "../../components/mcq/McqCategoriesTab";
 import ModalPopupCommon from "../../components/Quizzes/ModalPopupCommon";
 import QuizCreateForm from "../../components/Quizzes/QuizCreateForm";
-import useAxiosPrivate from "../../hooks/useAxiosPrivate";
-import { useState } from "react";
-import { useEffect } from "react";
 
 export default function TutorQuizzes() {
-
   const tabFontSize = "17px";
-
-  const axiosPrivate = useAxiosPrivate();
-  const [quizzes, setQuizzes] = useState([]);
-  const [search, setSearch] = useState("");
 
   const {
     isOpen: isNewQuizPopupOpen,
     onOpen: onNewQuizPopupOpen,
     onClose: onNewQuizPopupClose,
   } = useDisclosure();
-
-  useEffect(() => {
-    const getQuizzes = async () => {
-      try {
-        const response = await axiosPrivate.get("/tutor/quizzes");
-        setQuizzes(response.data);
-      } catch (error) {
-        console.log(error.response.data);
-      }
-    };
-
-    getQuizzes();
-  }, []);
 
   return (
     <Box w="100%">
@@ -54,13 +33,7 @@ export default function TutorQuizzes() {
         onOpen={onNewQuizPopupOpen}
         onClose={onNewQuizPopupClose}
         modalHeader={"Create a quiz"}
-        modalBody={
-          <QuizCreateForm
-            onClose={onNewQuizPopupClose}
-            quizzes={quizzes}
-            setQuizzes={setQuizzes}
-          />
-        }
+        modalBody={<QuizCreateForm onClose={onNewQuizPopupClose} />}
         size={"2xl"}
       />
 
@@ -75,12 +48,7 @@ export default function TutorQuizzes() {
         </TabList>
         <TabPanels>
           <TabPanel>
-            <QuizzesTab
-              onOpen={onNewQuizPopupOpen}
-              quizzes={quizzes}
-              search={search}
-              setSearch={setSearch}
-            />
+            <QuizzesTab onOpen={onNewQuizPopupOpen} />
           </TabPanel>
           <TabPanel>
             <McqCategoriesTab />

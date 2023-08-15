@@ -4,40 +4,54 @@ import {
   Button,
   Group,
   TextInput,
+  PasswordInput,
+  Code,
   SimpleGrid,
+  Radio,
   NumberInput,
   Select,
   MultiSelect,
   Textarea,
+  Paper,
+  CloseButton,
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
-import { Card } from "@chakra-ui/react";
+import { useNavigate } from "react-router-dom";
+import { Card, HStack } from "@chakra-ui/react";
 
-export default function NewMcqStepper({
-  quizId,
-  mcqsForQuiz,
-  setMcqsForQuiz,
-  onClose,
-}) {
+
+export default function NewMcqStepper() {
   const [active, setActive] = useState(0);
   const axiosPrivate = useAxiosPrivate();
+  const navigate = useNavigate();
+
+  const [selectedOptions, setSelectedOptions] = useState([]);
 
   const [options, setOptions] = useState([]);
 
-  //Used to display answer Options in seperately
-  const [selectedOptionsForDisplay, setSelectedOptionsForDisplay] = useState(
-    []
-  );
+  const handleOptionRemoval = (optionToRemove) => {
+    setOptions((currentOptions) =>
+      currentOptions.filter((option) => option.value !== optionToRemove.value)
+    );
+    setSelectedOptions((currentSelectedOptions) =>
+      currentSelectedOptions.filter(
+        (option) => option.value !== optionToRemove.value
+      )
+    );
+  };
+
+  
+
 
   const [subjectAreas, setSubjectAreas] = useState([
-    { value: "Inorganic", label: "Inorganic" },
-    { value: "Calculation", label: "Calculation" },
+    { value: "inorganic", label: "Inorganic" },
+    { value: "calculation", label: "Calculation" },
   ]);
 
   const [subject, setSubject] = useState([
-    { value: "Mathematics", label: "Mathematics" },
-    { value: "Chemistry", label: "Chemistry" },
+    { value: "mathematics", label: "Mathematics" },
+    { value: "chemistry", label: "Chemistry" },
   ]);
 
   const form = useForm({
@@ -46,9 +60,9 @@ export default function NewMcqStepper({
       points: "",
       difficulty_level: "",
       subject: "",
-      subject_areas: [],
-      options: [],
-      correct_answer: "",
+      subject_areas: "",
+      options: "",
+      correct_option: "",
       explanation: "",
     },
 
@@ -56,8 +70,8 @@ export default function NewMcqStepper({
       if (active === 0) {
         return {
           question:
-            values.question.trim().length < 3
-              ? "Question must include at least 3 characters"
+            values.question.trim().length < 2
+              ? "Question must include at least 6 characters"
               : null,
         };
       }
@@ -71,10 +85,15 @@ export default function NewMcqStepper({
   });
 
   useEffect(() => {
-    // Update selected Options for display when Options change
-    setSelectedOptionsForDisplay(form.values.options);
-    setOptions(form.values.options);
-  }, [form.values.options]);
+    // Create a new array of option values from the updated options state
+    const optionValues = options.map((option) => option.value);
+
+    // Update the form values for "options" with the new array
+    form.setFieldValue("options", optionValues);
+  }, [options]);
+
+
+  console.log(form.values.options);
 
   const nextStep = () =>
     setActive((current) => {
@@ -94,35 +113,23 @@ export default function NewMcqStepper({
       try {
         console.log(form.values);
 
-        const FormValues = {
-          question: form.values.question,
-          points: form.values.points,
-          difficulty_level: form.values.difficulty_level,
-          subject: form.values.subject,
-          subject_areas: form.values.subject_areas,
-          options: form.values.options,
-          correct_answer: form.values.options.findIndex(
-            (option) => option === form.values.correct_answer
-          ),
-          explanation: form.values.explanation,
-        };
+        //  Create a new object containing all form values and the added date
+        // const updatedFormValues = {
+        //   ...form.values,
+        //   joined_date: new Date().toLocaleDateString(),
+        // };
 
-        const response = await axiosPrivate.post(
-          `/tutor/quizzes/addMcq/${quizId}`,
-          JSON.stringify(FormValues),
-          {
-            headers: { "Content-Type": "application/json" },
-            withCredentials: true,
-          }
-        );
+        // console.log(updatedFormValues);
 
-        //Added to state
-        setMcqsForQuiz([...mcqsForQuiz, response.data]);
+        //   const response = await axiosPrivate.post(
+        //     "tutor/staffs",
+        //     updatedFormValues
+        //   );
 
-        console.log(JSON.stringify(response?.data));
         console.log("Form data submitted successfully!");
 
-        onClose();
+        // window.location.reload();
+        //   navigate("/tutor/staffs");
       } catch (error) {
         console.error("Error sending data:", error);
       }
@@ -153,21 +160,38 @@ export default function NewMcqStepper({
               onCreate={(query) => {
                 const item = { value: query, label: query };
                 setOptions((current) => [...current, item]);
+                setSelectedOptions((current) => [...current, item]);
                 return item;
               }}
               {...form.getInputProps("options")}
             />
-            <SimpleGrid cols={2} spacing="xs" verticalSpacing="xs" m="8px">
-              {selectedOptionsForDisplay ? (
-                selectedOptionsForDisplay.map((option) => (
-                  <Card p="5px" fontSize="12px" withBorder key={option}>
-                    {option}
-                  </Card>
-                ))
-              ) : (
-                <></>
-              )}
-            </SimpleGrid>
+            {selectedOptions.map((option) => (
+              <HStack>
+                <Paper
+                  shadow="sm"
+                  p="5px"
+                  m="4px"
+                  fz="sm"
+                  withBorder
+                  key={option.value}
+                >
+                  {option.label}
+                  {/* <Button
+                  size="xs"
+                  style={{ marginLeft: "8px" }}
+                  onClick={() => handleOptionRemoval(option)}
+                >
+                  Remove
+                </Button> */}
+                </Paper>
+                <CloseButton
+                  aria-label="Close modal"
+                  variant="filled"
+                  color="blue"
+                  onClick={() => handleOptionRemoval(option)}
+                />
+              </HStack>
+            ))}
 
             <Select
               required
@@ -175,7 +199,7 @@ export default function NewMcqStepper({
               label="Correct Option"
               placeholder="Select correct option"
               data={options}
-              {...form.getInputProps("correct_answer")}
+              {...form.getInputProps("correct_option")}
             />
           </Stepper.Step>
 
@@ -183,7 +207,6 @@ export default function NewMcqStepper({
             <Textarea
               required
               mt="md"
-              autosize
               placeholder="Answer Explanation"
               label="Answer Explanation"
               {...form.getInputProps("explanation")}
@@ -194,8 +217,8 @@ export default function NewMcqStepper({
                 label="Difficulty Level"
                 placeholder="Difficulty Level"
                 data={[
-                  { value: "Medium", label: "Medium" },
-                  { value: "Hard", label: "Hard" },
+                  { value: "medium", label: "Medium" },
+                  { value: "hard", label: "Hard" },
                 ]}
                 {...form.getInputProps("difficulty_level")}
               />
@@ -246,66 +269,9 @@ export default function NewMcqStepper({
           </Stepper.Step>
           <Stepper.Completed>
             Completed! Form values:
-            <Card padding="10px">
-              <TextInput
-                readOnly
-                label="Question"
-                defaultValue={form.values.question}
-              />
-              <MultiSelect
-                readOnly
-                label="Define Options"
-                data={options}
-                placeholder="Define Options"
-                getCreateLabel={(query) => `+ Create ${query}`}
-                defaultValue={form.values.options}
-              />
-              <SimpleGrid cols={2} spacing="xs" verticalSpacing="xs" m="8px">
-                {selectedOptionsForDisplay ? (
-                  selectedOptionsForDisplay.map((option) => (
-                    <Card p="5px" fontSize="12px" withBorder key={option}>
-                      {option}
-                    </Card>
-                  ))
-                ) : (
-                  <></>
-                )}
-              </SimpleGrid>
-              <Textarea
-                readOnly
-                autosize
-                label="Answer Explanation"
-                defaultValue={form.values.explanation}
-              />
-              <SimpleGrid cols={2} mt="md">
-                <Select
-                  readOnly
-                  label="Difficulty Level"
-                  data={[
-                    { value: "Medium", label: "Medium" },
-                    { value: "Hard", label: "Hard" },
-                  ]}
-                  defaultValue={form.values.difficulty_level}
-                />
-                <NumberInput
-                  readOnly
-                  label="Points"
-                  defaultValue={form.values.points}
-                />
-              </SimpleGrid>
-              <SimpleGrid cols={2}>
-                <Select
-                  label="Select Subject"
-                  data={subject}
-                  defaultValue={form.values.subject}
-                />
-                <MultiSelect
-                  label="Select Subject Areas"
-                  data={subjectAreas}
-                  defaultValue={form.values.subject_areas}
-                />
-              </SimpleGrid>
-            </Card>
+            <Code block mt="xl">
+              {JSON.stringify(form.values, null, 2)}
+            </Code>
           </Stepper.Completed>
         </Stepper>
 

@@ -1,34 +1,27 @@
 import { useEffect, useState } from "react";
 import { Box, useDisclosure } from "@chakra-ui/react";
-import { Skeleton } from "@mantine/core";
 
+import useStaffStore from "../../zustandStore/staffStore.js";
+
+import useAxiosPrivate from "../../hooks/useAxiosPrivate.js";
 
 //Imported Components
 import StaffTable from "../../components/TutorStaff/StaffTable.js";
 import StaffHeaderBar from "../../components/TutorStaff/StaffHeaderBar.js";
-import StaffModalPopup from "../../components/TutorStaff/StaffModalPopup.js";
+import BreadCrumbs from "../../components/BreadCrumbs/BreadCrumbs.js";
+// import ModalPopup from "../../components/TutorStaff/ModalPopup.js";
+// import { Modal } from "@mantine/core";
+
+import NewStaffModalPopup from "../../components/TutorStaff/NewStaffModalPopup.js";
 import StaffDeleteAlertDialog from "../../components/TutorStaff/StaffDeleteAlertDialog.js";
-import NewStaffStepper from "../../components/TutorStaff/NewStaffStepper.js";
-import EditStaffForm from "../../components/TutorStaff/EditStaffForm.js";
-import useAxiosPrivate from "../../hooks/useAxiosPrivate.js";
 
 const TutorStaffs = () => {
-  const [staffIdToDelete, setStaffIdToDelete] = useState(null);
-  const [staffIdToEdit, setStaffIdToEdit] = useState(null);
-  const [staffs, setStaffs] = useState([]);
-
-  const axiosPrivate = useAxiosPrivate();
+  const [staffIdToDelete, setStaffIdToDelete] = useState();
 
   const {
     isOpen: isNewStaffPopupOpen,
     onOpen: onNewStaffPopupOpen,
     onClose: onNewStaffPopupClose,
-  } = useDisclosure();
-
-  const {
-    isOpen: isEditStaffPopupOpen,
-    onOpen: onEditStaffPopupOpen,
-    onClose: onEditStaffPopupClose,
   } = useDisclosure();
 
   const {
@@ -39,115 +32,54 @@ const TutorStaffs = () => {
 
   const [search, setSearch] = useState("");
 
+  //Zustand store
+  const staffs = useStaffStore((state) => state.staffs);
+  const fetchStaffs = useStaffStore((state) => state.fetchStaffs);
+  const deleteStaff = useStaffStore((state) => state.deleteStaff);
 
   useEffect(() => {
-    getStaffs();
-
+    //Getting data from the db
+    fetchStaffs();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-
-  const getStaffs = async () => {
+  const handleDelete = async (id) => {
     try {
-      const response = await axiosPrivate.get("/tutor/staffs");
-      setStaffs(response.data);
-    } catch (error) {
-     if (error.response && error.response.data) {
-       console.log(error.response.data);
-     } else {
-       console.log("An error occurred:", error.message);
-     }
+      // Open the delete alert dialog before performing the deletion
+      onStaffDeleteAlertDialogOpen();
+      // Save the staff ID to be deleted in the state
+      setStaffIdToDelete(id);
+    } catch (err) {
+      console.log(`Error: ${err.message}`);
+    } finally {
     }
   };
 
-  console.log(staffs)
-
-    const handleDelete = (id) => {
-      try {
-        setStaffIdToDelete(id);
-      } catch (err) {
-        console.log(`Error: ${err.message}`);
-      }
-    };
-
-    const handleEdit = async (id) => {
-      try {
-        setStaffIdToEdit(id);
-      } catch (err) {
-        console.log(`Error: ${err.message}`);
-      }
-    };
-
-    useEffect(() => {
-      if (staffIdToDelete !== null) {
-        onStaffDeleteAlertDialogOpen();
-      }
-    }, [staffIdToDelete]);
-
-    useEffect(() => {
-      if (staffIdToEdit !== null) {
-        onEditStaffPopupOpen();
-        console.log(staffIdToEdit);
-      }
-    }, [staffIdToEdit]);
-
   return (
     <Box width="100%">
-      <StaffModalPopup
+      <NewStaffModalPopup
         isOpen={isNewStaffPopupOpen}
         onOpen={onNewStaffPopupOpen}
         onClose={onNewStaffPopupClose}
-        modalHeader={"Register a staff"}
-        modalBody={
-          <NewStaffStepper
-            staffs={staffs}
-            setStaffs={setStaffs}
-            onClose={onNewStaffPopupClose}
-          />
-        }
-        size={"2xl"}
-      />
-
-      <StaffModalPopup
-        isOpen={isEditStaffPopupOpen}
-        onOpen={onEditStaffPopupOpen}
-        onClose={onEditStaffPopupClose}
-        modalHeader={"Edit a staff"}
-        modalBody={
-          <EditStaffForm
-            staffId={staffIdToEdit}
-            onClose={onEditStaffPopupClose}
-            staffs={staffs}
-            setStaffs={setStaffs}
-          />
-        }
-        size={"2xl"}
       />
       <StaffDeleteAlertDialog
         isOpen={isStaffDeleteAlertDialogOpen}
         onClose={onStaffDeleteAlertDialogClose}
         handleDelete={handleDelete}
         staffIdToDelete={staffIdToDelete}
-        staffs={staffs}
-        setStaffs={setStaffs}
+        deleteStaff={deleteStaff}
       />
       <StaffHeaderBar
         search={search}
         setSearch={setSearch}
         onOpen={onNewStaffPopupOpen}
       />
-
-      {staffs.length > 0 ? (
-        <StaffTable
-          staffs={staffs.filter((staff) =>
-            staff.first_name.toLowerCase().includes(search.toLowerCase())
-          )}
-          handleDelete={handleDelete}
-          handleEdit={handleEdit}
-        />
-      ) : (
-        <>
-        </>
-      )}
+      <StaffTable
+        staffs={staffs.filter((staff) =>
+          staff.name.toLowerCase().includes(search.toLowerCase())
+        )}
+        handleDelete={handleDelete}
+      />
     </Box>
   );
 };

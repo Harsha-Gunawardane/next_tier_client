@@ -19,7 +19,7 @@ const rightTextStyle = {
 function onlineReceipt(props) {
 
   return (
-    <Box bg="white" border="0.05px solid #DAE6F0" width={{ lg: "40%", base: "100%" }} ml={{ lg: "260px", base: "0px" }}>
+    <Box bg="white" border="0.05px solid #DAE6F0" width={{ lg: "40%", base: "100%" }} ml={{ lg: "360px", base: "0px" }}>
       <SimpleGrid columns={1}>
         <Box display="Flex" flexDirection="column" alignItems="center">
           <Image src={Logo} width={140} height={35} mt={3}></Image>

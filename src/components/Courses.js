@@ -1,5 +1,7 @@
 import { useContext, useEffect } from "react";
 import useSidebar from "../hooks/useSidebar";
+import { useOutletContext } from "react-router-dom";
+import { useBreakpointValue } from "@chakra-ui/media-query";
 
 export default function Courses() {
 

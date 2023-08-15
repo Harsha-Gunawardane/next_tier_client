@@ -1,0 +1,40 @@
+.custom-header {
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 10px;
+  padding-right: 8px;
+}
+
+.custom-header-left {
+  display: flex;
+  align-items: center;
+}
+.custom-header-center {
+  flex-grow: 1;
+  padding: 0 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.custom-header-right {
+  display: flex;
+  align-items: center;
+  padding-right: 30px;
+}
+.custom-header-left Button,
+.custom-header-right Button {
+  font-weight: normal;
+}
+
+.view-buttons {
+  display: flex;
+  border-radius: 4px;
+  background-color: rgb(230, 226, 226);
+}
+
+.chakra-button.css-ez23ye,.chakra-button.css-1jy7dd1 {
+  color: black; 
+  border: 2px solid rgb(230, 226, 226);
+  background-color: #ffffff;
+}
+

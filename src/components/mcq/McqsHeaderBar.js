@@ -8,14 +8,15 @@ import {
   InputRightElement,
   Select,
 } from "@chakra-ui/react";
+import { AddIcon } from "@chakra-ui/icons";
 import { Button } from "@chakra-ui/react";
+import { NavLink } from "react-router-dom";
 import { IconSearch } from "@tabler/icons-react";
 import { IoCloseCircleSharp } from "react-icons/io5";
 import { BiBook } from "react-icons/bi";
-import { IoIosAddCircleOutline } from "react-icons/io";
 // import SearchBarOne from "../SearchBars/SearchBarOne";
 
-export default function McqsHeaderBar({ search, setSearch, onOpen }) {
+export default function McqsHeaderBar({ search, setSearch }) {
   return (
     <Grid
       margin={{ base: "5px 5px", sm: "20px auto" }}
@@ -40,7 +41,6 @@ export default function McqsHeaderBar({ search, setSearch, onOpen }) {
               size="sm"
               fontSize={{ base: "14px", sm: "16px" }}
               borderRadius={"5px"}
-              paddingLeft="35px"
               value={search}
               onChange={(e) => {
                 setSearch(e.target.value);
@@ -68,7 +68,7 @@ export default function McqsHeaderBar({ search, setSearch, onOpen }) {
               pointerEvents="none"
               fontSize="12px"
               children={<BiBook size="1.3rem" color="gray" />}
-              // display={{ base: "none", md:"block" }}
+              display={{ base: "none", md:"block" }}
             />
 
             <Input
@@ -80,7 +80,6 @@ export default function McqsHeaderBar({ search, setSearch, onOpen }) {
               h={"40px"}
               size="sm"
               borderRadius={"5px"}
-              paddingLeft="35px"
             >
               <option value="option1">Inorganic</option>
               <option value="option2">Organic</option>
@@ -92,20 +91,17 @@ export default function McqsHeaderBar({ search, setSearch, onOpen }) {
       </GridItem>
 
       <GridItem colSpan={{ base: 6, sm: 1 }} justifySelf={{ base: "end" }}>
-        <Button
-          colorScheme="messenger"
-          variant="solid"
-          size="md"
-          width="160px"
-          onClick={onOpen}
-        >
-          <IoIosAddCircleOutline
-            size="20px"
-            color="white"
-            style={{ marginRight: "6px" }}
-          />
-          New mcq
-        </Button>
+        <NavLink to="/tutor/quizzes/quiz/mcq/create">
+          <Button
+            colorScheme="messenger"
+            variant="solid"
+            size="md"
+            width="160px"
+          >
+            <AddIcon boxSize={5} pr="7px" color="white" />
+            Add Mcq
+          </Button>
+        </NavLink>
       </GridItem>
     </Grid>
   );

@@ -21,7 +21,7 @@ const Courses = () => {
   <Tabs isFitted variant='enclosed' colorScheme="blue" >
   <TabList mb='1em' colorScheme="blue">
     <Tab fontSize='20px'>Course</Tab>
-    <Tab fontSize='20px'>Study Pack</Tab>
+    <Tab fontSize='20px'>Course Package</Tab>
   </TabList>
   <TabPanels>
     <TabPanel>

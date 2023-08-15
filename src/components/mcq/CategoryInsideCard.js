@@ -57,11 +57,14 @@ export default function CategoryInsideCard() {
           </Heading>
 
           <Box >
-  
+            <Text fontSize={{ base: "16px", md: "16px" }}>Chemistry</Text>
+            <Text color="gray" fontSize={{ base: "14px", md: "14px" }} >
+              (Inorganic / Calculations / Industrial / Atomocity)
+            </Text>
             <HStack>
               <Text
                 fontSize={{ base: "14px", md: "16px" }}
-              >{`6 Questions`}</Text>
+              >{`20 Questions`}</Text>
             </HStack>
           </Box>
         </CardBody>

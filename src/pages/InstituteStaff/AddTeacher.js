@@ -1,23 +1,34 @@
-import { useState, useRef } from "react";
-import axios from "axios";
+import * as React from "react";
 import {
   Box,
   Button,
   FormControl,
   FormLabel,
   Input,
-  Radio,
-  RadioGroup,
   Stack,
   extendTheme,
   ChakraProvider,
   Flex,
   Grid,
   GridItem,
-  Text,
+  FormErrorMessage,
 } from "@chakra-ui/react";
-import { Checkbox, CheckboxGroup, Select, Textarea, Avatar, AvatarBadge, IconButton } from "@chakra-ui/react";
+import {
+  Checkbox,
+  CheckboxGroup,
+  Textarea,
+  Avatar,
+  AvatarBadge,
+  IconButton,
+  useToast,
+} from "@chakra-ui/react";
+import { useState } from "react";
 import { EditIcon } from "@chakra-ui/icons";
+import { BiArrowBack } from "react-icons/bi";
+import { Link, } from "react-router-dom";
+import useAxiosPrivate from "../../hooks/useAxiosPrivate";
+import * as yup from "yup";
+import { useFormik } from "formik";
 
 // Create a custom text input style
 const customTextInputStyle = {
@@ -46,285 +57,298 @@ const theme = extendTheme({
   },
 });
 
+const REGISTER_URL = "/staff/tutor";
+
 function AddTeacher() {
-  const initialFormData = {
-    profilePicture: "",
-    fname: "",
-    lname: "",
-    nic: "",
-    dob: "",
-    gender: "1",
-    preferedLanguage: "",
-    phone: "",
-    address: "",
-    password: "",
-    stream: "",
-    subject: "",
-    teachingMedium: [],
-    teachingSchool: "",
-    qualifications: "",
+  const toast = useToast();
+  const axiosPrivate = useAxiosPrivate();
+
+  // Define validation schema using yup
+  const validationSchema = yup.object().shape({
+    fName: yup.string().required("First Name is required"),
+    lName: yup.string().required("Last Name is required"),
+    email: yup.string().email("Invalid email").required("Email is required"),
+    nic: yup.string().required("NIC Number is required"),
+    dob: yup.string().required("DOB Number is required"),
+    phoneNo: yup.string().required("Phone Number is required"),   
+    address: yup.string().required("Address is required"),
+  });                                                               
+
+  const [selectedImage, setSelectedImage] = useState("");           
+  const [selectedSubjects, setSelectedSubjects] = useState([]);
+
+  const formik = useFormik({
+    initialValues: {
+      fName: "",
+      lName: "",
+      email: "",
+      nic: "",
+      dob: "",
+      phoneNo: "",
+      address: "",
+      subjects: [],
+    },
+    validationSchema: validationSchema,
+    onSubmit: async (values) => {
+      try {
+        values.subjects = selectedSubjects;
+
+        const addTutor = await axiosPrivate.post(
+          REGISTER_URL,
+          JSON.stringify(values),
+          {
+            headers: { "Content-Type": "application/json" },
+            withCredentials: true,
+          }
+        );
+        console.log(JSON.stringify(addTutor?.data));
+
+        toast({
+          title: "Tutor Registered Successfully",
+          status: "success",
+          duration: 5000,
+          position: "top",
+          isClosable: true,
+        });
+      } catch (err) {
+        if (!err?.response) {
+          toast({
+            title: "Error",
+            description: "No Server Response",
+            status: "error",
+            duration: 5000,
+            position: "top",
+            isClosable: true,
+          });
+        } else if (err.response?.status === 409) {
+          toast({
+            title: "Error",
+            description: "Username already exists",
+            status: "error",
+            duration: 5000,
+            position: "top",
+            isClosable: true,
+          });
+        } else {
+          toast({
+            title: "Error",
+            description: "Registration Failed",
+            status: "error",
+            duration: 5000,
+            position: "top",
+            isClosable: true,
+          });
+        }
+        
+      }
+    },
+  });
+
+  // Function to handle image selection
+  const handleImageChange = (event) => {
+    const file = event.target.files[0];
+    setSelectedImage(file);
   };
 
-  const [formData, setFormData] = useState(initialFormData);
-  const [selectedImage, setSelectedImage] = useState(null);
-  const fileInputRef = useRef(null);
-
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      [name]: value,
-    }));
-  };
-
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-
-    try {
-      // Make a POST request to the server with the form data
-      const response = await axios.post("/staff/teachers", {
-        ...formData,
-        profilePicture: selectedImage, // Attach the selected image to the form data
-      });
-      console.log("Teacher registration successful!", response.data);
-
-      // Reset the form after successful submission (optional)
-      setFormData(initialFormData);
-      setSelectedImage(null);
-    } catch (error) {
-      console.error("Error registering teacher:", error);
-    }
-  };
-
-  const handleImageClick = () => {
-    fileInputRef.current.click();
+  const handleCancelClick = () => {
+    formik.resetForm(); // Reset the formik form values
+    setSelectedImage(""); // Clear the selected image
+    setSelectedSubjects(""); // Clear the selected subjects
   };
 
   return (
-    <Box>
-      <Text fontSize="20px" fontWeight="bold" padding="10px 5px 3px 10px">
-        {" "}
-        Teacher Registration{" "}
-      </Text>
+    <Box mx={5} width="100%">
+      <Box display="flex" alignItems="center">
+        <Link to="/staff/tutors-list">
+          <BiArrowBack style={{ marginRight: "20px", cursor: "pointer" }} />
+        </Link>
+        <Box fontSize="18px" fontWeight="bold" padding="10px 25px 15px 0">
+          Tutor Registration
+        </Box>
+      </Box>
       <ChakraProvider theme={theme}>
-        <Box width="1150px" mx="auto" mt={5} ml={10} p={5} borderWidth="1px" borderRadius="md">
-          <form onSubmit={handleSubmit}>
-            <Grid templateColumns={{ base: "1fr", md: "repeat(3, 1fr)" }} gap={20}>
-              <GridItem width={{ base: "50%", md: "auto" }}>
-              <FormControl>
-                  <FormLabel mb="5px">Profile Picture:</FormLabel>
+        <Box
+          maxW="1150px"
+          mx={{ base: "10px", md: "auto" }}
+          ml={10}
+          p={15}
+          borderWidth="1px"
+          borderRadius="md"
+        >
+          <form onSubmit={formik.handleSubmit}>
+            <Grid
+              templateColumns={{ base: "1fr", md: "repeat(2, 1fr)" }}
+              gap={{ base: 0, md: 20 }}
+            >
+              <GridItem width={{ base: "80%", md: "auto" }} mx={10}>
+                <FormControl mb={7}>
+                  <FormLabel mb="5px">ProfilePicture:</FormLabel>
                   <Avatar
                     width="140px"
                     height="140px"
-                    src={selectedImage ? URL.createObjectURL(selectedImage) : "https://bit.ly/code-beast"}
+                    src="https://bit.ly/code-beast"
                     ml="50px"
                   >
                     <AvatarBadge width="3em" height="3em" bg="gray.400">
-                      <IconButton
-                        borderRadius="30px"
-                        width="3em"
-                        height="3em"
-                        aria-label="Insert Image"
-                        bg="gray.400"
-                        icon={<EditIcon boxSize="20px" />}
-                        onClick={handleImageClick}
-                      />
+                      {/* <EditIcon w={15} h={10} /> */}
+                      <label htmlFor="file-upload">
+                        <IconButton
+                          as="span"
+                          borderRadius="30px"
+                          width="3em"
+                          height="3em"
+                          aria-label="Change Image"
+                          bg="gray.400"
+                          icon={<EditIcon boxSize="20px" />}
+                        />
+                      </label>
                     </AvatarBadge>
                   </Avatar>
-                  {/* Input to allow image selection */}
+                  {/* input to allow image selection */}
                   <Input
                     type="file"
-                    ref={fileInputRef}
+                    id="image"
                     accept="image/*"
                     display="none"
-                    onChange={(event) => setSelectedImage(event.target.files[0])}
+                    onChange={handleImageChange}
                   />
                 </FormControl>
-
-                <FormControl mb={7}>
+                <FormControl
+                  isInvalid={formik.errors.fName && formik.touched.fName}
+                  mb={5}
+                >
                   <FormLabel>First Name:</FormLabel>
                   <Input
                     type="text"
-                    name="fname"
+                    id="fName"
+                    {...formik.getFieldProps("fName")}
                     placeholder="Enter the First Name."
                     variant="styledInput"
-                    value={formData.fname}
-                    onChange={handleChange}
                   />
+                  <FormErrorMessage>{formik.errors.fName}</FormErrorMessage>
                 </FormControl>
 
-                <FormControl mb={7}>
+                <FormControl
+                  isInvalid={formik.errors.lName && formik.touched.lName}
+                  mb={5}
+                >
                   <FormLabel>Last Name:</FormLabel>
                   <Input
                     type="text"
-                    name="lname"
+                    id="lName"
+                    {...formik.getFieldProps("lName")}
                     placeholder="Enter the Last Name."
                     variant="styledInput"
-                    value={formData.lname}
-                    onChange={handleChange}
                   />
+                  <FormErrorMessage>{formik.errors.lName}</FormErrorMessage>
                 </FormControl>
-
-                <FormControl mb={7}>
-                  <FormLabel>NIC:</FormLabel>
+                <FormControl
+                  isInvalid={formik.errors.email && formik.touched.email}
+                  mb={5}
+                >
+                  <FormLabel>Email:</FormLabel>
                   <Input
                     type="text"
-                    name="nic"
-                    placeholder="Enter the NIC Number."
+                    id="email"
+                    {...formik.getFieldProps("email")}
+                    placeholder="Enter the Email Address."
                     variant="styledInput"
-                    value={formData.nic}
-                    onChange={handleChange}
                   />
-                </FormControl>
-
-                <FormControl isRequired mb={7}>
-                  <FormLabel>Date of Birth:</FormLabel>
-                  <Input
-                    type="date"
-                    name="dob"
-                    placeholder="Enter the DOB."
-                    variant="styledInput"
-                    value={formData.dob}
-                    onChange={handleChange}
-                  />
+                  <FormErrorMessage>{formik.errors.email}</FormErrorMessage>
                 </FormControl>
               </GridItem>
 
-              <GridItem width={{ base: "50%", md: "auto" }}>
-                <FormControl mb={7}>
-                  <FormLabel>Gender:</FormLabel>
-                  <RadioGroup mb={17} defaultValue="1">
-                    <Stack spacing={20} direction="row">
-                      <Radio value="1" name="gender" onChange={handleChange} isChecked={formData.gender === "1"}>
-                        Male
-                      </Radio>
-                      <Radio value="2" name="gender" onChange={handleChange} isChecked={formData.gender === "2"}>
-                        Female
-                      </Radio>
-                    </Stack>
-                  </RadioGroup>
+              <GridItem width={{ base: "80%", md: "auto" }} mx={10}>
+                <FormControl
+                  isInvalid={formik.errors.nic && formik.touched.nic}
+                  mb={5}
+                >
+                  <FormLabel>NIC:</FormLabel>
+                  <Input
+                    type="text"
+                    id="nic"
+                    {...formik.getFieldProps("nic")}
+                    placeholder="Enter the NIC Number."
+                    variant="styledInput"
+                  />
+                  <FormErrorMessage>{formik.errors.nic}</FormErrorMessage>
                 </FormControl>
 
-                <FormControl mb={6}>
-                  <FormLabel>Prefered Language:</FormLabel>
-                  <Select
-                    name="preferedLanguage"
-                    placeholder="Select the Prefered Language."
-                    value={formData.preferedLanguage}
-                    onChange={handleChange}
-                  >
-                    <option value="option1">Sinhala</option>
-                    <option value="option2">English</option>
-                    <option value="option3">Tamil</option>
-                  </Select>
+                <FormControl
+                  isInvalid={formik.errors.dob && formik.touched.dob}
+                  mb={5}
+                >
+                  <FormLabel>Date of Birth:</FormLabel>
+                  <Input
+                    type="date"
+                    id="dob"
+                    {...formik.getFieldProps("dob")}
+                    placeholder="Enter the DOB."
+                    variant="styledInput"
+                  />
+                  <FormErrorMessage>{formik.errors.dob}</FormErrorMessage>
                 </FormControl>
 
-                <FormControl mb={7}>
+                <FormControl
+                  isInvalid={formik.errors.phoneNo && formik.touched.phoneNo}
+                  mb={5}
+                >
                   <FormLabel>Phone Number:</FormLabel>
                   <Input
                     type="text"
-                    name="phone"
+                    {...formik.getFieldProps("phoneNo")}
                     placeholder="Enter the Phone Number."
                     variant="styledInput"
-                    value={formData.phone}
-                    onChange={handleChange}
                   />
+                  <FormErrorMessage>{formik.errors.phoneNo}</FormErrorMessage>
                 </FormControl>
 
-                <FormControl mb={7}>
+                <FormControl
+                  isInvalid={formik.errors.address && formik.touched.address}
+                  mb={5}
+                >
                   <FormLabel>Address:</FormLabel>
-                  <Input
-                    type="text"
-                    name="address"
+                  <Textarea
+                    {...formik.getFieldProps("address")}
                     placeholder="Enter the Address."
-                    variant="styledInput"
-                    value={formData.address}
-                    onChange={handleChange}
                   />
+                  <FormErrorMessage>{formik.errors.address}</FormErrorMessage>
                 </FormControl>
 
-                <FormControl mb={7}>
-                <FormLabel>Password:</FormLabel>
-                <Input
-                  type="text"
-                  name="password"
-                  placeholder="Enter a Password."
-                  variant="styledInput"
-                  value={formData.password}
-                  onChange={handleChange}
-                />
-              </FormControl>
-            </GridItem>
+                <FormControl mb={5}>
+                  <FormLabel>Teaching Subjects:</FormLabel>
+                  <CheckboxGroup
+                    colorScheme="blue"
+                    value={selectedSubjects}
+                    onChange={(values) => setSelectedSubjects(values)}
+                  >
+                    <Stack spacing={[1, 5]} direction={["column", "row"]}>
+                      <Checkbox value="physics">Physics</Checkbox>
+                      <Checkbox value="chemistry">Chemistry</Checkbox>
+                      <Checkbox value="maths">Maths</Checkbox>
+                      <Checkbox value="biology">Biology</Checkbox>
+                      <Checkbox value="ict">ICT</Checkbox>
+                    </Stack>
+                  </CheckboxGroup>
+                </FormControl>
 
-            <GridItem width={{ base: "50%", md: "auto" }}>
-              <FormControl isRequired mb={7}>
-                <FormLabel>Stream:</FormLabel>
-                <Select name="stream" placeholder="Select a Stream" value={formData.stream} onChange={handleChange}>
-                  <option value="option1">Biological Science</option>
-                  <option value="option2">Physical Science</option>
-                  <option value="option3">Art</option>
-                  <option value="option4">Commerce</option>
-                  <option value="option5">Technology</option>
-                </Select>
-              </FormControl>
-
-              <FormControl mb={7}>
-                <FormLabel>Subject:</FormLabel>
-                <Input
-                  type="text"
-                  name="subject"
-                  placeholder="Enter the Subject."
-                  variant="styledInput"
-                  value={formData.subject}
-                  onChange={handleChange}
-                />
-              </FormControl>
-
-              <FormControl mb={7}>
-                <FormLabel>Teaching Medium:</FormLabel>
-                <CheckboxGroup colorScheme="blue" value={formData.teachingMedium} onChange={(val) => setFormData({ ...formData, teachingMedium: val })}>
-                  <Stack spacing={[1, 5]} direction={["column", "row"]}>
-                    <Checkbox value="sinhala">Sinhala</Checkbox>
-                    <Checkbox value="english">English</Checkbox>
-                    <Checkbox value="tamil">Tamil</Checkbox>
-                  </Stack>
-                </CheckboxGroup>
-              </FormControl>
-
-              <FormControl mb={7}>
-                <FormLabel>Teaching School:</FormLabel>
-                <Input
-                  type="text"
-                  name="school"
-                  placeholder="Enter the Teaching School."
-                  variant="styledInput"
-                  value={formData.teachingSchool}
-                  onChange={handleChange}
-                />
-              </FormControl>
-
-              <FormControl mb={7}>
-                <FormLabel>Qualifications:</FormLabel>
-                <Textarea name="qualifications" placeholder="Provide the Qualifications" value={formData.qualifications} onChange={handleChange} />
-              </FormControl>
-
-              <Flex justifyContent="center" alignItems="center" mt={1}>
-                <Button type="submit" colorScheme="blue">
-                  Submit
-                </Button>
-                <Box ml={10}>
-                  <Button type="button" colorScheme="blue" onClick={() => setFormData(initialFormData)}>
-                    Cancel
+                <Flex justifyContent="center" alignItems="center" mt={1}>
+                  <Button type="submit" colorScheme="blue">
+                    Submit
                   </Button>
-                </Box>
-              </Flex>
-            </GridItem>
-          </Grid>
-        </form>
-      </Box>
-    </ChakraProvider>
-  </Box>
-);
+                  <Box ml={10}>
+                    <Button colorScheme="blue" onClick={handleCancelClick}>
+                      Cancel
+                    </Button>
+                  </Box>
+                </Flex>
+              </GridItem>
+            </Grid>
+          </form>
+        </Box>
+      </ChakraProvider>
+    </Box>
+  );
 }
 
 export default AddTeacher;

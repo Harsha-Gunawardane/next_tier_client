@@ -5,15 +5,7 @@ import { Image, Heading, Text } from "@chakra-ui/react";
 
 import { Avatar } from "@chakra-ui/react";
 import { HStack } from "@chakra-ui/react";
-import {
-  SimpleGrid,
-  Button,
-  FormControl,
-  Switch,
-  FormLabel,
-  UnorderedList,
-  ListItem,
-} from "@chakra-ui/react";
+import { SimpleGrid, Button,FormControl,Switch,FormLabel } from "@chakra-ui/react";
 import { TimeIcon, CalendarIcon } from "@chakra-ui/icons";
 
 import CourseInclude from "../../components/tutor/coursepackage/CoursepackInclude";
@@ -75,7 +67,7 @@ const Coursepackedit = () => {
 
             <Heading fontSize="25px">{studypackdata.title}</Heading>
 
-            {/* <HStack spacing="24px" mt="20px">
+            <HStack spacing="24px" mt="20px">
               <Box w="50%" h="30px" bg="white">
                 <Text ml="" fontSize="15px">
                   <TimeIcon mr="4px" mt="-2px"></TimeIcon>20h 20 min
@@ -91,11 +83,12 @@ const Coursepackedit = () => {
                   Sinhala
                 </Text>
               </Box>
-            </HStack> */}
+            </HStack>
 
-            {/* <Heading fontSize="22px">Description</Heading> */}
-
-            <Box width={{ base: 300, xl: 500 }} mt="18px">
+            <br></br>
+            <Heading fontSize="22px">Description</Heading>
+            <br></br>
+            <Box width={{ base: 300, xl: 500 }}>
               <Text fontSize={{ base: 13, xl: 15 }}>
                 {studypackdata.description}
               </Text>
@@ -115,29 +108,11 @@ const Coursepackedit = () => {
             <TutorDetails></TutorDetails>
 
             <Heading fontSize="20px" mt="20px">
-              Study Pack Details
+              Course Details
             </Heading>
-            <UnorderedList spacing={3} mb="10px">
-              <ListItem mt="10px">
-                {" "}
-                <Text ml="" fontSize="15px">
-                  20h 20 min Course
-                </Text>
-              </ListItem>
-              <ListItem>
-                {" "}
-                <Text fontSize="15px">Rs.{studypackdata.price}</Text>
-              </ListItem>
-              <ListItem>
-                {" "}
-                <Text fontSize="15px">Medium-Sinhala</Text>
-              </ListItem>
-            </UnorderedList>
-
+            <CourseDetails></CourseDetails>
             <br></br>
-            <Heading fontSize="20px" mb="10px">
-              Course Includes
-            </Heading>
+            <Heading fontSize="20px">Course Includes</Heading>
 
             <CourseInclude></CourseInclude>
 

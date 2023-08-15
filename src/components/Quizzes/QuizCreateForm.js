@@ -2,119 +2,95 @@ import {
   Button,
   Group,
   MultiSelect,
+  NumberInput,
   Select,
+  SimpleGrid,
   TextInput,
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 
+export default function QuizCreateForm({ onClose }) {
 
-export default function QuizCreateForm({ onClose, quizzes, setQuizzes }) {
-  const axiosPrivate = useAxiosPrivate();
   const navigate = useNavigate();
 
   const [subjectAreas, setSubjectAreas] = useState([
-    { value: "Inorganic", label: "Inorganic" },
-    { value: "Calculation", label: "Calculation" },
+    { value: "inorganic", label: "Inorganic" },
+    { value: "calculation", label: "Calculation" },
   ]);
 
   const [subject, setSubject] = useState([
-    { value: "Mathematics", label: "Mathematics" },
-    { value: "Chemistry", label: "Chemistry" },
+    { value: "mathematics", label: "Mathematics" },
+    { value: "chemistry", label: "Chemistry" },
   ]);
+  
+
 
   const form = useForm({
     initialValues: {
       title: "",
       subject: "",
-      subject_areas: [],
-      question_ids: [],
-      number_of_questions:0,
+      subject_areas: "",
+      number_of_questions:"",
     },
 
     validate: (values) => {
       return {
-        title: !values.title ? "Quiz title is required" : null,
-        subject:
-          values.subject.trim().length < 3
-            ? "Subject must include at least 3 characters"
+        title:
+          values.title.trim().length < 2
+            ? "Question must include at least 6 characters"
             : null,
-        subject_areas: !values.subject_areas
-          ? "Subject areas are required"
-          : null,
+        subject:
+          values.subject.trim().length < 2
+            ? "Question must include at least 6 characters"
+            : null,
       };
     },
   });
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
 
-       console.log(form.values);
-
-
-    if (!form.validate().hasErrors) {
-      try {
-    console.log("here");
-
-        console.log(form.values);
-
-        const response = await axiosPrivate.post(
-          "/tutor/quizzes",
-          JSON.stringify({
-            title: form.values.title,
-            subject: form.values.subject,
-            subject_areas: form.values.subject_areas,
-            number_of_questions: form.values.question_ids.length,
-            question_ids: form.values.question_ids,
-          }),
-          {
-            headers: { "Content-Type": "application/json" },
-            withCredentials: true,
-          }
-        );
-
-        console.log(JSON.stringify(response?.data));
-
-        //Added to state
-        setQuizzes([...quizzes, form.values]);
-
-        console.log("Form data submitted successfully!");
-        console.log(response.data.id)
-
-        navigate(`/tutor/quizzes/create/${response.data.id}`);
-
-        onClose();
-        
-
-      } catch (error) {
-        console.error("Error sending data:", error);
-      }
-    }
+    //Post quiz logic
+    //Here we get the id
+    // navigate("/tutor/quizzes/quiz/create/id");
     
-    
+
+    navigate("/tutor/quizzes/quiz/create/1");
+    // Access form values through form.values object
+    console.log(form.values);
   };
 
   return (
     <>
       <form onSubmit={handleSubmit}>
-        <TextInput required label="Title" {...form.getInputProps("title")} />
-        <Select
+        <TextInput
           required
-          data={subject}
-          label="Select or create subject"
-          nothingFound="Nothing found"
-          searchable
-          creatable
-          getCreateLabel={(query) => `+ Create ${query}`}
-          onCreate={(query) => {
-            const item = { value: query, label: query };
-            setSubject((current) => [...current, item]);
-            return item;
-          }}
-          {...form.getInputProps("subject")}
+          label="Title"
+          {...form.getInputProps("title")}
         />
+        <SimpleGrid cols={2} mt="md">
+          <Select
+            required
+            data={subject}
+            label="Select or create subject"
+            nothingFound="Nothing found"
+            searchable
+            creatable
+            getCreateLabel={(query) => `+ Create ${query}`}
+            onCreate={(query) => {
+              const item = { value: query, label: query };
+              setSubject((current) => [...current, item]);
+              return item;
+            }}
+          />
+          <NumberInput
+            required
+            label="Number of questions"
+            {...form.getInputProps("number_of_questions")}
+          />
+        </SimpleGrid>
         <MultiSelect
           required
           mt="md"
@@ -128,10 +104,10 @@ export default function QuizCreateForm({ onClose, quizzes, setQuizzes }) {
             setSubjectAreas((current) => [...current, item]);
             return item;
           }}
-          {...form.getInputProps("subject_areas")}
         />
         <Group position="right" mt="md">
-          <Button onClick={onClose}>Cancel</Button>
+          <Button
+          onClick={onClose}>Cancel</Button>
           <Button type="submit">Save</Button>
         </Group>
       </form>

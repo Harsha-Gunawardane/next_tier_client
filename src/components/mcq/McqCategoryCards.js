@@ -7,26 +7,26 @@ import backgroundTemplate5 from "../mcq/assests/backgroundTemplate5.jpg";
 
 export function McqCategoryCards({ category }) {
   return (
-    <Card variant="outline" height="190px" key={category.id}>
+    <Card variant="outline" height="190px">
       <CardBody>
         <Image
           src={
             category.title === "Calculation Questions"
-              ? backgroundTemplate2
-              : category.title === "Revision Questions"
-              ? backgroundTemplate3
-              : category.title === "Inorganic Questions"
               ? backgroundTemplate
-              : backgroundTemplate4
+              : category.title === "Organic Questions"
+              ? backgroundTemplate3
+              : category.title === "2018 - OLD Syllabus"
+              ? backgroundTemplate2
+              : backgroundTemplate5
           }
           borderRadius="lg"
           width="300px"
           height="90px"
         />
         <Stack mt="4" spacing="1">
-          <Heading fontSize="16px">{category.title}</Heading>
+          <Heading fontSize="16px" >{category.title}</Heading>
           <Text fontSize="13px" color="gray">
-            Number of MCQs : {category.number_of_questions}
+            Number of MCQs : {category.noofmcqs}
           </Text>
         </Stack>
       </CardBody>

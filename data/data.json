@@ -1,145 +1,79 @@
 {
   "staffs": [
     {
-      "id": 1,
-      "first_name": "Robert",
-      "last_name": "Wolfkisser",
-      "profile_picture": "https://images.unsplash.com/photo-1624298357597-fd92dfbec01d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=250&q=80",
-      "NIC": "980756789V",
-      "DOB": "2023-08-15T18:30:00.000Z",
-      "address": "Kenwood",
-      "email": "rob_wolf@gmail.com",
-      "phone_number": "+94 766016862",
-      "staff_title": "Cls Supporting Staff"
-    },
-    {
-      "id": 2,
-      "first_name": "Jill",
-      "last_name": "Jailbreaker",
-      "profile_picture": "https://images.unsplash.com/photo-1586297135537-94bc9ba060aa?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=250&q=80",
-      "NIC": "980756789V",
-      "DOB": "2023-08-15T18:30:00.000Z",
-      "address": "Kenwood",
+      "id": 20,
+      "avatar": "https://images.unsplash.com/photo-1586297135537-94bc9ba060aa?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=250&q=80",
+      "name": "Jill Jailbreaker",
+      "job": "Paper Marking Staff",
       "email": "jj@breaker.com",
-      "phone_number": "+94 766016862",
-      "staff_title": "Paper Marking Staff"
+      "phone": "+44 (934) 777 12 76"
     },
     {
-      "id": 3,
-      "first_name": "Bill",
-      "last_name": "Horsefighter",
-      "profile_picture": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=250&q=80",
-      "NIC": "980756789V",
-      "DOB": "2023-08-15T18:30:00.000Z",
-      "address": "Kenwood",
+      "id": 30,
+      "avatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=250&q=80",
+      "name": "Bill Horsefighter",
+      "job": "Paper Marking Staff",
       "email": "bhorsefighter@gmail.com",
-      "phone_number": "+94 786016662",
-      "staff_title": "Cls Supporting Staff"
+      "phone": "+44 (667) 341 45 22"
     },
     {
-      "id": 4,
-      "first_name": "Henry",
-      "last_name": "Silkeater",
-      "profile_picture": "https://images.unsplash.com/photo-1624298357597-fd92dfbec01d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=250&q=80",
-      "NIC": "980756789V",
-      "DOB": "2023-08-15T18:30:00.000Z",
-      "address": "Kenwood",
+      "id": 40,
+      "avatar": "https://images.unsplash.com/photo-1632922267756-9b71242b1592?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=250&q=80",
+      "name": "Henry Silkeater",
+      "job": "Cls Supporting Staff",
       "email": "henry@silkeater.io",
-      "phone_number": "+94 786016668",
-      "staff_title": "Paper Marking Staff"
+      "phone": "+44 (901) 384 88 34"
     },
     {
-      "id": 5,
-      "first_name": "Tommy",
-      "last_name": "Footviewer",
-      "profile_picture": "https://images.unsplash.com/photo-1586297135537-94bc9ba060aa?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=250&q=80",
-      "NIC": "980756789V",
-      "DOB": "2023-08-15T18:30:00.000Z",
-      "address": "Kenwood",
-      "email": "jeremy@foot.dev",
-      "phone_number": "+94 786016667",
-      "staff_title": "Paper Marking Staff"
-    },
-    {
-      "id": 6,
-      "first_name": "Jeremy",
-      "last_name": "Footviewer",
-      "profile_picture": "https://images.unsplash.com/photo-1586297135537-94bc9ba060aa?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=250&q=80",
-      "NIC": "980756789V",
-      "DOB": "2023-08-15T18:30:00.000Z",
-      "address": "Kenwood",
-      "email": "jeremy@foot.dev",
-      "phone_number": "+94 786916662",
-      "staff_title": "Paper Marking Staff"
-    },
-    {
-      "id": 7,
-      "first_name": "Bill",
-      "last_name": "Horsefighter",
-      "profile_picture": "https://images.unsplash.com/photo-1630841539293-bd20634c5d72?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=250&q=80",
-      "NIC": "980756789V",
-      "DOB": "2023-08-15T18:30:00.000Z",
-      "address": "Kenwood",
+      "id": 50,
+      "avatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=250&q=80",
+      "name": "Bill Horsefighter",
+      "job": "Paper Marking Staff",
       "email": "bhorsefighter@gmail.com",
-      "phone_number": "+94 786016662",
-      "staff_title": "Cls Supporting Staff"
+      "phone": "+44 (667) 341 45 22"
+    },
+    {
+      "id": 60,
+      "avatar": "https://images.unsplash.com/photo-1632922267756-9b71242b1592?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=250&q=80",
+      "name": "Henry Silkeater",
+      "job": "Cls Supporting Staff",
+      "email": "henry@silkeater.io",
+      "phone": "+44 (901) 384 88 34"
+    },
+    {
+      "id": 45,
+      "avatar": "https://images.unsplash.com/photo-1630841539293-bd20634c5d72?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=250&q=80",
+      "name": "Jeremy Footviewer",
+      "job": "Cls Supporting Staff",
+      "email": "jeremy@foot.dev",
+      "phone": "+44 (881) 245 65 65"
     }
   ],
   "categories": [
     {
       "id": 1,
       "title": "Calculation Questions",
-      "number_of_questions": 25,
-      "question_ids": [
-        1,
-        2,
-        3,
-        4
-      ]
+      "noofmcqs": 25
     },
     {
       "id": 2,
       "title": "Organic Questions",
-      "number_of_questions": 12,
-      "question_ids": [
-        1,
-        2,
-        3,
-        4
-      ]
+      "noofmcqs": 12
     },
     {
       "id": 3,
       "title": "2018 - Syllabus Questions",
-      "number_of_questions": 12,
-      "question_ids": [
-        1,
-        2,
-        3,
-        4
-      ]
+      "noofmcqs": 12
     },
     {
       "id": 4,
       "title": "Inorganic Questions",
-      "number_of_questions": 12,
-      "question_ids": [
-        1,
-        2,
-        3,
-        4
-      ]
+      "noofmcqs": 12
     },
     {
       "id": 5,
       "title": "Revison Questions",
-      "number_of_questions": 12,
-      "question_ids": [
-        1,
-        2,
-        3,
-        4
-      ]
+      "noofmcqs": 12
     }
   ],
   "mcqs": [
@@ -147,101 +81,49 @@
       "id": 1,
       "question": "Which of the following elements is not a noble gas?",
       "points": 2,
-      "difficulty_level": "Medium",
-      "subject": "Chemistry",
-      "subject_areas": [
-        "Calculation",
-        "Inorganic"
-      ],
-      "options": [
-        "1. Helium (He)",
-        "2. Neon (Ne)",
-        "3. Argon (Ar)",
-        "4. Krypton (Kr)",
-        "5. Nitrogen (N)"
-      ],
-      "correct_answer": 4,
+      "choice1": "a) Helium (He)",
+      "choice2": "b) Neon (Ne)",
+      "choice3": "c) Argon (Ar)",
+      "choice4": "d) Krypton (Kr)",
+      "choice5": "e) Nitrogen (N)",
+      "answer": "e) Nitrogen (N)",
       "explanation": "Noble gases are a group of elements in the periodic table known for their low reactivity and full outer electron shells. These elements include helium (He), neon (Ne), argon (Ar), krypton (Kr), xenon (Xe), and radon (Rn). Nitrogen (N) is not a noble gas because it does not belong to the group of elements with full outer electron shells and low reactivity. Nitrogen is a diatomic molecule composed of two nitrogen atoms (N2) and is commonly found in the Earth's atmosphere. It is an important element for various biological processes and is widely used in the production of fertilizers, explosives, and other chemical compounds."
     },
     {
       "id": 2,
       "question": "Which of the following compounds is an example of an ionic compound?",
       "points": 2,
-      "difficulty_level": "Medium",
-      "subject": "Chemistry",
-      "subject_areas": [
-        "Calculation",
-        "Inorganic"
-      ],
-      "options": [
-        "1. Methane (CH4)",
-        "2. Ethanol (C2H5OH)",
-        "3. Sodium chloride (NaCl)",
-        "4. Carbon dioxide (CO2)",
-        "5. Hydrogen peroxide (H2O2)"
-      ],
-      "correct_answer": 2,
-      "explanation": "Ionic compounds are formed when there is a strong electrostatic attraction between positively charged ions (cations) and negatively charged ions (anions). In the case of sodium chloride (NaCl), it is an example of an ionic compound. Sodium (N1. is a metal and tends to lose one electron, forming a sodium cation (Na+). Chlorine (Cl) is a nonmetal and tends to gain one electron, forming a chloride anion (Cl-). The electrostatic attraction between the sodium cation and chloride anion leads to the formation of sodium chloride (NaCl), which is commonly known as table salt."
+      "choice1": "a) Methane (CH4)",
+      "choice2": "b) Ethanol (C2H5OH)",
+      "choice3": "c) Sodium chloride (NaCl)",
+      "choice4": "Carbon dioxide (CO2)",
+      "choice5": "e) Hydrogen peroxide (H2O2)",
+      "answer": "c) Sodium chloride (NaCl)",
+      "explanation": "Ionic compounds are formed when there is a strong electrostatic attraction between positively charged ions (cations) and negatively charged ions (anions). In the case of sodium chloride (NaCl), it is an example of an ionic compound. Sodium (Na) is a metal and tends to lose one electron, forming a sodium cation (Na+). Chlorine (Cl) is a nonmetal and tends to gain one electron, forming a chloride anion (Cl-). The electrostatic attraction between the sodium cation and chloride anion leads to the formation of sodium chloride (NaCl), which is commonly known as table salt."
     },
     {
       "id": 3,
-      "question": "What is the volume of 0.5 moles of oxygen gas (O2) at standard temperature and pressure (STP)?",
+      "question": "What are the ...................",
       "points": 2,
-      "difficulty_level": "Medium",
-      "subject": "Chemistry",
-      "subject_areas": [
-        "Calculation",
-        "Inorganic"
-      ],
-      "options": [
-        "1. 11.2 L",
-        "2. 22.4 L",
-        "3. 44.8 L",
-        "4. 33.6 L",
-        "5. 16.8 L"
-      ],
-      "correct_answer": 1,
-      "explanation": "At standard temperature and pressure (STP), one mole of any gas occupies a volume of 22.4 liters. Since you have 0.5 moles of oxygen gas (O2), the volume would be 0.5 moles * 22.4 L/mole = 11.2 L."
-    },
-    {
-      "id": 4,
-      "question": "How much heat is required to raise the temperature of 50 grams of water (specific heat capacity = 4.18 J/g°3. from 20°C to 40°C?",
-      "points": 3,
-      "difficulty_level": "Medium",
-      "subject": "Chemistry",
-      "subject_areas": [
-        "Calculation",
-        "Inorganic"
-      ],
-      "options": [
-        "1. 2090 J",
-        "2. 4180 J",
-        "3. 6270 J",
-        "4. 8360 J",
-        "5. 10450 J"
-      ],
-      "correct_answer": 1,
-      "explanation": "The heat energy (Q) can be calculated using the formula Q = m * c * ΔT, where m is the mass, c is the specific heat capacity, and ΔT is the temperature change. In this case, Q = 50 g * 4.18 J/g°C * (40°C - 20°3. = 4180 J."
+      "choice1": "A. Answer1",
+      "choice2": "B. Answer2",
+      "choice3": "C. Answer3",
+      "choice4": "D. Answer4",
+      "choice5": "E. Answer5",
+      "answer": "C. Answer3",
+      "explanation": "            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut"
     },
     {
       "id": 5,
-      "question": "How many grams of potassium hydroxide (KOH) are needed to neutralize 25 mL of 0.2 M hydrochloric acid (HCl)?",
-      "points": 3,
-      "difficulty_level": "Medium",
-      "subject": "Chemistry",
-      "subject_areas": [
-        "Calculation",
-        "Inorganic"
-      ],
-      "options": [
-        "1. 0.25 g",
-        "2. 0.5 g",
-        "3. 1 g",
-        "4. 2 g",
-        "5. 5 g"
-      ],
-      "correct_answer": 1,
-      "explanation": "Neutralization reactions involve the reaction between an acid and a base to form water and a salt. The balanced equation for the reaction between HCl and KOH is HCl + KOH -> H2O + KCl. The molar ratio of HCl to KOH is 1:1. Given that the concentration (Molarity) of HCl is 0.2 M and the volume is 25 mL (0.025 L), the moles of HCl are 0.2 M * 0.025 L = 0.005 moles. Since the molar ratio is 1:1, you need 0.005 moles of KOH. The molar mass of KOH is approximately 56.11 g/mol, so the mass needed is 0.005 moles * 56.11 g/mol = 0.28055 g, which is approximately 0.5 g."
+      "question": "What are the ...................",
+      "points": 2,
+      "choice1": "A. Answer1",
+      "choice2": "B. Answer2",
+      "choice3": "C. Answer3",
+      "choice4": "D. Answer4",
+      "choice5": "E. Answer5",
+      "answer": "C. Answer3",
+      "explanation": "            aliquip ex ea commodo consequat."
     }
   ],
   "quizzes": [

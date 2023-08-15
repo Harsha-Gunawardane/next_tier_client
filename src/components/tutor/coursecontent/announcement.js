@@ -14,7 +14,7 @@ const Announcement = (props) => {
 
 
 <Box bg='white' p={5} ml={{base:-85,xl:0}}>
-        <Heading fontSize='20px' mt='-20px' mb='10px' fontWeight='xl'>Announcement</Heading>
+        <Heading fontSize='20px' mt='-20px' mb='10px'>Announcement</Heading>
       <Box bg='white' mt='20px' width={{base:350,xl:320}} p={2} boxShadow='0 3px 10px rgb(0 0 0 / 0.2)' borderLeft='6px solid red'>
         <Text fontSize='16px' color='grey'>Class is cancelled on 29th July</Text>
         <HStack mt='8px' spacing='30px'>

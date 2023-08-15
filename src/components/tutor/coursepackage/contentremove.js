@@ -40,8 +40,8 @@ const Contentremove = ({  month }) => {
 
   return (
     <>
-      <Button colorScheme='red' onClick={onOpen} height='20px' fontSize='10px' p={1.5} size={10}>
-        Remove
+      <Button colorScheme='red' onClick={onOpen} height='5px' fontSize='12px' p={1.5} size={10}>
+        -
       </Button>
 
       <AlertDialog isOpen={isOpen} leastDestructiveRef={cancelRef} onClose={onClose}>

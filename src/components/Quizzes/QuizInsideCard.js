@@ -1,21 +1,44 @@
 import {
   Image,
   Heading,
+  Button,
   Card,
   CardBody,
   HStack,
   Stack,
   Text,
+  Spacer,
   IconButton,
   Box,
+  useDisclosure,
 } from "@chakra-ui/react";
 import backgroundTemplate from "../../components/mcq/assests/backgroundTemplate.jpg";
-import { DeleteIcon } from "@chakra-ui/icons";
+import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
 import { FaPen } from "react-icons/fa";
+import ModalPopupCommon from "./ModalPopupCommon";
+import QuizEditForm from "./QuizEditForm";
 
-export default function QuizInsideCard({ quiz, handleDelete, handleEdit }) {
+export default function QuizInsideCard({ quiz }) {
+  const {
+    isOpen: isEditQuizPopupOpen,
+    onOpen: onEditQuizPopupOpen,
+    onClose: onEditQuizPopupClose,
+  } = useDisclosure();
+  const {
+    isOpen: isDeleteQuizPopupOpen,
+    onOpen: onDeleteQuizPopupOpen,
+    onClose: onDeleteQuizPopupClose,
+  } = useDisclosure();
+
   return (
     <>
+      <ModalPopupCommon
+        isOpen={isEditQuizPopupOpen}
+        onOpen={onEditQuizPopupOpen}
+        onClose={onEditQuizPopupClose}
+        modalHeader={"Edit quiz details"}
+        modalBody={<QuizEditForm quiz={quiz} onClose={onEditQuizPopupClose} />}
+      />
       <Card
         direction={{ base: "column", md: "row" }}
         variant="outline"
@@ -32,25 +55,23 @@ export default function QuizInsideCard({ quiz, handleDelete, handleEdit }) {
 
         <Stack>
           <CardBody padding="10px" minWidth={{ base: "370px", md: "620px" }}>
-            <HStack justifyContent="space-between">
+            <HStack>
               <Text color="gray" fontSize="16px" mt="3px">
                 Quiz
               </Text>
-              <HStack>
-                <IconButton
-                  size="xs"
-                  variant="outline"
-                  icon={<FaPen color="gray" />}
-                  onClick={() => handleEdit(quiz.id)}
-                />
-                <IconButton
-                  size="xs"
-                  variant="outline"
-                  marginLeft="4px"
-                  icon={<DeleteIcon w={4} h={4} color="red.500" />}
-                  onClick={() => handleDelete(quiz.id)}
-                />
-              </HStack>
+              <Spacer />
+              <IconButton
+                size="xs"
+                variant="outline"
+                icon={<FaPen color="gray" />}
+                onClick={onEditQuizPopupOpen}
+              />
+              <IconButton
+                size="xs"
+                variant="outline"
+                marginLeft="4px"
+                icon={<DeleteIcon w={4} h={4} color="red.500" />}
+              />
             </HStack>
 
             <Heading fontSize={{ base: "20px", md: "20px" }} mt="3px">
