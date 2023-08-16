@@ -15,7 +15,9 @@ import { MdOutlineKeyboardArrowLeft } from "react-icons/md";
 
 
 
-const Option = ({ icon: iconComponent, name, href, active, minimizeStatus }) => {
+const Option = (props) => {
+
+	const { icon: iconComponent, name, href, active, minimizeStatus } = props
 
 	//animation
 	const show = {
