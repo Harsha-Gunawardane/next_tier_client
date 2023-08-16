@@ -26,6 +26,24 @@ const Coursepackcontent = (id) => {
 }
  
 
+const getStudyPack = async () => {
+  const controller = new AbortController();
+  try {
+    const response = await axiosPrivate.get(`/tutor/studypack`, {
+      signal: controller.signal,
+    });
+
+    // Filter courses with type "PAID"
+    const paidCourses = response.data.filter((course) => course.type === "PAID");
+
+    setCoursesData(paidCourses);
+    console.log(response.data);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+
 useEffect(() => {
   const getStudyPack = async () => {
     const controller = new AbortController();
@@ -71,8 +89,7 @@ useEffect(() => {
 const handleSearch = (searchTerm) => {
   if (searchTerm.trim() === "") {
     // If search term is empty, show all courses
-    setCoursesData(coursesdata);
-    window.location.reload();
+    getStudyPack();
   } else {
     // Filter courses based on the search term
     const filteredCourses = coursesdata.filter((course) =>

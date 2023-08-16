@@ -187,7 +187,7 @@ const Coursepackedit = () => {
         onClose={onClose}
       >
         <ModalOverlay />
-        <ModalContent>
+        <ModalContent  height='600px' width='500px' overflowY='scroll'>
           <form onSubmit={handlesubmit}>
             <ModalHeader>Update Course Details</ModalHeader>
             <ModalCloseButton />
