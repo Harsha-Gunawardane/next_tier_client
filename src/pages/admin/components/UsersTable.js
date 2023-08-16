@@ -1,7 +1,7 @@
 import { Box } from "@chakra-ui/react";
 import { Table } from "@mantine/core";
 
-import "../../../assets/css/mantineTable.css";
+import "../../../assests/css/mantineTable.css";
 
 function UsersTable({ users }) {
   const thStyle = {

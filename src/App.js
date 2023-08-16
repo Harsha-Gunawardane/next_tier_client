@@ -26,7 +26,6 @@ import StudentCourses from "./pages/student/Courses";
 
 // instituteStaff components
 import InstStaffDashboard from "./pages/InstituteStaff/Dashboard";
-import ViewTeacher from "./pages/InstituteStaff/ViewTeacher";
 import AddTeacher from "./pages/InstituteStaff/AddTeacher";
 import InstStaffProfile from "./pages/InstituteStaff/StaffProfile";
 import InstStaffComplaintsList from "./pages/InstituteStaff/Complaints/ComplaintsListView";
@@ -36,10 +35,10 @@ import HallSchedule from "./pages/InstituteStaff/HallSchedule";
 import InstStaffStuPayment from "./pages/InstituteStaff/StuPayment";
 import InstStaffList from "./pages/InstituteStaff/StaffList";
 import ViewPaymentHistory from "./pages/InstituteStaff/viewPaymentHistory";
-import MyProfile from "./pages/InstituteStaff/myProfile";
+import MyProfile from "./pages/InstituteStaff/Profile";
 import CashReceipt from "./pages/InstituteStaff/cashReceiptStaff";
 import OnlineReceipt from "./pages/InstituteStaff/onlineReceiptStaff";
-import StudentsList from "./pages/InstituteStaff/studentsList";
+// import StudentsList from "./pages/InstituteStaff/studentsList";
 import StudentProfile from "./pages/InstituteStaff/StudentProfile";
 import TutorsList from "./pages/InstituteStaff/tutorsList";
 import TutorProfile from "./pages/InstituteStaff/TutorProfile";
@@ -172,7 +171,7 @@ function App() {
             element={<SidebarAndHeader userRole={"InstituteStaff"} />}
           >
             <Route path="dashboard" element={<InstStaffDashboard />} />
-            <Route path="teacher" element={<ViewTeacher />} />
+            {/* <Route path="teacher" element={<ViewTeacher />} /> */}
             <Route path="teacher/add" element={<AddTeacher />} />
             <Route path="class" element={<ApproveClass />} />
             <Route path="profile" element={<InstStaffProfile />} />
@@ -209,7 +208,7 @@ function App() {
           >
             <Route path="dashboard" element={<InstStaffDashboard />} />
             <Route path="my-profile" element={<MyProfile />} />
-            <Route path="teacher" element={<ViewTeacher />} />
+            {/* <Route path="teacher" element={<ViewTeacher />} /> */}
             <Route path="teacher/add" element={<AddTeacher />} />
             <Route path="class" element={<ApproveClass />} />
             <Route path="profile/:id" element={<InstStaffProfile />} />
@@ -221,7 +220,7 @@ function App() {
             <Route path="payment-history" element={<ViewPaymentHistory />} />
             <Route path="cash-receipt" element={<CashReceipt />} />
             <Route path="online-receipt" element={<OnlineReceipt />} />
-            <Route path="stu-list" element={<StudentsList />} />
+            {/* <Route path="stu-list" element={<StudentsList />} /> */}
             <Route path="stu-profile/:id" element={<StudentProfile />} />
             <Route path="staff-list" element={<InstStaffList />} />
             <Route path="tutors-list" element={<TutorsList />} />
