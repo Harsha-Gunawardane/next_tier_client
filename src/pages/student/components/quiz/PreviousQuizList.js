@@ -3,12 +3,21 @@ import PreviousQuizCard from "../cards/PreviousQuizCard";
 
 function PreviousQuizList({ previousQuizzes }) {
   return (
-    <Flex justifyContent="center">
+    <Flex
+      justifyContent="center"
+      w={{
+        base: "90vw",
+        sm: "85vw",
+        md: "85vw",
+        lg: "700px",
+        xl: "750px",
+      }}
+    >
       <Flex flexDirection="column">
         {previousQuizzes ? (
           previousQuizzes.map((quiz) => (
             <PreviousQuizCard
-              key={quiz.id} // Make sure to add a unique key prop when mapping over an array of elements
+              key={quiz.id}
               subject={quiz.subject}
               quizname={quiz.quizname}
               value={quiz.value}

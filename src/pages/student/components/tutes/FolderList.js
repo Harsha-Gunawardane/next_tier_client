@@ -3,16 +3,18 @@ import { Accordion } from "@mantine/core";
 import PageNameCard from "../cards/PageNameCard";
 import { Box } from "@chakra-ui/react";
 
-import "../../../../assests/css/accordion.css"
+import "../../../../assests/css/accordion.css";
 
 function FolderList({ folders }) {
   return (
-    <Box w={220} pl={8}>
-      <Accordion
-        variant="filled"
-        radius="md"
-        chevronPosition="left"
-      >
+    <Box
+      w={220}
+      pl={8}
+      h={160}
+      maxH={160}
+      overflowY={"scroll"}
+    >
+      <Accordion variant="filled" radius="md" chevronPosition="left">
         {folders.map((folder) => {
           return (
             <Accordion.Item value={folder.name}>

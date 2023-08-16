@@ -15,7 +15,7 @@ function TutePageList({ pages }) {
   };
 
   return (
-    <Box>
+    <Box maxH={220} overflowY={"scroll"}>
       {pages.map((page) => {
         return (
           <PageNameCard

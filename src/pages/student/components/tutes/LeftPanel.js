@@ -14,16 +14,24 @@ import truncateString from "../../../../utils/truncateString";
 import FolderList from "./FolderList";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import NewFolderModal from "../modals/NewFolderModal";
 
 function LeftPanel() {
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
+  const [isFOpen, setIsFOpen] = useState(false);
 
   const handleCloseModal = () => {
     setIsOpen(false);
   };
   const handleOpenModal = () => {
     setIsOpen(true);
+  };
+  const handleCloseFModal = () => {
+    setIsFOpen(false);
+  };
+  const handleOpenFModal = () => {
+    setIsFOpen(true);
   };
 
   const pages = useSelector((state) => state.tutes.pages);
@@ -45,11 +53,7 @@ function LeftPanel() {
             borderRadius={5}
             onClick={() => navigate("/stu/tutes")}
           >
-            <AiFillHome
-              color="#F7F7F7"
-              fontWeight={"bold"}
-              fontSize={18}
-            />
+            <AiFillHome color="#F7F7F7" fontWeight={"bold"} fontSize={18} />
             <Text
               fontSize={16}
               fontWeight={"semibold"}
@@ -69,7 +73,7 @@ function LeftPanel() {
           <LeftPanelTab
             title={"New Folder"}
             icon={<AiFillFolderOpen color="#555555" />}
-            onClickHandler={handleOpenModal}
+            onClickHandler={handleOpenFModal}
           />
           <LeftPanelTab
             title={"Starred"}
@@ -103,6 +107,7 @@ function LeftPanel() {
         </Box>
       </Box>
       <NewTuteModal isOpen={isOpen} handleCloseModal={handleCloseModal} />
+      <NewFolderModal isOpen={isFOpen} handleCloseModal={handleCloseFModal} />
     </>
   );
 }
