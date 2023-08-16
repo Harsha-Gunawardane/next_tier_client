@@ -4,10 +4,10 @@ import { SmallAddIcon } from '@chakra-ui/icons'
 import { ChakraProvider, Button, Image } from '@chakra-ui/react'
 import { Tabs, TabList, TabPanels, Tab, TabPanel, Box } from '@chakra-ui/react'
 
+import Addcoursecontent from "./Addvideo.js";
 
-import Addcoursedoccontent from "./Adddoc.js";
 
-// import Remove from "./Papercontentremove.js";
+import Remove from "./Removecontent.js";
 
 
 import { useNavigate, useLocation } from "react-router-dom";
@@ -15,7 +15,7 @@ import "../../../index.css"
 import { useEffect, useState } from "react";
 import useAxiosPrivate from "../../../hooks/useAxiosPrivate.js";
 
-const CourseIncludedoc = () => {
+const CourseInclude = () => {
 
 
 
@@ -103,7 +103,7 @@ const CourseIncludedoc = () => {
                
                 <Box as="span" flex="1" textAlign="left" height="30px">
                   <Heading p={1} ml="20px" fontSize="15px">
-                    Tute Contents
+                    Video Contents
                   </Heading>
                 </Box>
              
@@ -117,42 +117,42 @@ const CourseIncludedoc = () => {
 
               <AccordionPanel pb={4} bg="white">
 
-              <HStack spacing={{ base: 40, xl: 100 }}>
-        
+              <HStack spacing={{ base: 220, xl: 300 }}>
+     
           <Box>
-            <Addcoursedoccontent studypackId={id}></Addcoursedoccontent>
+            <Addcoursecontent studypackId={id}></Addcoursecontent>
           </Box>
         </HStack>
                 {/* Video Content */}
                 {studyPack.content_ids.map((content, contentIndex) => (
                   <Box key={contentIndex} mt="20px">
-                    {content && content.tute_id && content.tute_id.length > 0 && (
+                    {content && content.video_id && content.video_id.length > 0 && (
                       <Box mt="10px">
-                        {content.tute_id.map((tuteId, tuteIndex) => (
-                          <Box bg="#F0F8FF" mt="4px" className="box1" key={tuteIndex}>
-                            <HStack spacing={{ base: 90, xl: 330 }}>
-                              <Box p={2} width="210px">
+                        {content.video_id.map((videoId, videoIndex) => (
+                          <Box bg="#F0F8FF" mt="4px" className="box1" key={videoIndex}>
+                            <HStack spacing={{ base: 40, xl: 100 }}>
+                              <Box p={2} width="180px" >
                                 <HStack>
                                   <Image
                                     boxSize="50%"
                                     width={{ base: 70, xl: 70 }}
                                     height="50px"
                                     objectFit="cover"
-                                    src={getContentThumbnail(tuteId)}
+                                    src={getContentThumbnail(videoId)}
                                   />
                                   <Box>
-                                    <Text fontSize="14px" className="box2">
-                                      {getContentTitle(tuteId)}
+                                    <Text fontSize="12px" className="box2">
+                                      {getContentTitle(videoId)}
                                     </Text>
                                   </Box>
                                 </HStack>
                               </Box>
-                              <Box width="90px" ml="5px" mt="-5px">
+                              <Box width="50px"  mt="-5px" ml='-15px'>
                                 <HStack>
                                   <Button fontSize="12px" height="20px">
                                     View
                                   </Button>{" "}
-                                  {/* <Remove contentId={videoId} part={studyPack.id}></Remove> */}
+                                  <Remove contentId={videoId}></Remove>
                                 </HStack>
                               </Box>
                             </HStack>
@@ -225,4 +225,4 @@ const CourseIncludedoc = () => {
   );
 };
 
-export default CourseIncludedoc;
+export default CourseInclude;

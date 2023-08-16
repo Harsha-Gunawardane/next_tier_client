@@ -31,21 +31,6 @@ const Course = (props) => {
     navigate("/tutor/courses/content/" + id);
   };
 
-  const getCourses = async () => {
-    const controller = new AbortController();
-    try {
-      const response = await axiosPrivate.get(`/tutor/course`, {
-        signal: controller.signal,
-      });
-      setCoursesData(response.data);
-      console.log(response.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  
-
   useEffect(() => {
     const getCourses = async () => {
       const controller = new AbortController();
@@ -62,19 +47,19 @@ const Course = (props) => {
     getCourses();
   }, [axiosPrivate]); // Make sure to add "axiosPrivate" as a dependency
 
-const handleSearch = (searchTerm) => {
-  if (searchTerm.trim() === "") {
-    // If search term is empty, show all courses
-    getCourses();
-  } else {
-    // Filter courses based on the search term
-    const filteredCourses = coursesdata.filter((course) =>
-      course.title.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-    setCoursesData(filteredCourses);
-  }
-};
-
+  const handleSearch = (searchTerm) => {
+    if (searchTerm.trim() === "") {
+      // If search term is empty, show all courses
+      setCoursesData(coursesdata);
+      window.location.reload();
+    } else {
+      // Filter courses based on the search term
+      const filteredCourses = coursesdata.filter((course) =>
+        course.title.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+      setCoursesData(filteredCourses);
+    }
+  };
 
   return (
     <div>
@@ -82,7 +67,6 @@ const handleSearch = (searchTerm) => {
         
         
         <SearchCourse onSearch={handleSearch} />
-        
         <SimpleGrid minChildWidth="300px" spacing="40px" p={5}>
           {coursesdata != null && coursesdata.length > 0 ? (
             coursesdata.map((item) => (
