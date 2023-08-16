@@ -77,7 +77,20 @@ const Option = ({ icon: iconComponent, name, href, active, minimizeStatus }) => 
 	);
 };
 
-const Sidebar = ({ Options, minimized, setMinimized, full = true, hidden, setHidden, onOpen, onClose, minimizeButtonRef, ...rest }) => {
+const Sidebar = (props) => {
+
+	const {
+		Options,
+		minimized,
+		setMinimized,
+		full = true,
+		hidden,
+		setHidden,
+		onOpen,
+		onClose,
+		minimizeButtonRef,
+		...rest
+	} = props;
 
 	const { activeTab } = useContext(SidebarContext);
 
@@ -106,13 +119,19 @@ const Sidebar = ({ Options, minimized, setMinimized, full = true, hidden, setHid
 			onClose();
 		}
 		else {
-			console.log(animations);
 			const status = {
 				base: minimized.base ? false : false,
-				md: minimized.md ? false : true,
-				lg: minimized.lg ? false : true,
+				md: minimized.md ? true : true,
+				lg: minimized.lg ? true : true,
 			}
-			setMinimized(status);
+			setMinimized((prev) => {
+				const newStatus = {
+					base: prev.base ? false : false,
+					md: prev.md ? true : true,
+					lg: prev.lg ? true : true,
+				}
+				return newStatus;
+			});
 		}
 	};
 

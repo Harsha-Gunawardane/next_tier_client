@@ -7,7 +7,6 @@ import {
   ModalBody,
   ModalCloseButton,
 } from "@chakra-ui/react";
-import NewMcqStepper from "./NewMcqStepper";
 
 export default function ModalPopupCommon({
   isOpen,

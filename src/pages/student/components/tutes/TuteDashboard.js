@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Flex, Box, Text } from "@chakra-ui/react";
+// import { useOutletContext } from 'react-router-dom';
 
 import RecentTutes from "./RecentTutes";
 import ScratchPad from "./ScratchPad";
@@ -7,6 +8,13 @@ import ScheduleTute from "./ScheduleTute";
 import QuoteCard from "./QuoteCard";
 
 function TuteDashboard() {
+  // const [minimizeButtonRef] = useOutletContext();
+
+
+  // useEffect(() => {
+  //   minimizeButtonRef.current.click();
+  // }, [])
+
   return (
     <Box h={"calc(100vh - 65px)"}>
       <Text
@@ -28,7 +36,7 @@ function TuteDashboard() {
         <RecentTutes />
         <ScratchPad />
       </Flex>
-      
+
     </Box>
   );
 }

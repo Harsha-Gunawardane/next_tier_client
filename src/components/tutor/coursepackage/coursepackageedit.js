@@ -5,6 +5,7 @@ import {
   FormControl,
   FormLabel,
   Input,
+  Textarea
 } from "@chakra-ui/react";
 import {
   Modal,
@@ -122,8 +123,7 @@ const Coursepackedit = () => {
     const isFormValid =
     title.trim().length !== 0 &&
     description.trim().length !== 0 &&
-    description.length >= 200 &&
-    description.length <= 400 &&
+    description.length <= 200 &&
     price.trim().length !== 0 &&
     !isNaN(price) &&
     parseFloat(price) >= 0 &&
@@ -210,25 +210,25 @@ const Coursepackedit = () => {
                 mt={4}
                 isRequired
                 isInvalid={
-                  description.trim().length === 0 || description.length > 400 || description.length < 200 
+                  description.trim().length === 0 || description.length > 200 
                 }
               >
                 <FormLabel fontSize="15px">Description</FormLabel>
-                <Input
+                <Textarea
                   fontSize="15px"
                   value={description}
-                  height="40px"
+                  height="150px"
                   ref={initialRef}
                   placeholder="Description"
                   onMouseDown={(e) => valchange(true)}
                   onChange={(e) => setDescription(e.target.value)}
                 />
            <FormErrorMessage>
-                {description.trim().length === 0
-          ? "Description is required"
-          : description.length > 400
-          ? "Description cannot exceed 400 characters"
-          : "Description must be at least 200 characters"}
+           {description.trim().length === 0
+      ? "Description is required"
+      : description.length > 200
+      ? "Description should be 200 characters or less"
+      : null}
                 </FormErrorMessage>
               </FormControl>
 

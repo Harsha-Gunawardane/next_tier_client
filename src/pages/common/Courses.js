@@ -9,8 +9,9 @@ function Courses({ courses }) {
       <SimpleGrid columns={{ base: 1, sm: 2, md: 2, lg: 3 }} spacing={8}>
         {courses.map((course) => {
           return (
+
             <GridItem colSpan={1}>
-              <CourseCard course={course}/>
+              <CourseCard course={course} />
             </GridItem>
           );
         })}

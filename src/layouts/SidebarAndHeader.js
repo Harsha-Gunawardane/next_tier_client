@@ -3,7 +3,7 @@ import Header from "../components/Header/Header";
 import ResponsiveSidebar from "../components/Sidebar/ResponsiveSidebar";
 
 import { useState, useEffect, useRef } from "react";
-import { FaUsers,FaUserAlt, FaMoneyBillAlt } from "react-icons/fa";
+import { FaUsers, FaUserAlt, FaMoneyBillAlt } from "react-icons/fa";
 
 import { Box, Grid, GridItem, useDisclosure } from "@chakra-ui/react";
 import useSidebar from "../hooks/useSidebar";
@@ -34,7 +34,6 @@ const SidebarAndHeader = ({ userRole }) => {
 
 	useEffect(() => {
 		const activeTab = findActiveTab(params);
-		console.log(activeTab);
 		setSidebarOptionHandler(activeTab);
 
 	}, [setSidebarOptionHandler]);
@@ -51,7 +50,8 @@ const SidebarAndHeader = ({ userRole }) => {
 		['stu/dashboard', 'dashboard'],
 		['stu/courses', 'courses'],
 		['stu/content', 'content'],
-		['stu/courses/:id/forum', 'courses'],
+		['stu/content/watch/:id', 'content'],
+		['stu/courses/:courseId/forum', 'courses'],
 
 		// More routes and active tabs...
 	]);
@@ -68,7 +68,6 @@ const SidebarAndHeader = ({ userRole }) => {
 				routeWithParams = routeWithParams.replace(params[key], ":" + key);
 			}
 		});
-		console.log(routeWithParams);
 		return (routeWithParams)
 
 	}
@@ -84,7 +83,8 @@ const SidebarAndHeader = ({ userRole }) => {
 		var templateColumns = { base: "0 1fr", md: "260px 1fr", lg: "260px 1fr" };
 		if (minimized.md) {
 			templateColumns.md = "64px 1fr";
-		} else if (minimized.lg) {
+		}
+		if (minimized.lg) {
 			templateColumns.lg = "64px 1fr";
 		}
 		return templateColumns;
@@ -96,7 +96,15 @@ const SidebarAndHeader = ({ userRole }) => {
 		{ icon: GridViewRoundedIcon, name: "Dashboard", value: "dashboard", href: "/stu/dashboard" },
 		{ icon: TiDocumentText, name: "Courses", value: "courses", href: "/stu/courses" },
 		{ icon: FaCompass, name: "Content", value: "content", href: "/stu/content" },
+		{ icon: FaListAlt, name: "Quizzes", value: "quizzes", href: "/stu/quizzes" },
+		{ icon: FaQuestionCircle, name: "Tutes", value: "tutes", href: "/stu/tutes" },
 	];
+
+	const AdminOptions = [
+		{ icon: GridViewRoundedIcon, name: "Dashboard", value: "dashboard", href: "/admin/dashboard" },
+		{ icon: TiDocumentText, name: "Info", value: "info", href: "/admin/info" },
+		{ icon: FaCompass, name: "Settings", value: "adsettings", href: "/admin/settings" },
+	]
 
 	const TeacherOptions = [
 		{
@@ -119,9 +127,9 @@ const SidebarAndHeader = ({ userRole }) => {
 		},
 		{
 			icon: FaUserFriends,
-			name: "Support Staffs",
+			name: "Staff",
 			value: "staffs",
-			href: "/tutor/supportstaffs",
+			href: "/tutor/staffs",
 		},
 		{
 			icon: FaListAlt,
@@ -140,7 +148,7 @@ const SidebarAndHeader = ({ userRole }) => {
 
 	const InstStaffOptions = [
 		{ icon: GridViewRoundedIcon, name: 'Dashboard', value: 'dashboard', href: '/staff/dashboard' },
-		{icon: TiDocumentText, name: "Class Request", value: "approveClass", href: "/staff/class"},
+		{ icon: TiDocumentText, name: "Class Request", value: "approveClass", href: "/staff/class" },
 		{ icon: ReportProblemIcon, name: 'Complaints', value: 'complaints', href: '/staff/complaints' },
 		{ icon: TiDocumentText, name: "Hall Management", value: "hallSchedule", href: "/staff/hall" },
 		{ icon: FaUserAlt, name: 'Institute Staffs', value: 'staff-list', href: '/staff/staff-list' },
@@ -158,6 +166,9 @@ const SidebarAndHeader = ({ userRole }) => {
 			break;
 		case ('InstituteStaff'):
 			Options = InstStaffOptions
+			break;
+		case ('admin'):
+			Options = AdminOptions
 			break;
 		default:
 			Options = StuOptions;
@@ -181,7 +192,7 @@ const SidebarAndHeader = ({ userRole }) => {
 			overscrollBehaviorY={"none"}
 			transition={"all 0.5s ease"}
 		>
-			<GridItem area="sidebar" as={"aside"} h="100vh" maxWidth={"260px"} transition={"all 0.5s ease"}>
+			<GridItem area="sidebar" as={"aside"} h="100vh" maxWidth={"260px"} width={"max-content"} transition={"all 0.5s ease"}>
 				<ResponsiveSidebar
 					Options={Options}
 					minimized={minimized}
@@ -194,21 +205,21 @@ const SidebarAndHeader = ({ userRole }) => {
 					minimizeButtonRef={minimizeButtonRef}
 				/>
 			</GridItem>
-			<GridItem area="main" as={"main"} overflowY={"auto"} overscrollBehavior={"none"} transition={"all 0.5s ease"} sx={{ "clip-path": "inset(0 0 0 0)" }}>
+			<GridItem area="main" as={"main"} overflowY={"auto"} overscrollBehavior={"none"} transition={"all 0.5s ease"} >
 				<Header
-					w={{ base: "100vw", md: minimized.md ? "calc(100vw - 72px)" : "calc(100vw - 268px)", lg: minimized.lg ? "calc(100vw - 72px)" : "calc(100vw - 268px)" }}
+					w={{ base: "100vw", md: minimized.md ? "100%" : "100%", lg: minimized.lg ? "100%" : "100%" }}
 					hidden={hidden}
 					setHidden={setHidden}
-					right={0}
 					onOpen={onOpen}
 					transition={"width 0.5s ease"}
 					minimized={minimized}
 					setMinimized={setMinimized}
-					mr={{ base: "none", md: "8px", lg: "8px" }}
+					position={"sticky"}
+					top={0}
 				/>
-				<Box h={"100vh"} w={"100%"} pt="64px" overflowX={"hidden"}>
-					<Outlet context={[minimizeButtonRef, minimized]} />
-				</Box>
+				{/* <Box h={"100vh"} w={"100%"} overflowX={"hidden"}> */}
+				<Outlet context={[minimizeButtonRef, minimized]} />
+				{/* </Box> */}
 			</GridItem>
 		</Grid >
 	);

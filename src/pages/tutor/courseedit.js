@@ -8,6 +8,7 @@ import { SimpleGrid } from "@chakra-ui/react";
 import { TimeIcon, CalendarIcon } from "@chakra-ui/icons";
 
 import CourseInclude from "../../components/tutor/coursedetails/CourseInclude";
+import CourseIncludedoc from "../../components/tutor/coursedetails/CourseIncludedoc";
 import CourseDetails from "../../components/tutor/coursedetails/CourseDetails";
 import TutorDetails from "../../components/tutor/Tutordetails";
 import Courseeditbutton from "../../components/tutor/coursedetails/Courseeditbutton";
@@ -127,6 +128,7 @@ const Courseedit = () => {
             </Heading>
 
             <CourseInclude></CourseInclude>
+            <CourseIncludedoc></CourseIncludedoc>
 
             <HStack spacing="30px" mt="50px">
               <Courseeditbutton></Courseeditbutton>

@@ -15,6 +15,7 @@ import { IoCloseCircleSharp } from "react-icons/io5";
 import { IconSearch } from "@tabler/icons-react";
 import { BiBook } from "react-icons/bi";
 import { IoIosAddCircleOutline } from "react-icons/io";
+import { AiOutlineImport } from "react-icons/ai";
 
 // import SearchBarOne from "../SearchBars/SearchBarOne";
 
@@ -43,6 +44,7 @@ export default function QuizMcqsHeaderBar({ search, setSearch, handleDrawer, onO
               size="sm"
               fontSize={{ base: "14px", sm: "16px" }}
               borderRadius={"5px"}
+              paddingLeft="35px"
               value={search}
               onChange={(e) => {
                 setSearch(e.target.value);
@@ -64,21 +66,22 @@ export default function QuizMcqsHeaderBar({ search, setSearch, handleDrawer, onO
       </GridItem>
 
       <GridItem colSpan={{ base: 3, sm: 3 }}>
-       
         <FormControl>
           <InputGroup borderColor="#E0E1E7">
             <InputLeftElement
               pointerEvents="none"
               fontSize="12px"
-              children={<IconSearch size="1.3rem" color="gray" />}
+              children={<AiOutlineImport size="1.3rem" color="gray" />}
             />
 
             <Input
+            readOnly
               variant="outline"
-              placeholder="Teleport mcqs from the question library"
+              placeholder="Import mcqs from the question library"
               h={"40px"}
               size="sm"
               fontSize={{ base: "14px", sm: "16px" }}
+              paddingLeft="35px"
               borderRadius={"5px"}
               onClick={handleDrawer}
             />
@@ -87,7 +90,13 @@ export default function QuizMcqsHeaderBar({ search, setSearch, handleDrawer, onO
       </GridItem>
 
       <GridItem colSpan={{ base: 6, sm: 1 }} justifySelf={{ base: "end" }}>
-        <Button colorScheme="messenger" variant="solid" size="md" width="160px" onClick={onOpen}>
+        <Button
+          colorScheme="messenger"
+          variant="solid"
+          size="md"
+          width="160px"
+          onClick={onOpen}
+        >
           <IoIosAddCircleOutline
             size="20px"
             color="white"

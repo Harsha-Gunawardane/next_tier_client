@@ -274,8 +274,8 @@ const Comment = (props) => {
                                 likeCount={commentDetails._count.comment_reactions}
                                 liked={commentDetails.comment_reactions.length > 0 ? commentDetails.comment_reactions[0].islike : null}
                                 type={"comments"}
-                                // refid={commentDetails.id}
-                                buttonDivider={false}
+                                refid={commentDetails.id}
+                                buttonDivider={true}
                             /> : <></>}
                             <Button variant={"link"} color={"gray.400"} fontWeight={"semi-bold"} fontSize={16} size="sm" _hover={{ color: "gray.600" }} onClick={handleReplyInputToggle} px={0}>
                                 Reply
@@ -389,6 +389,7 @@ const CommentSection = (props) => {
         onLoadMore = null,
         parentIndex = null,
         inputAvatar = true,
+        commentStyles,
         ...rest
     } = props
 
@@ -578,7 +579,6 @@ const CommentSection = (props) => {
                 }
 
             </Flex>
-            {console.log(commentsArr.length, commentCount, renderLimit, iteratorCount)}
             {(commentsArr.length < commentCount) || (renderLimit !== 0 && iteratorCount < commentCount) ?
                 <Flex w="100%" justifyContent={"center"} alignItems={"center"} my="10px">
                     <Button variant={"ghost"} color={"gray.400"} colorScheme='blue' fontWeight={"semi-bold"} fontSize={12} size="xs" onClick={() => onLoadMore ? onLoadMore(parentIndex) : fetchComments(sectionId, skip, limit)} >

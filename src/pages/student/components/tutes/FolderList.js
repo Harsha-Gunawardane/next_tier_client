@@ -19,7 +19,7 @@ function FolderList({ folders }) {
               <Accordion.Control>{folder.name}</Accordion.Control>
               <Accordion.Panel>
                 {folder.pages.map((page) => {
-                  return <PageNameCard name={page} ml={8}/>;
+                  return <PageNameCard name={page} ml={8} />;
                 })}
               </Accordion.Panel>
             </Accordion.Item>

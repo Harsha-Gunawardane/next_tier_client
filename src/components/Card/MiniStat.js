@@ -4,7 +4,7 @@ import Card from "./Card.js";
 // Custom icons
 import React from "react";
 
-export default function Default(props) {
+export default function MiniStat(props) {
   const { startContent, endContent, name, growth, value } = props;
   const textColor = useColorModeValue("#333", "white");
   const textColorSecondary = "gray.600";

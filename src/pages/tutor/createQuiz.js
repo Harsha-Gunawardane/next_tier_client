@@ -49,7 +49,7 @@ export default function CreateQuiz() {
   useEffect(() => {
     const getQuiz = async () => {
       try {
-        const response = await axiosPrivate.get(`/quizzes/${quizId}`);
+        const response = await axiosPrivate.get(`/tutor/quizzes/${quizId}`);
         setQuiz(response.data);
         console.log(response.data);
       } catch (error) {
@@ -62,7 +62,7 @@ export default function CreateQuiz() {
   useEffect(() => {
     const getMcqs = async () => {
       try {
-        const response = await axiosPrivate.get("/mcqs");
+        const response = await axiosPrivate.get("/tutor/mcqs");
         setMcqs(response.data);
       } catch (error) {
         console.log(error.response.data);
