@@ -21,7 +21,7 @@ import React, { useState, useEffect } from 'react';
 import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
 import 'react-pdf/dist/Page/TextLayer.css';
 import { LoadingOverlay } from '@mantine/core';
-import { Document, Page } from "react-pdf";
+import { pdfjs, Document, Page } from "react-pdf";
 import axios from '../../../api/axios';
 
 //icons
@@ -29,13 +29,12 @@ import { RiArrowLeftSLine, RiArrowRightSLine } from 'react-icons/ri';
 import { HiOutlineDownload } from 'react-icons/hi';
 
 //bundle worker from react-pdf
-import { pdfjs } from 'react-pdf';
 
-pdfjs.GlobalWorkerOptions.workerSrc = new URL(
-    'pdfjs-dist/build/pdf.worker.min.js',
-    import.meta.url,
-).toString();
-
+// pdfjs.GlobalWorkerOptions.workerSrc = new URL(
+//     '/pdf.worker.min.js',
+//     import.meta.url,
+// ).toString();
+pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.js`;
 
 
 const PdfModal = ({ pdfUrl, isOpen, onClose }) => {
@@ -83,13 +82,11 @@ const PdfModal = ({ pdfUrl, isOpen, onClose }) => {
     };
 
     const handleDownload = () => {
-        const blob = new Blob([pdfData], { type: 'application/pdf' });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = 'downloaded.pdf';
-        a.click();
-        URL.revokeObjectURL(url);
+        const link = document.createElement('a');
+        link.href = pdfData;
+        link.setAttribute('download', 'file.pdf');
+        document.body.appendChild(link);
+        link.click();
     };
 
 
@@ -127,7 +124,7 @@ const PdfModal = ({ pdfUrl, isOpen, onClose }) => {
                                     height={"100%"}
                                     width={"100%"}
                                 >
-                                    <Page pageNumber={currentPage} />
+                                    <Page pageNumber={currentPage} renderMode="canvas" />
                                 </Document>
                             </Flex>
                         )

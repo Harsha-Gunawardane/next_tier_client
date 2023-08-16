@@ -224,7 +224,7 @@ function App() {
             <Route path="dashboard" element={<InstStaffDashboard />} />
             <Route path="my-profile" element={<MyProfile />} />
             {/* <Route path="teacher" element={<ViewTeacher />} /> */}
-            <Route path="teacher/add" element={<AddTeacher />} />
+            <Route path="tutors-list/add" element={<AddTeacher />} />
             <Route path="class" element={<ApproveClass />} />
             <Route path="profile/:id" element={<InstStaffProfile />} />
             <Route path="complaints" element={<InstStaffComplaintsList />} />
