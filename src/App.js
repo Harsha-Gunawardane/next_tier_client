@@ -123,29 +123,29 @@ function App() {
               <Route path="courses" element={<StudentCourses />} />
               {/* <Route path="courses/:id/content" element={<Coursecontent />} /> */}
               <Route path="content" element={<ContentPage />} />
-
+{/* 
               <Route path="quizzes" element={<QuizDashboard />} />
               <Route path="quizzes/:subject" element={<QuizDashboard />} />
               <Route
                 path="quizzes/:subject/:mcqname/review"
                 element={<ReviewQuiz />}
-              />
+              /> */}
 
-              <Route path="courses/:courseId" element={<CourseLayout />} >
+              {/* <Route path="courses/:courseId" element={<CourseLayout />} >
                 <Route index element={<Test />} />
                 <Route path="forum" element={<Forum />} />
               </Route>
               <Route path="content" element={<ContentPage />} />
               <Route path="content/watch/:id" element={<ContentWatch />} />
-              <Route path="quizzes/:subject/:mcqname" element={<Quiz />} />
+              <Route path="quizzes/:subject/:mcqname" element={<Quiz />} /> */}
 
-              <Route path="tutes" element={<TuteLayout />}>
+              {/* <Route path="tutes" element={<TuteLayout />}>
                 <Route index element={<TuteDashboard />} />
                 <Route path="new/:id" element={<NewTute />} />
                 <Route path="edit/:id" element={<NewTute />} />
                 <Route path="view/:id" element={<PdfView />} />
                 <Route path=":id" element={<TuteView />} />
-              </Route>
+              </Route> */}
 
               <Route path="settings" element={<Settings />} />
             </Route>
@@ -224,7 +224,7 @@ function App() {
             <Route path="dashboard" element={<InstStaffDashboard />} />
             <Route path="my-profile" element={<MyProfile />} />
             {/* <Route path="teacher" element={<ViewTeacher />} /> */}
-            <Route path="teacher/add" element={<AddTeacher />} />
+            {/* <Route path="teacher/add" element={<AddTeacher />} />
             <Route path="class" element={<ApproveClass />} />
             <Route path="profile/:id" element={<InstStaffProfile />} />
             <Route path="complaints" element={<InstStaffComplaintsList />} />
@@ -243,7 +243,7 @@ function App() {
             <Route
               path="tutor-profile/:id/course/:id"
               element={<CourseProfile />}
-            />
+            /> */}
           </Route>
           {/* </Route> */}
 

@@ -11,7 +11,7 @@ import VideoJS from './VideoPlayer'
 import videojs from 'video.js'
 import VideoPlayer from './VideoPlayer';
 
-import ReactHlsPlayer from "react-hls-player";
+// import ReactHlsPlayer from "react-hls-player";
 
 
 
@@ -51,7 +51,7 @@ const VideoView = (props) => {
                         subtitle: false,
                     }}
                 >
-                    {(ref, props) => <ReactHlsPlayer playerRef={ref} {...props} width={"100%"} />}
+                    {/* {(ref, props) => <ReactHlsPlayer playerRef={ref} {...props} width={"100%"} />} */}
 
                 </Player>
             </AspectRatio>
