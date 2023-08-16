@@ -37,9 +37,28 @@ const VideoView = (props) => {
             <AspectRatio minW="100%" ratio={16 / 9} overflow={"hidden"}>
 
                 <Player
-                    src={"http://localhost:3500/video/1691992995998-372376720/hls"}
+                    src={[
+                        {
+                            quality: "Original",
+                            url:
+                                `http://localhost:3500/video/${videoDetails.file_path}/hls`,
+                        },
+                        {
+                            quality: "1080p",
+                            url:
+                                `http://localhost:3500/video/${videoDetails.file_path}/hls/1080p`,
+                        },
+                        {
+                            quality: "720p",
+                            url: `http://localhost:3500/video/${videoDetails.file_path}/hls/720p`,
+                        },
+                        {
+                            quality: "360p",
+                            url: `http://localhost:3500/video/${videoDetails.file_path}/hls/360p`,
+                        },
+                    ]}
 
-                    poster="https://cdn.jsdelivr.net/gh/naptestdev/video-examples@master/poster.png"
+                    poster={videoDetails.thumbnail}
 
                     keyboardShortcut={{
                         play: false,

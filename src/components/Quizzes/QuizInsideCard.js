@@ -31,7 +31,7 @@ export default function QuizInsideCard({ quiz, handleDelete, handleEdit }) {
         />
 
         <Stack>
-          <CardBody padding="10px" minWidth={{ base: "370px", md: "620px" }}>
+          <CardBody padding="10px" minWidth={{ base: "370px", md: "670px" }}>
             <HStack justifyContent="space-between">
               <Text color="gray" fontSize="16px" mt="3px">
                 Quiz
@@ -69,7 +69,9 @@ export default function QuizInsideCard({ quiz, handleDelete, handleEdit }) {
               </Text>
               <HStack>
                 <Text fontSize={{ base: "14px", md: "16px" }}>
-                  {quiz.number_of_questions}
+                  {quiz && Array.isArray(quiz.question_ids)
+                    ? quiz.question_ids.length
+                    : 0}
                 </Text>
               </HStack>
             </Box>

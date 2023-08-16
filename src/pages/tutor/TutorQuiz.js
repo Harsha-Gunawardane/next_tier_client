@@ -16,13 +16,14 @@ import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import { useParams } from "react-router-dom";
 import QuizMcqsHeaderBar from "../../components/Quizzes/QuizMcqsHeaderBar";
 import McqDisplayFromLibraryDrawer from "../../components/Quizzes/McqDisplayFromLibraryDrawer";
-import NewMcqStepper from "../../components/Quizzes/NewMcqStepper";
+import NewMcqQuizStepper from "../../components/Quizzes/NewMcqQuizStepper";
 import ModalPopupCommon from "../../components/Quizzes/ModalPopupCommon";
 import McqsView from "../../components/mcq/McqsView";
 import McqEditForm from "../../components/mcq/McqEditForm";
-import McqDeleteAlertDialog from "../../components/mcq/McqDeleteAlertDialog";
 import QuizDeleteAlertDialog from "../../components/Quizzes/QuizDeleteAlertDialog";
 import QuizEditForm from "../../components/Quizzes/QuizEditForm";
+import McqDeleteFromQuizAlertDialog from "../../components/mcq/McqDeleteFromQuizAlertDialog";
+import McqAddingCard from "../../components/mcq/McqAddingCard";
 
 export default function TutorQuiz() {
   const { quizId } = useParams();
@@ -32,9 +33,10 @@ export default function TutorQuiz() {
   const [quiz, setQuiz] = useState([]);
   const [quizzes, setQuizzes] = useState([]);
 
+  const [allMcqs, setAllMcqs] = useState([]);
+
   const [mcqs, setMcqs] = useState([]);
   const [mcq, setMcq] = useState(null);
-  const [mcqsForQuiz, setMcqsForQuiz] = useState([]);
   const [search, setSearch] = useState("");
 
   const {
@@ -179,10 +181,35 @@ export default function TutorQuiz() {
     getQuiz();
   }, []);
 
+//Get all mcqs
+useEffect(() => {
+  const getAllMcqs = async () => {
+    try {
+      const response = await axiosPrivate.get(
+        "/tutor/mcqs"
+      );
+      setAllMcqs(response.data);
+    } catch (error) {
+      if (error.response && error.response.data) {
+        console.log(error.response.data);
+      } else {
+        console.log("An error occurred:", error.message);
+      }
+    }
+  };
+
+  getAllMcqs();
+}, []);
+
+
+
+  //Get mcqs in the quiz
   useEffect(() => {
-    const getMcqs = async () => {
+    const getMcqsFromQuiz = async () => {
       try {
-        const response = await axiosPrivate.get("/tutor/mcqs");
+        const response = await axiosPrivate.get(
+          `/tutor/quizzes/getMcqs/${quizId}`
+        );
         setMcqs(response.data);
       } catch (error) {
         if (error.response && error.response.data) {
@@ -193,7 +220,7 @@ export default function TutorQuiz() {
       }
     };
 
-    getMcqs();
+    getMcqsFromQuiz();
   }, []);
 
   useEffect(() => {
@@ -216,17 +243,7 @@ export default function TutorQuiz() {
     getmcq();
   }, [mcqIdToEdit]);
 
-  useEffect(() => {
-    // Filtering mcqs according to the quiz
-    if (mcqs.length > 0 && quiz && quiz.question_ids) {
-      const filteredMcqs = mcqs.filter((mcq) =>
-        quiz.question_ids.includes(mcq.id)
-      );
-      setMcqsForQuiz(filteredMcqs);
-    }
-  }, [quiz, mcqs]);
-
-  console.log(quiz)
+  console.log(mcqs);
 
   return (
     <Box width="100%">
@@ -237,10 +254,12 @@ export default function TutorQuiz() {
         onClose={onNewMcqPopupClose}
         modalHeader={"Create a question"}
         modalBody={
-          <NewMcqStepper
+          <NewMcqQuizStepper
+            quiz={quiz}
+            setQuiz={setQuiz}
             quizId={quizId}
-            mcqsForQuiz={mcqsForQuiz}
-            setMcqsForQuiz={setMcqsForQuiz}
+            mcqs={mcqs}
+            setMcqs={setMcqs}
             onClose={onNewMcqPopupClose}
           />
         }
@@ -266,12 +285,13 @@ export default function TutorQuiz() {
         <></>
       )}
 
-      <McqDeleteAlertDialog
+      <McqDeleteFromQuizAlertDialog
         isOpen={isMcqDeleteAlertDialogOpen}
         onClose={onMcqDeleteAlertDialogClose}
         mcqIdToDelete={mcqIdToDelete}
         mcqs={mcqs}
         setMcqs={setMcqs}
+        quiz={quiz}
         setQuiz={setQuiz}
       />
 
@@ -280,7 +300,14 @@ export default function TutorQuiz() {
         onOpen={onEditQuizPopupOpen}
         onClose={onEditQuizPopupClose}
         modalHeader={"Edit quiz details"}
-        modalBody={<QuizEditForm quiz={quiz} onClose={onEditQuizPopupClose} />}
+        modalBody={
+          <QuizEditForm
+            quizId={quizId}
+            quiz={quiz}
+            setQuiz={setQuiz}
+            onClose={onEditQuizPopupClose}
+          />
+        }
       />
 
       <QuizDeleteAlertDialog
@@ -293,8 +320,8 @@ export default function TutorQuiz() {
       <Grid
         margin={{ base: "10px 10px", md: "20px auto" }}
         templateColumns="repeat(3, 1fr)"
-        maxWidth="1180px"
-        gap={{ base: 2, md: 8 }}
+        maxWidth="1240px"
+        gap={{ base: 2, md: 4 }}
       >
         <GridItem colSpan={{ base: 3, md: 2 }}>
           <QuizInsideCard
@@ -303,7 +330,7 @@ export default function TutorQuiz() {
             handleEdit={handleEditQuiz}
           />
         </GridItem>
-        <GridItem colSpan={{ base: 3, md: 1 }}>
+        <GridItem colSpan={{ base: 1, md: 1 }}>
           <Card
             variant="outline"
             height={{ base: "80px", md: "150px" }}
@@ -312,35 +339,34 @@ export default function TutorQuiz() {
             <DonutChartQuiz />
           </Card>
         </GridItem>
+        <GridItem colSpan={{ base: 3, md: 3 }}>
+          <McqAddingCard
+            handleDrawer={handleDrawer}
+            onOpen={onNewMcqPopupOpen}
+          />
+        </GridItem>
       </Grid>
-      <QuizMcqsHeaderBar
-        search={search}
-        setSearch={setSearch}
-        handleDrawer={handleDrawer}
-        onOpen={onNewMcqPopupOpen}
-      />
 
       {mcqs.length > 0 ? (
         <McqsView
-          mcqs={mcqsForQuiz.filter((mcq) =>
+          mcqs={mcqs.filter((mcq) =>
             mcq.question.toLowerCase().includes(search.toLowerCase())
           )}
           handleDelete={handleDeleteMcq}
           handleEdit={handleEditMcq}
         />
       ) : (
-        <>
-          <Stack mt="40px">
-            <Skeleton height="20px" />
-            <Skeleton height="20px" />
-            <Skeleton height="20px" />
-          </Stack>
-        </>
+        <></>
       )}
 
       <McqDisplayFromLibraryDrawer
-        mcqs={mcqs}
-        setMcqs={setMcqs}
+        quiz={quiz}
+        setQuiz={setQuiz}
+        allMcqs={allMcqs}
+        setAllMcqs={setAllMcqs}
+        quizMcqs={mcqs}
+        setQuizMcqs={setMcqs}
+        quizId={quizId}
         search={search}
         setSearch={setSearch}
         isOpen={isDrawerOpen}

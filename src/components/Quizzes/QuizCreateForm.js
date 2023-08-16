@@ -83,7 +83,7 @@ export default function QuizCreateForm({ onClose, quizzes, setQuizzes }) {
         console.log("Form data submitted successfully!");
         console.log(response.data.id)
 
-        navigate(`/tutor/quizzes/create/${response.data.id}`);
+        navigate(`/tutor/quizzes/${response.data.id}`);
 
         onClose();
         
@@ -94,7 +94,7 @@ export default function QuizCreateForm({ onClose, quizzes, setQuizzes }) {
     }
     
     
-  };
+  }
 
   return (
     <>

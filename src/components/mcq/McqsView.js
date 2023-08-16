@@ -10,7 +10,7 @@ export default function McqsView({ mcqs, handleDelete, handleEdit }) {
       variant="separated"
       chevronPosition="left"
       m="20px"
-      style={{ overflow: "auto", maxHeight: "330px" }}
+      style={{ overflow: "auto", maxHeight: "270px" }}
     >
       {mcqs.map((mcq) => (
         <Accordion.Item key={mcq.id} value={mcq.question}>

@@ -5,35 +5,42 @@ import {
   Group,
   TextInput,
   SimpleGrid,
-  Card,
-  MultiSelect,
-  Select,
-  Textarea,
   NumberInput,
-  Code,
+  Select,
+  MultiSelect,
+  Textarea,
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
-import { useToast } from "@chakra-ui/react";
+import { Card, useToast } from "@chakra-ui/react";
 
-export default function McqEditForm({ mcq, mcqId, onClose, mcqs, setMcqs }) {
+export default function NewMcqQuizStepper({
+  quizId,
+  mcqs,
+  setMcqs,
+  quiz,
+  setQuiz,
+  onClose,
+}) {
+  const toast = useToast();
   const [active, setActive] = useState(0);
-
   const axiosPrivate = useAxiosPrivate();
 
-  const toast = useToast();
-
-  const [options, setOptions] = useState(mcq.options);
+  const [options, setOptions] = useState([]);
 
   //Used to display answer Options in seperately
   const [selectedOptionsForDisplay, setSelectedOptionsForDisplay] = useState(
-    mcq.options
+    []
   );
 
-  const [subjectAreas, setSubjectAreas] = useState(mcq.subject_areas);
+  const [subjectAreas, setSubjectAreas] = useState([
+    { value: "Inorganic", label: "Inorganic" },
+    { value: "Calculation", label: "Calculation" },
+  ]);
 
   const [subject, setSubject] = useState([
-    { value: mcq.subject, label: mcq.subject },
+    { value: "Mathematics", label: "Mathematics" },
+    { value: "Chemistry", label: "Chemistry" },
   ]);
 
   const form = useForm({
@@ -42,7 +49,7 @@ export default function McqEditForm({ mcq, mcqId, onClose, mcqs, setMcqs }) {
       points: "",
       difficulty_level: "",
       subject: "",
-      subject_areas: "",
+      subject_areas: [],
       options: [],
       correct_answer: "",
       explanation: "",
@@ -52,8 +59,8 @@ export default function McqEditForm({ mcq, mcqId, onClose, mcqs, setMcqs }) {
       if (active === 0) {
         return {
           question:
-            values.question.trim().length < 6
-              ? "Question must include at least 6 characters"
+            values.question.trim().length < 3
+              ? "Question must include at least 3 characters"
               : null,
         };
       }
@@ -83,22 +90,6 @@ export default function McqEditForm({ mcq, mcqId, onClose, mcqs, setMcqs }) {
   const prevStep = () =>
     setActive((current) => (current > 0 ? current - 1 : current));
 
-  // Update the form values when mcq data changes (in case mcq is fetched after form mount)
-  useEffect(() => {
-    if (mcq) {
-      form.setValues({
-        question: mcq.question || "",
-        points: mcq.points || "",
-        difficulty_level: mcq.difficulty_level || "",
-        subject: mcq.subject || "",
-        subject_areas: subjectAreas,
-        options: options,
-        correct_answer: mcq.options[mcq.correct_answer] || "",
-        explanation: mcq.explanation || "",
-      });
-    }
-  }, [mcq]);
-
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -106,7 +97,7 @@ export default function McqEditForm({ mcq, mcqId, onClose, mcqs, setMcqs }) {
       try {
         console.log(form.values);
 
-        const updatedFormValues = {
+        const FormValues = {
           question: form.values.question,
           points: form.values.points,
           difficulty_level: form.values.difficulty_level,
@@ -119,46 +110,37 @@ export default function McqEditForm({ mcq, mcqId, onClose, mcqs, setMcqs }) {
           explanation: form.values.explanation,
         };
 
-        const response = await axiosPrivate.put(
-          `/tutor/mcqs/${mcqId}`,
-          updatedFormValues
+        const response = await axiosPrivate.post(
+          `/tutor/quizzes/addMcq/${quizId}`,
+          JSON.stringify(FormValues),
+          {
+            headers: { "Content-Type": "application/json" },
+            withCredentials: true,
+          }
         );
 
-        //Update data in state
-        const updatedmcqList = mcqs.map((mcq) => {
-          if (mcq.id === mcqId) {
-            return {
-              ...mcq, // Copy all the properties of mcq object
-              question: form.values.question,
-              points: form.values.points,
-              difficulty_level: form.values.difficulty_level,
-              subject: form.values.subject,
-              subject_areas: form.values.subject_areas,
-              options: form.values.options,
-              correct_answer: form.values.options.findIndex(
-                (option) => option === form.values.correct_answer
-              ),
-              explanation: form.values.explanation, // Overwrite those values
-            };
-          }
-          return mcq;
-        });
+        const newQuestion = response.data;
+        //Added to state
+        setMcqs([...mcqs, newQuestion]);
 
-        setMcqs(updatedmcqList);
+        //Added question id to the quiz
+        const updatedQuestionIds = [...quiz.question_ids, response.data.id];
+        const updatedQuiz = { ...quiz, question_ids: updatedQuestionIds };
+        setQuiz(updatedQuiz);
 
-        //Close edit form
+        console.log(JSON.stringify(response?.data));
+        console.log("Form data submitted successfully!");
+
         onClose();
 
         toast({
-          title: "Mcq edited.",
-          description: `Mcq edited succesfully.`,
+          title: "Mcq added.",
+          description: `Mcq added to the ${quiz.title} succesfully.`,
           status: "success",
           duration: 9000,
           isClosable: true,
           position: "top-right",
         });
-
-        console.log("Form data updated successfully!");
       } catch (error) {
         console.error("Error sending data:", error);
       }
@@ -191,15 +173,18 @@ export default function McqEditForm({ mcq, mcqId, onClose, mcqs, setMcqs }) {
                 setOptions((current) => [...current, item]);
                 return item;
               }}
-              defaultValue={options}
               {...form.getInputProps("options")}
             />
             <SimpleGrid cols={2} spacing="xs" verticalSpacing="xs" m="8px">
-              {selectedOptionsForDisplay.map((option) => (
-                <Card p="5px" fz="xs" withBorder key={option}>
-                  {option}
-                </Card>
-              ))}
+              {selectedOptionsForDisplay ? (
+                selectedOptionsForDisplay.map((option) => (
+                  <Card p="5px" fontSize="12px" withBorder key={option}>
+                    {option}
+                  </Card>
+                ))
+              ) : (
+                <></>
+              )}
             </SimpleGrid>
 
             <Select
@@ -258,7 +243,6 @@ export default function McqEditForm({ mcq, mcqId, onClose, mcqs, setMcqs }) {
                 setSubject((current) => [...current, item]);
                 return item;
               }}
-              defaultValue={mcq.subject}
               {...form.getInputProps("subject")}
             />
             <MultiSelect
@@ -275,15 +259,73 @@ export default function McqEditForm({ mcq, mcqId, onClose, mcqs, setMcqs }) {
                 setSubjectAreas((current) => [...current, item]);
                 return item;
               }}
-              defaultValue={subjectAreas}
               {...form.getInputProps("subject_areas")}
             />
           </Stepper.Step>
           <Stepper.Completed>
             Completed! Form values:
-            <Code block mt="xl">
-              {JSON.stringify(form.values, null, 2)}
-            </Code>
+            <Card padding="10px">
+              <TextInput
+                readOnly
+                label="Question"
+                defaultValue={form.values.question}
+              />
+              <MultiSelect
+                readOnly
+                label="Define Options"
+                data={options}
+                placeholder="Define Options"
+                getCreateLabel={(query) => `+ Create ${query}`}
+                defaultValue={form.values.options}
+              />
+              <SimpleGrid cols={2} spacing="xs" verticalSpacing="xs" m="8px">
+                {selectedOptionsForDisplay ? (
+                  selectedOptionsForDisplay.map((option) => (
+                    <Card p="5px" fontSize="12px" withBorder key={option}>
+                      {option}
+                    </Card>
+                  ))
+                ) : (
+                  <></>
+                )}
+              </SimpleGrid>
+              <Textarea
+                readOnly
+                autosize
+                label="Answer Explanation"
+                defaultValue={form.values.explanation}
+              />
+              <SimpleGrid cols={2} mt="md">
+                <Select
+                  readOnly
+                  label="Difficulty Level"
+                  data={[
+                    { value: "Medium", label: "Medium" },
+                    { value: "Hard", label: "Hard" },
+                  ]}
+                  defaultValue={form.values.difficulty_level}
+                />
+                <NumberInput
+                  readOnly
+                  label="Points"
+                  defaultValue={form.values.points}
+                />
+              </SimpleGrid>
+              <SimpleGrid cols={2}>
+                <Select
+                  readOnly
+                  label="Select Subject"
+                  data={subject}
+                  defaultValue={form.values.subject}
+                />
+                <MultiSelect
+                  readOnly
+                  label="Select Subject Areas"
+                  data={subjectAreas}
+                  defaultValue={form.values.subject_areas}
+                />
+              </SimpleGrid>
+            </Card>
           </Stepper.Completed>
         </Stepper>
 

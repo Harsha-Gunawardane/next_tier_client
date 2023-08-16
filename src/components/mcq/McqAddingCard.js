@@ -33,7 +33,7 @@ export default function McqAddingCard({ handleDrawer, onOpen }) {
               <Input
                 readOnly
                 variant="outline"
-                placeholder="Search from question library"
+                placeholder="Import mcqs from the question library"
                 h={"40px"}
                 size="sm"
                 fontSize={{ base: "14px", md: "16px" }}
