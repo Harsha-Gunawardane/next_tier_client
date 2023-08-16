@@ -73,7 +73,6 @@ import PaperclassContent from "./pages/tutor/paperclasscontent";
 import TutorStaffs from "./pages/tutor/TutorStaffs";
 import McqsByCategory from "./pages/tutor/McqsByCategory";
 import PaperMarking from "./pages/tutor/PaperMarking";
-import CreateQuiz from "./pages/tutor/CreateQuiz";
 import TutorQuiz from "./pages/tutor/TutorQuiz";
 import TutorQuizzes from "./pages/tutor/TutorQuizzes";
 
@@ -213,47 +212,46 @@ function App() {
 
               <Route path="quizzes">
                 <Route index element={<TutorQuizzes />} />
-                <Route path="create/:quizId" element={<CreateQuiz />} />
                 <Route path=":quizId" element={<TutorQuiz />} />
                 <Route path="category/:id" element={<McqsByCategory />}></Route>
               </Route>
             </Route>
-          </Route>
+            {/* </Route> */}
 
-          <Route element={<RequireAuth allowedRoles={[ROLES.Staff]} />}>
-            <Route
-              path="staff"
-              element={<SidebarAndHeader userRole={"InstituteStaff"} />}
-            >
-              <Route path="dashboard" element={<InstStaffDashboard />} />
-              <Route path="my-profile" element={<MyProfile />} />
-              {/* <Route path="teacher" element={<ViewTeacher />} /> */}
-              <Route path="tutors-list/add" element={<AddTeacher />} />
-              <Route path="class" element={<ApproveClass />} />
-              <Route path="profile/:id" element={<InstStaffProfile />} />
-              <Route path="complaints" element={<InstStaffComplaintsList />} />
-              <Route path="hall" element={<HallSchedule />} />
-              <Route path="hall/view" element={<HallList />} />
-              <Route path="stu-payment" element={<InstStaffStuPayment />} />
-              <Route path="staff-list" element={<InstStaffList />} />
-              <Route path="payment-history" element={<ViewPaymentHistory />} />
-              <Route path="cash-receipt" element={<CashReceipt />} />
-              <Route path="online-receipt" element={<OnlineReceipt />} />
-              <Route path="stu-list" element={<StudentsList />} />
-              <Route path="stu-profile/:id" element={<StudentProfile />} />
-              <Route path="staff-list" element={<InstStaffList />} />
-              <Route path="tutors-list" element={<TutorsList />} />
-              <Route path="tutor-profile/:id" element={<TutorProfile />} />
+            <Route element={<RequireAuth allowedRoles={[ROLES.Staff]} />}>
               <Route
-                path="tutor-profile/:id/course/:id"
-                element={<CourseProfile />}
-              />
+                path="staff"
+                element={<SidebarAndHeader userRole={"InstituteStaff"} />}
+              >
+                <Route path="dashboard" element={<InstStaffDashboard />} />
+                <Route path="my-profile" element={<MyProfile />} />
+                {/* <Route path="teacher" element={<ViewTeacher />} /> */}
+                <Route path="tutors-list/add" element={<AddTeacher />} />
+                <Route path="class" element={<ApproveClass />} />
+                <Route path="profile/:id" element={<InstStaffProfile />} />
+                <Route path="complaints" element={<InstStaffComplaintsList />} />
+                <Route path="hall" element={<HallSchedule />} />
+                <Route path="hall/view" element={<HallList />} />
+                <Route path="stu-payment" element={<InstStaffStuPayment />} />
+                <Route path="staff-list" element={<InstStaffList />} />
+                <Route path="payment-history" element={<ViewPaymentHistory />} />
+                <Route path="cash-receipt" element={<CashReceipt />} />
+                <Route path="online-receipt" element={<OnlineReceipt />} />
+                <Route path="stu-list" element={<StudentsList />} />
+                <Route path="stu-profile/:id" element={<StudentProfile />} />
+                <Route path="staff-list" element={<InstStaffList />} />
+                <Route path="tutors-list" element={<TutorsList />} />
+                <Route path="tutor-profile/:id" element={<TutorProfile />} />
+                <Route
+                  path="tutor-profile/:id/course/:id"
+                  element={<CourseProfile />}
+                />
+              </Route>
             </Route>
+
           </Route>
 
-        </Route>
-
-        {/* <Route element={<RequireAuth allowedRoles={[ROLES.User]} />}>
+          {/* <Route element={<RequireAuth allowedRoles={[ROLES.User]} />}>
             <Route path="user" element={<UserLayout />}>
               <Route path="profile" element={<UserProfile />} />
             </Route>
@@ -261,7 +259,8 @@ function App() {
         </Route>
 
         {/* catch all */}
-        <Route path="*" element={<Missing />} />
+          <Route path="*" element={<Missing />} />
+        </Route>
       </Route>
     </Routes>
   );
