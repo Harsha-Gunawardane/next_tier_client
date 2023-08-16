@@ -6,9 +6,6 @@ import {
   DrawerOverlay,
   DrawerContent,
   DrawerCloseButton,
-  Stack,
-  Box,
-  FormLabel,
   Input,
   Button,
   InputLeftElement,
@@ -23,10 +20,15 @@ import McqsAddingViewInDrawer from "./McqsAddingViewInDrawer";
 import { BiBook } from "react-icons/bi";
 
 export default function McqDisplayFromLibraryDrawer({
-  mcqs,
-  setMcqs,
+  quizId,
+  allMcqs,
+  setAllMcqs,
+  quizMcqs,
+  setQuizMcqs,
   search,
   setSearch,
+  quiz,
+  setQuiz,
   isOpen,
   onOpen,
   onClose,
@@ -63,8 +65,8 @@ export default function McqDisplayFromLibraryDrawer({
                     h={"40px"}
                     size="sm"
                     fontSize={{ base: "14px", md: "16px" }}
-                    // bg="gray.50"
                     borderRadius={"5px"}
+                    paddingLeft="35px"
                     value={search}
                     onChange={(e) => {
                       setSearch(e.target.value);
@@ -89,6 +91,7 @@ export default function McqDisplayFromLibraryDrawer({
                     h={"40px"}
                     size="sm"
                     borderRadius={"5px"}
+                    paddingLeft="35px"
                   >
                     <option value="option1">Inorganic</option>
                     <option value="option2">Organic</option>
@@ -99,9 +102,16 @@ export default function McqDisplayFromLibraryDrawer({
               </FormControl>
             </HStack>
             <McqsAddingViewInDrawer
-              mcqs={mcqs.filter((mcq) =>
+              mcqs={allMcqs.filter((mcq) =>
                 mcq.question.toLowerCase().includes(search.toLowerCase())
               )}
+              quizId={quizId}
+              setAllMcqs={setAllMcqs}
+              allMcqs={allMcqs}
+              quizMcqs={quizMcqs}
+              setQuizMcqs={setQuizMcqs}
+              quiz={quiz}
+              setQuiz={setQuiz}
             />
           </DrawerBody>
 

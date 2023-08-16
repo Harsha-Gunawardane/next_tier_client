@@ -10,9 +10,12 @@ import {
 import { useForm } from "@mantine/form";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import { useState } from "react";
+import { useToast } from "@chakra-ui/react";
 
-export default function QuizEditForm({ quiz, onClose }) {
+export default function QuizEditForm({ quizId, quiz, setQuiz, onClose }) {
   const axiosPrivate = useAxiosPrivate();
+
+  const toast = useToast()
 
   const [subjectAreas, setSubjectAreas] = useState(quiz.subject_areas);
 
@@ -20,14 +23,13 @@ export default function QuizEditForm({ quiz, onClose }) {
     { value: quiz.subject, label: quiz.subject },
   ]);
 
-
-
   const form = useForm({
     initialValues: {
       title: quiz.title,
       subject: quiz.subject,
       subject_areas: subjectAreas,
       number_of_questions: quiz.number_of_questions,
+      question_ids: quiz.question_ids,
     },
 
     validate: (values) => {
@@ -44,12 +46,39 @@ export default function QuizEditForm({ quiz, onClose }) {
     },
   });
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
-    // Access form values through form.values object
-    console.log(form.values);
-    // ... other logic to handle form submission ...
+    if (!form.validate().hasErrors) {
+      try {
+        console.log(form.values);
+
+        const response = await axiosPrivate.put(
+          `/tutor/quizzes/${quizId}`,
+          form.values
+        );
+
+        //Update data in state
+
+        setQuiz(response.data);
+
+        //Close edit form
+        onClose();
+
+        toast({
+          title: "Quiz edited.",
+          description: `Quiz edited succesfully.`,
+          status: "success",
+          duration: 9000,
+          isClosable: true,
+          position: "top-right",
+        });
+
+        console.log("Form data updated successfully!");
+      } catch (error) {
+        console.error("Error sending data:", error);
+      }
+    }
   };
 
   return (
@@ -74,8 +103,8 @@ export default function QuizEditForm({ quiz, onClose }) {
             {...form.getInputProps("subject")}
           />
           <NumberInput
-            required
-            label="Points"
+            readOnly
+            label="Number of questions"
             {...form.getInputProps("number_of_questions")}
           />
         </SimpleGrid>

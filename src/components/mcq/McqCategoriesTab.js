@@ -53,7 +53,10 @@ export default function McqCategoriesTab() {
             category.title.toLowerCase().includes(search.toLowerCase())
           )
           .map((category) => (
-            <NavLink key={category.id} to={`category/${category.id}`}>
+            <NavLink
+              key={category.id}
+              to={`/tutor/quizzes/category/${category.id}`}
+            >
               <McqCategoryCards category={category} />
             </NavLink>
           ))}

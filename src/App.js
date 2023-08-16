@@ -72,10 +72,8 @@ import PaperclassContent from "./pages/tutor/paperclasscontent";
 import TutorStaffs from "./pages/tutor/TutorStaffs";
 import McqsByCategory from "./pages/tutor/McqsByCategory";
 import PaperMarking from "./pages/tutor/PaperMarking";
-import CreateQuiz from "./pages/tutor/CreateQuiz";
 import TutorQuiz from "./pages/tutor/TutorQuiz";
 import TutorQuizzes from "./pages/tutor/TutorQuizzes";
-
 
 // staff components
 // import InstStaffDashboard from "./pages/InstituteStaff/Dashboard";
@@ -97,7 +95,6 @@ import Content from "./components/Content";
 import { Routes, Route } from "react-router-dom";
 import { ROLES } from "./config/roles";
 import Test from "./pages/common/Test";
-
 
 function App() {
   return (
@@ -181,49 +178,44 @@ function App() {
           </Route>
 
           <Route element={<RequireAuth allowedRoles={[ROLES.Tutor]} />}>
-            <Route path='tutor' element={<SidebarAndHeader userRole={"teacher"} />}>
-              <Route path="dashboard" element={<TDashboard />} />
+          <Route
+            path="tutor"
+            element={<SidebarAndHeader userRole={"teacher"} />}
+          >
+            <Route path="dashboard" element={<TDashboard />} />
               <Route path="content" element={<Tcontents />} />
               <Route path="courses/add" element={<Addcourse />} />
               <Route path="courses" element={<TCourses />} ></Route>
               <Route path='courses/content/:courseid' element={<Coursecontent />} ></Route>
               <Route path='courses/details/:courseid' element={<Courseedit />} ></Route>
-              {/* <Route path='courses/content/analyze/:studypackid' element={<PaperAnalyze />} ></Route> */}
-              <Route path='courses/studypackcontent/:courseid' element={<Studypackcontent />} ></Route>
+            <Route path='courses/content/analyze/:studypackid' element={<PaperAnalyze />} ></Route>
+            <Route path='courses/studypackcontent/:courseid' element={<Studypackcontent />} ></Route>
               <Route path='courses/studypackdetails/:courseid' element={<Studypackedit />} ></Route>
               <Route path="courses/addstudypack" element={<Addstudypack />} />
 
-              <Route path="staffs">
-                <Route index element={<TutorStaffs />} />
-              </Route>
+            <Route path="staffs">
+              <Route index element={<TutorStaffs />} />
+            </Route>
 
-              <Route path="papers">
-                <Route path="marking" element={<PaperMarking />} />
-              </Route>
+            <Route path="papers">
+              <Route path="marking" element={<PaperMarking />} />
+            </Route>
 
-              <Route path="quizzes">
-                <Route index element={<TutorQuizzes />} />
-                <Route path="create/:quizId" element={<CreateQuiz />} />
-                <Route path=":quizId" element={<TutorQuiz />} />
-                <Route path="category/:id" element={<McqsByCategory />}></Route>
-              </Route>
-
+            <Route path="quizzes">
+              <Route index element={<TutorQuizzes />} />
+              <Route path=":quizId" element={<TutorQuiz />} />
+              <Route path="category/:id" element={<McqsByCategory />}></Route>
             </Route>
           </Route>
-
-
-
-
-
+          {/* </Route> */}
 
           {/* <Route element={<RequireAuth allowedRoles={[ROLES.Staff]} />}> */}
-          <Route
+          {/* <Route
             path="staff"
             element={<SidebarAndHeader userRole={"InstituteStaff"} />}
           >
             <Route path="dashboard" element={<InstStaffDashboard />} />
             <Route path="my-profile" element={<MyProfile />} />
-            {/* <Route path="teacher" element={<ViewTeacher />} /> */}
             <Route path="teacher/add" element={<AddTeacher />} />
             <Route path="class" element={<ApproveClass />} />
             <Route path="profile/:id" element={<InstStaffProfile />} />
@@ -244,9 +236,7 @@ function App() {
               path="tutor-profile/:id/course/:id"
               element={<CourseProfile />}
             />
-          </Route>
-          {/* </Route> */}
-
+          </Route> */}
           {/* </Route> */}
 
           {/* <Route element={<RequireAuth allowedRoles={[ROLES.User]} />}>
