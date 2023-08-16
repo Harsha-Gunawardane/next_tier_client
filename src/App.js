@@ -58,16 +58,17 @@ import AdminsInfo from "./pages/admin/AdminsInfo";
 import AdminSetting from "./pages/admin/Settings";
 
 // tutor components
-// import TDashboard from "./pages/tutor/dashboard";
-// import TCourses from "./pages/tutor/course";
-// import Tcontents from "./pages/tutor/contents";
-// import Addcourse from "./pages/tutor/addcourse";
-// import Addstudypack from "./pages/tutor/addcoursepack";
-// import Studypackedit from "./pages/tutor/coursepackageedit";
-// import Studypackcontent from "./pages/tutor/coursepackcontent";
-// import Coursecontent from "./pages/tutor/courseContent";
-// import Courseedit from "./pages/tutor/courseedit";
-// import PaperclassContent from "./pages/tutor/paperclasscontent";
+import TDashboard from "./pages/tutor/dashboard";
+import TCourses from "./pages/tutor/course";
+import Tcontents from "./pages/tutor/contents";
+import Addcourse from "./pages/tutor/addcourse";
+import Addstudypack from "./pages/tutor/addcoursepack";
+import Studypackedit from "./pages/tutor/coursepackageedit";
+import Studypackcontent from "./pages/tutor/coursepackcontent";
+import Coursecontent from "./pages/tutor/courseContent";
+import Courseedit from "./pages/tutor/courseedit";
+import PaperAnalyze from "./pages/tutor/quizAnalyze";
+import PaperclassContent from "./pages/tutor/paperclasscontent";
 
 // import TutorStaffs from "./pages/tutor/TutorStaffs";
 // import McqsByCategory from "./pages/tutor/McqsByCategory";
@@ -75,7 +76,6 @@ import AdminSetting from "./pages/admin/Settings";
 // import CreateQuiz from "./pages/tutor/CreateQuiz";
 // import TutorQuiz from "./pages/tutor/TutorQuiz";
 // import TutorQuizzes from "./pages/tutor/TutorQuizzes";
-
 
 // staff components
 // import InstStaffDashboard from "./pages/InstituteStaff/Dashboard";
@@ -97,7 +97,6 @@ import Content from "./components/Content";
 import { Routes, Route } from "react-router-dom";
 import { ROLES } from "./config/roles";
 import Test from "./pages/common/Test";
-
 
 function App() {
   return (
@@ -123,22 +122,19 @@ function App() {
               <Route path="courses" element={<StudentCourses />} />
               {/* <Route path="courses/:id/content" element={<Coursecontent />} /> */}
               <Route path="content" element={<ContentPage />} />
-
               <Route path="quizzes" element={<QuizDashboard />} />
               <Route path="quizzes/:subject" element={<QuizDashboard />} />
               <Route
                 path="quizzes/:subject/:mcqname/review"
                 element={<ReviewQuiz />}
               />
-
-              <Route path="courses/:courseId" element={<CourseLayout />} >
+              <Route path="courses/:courseId" element={<CourseLayout />}>
                 <Route index element={<Test />} />
                 <Route path="forum" element={<Forum />} />
               </Route>
               <Route path="content" element={<ContentPage />} />
               <Route path="content/watch/:id" element={<ContentWatch />} />
-              <Route path="quizzes/:subject/:mcqname" element={<Quiz />} />
-
+              <Route path="quizzes/:subject/:mcqname" element={<Quiz />} /> 
               <Route path="tutes" element={<TuteLayout />}>
                 <Route index element={<TuteDashboard />} />
                 <Route path="new/:id" element={<NewTute />} />
@@ -146,7 +142,6 @@ function App() {
                 <Route path="view/:id" element={<PdfView />} />
                 <Route path=":id" element={<TuteView />} />
               </Route>
-
               <Route path="settings" element={<Settings />} />
             </Route>
           </Route>
@@ -180,17 +175,32 @@ function App() {
             </Route>
           </Route>
 
-          {/* <Route element={<RequireAuth allowedRoles={[ROLES.Tutor]} />}>
-            <Route path='tutor' element={<SidebarAndHeader userRole={"teacher"} />}>
+          <Route element={<RequireAuth allowedRoles={[ROLES.Tutor]} />}>
+            <Route
+              path="tutor"
+              element={<SidebarAndHeader userRole={"teacher"} />}
+            >
               <Route path="dashboard" element={<TDashboard />} />
               <Route path="content" element={<Tcontents />} />
               <Route path="courses/add" element={<Addcourse />} />
-              <Route path="courses" element={<TCourses />} ></Route>
-              <Route path='courses/content/:courseid' element={<Coursecontent />} ></Route>
-              <Route path='courses/details/:courseid' element={<Courseedit />} ></Route>
-              <Route path='courses/content/analyze/:studypackid' element={<PaperAnalyze />} ></Route>
-              <Route path='courses/studypackcontent/:courseid' element={<Studypackcontent />} ></Route>
-              <Route path='courses/studypackdetails/:courseid' element={<Studypackedit />} ></Route>
+              <Route path="courses" element={<TCourses />}></Route>
+              <Route
+                path="courses/content/:courseid"
+                element={<Coursecontent />}
+              ></Route>
+              <Route
+                path="courses/details/:courseid"
+                element={<Courseedit />}
+              ></Route>
+               <Route path='courses/content/analyze/:studypackid' element={<PaperAnalyze />} ></Route> 
+              <Route
+                path="courses/studypackcontent/:courseid"
+                element={<Studypackcontent />}
+              ></Route>
+              <Route
+                path="courses/studypackdetails/:courseid"
+                element={<Studypackedit />}
+              ></Route>
               <Route path="courses/addstudypack" element={<Addstudypack />} />
 
               <Route path="staffs">
@@ -207,23 +217,17 @@ function App() {
                 <Route path=":quizId" element={<TutorQuiz />} />
                 <Route path="category/:id" element={<McqsByCategory />}></Route>
               </Route>
-
             </Route>
-          </Route> */}
+          </Route>
 
-
-
-
-
-
-          {/* <Route element={<RequireAuth allowedRoles={[ROLES.Staff]} />}> */}
+           <Route element={<RequireAuth allowedRoles={[ROLES.Staff]} />}> 
           <Route
             path="staff"
             element={<SidebarAndHeader userRole={"InstituteStaff"} />}
           >
             <Route path="dashboard" element={<InstStaffDashboard />} />
             <Route path="my-profile" element={<MyProfile />} />
-            {/* <Route path="teacher" element={<ViewTeacher />} /> */}
+            {/* <Route path="teacher" element={<ViewTeacher />} />  */}
             <Route path="teacher/add" element={<AddTeacher />} />
             <Route path="class" element={<ApproveClass />} />
             <Route path="profile/:id" element={<InstStaffProfile />} />
@@ -245,15 +249,15 @@ function App() {
               element={<CourseProfile />}
             />
           </Route>
-          {/* </Route> */}
+        </Route>
 
-          {/* </Route> */}
+         </Route> 
 
           {/* <Route element={<RequireAuth allowedRoles={[ROLES.User]} />}>
             <Route path="user" element={<UserLayout />}>
               <Route path="profile" element={<UserProfile />} />
             </Route>
-          </Route> */}
+          </Route>
         </Route>
 
         {/* catch all */}

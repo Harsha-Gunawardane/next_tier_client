@@ -2,11 +2,11 @@ import React from "react";
 
 
 import { ChakraProvider,Text,Heading,Box,HStack,Button } from "@chakra-ui/react";
-import Addannouncement from "./Addannouncement";
 
 
 
-const Announcement = (props) => {
+
+const Classes = (props) => {
   
 
   return (
@@ -33,7 +33,7 @@ const Announcement = (props) => {
 
       
       
-     <Addannouncement></Addannouncement> 
+   
     
       </Box>
 
@@ -41,4 +41,4 @@ const Announcement = (props) => {
   );
 };
 
-export default Announcement;
+export default Classes;
