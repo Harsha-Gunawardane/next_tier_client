@@ -1,7 +1,7 @@
 import React from "react";
 
 import { Box, Button } from "@chakra-ui/react";
-import { Image, Heading, Text } from "@chakra-ui/react";
+import { Image, Heading, Text,Link } from "@chakra-ui/react";
 
 import { HStack } from "@chakra-ui/react";
 import { SimpleGrid } from "@chakra-ui/react";
@@ -50,6 +50,7 @@ const Courseedit = () => {
 
   return (
     <Box>
+      {/* <Link to = {'/tutor/courses'}><Text fontSize='15px' ml='10px' color='black'>Back to Courses</Text></Link> */}
       {coursedata && (
         <SimpleGrid spacing={20} minChildWidth="250px">
           <Box w="120%" bg="white" p={10} borderRadius="10px" ml="10px">

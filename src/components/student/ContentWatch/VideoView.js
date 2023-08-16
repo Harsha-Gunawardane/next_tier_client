@@ -11,7 +11,7 @@ import VideoJS from './VideoPlayer'
 import videojs from 'video.js'
 import VideoPlayer from './VideoPlayer';
 
-import ReactHlsPlayer from "react-hls-player";
+// import ReactHlsPlayer from "react-hls-player";
 
 
 
