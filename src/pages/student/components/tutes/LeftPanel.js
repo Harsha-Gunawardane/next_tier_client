@@ -15,6 +15,7 @@ import FolderList from "./FolderList";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import NewFolderModal from "../modals/NewFolderModal";
+import { useFoldersInfo } from "../../../../store/student/useFoldersInfo";
 
 function LeftPanel() {
   const navigate = useNavigate();
@@ -34,8 +35,8 @@ function LeftPanel() {
     setIsFOpen(true);
   };
 
-  const pages = useSelector((state) => state.tutes.pages);
-  console.log(pages);
+  // const pages = useSelector((state) => state.tutes.pages);
+  const { tutes, folders } = useFoldersInfo();
 
   return (
     <>
@@ -93,17 +94,12 @@ function LeftPanel() {
         </Box>
 
         <Box w={250}>
-          <TutePageList pages={pages} />
+          <TutePageList pages={tutes} />
           <Flex justifyContent="center">
             <Divider mt={2} mb={2} w="80%" color="#222222" />
           </Flex>
 
-          <FolderList
-            folders={[
-              { name: "Physics", pages: ["Power", "Energy"] },
-              { name: "Chemistry", pages: ["Power", "Energy"] },
-            ]}
-          />
+          <FolderList folders={folders} />
         </Box>
       </Box>
       <NewTuteModal isOpen={isOpen} handleCloseModal={handleCloseModal} />

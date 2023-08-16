@@ -6,12 +6,13 @@ export const useFoldersInfo = create()(
     persist(
       (set) => ({
         folders: [],
+        tutes: [],
 
         setFolders: (value) => set(() => ({ folders: value })),
         addNewFolder: (value) =>
           set((state) => ({ folders: [...state.folders, value] })),
 
-        addNewTute: (folderName, tuteName) =>
+        addNewTuteToFolder: (folderName, tuteName) =>
           set((state) => {
             const updatedFolders = state.folders.map((folder) => {
               if (folder.name === folderName) {
@@ -24,6 +25,11 @@ export const useFoldersInfo = create()(
             });
             return { folders: updatedFolders };
           }),
+
+        setTutes: (value) => set(() => ({ tutes: value })),
+        addNewTute: (value) =>
+          set((state) => ({ tutes: [...state.tutes, value] })),
+        
       }),
       { name: "foldersInfo" }
     )

@@ -24,7 +24,7 @@ const TUTE_URL = "/stu/tute";
 // form validations
 const NAMING_REGEX = /^[a-zA-Z ]{3,50}$/;
 
-function NewTuteModal({ isOpen, handleCloseModal }) {
+function NewTuteModal({ isOpen, handleCloseModal, folderName = null }) {
   const axiosPrivate = useAxiosPrivate();
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -82,6 +82,10 @@ function NewTuteModal({ isOpen, handleCloseModal }) {
     formData.append("file", selectedFile);
     formData.append("id", tuteId);
     formData.append("name", tuteName);
+
+    if(folderName) {
+      formData.append("folderName", folderName);
+    }
 
     console.log(formData);
 

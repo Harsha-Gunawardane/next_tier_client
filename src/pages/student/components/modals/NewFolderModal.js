@@ -13,6 +13,7 @@ import { CheckIcon, CloseIcon } from "@chakra-ui/icons";
 
 import ModalLayout from "../../../../components/ModalLayout";
 import useAxiosPrivate from "../../../../hooks/useAxiosPrivate";
+import { useFoldersInfo } from "../../../../store/student/useFoldersInfo";
 
 const FOLDER_URL = "/stu/folder";
 const NAMING_REGEX = /^[a-zA-Z ]{3,50}$/;
@@ -20,6 +21,8 @@ const NAMING_REGEX = /^[a-zA-Z ]{3,50}$/;
 function NewFolderModal({ isOpen, handleCloseModal }) {
   const axiosPrivate = useAxiosPrivate();
   const toast = useToast();
+
+  const { addNewFolder } = useFoldersInfo;
 
   const [folderName, setFolderName] = useState("");
   const [validFolderName, setValidFolderName] = useState(false);
@@ -48,7 +51,12 @@ function NewFolderModal({ isOpen, handleCloseModal }) {
       const response = await axiosPrivate.post(FOLDER_URL, {
         name: folderName,
       });
-      
+
+      const newFolder = {
+        name: folderName,
+        pages: [],
+      };
+      addNewFolder(newFolder);
     } catch (err) {
       if (!err?.response) {
         setErrMsg("No Server Response");

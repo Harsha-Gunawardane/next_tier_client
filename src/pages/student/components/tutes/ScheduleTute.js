@@ -77,7 +77,10 @@ function ScheduleTute() {
                 date={date}
                 dateName={days[index]}
                 isToday={currentDayOfWeek === index}
-                isSchedule={dates[index] === 8}
+                isSchedule={dates[index] === 13}
+                reminder={
+                  "This popover is shown when user hovers the target element"
+                }
               />
             ))}
           </Flex>
