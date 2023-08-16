@@ -200,12 +200,17 @@ const Comment = (props) => {
         const controller = new AbortController();
 
         try {
+            console.log(commentDetails.commenter.id)
             const formData = new FormData()
             formData.append("message", replyCommentVal)
             formData.append("parent_id", commentDetails.parent_id)
             formData.append("replied_to", commentDetails.commenter.id)
 
             const response = await axiosPrivate.post(`/comments/${commentDetails.id}/replies`, formData, {
+                headers: {
+                    "Content-Type": "application/json",
+                },
+
                 signal: controller.signal
             })
 
@@ -354,7 +359,7 @@ const Comment = (props) => {
                                 <Collapse in={isReplyOpen} animateOpacity>
                                     {isRepliesLoaded && commentDetails.replies.length > 0
                                         ? commentDetails.replies.map((reply, index) => (
-                                            <Comment key={reply.id} comment={reply} setParentComment={setCommentDetails} />
+                                            <Comment key={reply.id} comment={reply} setParentComment={setCommentDetails} likes={likes} type={type} />
                                         ))
                                         :
                                         <Flex w="100%" direction={"row"} gap="10px" p="10px" >
@@ -406,6 +411,11 @@ const CommentSection = (props) => {
         setCommentsArr(comments)
     }, [comments])
 
+    useEffect(() => {
+        console.log(commentVal)
+    }, [commentVal])
+
+
     const handleCommentCancel = () => {
         setCommentVal("")
         setIsFocused(false)
@@ -416,7 +426,29 @@ const CommentSection = (props) => {
         const controller = new AbortController();
 
         try {
-            const response = await axiosPrivate.get(`/content/${sectionId}/comment/?skip=${skip}&limit=${limit}`, {
+
+            const CONTENT_COMMENT_URL = `/content/${sectionId}/comment`;
+            const POST_COMMENT_URL = `/forum/posts/${sectionId}/comment`;
+
+            var url;
+
+            switch (type) {
+                case "content":
+                    url = CONTENT_COMMENT_URL;
+                    break;
+                case "post":
+                    url = POST_COMMENT_URL;
+                    break;
+                default:
+                    url = CONTENT_COMMENT_URL;
+                    break;
+            }
+
+
+            const response = await axiosPrivate.get(`${url}?skip=${skip}&limit=${limit}`, {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                },
                 signal: controller.signal
             })
 
@@ -448,12 +480,14 @@ const CommentSection = (props) => {
 
 
     const addComment = async () => {
+        console.log(commentVal)
         try {
             const formData = new FormData();
             formData.append("message", commentVal);
 
+
             const CONTENT_COMMENT_URL = `/content/${sectionId}/comment`;
-            const POST_COMMENT_URL = `/forum/${sectionId}/comment`;
+            const POST_COMMENT_URL = `/forum/posts/${sectionId}/comment`;
 
             var url;
 
@@ -461,7 +495,7 @@ const CommentSection = (props) => {
                 case "content":
                     url = CONTENT_COMMENT_URL;
                     break;
-                case "forum":
+                case "post":
                     url = POST_COMMENT_URL;
                     break;
                 default:
@@ -471,7 +505,11 @@ const CommentSection = (props) => {
 
 
 
-            const response = await axiosPrivate.post(url, formData);
+            const response = await axiosPrivate.post(url, formData, {
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            });
             const newComment = response.data.data;
 
             await setCommentsArr((prevState) => {

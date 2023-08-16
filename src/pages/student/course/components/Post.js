@@ -106,7 +106,7 @@ const Post = (props) => {
                 <SimpleGrid w="100%" columns={1} gap="10px">
                     <Flex w={"100%"} px="5px" justifyContent={"space-between"} alignItems={"flex-start"}>
                         <Flex justifyContent={"flex-start"} alignItems={"center"} gap={"10px"} direction={"row"}>
-                            <Avatar h="40px" w="40px" name="Dan Abrahmov" src="https://bit.ly/dan-abramov" />
+                            <Avatar h="36px" w="36px" name="Dan Abrahmov" src="https://bit.ly/dan-abramov" />
                             <Flex alignItems={"flex-start"} justifyContent={"center"} direction={"column"}>
                                 <Text fontSize={"1rem"} fontWeight={"bold"} color={"#3f3f3f"}>
                                     {post.user.first_name} {post.user.last_name}
@@ -117,7 +117,7 @@ const Post = (props) => {
                             </Flex>
                         </Flex>
                         <Flex justifyContent={"flex-end"} alignItems={"center"} gap={"10px"} direction={"row"}>
-                            <MyTag leftIcon={TbPinnedFilled} tagLabel={"Pinned"} color={"red"} />
+                            {/* <MyTag leftIcon={TbPinnedFilled} tagLabel={"Pinned"} color={"red"} /> */}
                             <Menu >
                                 <MenuButton as={IconButton} size={"sm"} bg={"white"} icon={<SlOptions />} />
                                 <MenuList>
@@ -153,7 +153,7 @@ const Post = (props) => {
                             _hover={{ color: "accent" }}
                         >
                             <Text fontSize={"0.9rem"} fontWeight={"semi-bold"} color={"gray.400"} pointer={"pointer"}>
-                                {post._count.post_comments} Comments
+                                {post._count.comments} Comments
                             </Text>
                             <IconButton
                                 icon={<PiChatCircleBold size="24px" fontWeight={500} />}
@@ -174,11 +174,12 @@ const Post = (props) => {
                             commentLiking={false}
                             renderLimit={renderLimit}
                             onLoadMore={onLoadMore}
-                            commentCount={3}
+                            commentCount={post._count.comments}
                             parentIndex={index}
                             commentStyles={{ bg: "gray.100", borderRadius: "10px" }}
                             type="post"
                             inputAvatar={false}
+                            sectionId={post.id}
                         />
                     </Collapse>
                     {/* </Flex> */}

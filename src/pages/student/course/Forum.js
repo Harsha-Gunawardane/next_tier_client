@@ -17,7 +17,7 @@ import { useDisclosure } from "@chakra-ui/react";
 import Post from "./components/Post";
 import BreadCrumbForum from "./components/BreadCrumbForum";
 import { InputBoxButton } from "./components/InputBoxBotton";
-import { PostCreateModal, PostViewModal } from "./components/Modals";
+import { GuideLineModal, PostCreateModal, PostViewModal } from "./components/Modals";
 import RightPanel from "./components/RightPanel";
 import { axiosPrivate } from "../../../api/axios";
 import PdfModal from "./PdfViewer";
@@ -43,6 +43,7 @@ const Forum = () => {
     const { isOpen: isPostOpen, onOpen: onPostOpen, onClose: onPostClose } = useDisclosure();
     const { isOpen: isCreatePostOpen, onOpen: onCreatePostOpen, onClose: onCreatePostClose } = useDisclosure();
     const { isOpen: isPdfOpen, onOpen: onPdfOpen, onClose: onPdfClose } = useDisclosure();
+    const { isOpen: isGuideLineOpen, onOpen: onGuideLineOpen, onClose: onGuideLineClose } = useDisclosure();
 
     //functions 
     const onLoadMore = (index) => {
@@ -65,7 +66,7 @@ const Forum = () => {
         const controller = new AbortController();
 
         try {
-            const response = await axiosPrivate.get(`/courses/${courseId}/forum`, {
+            const response = await axiosPrivate.get(`/forum/${courseId}`, {
                 signal: controller.signal
             });
 
@@ -85,7 +86,7 @@ const Forum = () => {
     return (
         <SimpleGrid templateColumns={{ base: "repeat(1, 1fr)", md: "repeat(12, 1fr)", lg: "repeat(12, 1fr)" }} gap={5} p={"10px"} >
             <GridItem colSpan={{ base: 1, md: 12, lg: 8 }} h="max-content" bg="white" >
-                <Box>
+                <Box position={'sticky'} top={0}>
                     <BreadCrumbForum courseTitle={courseDetails.title} />
                 </Box>
                 <Box w="100%" my="10px" px="10px">
@@ -115,12 +116,13 @@ const Forum = () => {
                     {_.isEmpty(forumDetails) ?
                         <Skeleton height={"100%"} width={"100%"} />
                         :
-                        <RightPanel forumDetails={forumDetails} />
+                        <RightPanel forumDetails={forumDetails} onGuideLineOpen={onGuideLineOpen} />
                     }
                 </Flex>
             </GridItem>
             <PostViewModal isOpen={isPostOpen} onOpen={onPostOpen} onClose={onPostClose} post={forumDetails && forumDetails.posts[postOnModal]} />
             <PostCreateModal isOpen={isCreatePostOpen} onOpen={onCreatePostOpen} onClose={onCreatePostClose} setPosts={setPosts} />
+            <GuideLineModal isOpen={isGuideLineOpen} onClose={onGuideLineClose} />
             <PdfModal isOpen={isPdfOpen} onClose={onPdfClose} pdfUrl={pdfUrl} />
         </SimpleGrid >
     )

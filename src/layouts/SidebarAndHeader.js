@@ -52,6 +52,8 @@ const SidebarAndHeader = ({ userRole }) => {
 		['stu/content', 'content'],
 		['stu/content/watch/:id', 'content'],
 		['stu/courses/:courseId/forum', 'courses'],
+		['stu/quizzes', 'quizzes'],
+		['stu/tutes', 'tutes'],
 
 		// More routes and active tabs...
 	]);
