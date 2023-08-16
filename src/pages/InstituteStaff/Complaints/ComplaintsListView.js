@@ -545,11 +545,13 @@ function ComplaintsListView() {
                                     <FormControl>
                                       <FormLabel>Date</FormLabel>
                                       <Input
-                                        value={
-                                          selectedComplaintForViewResolved?.posted_at
-                                        }
-                                        isReadOnly
-                                      />
+    value={
+      selectedComplaintForViewResolved?.posted_at
+        ? new Date(selectedComplaintForViewResolved.posted_at).toLocaleDateString()
+        : ''
+    }
+    isReadOnly
+  />
                                     </FormControl>
                                     <FormControl>
                                       <FormLabel>Description</FormLabel>
@@ -661,12 +663,21 @@ function ComplaintsListView() {
                                     </FormControl>
                                     <FormControl>
                                       <FormLabel>Date</FormLabel>
-                                      <Input
+                                      {/* <Input
                                         value={
                                           selectedComplaint?.posted_at
                                         }
                                         isReadOnly
-                                      />
+                                      /> */}
+                                        <FormLabel>Date</FormLabel>
+                                      <Input
+    value={
+      selectedComplaint?.posted_at
+        ? new Date(selectedComplaint.posted_at).toLocaleDateString()
+        : ''
+    }
+    isReadOnly
+  />
                                     </FormControl>
                                     <FormControl>
                                       <FormLabel>Description</FormLabel>
@@ -807,12 +818,21 @@ function ComplaintsListView() {
                                     </FormControl>
                                     <FormControl>
                                       <FormLabel>Date</FormLabel>
-                                      <Input
+                                      {/* <Input
                                         value={
                                           selectedComplaintForViewIgnored?.posted_at
                                         }
                                         isReadOnly
-                                      />
+                                      /> */}
+                                        <FormLabel>Date</FormLabel>
+                                      <Input
+    value={
+      selectedComplaintForViewIgnored?.posted_at
+        ? new Date(selectedComplaintForViewIgnored.posted_at).toLocaleDateString()
+        : ''
+    }
+    isReadOnly
+  />
                                     </FormControl>
                                     <FormControl>
                                       <FormLabel>Description</FormLabel>
