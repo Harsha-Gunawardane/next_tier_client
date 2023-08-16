@@ -1,13 +1,11 @@
-import {Text, SimpleGrid } from '@chakra-ui/react';
-import React from 'react'
-import QuizCard from './QuizCard';
-import QuizzesHeaderBar from './QuizzesHeaderBar';
+import { Text, SimpleGrid } from "@chakra-ui/react";
+import React from "react";
+import QuizCard from "./QuizCard";
+import QuizzesHeaderBar from "./QuizzesHeaderBar";
 
-import { NavLink } from 'react-router-dom';
+import { NavLink } from "react-router-dom";
 
 function QuizzesTab({ onOpen, quizzes, search, setSearch }) {
-  
-
   return (
     <>
       <QuizzesHeaderBar search={search} setSearch={setSearch} onOpen={onOpen} />

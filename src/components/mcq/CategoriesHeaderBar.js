@@ -13,7 +13,7 @@ import { NavLink } from "react-router-dom";
 import { HiSearch } from "react-icons/hi";
 import { IoIosCloseCircle } from "react-icons/io";
 
-export default function CategoriesHeaderBar({ search , setSearch }) {
+export default function CategoriesHeaderBar({ search, setSearch, onOpen }) {
   return (
     <HStack marginBottom="10px" maxWidth="1250px" padding="10px">
       <form>
@@ -69,8 +69,7 @@ export default function CategoriesHeaderBar({ search , setSearch }) {
           size="md"
           width="160px"
           marginRight="25px"
-
-          // left={{ base: "120px", md: "250px", lg: "500px", xl: "1050px" }}
+          onClick={onOpen}
         >
           Create a category
         </Button>

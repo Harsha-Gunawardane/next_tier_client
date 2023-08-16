@@ -1,4 +1,4 @@
-import { Box, Grid, HStack, SimpleGrid, Text } from "@chakra-ui/react";
+import { Box, SimpleGrid, Text } from "@chakra-ui/react";
 import MiniStatCardIcon from "../icons/MiniStatCardIcon";
 import MiniStat from "../../components/Card/MiniStat";
 
