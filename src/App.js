@@ -145,24 +145,6 @@ function App() {
             </Route>
           </Route>
 
-          {/* <Route element={<RequireAuth allowedRoles={[ROLES.Tutor]} />}>
-            <Route path='tutor' element={<SidebarAndHeader userRole={"tutor"} />}>
-              <Route path="dashboard" element={<TDashboard />} />
-              <Route path="content" element={<Tcontents />} />
-              <Route path="courses/add" element={<Addcourse />} />
-              <Route path="courses" element={<TCourses />} ></Route>
-              <Route path='courses/content/:courseid' element={<Coursecontent />} ></Route>
-              <Route path='courses/paperclasscontent' element={<PaperclassContent />} ></Route>
-              <Route path='courses/details/:courseid' element={<Courseedit />} ></Route>
-              <Route path='courses/studypackcontent/:courseid' element={<Studypackcontent />} ></Route>
-              <Route path='courses/studypackdetails/:courseid' element={<Studypackedit />} ></Route>
-              <Route path="courses/addstudypack" element={<Addstudypack/>} />
-     
-          
-           </Route>
-          
-          </Route> */}
-
           <Route element={<RequireAuth allowedRoles={[ROLES.Admin]} />}>
             <Route
               path="admin"
@@ -191,7 +173,10 @@ function App() {
                 path="courses/details/:courseid"
                 element={<Courseedit />}
               ></Route>
-              <Route path='courses/content/analyze/:studypackid' element={<PaperAnalyze />} ></Route>
+              <Route
+                path="courses/content/analyze/:studypackid"
+                element={<PaperAnalyze />}
+              ></Route>
               <Route
                 path="courses/studypackcontent/:courseid"
                 element={<Studypackcontent />}

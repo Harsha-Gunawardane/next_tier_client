@@ -29,8 +29,17 @@ import StartQuizModal from "./components/modals/StartQuizModal";
 import SearchBar from "./components/SearchBar";
 import PreviousQuizList from "./components/quiz/PreviousQuizList";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
+import ModalLayout from "../../components/ModalLayout";
 
 const QUIZ_REVISION_URL = "/stu/quiz-revision";
+
+function searchQuizzes(quizzes, input) {
+  const searchTerm = input.toLowerCase();
+  const matchingQuizzes = quizzes.filter((quiz) =>
+    quiz.quizname.includes(searchTerm)
+  );
+  return matchingQuizzes;
+}
 
 function Quizzes() {
   const axiosPrivate = useAxiosPrivate();
@@ -46,15 +55,21 @@ function Quizzes() {
 
   const [previousQuizzes, setPreviousQuizzes] = useState([]);
   const [quizname, setQuizname] = useState("");
+  const [focusedSubject, setFocusedSubject] = useState(subject);
+  const [isopen, setIsopen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  // const [isAllQuizzes, setIsAllQuizzes] = useState("f");
 
-  const getPreviousQuizzes = async () => {
-    const controller = new AbortController();
+  const getPreviousQuizzes = async (isAllQuizzes) => {
+    const queryString = new URLSearchParams({
+      isAll: isAllQuizzes,
+      subject: focusedSubject,
+    }).toString();
+
     try {
       const response = await axiosPrivate.get(
-        `${QUIZ_REVISION_URL}/${subject}/${quizname}`,
-        {
-          signal: controller.signal,
-        }
+        `${QUIZ_REVISION_URL}?${queryString}`
       );
       console.log(response?.data?.responseQuizzes);
       setPreviousQuizzes(response?.data?.responseQuizzes);
@@ -64,12 +79,8 @@ function Quizzes() {
   };
 
   useEffect(() => {
-    getPreviousQuizzes();
-  }, [quizname]);
-
-  const [focusedSubject, setFocusedSubject] = useState(subject);
-  console.log(focusedSubject);
-  const [isopen, setIsopen] = useState(false);
+    getPreviousQuizzes("f");
+  }, [quizname, focusedSubject]);
 
   const handleCloseModal = () => {
     setIsopen(false);
@@ -77,6 +88,14 @@ function Quizzes() {
 
   const handleOpenModal = () => {
     setIsopen(true);
+  };
+
+  const handleModalOpen = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleModalClose = () => {
+    setIsModalOpen(false);
   };
 
   const drawer = isMobile && (
@@ -101,6 +120,34 @@ function Quizzes() {
       </DrawerContent>
     </Drawer>
   );
+
+  const modalBody = (
+    <Flex justifyContent={"center"}>
+      <Box maxH={420} overflowY={"scroll"}>
+        <SearchBar
+          setPreviousQuizzes={setPreviousQuizzes}
+          setSearch={setSearchQuery}
+          search={searchQuery}
+        />
+        <Box mt={5} />
+        <PreviousQuizList
+          previousQuizzes={searchQuizzes(previousQuizzes, searchQuery)}
+        />
+      </Box>
+    </Flex>
+  );
+  const modalHeader = "Previous Quizzes";
+
+  const handleSeeAllQuizzes = () => {
+    // setIsAllQuizzes("t");
+    getPreviousQuizzes("t")
+    // isMobile ? onOpen : handleModalOpen;
+    if (isMobile) {
+      onOpen();
+    } else {
+      handleModalOpen();
+    }
+  };
   const events = [
     {
       key: 1,
@@ -381,10 +428,19 @@ function Quizzes() {
                 Previous Quizzes
               </Text>
               <Button
-                color="#333333"
+                style={{
+                  background: "#383838",
+                  color: "#FFFFFF",
+                  _hover: {
+                    bg: "#383838",
+                    color: "#FFFFFF",
+                  },
+                  fontWeight: "normal",
+                }}
+                // color="#333333"
                 fontStyle="Roboto"
                 fontSize={13}
-                onClick={onOpen}
+                onClick={handleSeeAllQuizzes}
               >
                 See all
               </Button>
@@ -395,12 +451,8 @@ function Quizzes() {
             </Flex>
             {drawer}
           </Box>
-          <Flex justifyContent='center'>
-            <Flex
-              mt={2}
-              justifyContent="center"
-              flexDirection="column"
-            >
+          <Flex justifyContent="center">
+            <Flex mt={2} justifyContent="center" flexDirection="column">
               <Text
                 mb={2}
                 ml={5}
@@ -421,6 +473,13 @@ function Quizzes() {
         handleCloseModal={handleCloseModal}
         subject={focusedSubject.toLowerCase()}
         quizname="23-quiz"
+      />
+      <ModalLayout
+        isOpen={isModalOpen}
+        title={modalHeader}
+        body={modalBody}
+        handleCloseModal={handleModalClose}
+        size="4xl"
       />
     </>
   );

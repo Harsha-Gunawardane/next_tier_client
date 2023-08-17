@@ -216,7 +216,7 @@ const Courseeditbutton = () => {
         onClose={onClose}
       >
         <ModalOverlay />
-        <ModalContent height='600px' width='500px' overflowY='scroll'>
+        <ModalContent>
           <form onSubmit={handlesubmit}>
             <ModalHeader>Update Course Details</ModalHeader>
             <ModalCloseButton />

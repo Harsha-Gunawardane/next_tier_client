@@ -1,16 +1,41 @@
 import { Flex } from "@chakra-ui/react";
 import { Outlet } from "react-router-dom";
 import LeftPanel from "./LeftPanel";
-import { useFetchTutes } from "../../../../hooks/reduxReducers/tutesReducer";
+import { useEffect, useState } from "react";
 
-import Loading from '../../../../components/skeleton/Loading'
+import Loading from "../../../../components/skeleton/Loading";
+import useAxiosPrivate from "../../../../hooks/useAxiosPrivate";
+import { useFoldersInfo } from "../../../../store/student/useFoldersInfo";
+
+const TUTES_URL = "/stu/tutes";
 
 function TuteLayout() {
+  const axiosPrivate = useAxiosPrivate();
+  const [isLoading, setIsLoading] = useState(true);
 
-  const { isLoading } = useFetchTutes();
+  const { setFolders, setTutes } = useFoldersInfo();
 
-  if(isLoading) return (<Loading />)
-  
+  const fetchPages = async () => {
+    try {
+      const response = await axiosPrivate.get(TUTES_URL);
+      console.log(response.data?.data.folders);
+
+      setFolders(response.data?.data.folders)
+      setTutes(response.data?.data.pages)
+
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchPages();
+  }, []);
+
+  if (isLoading) return <Loading />;
+
   return (
     <Flex>
       <LeftPanel />
