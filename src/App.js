@@ -198,9 +198,14 @@ function App() {
               <Route path="quizzes">
                 <Route index element={<TutorQuizzes />} />
                 <Route path=":quizId" element={<TutorQuiz />} />
-                <Route path="category/:id" element={<McqsByCategory />}></Route>
+                <Route
+                  path="category/:categoryId"
+                  element={<McqsByCategory />}
+                ></Route>
               </Route>
             </Route>
+
+            
             {/* </Route> */}
 
             <Route element={<RequireAuth allowedRoles={[ROLES.Staff]} />}>

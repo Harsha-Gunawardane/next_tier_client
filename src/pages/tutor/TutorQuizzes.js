@@ -10,19 +10,30 @@ import QuizCreateForm from "../../components/Quizzes/QuizCreateForm";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import { useState } from "react";
 import { useEffect } from "react";
+import CategoryCreateForm from "../../components/mcq/CategoryCreateForm";
 
 export default function TutorQuizzes() {
 
   const tabFontSize = "17px";
 
   const axiosPrivate = useAxiosPrivate();
+
   const [quizzes, setQuizzes] = useState([]);
-  const [search, setSearch] = useState("");
+  const [searchQuiz, setSearchQuiz] = useState("");
+
+  const [categories, setCategories] = useState([]);
+  const [searchCategory, setSearchCategory] = useState("");
 
   const {
     isOpen: isNewQuizPopupOpen,
     onOpen: onNewQuizPopupOpen,
     onClose: onNewQuizPopupClose,
+  } = useDisclosure();
+
+  const {
+    isOpen: isNewCategoryPopupOpen,
+    onOpen: onNewCategoryPopupOpen,
+    onClose: onNewCategoryPopupClose,
   } = useDisclosure();
 
   useEffect(() => {
@@ -36,6 +47,20 @@ export default function TutorQuizzes() {
     };
 
     getQuizzes();
+  }, []);
+
+
+  useEffect(() => {
+    const getCategories = async () => {
+      try {
+        const response = await axiosPrivate.get("/tutor/categories");
+        setCategories(response.data);
+      } catch (error) {
+        console.log(error.response.data);
+      }
+    };
+
+    getCategories();
   }, []);
 
   return (
@@ -64,6 +89,21 @@ export default function TutorQuizzes() {
         size={"2xl"}
       />
 
+      <ModalPopupCommon
+        isOpen={isNewCategoryPopupOpen}
+        onOpen={onNewCategoryPopupOpen}
+        onClose={onNewCategoryPopupClose}
+        modalHeader={"Create a category"}
+        modalBody={
+          <CategoryCreateForm
+            onClose={onNewCategoryPopupClose}
+            categories={categories}
+            setCategories={setCategories}
+          />
+        }
+        size={"2xl"}
+      />
+
       <Tabs mt="10px">
         <TabList mb="">
           <Tab fontSize={tabFontSize} fontWeight={500}>
@@ -78,12 +118,17 @@ export default function TutorQuizzes() {
             <QuizzesTab
               onOpen={onNewQuizPopupOpen}
               quizzes={quizzes}
-              search={search}
-              setSearch={setSearch}
+              search={searchQuiz}
+              setSearch={setSearchQuiz}
             />
           </TabPanel>
           <TabPanel>
-            <McqCategoriesTab />
+            <McqCategoriesTab
+              onOpen={onNewCategoryPopupOpen}
+              categories={categories}
+              search={searchCategory}
+              setSearch={setSearchCategory}
+            />
           </TabPanel>
         </TabPanels>
       </Tabs>

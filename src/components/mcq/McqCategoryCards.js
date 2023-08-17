@@ -13,11 +13,11 @@ export function McqCategoryCards({ category }) {
           src={
             category.title === "Calculation Questions"
               ? backgroundTemplate2
+              : category.title === "Organic Questions"
+              ? backgroundTemplate
               : category.title === "Revision Questions"
               ? backgroundTemplate3
-              : category.title === "Inorganic Questions"
-              ? backgroundTemplate
-              : backgroundTemplate4
+              : backgroundTemplate5
           }
           borderRadius="lg"
           width="300px"
@@ -26,7 +26,7 @@ export function McqCategoryCards({ category }) {
         <Stack mt="4" spacing="1">
           <Heading fontSize="16px">{category.title}</Heading>
           <Text fontSize="13px" color="gray">
-            Number of MCQs : {category.number_of_questions}
+            Number of MCQs : {category.question_ids.length}
           </Text>
         </Stack>
       </CardBody>
