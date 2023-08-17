@@ -72,6 +72,14 @@ const SidebarAndHeader = ({ userRole }) => {
 		['courses/courses/addstudypack', 'courses'],
 		['tutor/staffs', 'staffs'],
 		['tutor/quizzes', 'quizzes'],
+
+		['staff/dashboard', 'dashboard'],
+		['staff/class', 'approveclass'],
+		['sttaff/complaints', 'complaints'],
+		['staff/hall', 'hallschedule'],
+		['staff/staff-list', 'stafflist'],
+		['staff/tutors-list', 'stulist'],
+		['staff/my-profile', 'profile'],
 	]);
 
 
@@ -166,11 +174,11 @@ const SidebarAndHeader = ({ userRole }) => {
 
 	const InstStaffOptions = [
 		{ icon: GridViewRoundedIcon, name: 'Dashboard', value: 'dashboard', href: '/staff/dashboard' },
-		{ icon: TiDocumentText, name: "Class Request", value: "approveClass", href: "/staff/class" },
+		{ icon: TiDocumentText, name: "Class Request", value: "approveclass", href: "/staff/class" },
 		{ icon: ReportProblemIcon, name: 'Complaints', value: 'complaints', href: '/staff/complaints' },
-		{ icon: TiDocumentText, name: "Halls", value: "hallSchedule", href: "/staff/hall" },
-		{ icon: FaUserAlt, name: 'Staff', value: 'staff-list', href: '/staff/staff-list' },
-		{ icon: FaUsers, name: 'Tutors', value: 'stu-list', href: '/staff/tutors-list' },
+		{ icon: TiDocumentText, name: "Halls", value: "hallschedule", href: "/staff/hall" },
+		{ icon: FaUserAlt, name: 'Staff', value: 'stafflist', href: '/staff/staff-list' },
+		{ icon: FaUsers, name: 'Tutors', value: 'stulist', href: '/staff/tutors-list' },
 		// { icon: FaMoneyBillAlt, name: 'Student Payments', value: 'payments', href: '/staff/stu-payment' },
 		{ icon: AccountCircleIcon, name: 'Settings', value: 'profile', href: '/staff/my-profile' }
 	]
