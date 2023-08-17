@@ -281,7 +281,13 @@ export default function NewMcqQuizStepper({
               <SimpleGrid cols={2} spacing="xs" verticalSpacing="xs" m="8px">
                 {selectedOptionsForDisplay ? (
                   selectedOptionsForDisplay.map((option) => (
-                    <Card p="5px" fontSize="12px" withBorder key={option}>
+                    <Card
+                      p="5px"
+                      fontSize="12px"
+                      fz="12px"
+                      withBorder
+                      key={option}
+                    >
                       {option}
                     </Card>
                   ))

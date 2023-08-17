@@ -3,8 +3,6 @@ import {
   Card,
   Grid,
   GridItem,
-  Skeleton,
-  Stack,
   useDisclosure,
 } from "@chakra-ui/react";
 import BreadCrumbs from "../../components/BreadCrumbs/BreadCrumbs";
@@ -14,7 +12,6 @@ import QuizInsideCard from "../../components/Quizzes/QuizInsideCard";
 
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import { useParams } from "react-router-dom";
-import QuizMcqsHeaderBar from "../../components/Quizzes/QuizMcqsHeaderBar";
 import McqDisplayFromLibraryDrawer from "../../components/Quizzes/McqDisplayFromLibraryDrawer";
 import NewMcqQuizStepper from "../../components/Quizzes/NewMcqQuizStepper";
 import ModalPopupCommon from "../../components/Quizzes/ModalPopupCommon";

@@ -1,37 +1,17 @@
 import { SimpleGrid, Text } from "@chakra-ui/react";
 import { NavLink } from "react-router-dom";
 import { McqCategoryCards } from "./McqCategoryCards";
-import { useEffect, useState } from "react";
 
-import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import CategoriesHeaderBar from "./CategoriesHeaderBar";
 
-export default function McqCategoriesTab() {
-
-  const axiosPrivate = useAxiosPrivate();
-  const [categories, setCategories] = useState([]);
-  const [search, setSearch] = useState("");
-
-  useEffect(() => {
-    const getCategories = async () => {
-      try {
-        const response = await axiosPrivate.get("/tutor/categories");
-        setCategories(response.data);
-      } catch (error) {
-        console.log(error.response.data);
-      }
-    };
-
-    getCategories();
-  }, []);
-
-  // setCategories(categories.filter((category) =>
-  //   category.title.toLowerCase().includes(search.toLowerCase())
-  // ));
-  
+export default function McqCategoriesTab({ onOpen, categories, search, setSearch }) {
   return (
     <>
-      <CategoriesHeaderBar search={search} setSearch={setSearch} />
+      <CategoriesHeaderBar
+        search={search}
+        setSearch={setSearch}
+        onOpen={onOpen}
+      />
       <Text
         fontSize={"16px"}
         fontWeight={"600"}
@@ -53,10 +33,7 @@ export default function McqCategoriesTab() {
             category.title.toLowerCase().includes(search.toLowerCase())
           )
           .map((category) => (
-            <NavLink
-              key={category.id}
-              to={`/tutor/quizzes/category/${category.id}`}
-            >
+            <NavLink key={category.id} to={`/tutor/quizzes/category/${category.id}`}>
               <McqCategoryCards category={category} />
             </NavLink>
           ))}

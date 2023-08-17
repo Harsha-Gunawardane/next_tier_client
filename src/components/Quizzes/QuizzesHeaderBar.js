@@ -50,7 +50,6 @@ export default function QuizzesHeaderhBar({ search, setSearch, onOpen }) {
         </FormControl>
       </form>
       <Spacer minwidth="10px" />
-      {/* <NavLink to="quiz/create"> */}
         <Button
           colorScheme="messenger"
           variant="solid"
@@ -62,7 +61,6 @@ export default function QuizzesHeaderhBar({ search, setSearch, onOpen }) {
         >
           Create a quiz
         </Button>
-      {/* </NavLink> */}
     </HStack>
   );
 }

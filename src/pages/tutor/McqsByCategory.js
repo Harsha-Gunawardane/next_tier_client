@@ -21,7 +21,9 @@ import NewMcqStepper from "../../components/Quizzes/NewMcqQuizStepper";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 
 export default function McqsByCategory() {
-  const { id } = useParams();
+  const { categoryId } = useParams();
+
+  console.log(categoryId);
 
   const axiosPrivate = useAxiosPrivate();
 
@@ -29,6 +31,8 @@ export default function McqsByCategory() {
 
   const [mcqs, setMcqs] = useState([]);
   const [search, setSearch] = useState("");
+  const [category, setCategory] = useState([]);
+
 
   const {
     isOpen: isNewMcqPopupOpen,
@@ -36,17 +40,42 @@ export default function McqsByCategory() {
     onClose: onNewMcqPopupClose,
   } = useDisclosure();
 
+
   useEffect(() => {
-    const getMcqs = async () => {
+    const getQuiz = async () => {
       try {
-        const response = await axiosPrivate.get("/tutor/mcqs");
-        setMcqs(response.data);
+        const response = await axiosPrivate.get(`/tutor/categories/${categoryId}`);
+        setCategory(response.data);
       } catch (error) {
-        console.log(error.response.data);
+        if (error.response && error.response.data) {
+          console.log(error.response.data);
+        } else {
+          console.log("An error occurred:", error.message);
+        }
       }
     };
 
-    getMcqs();
+    getQuiz();
+  }, []);
+
+  //Get mcqs in the quiz
+  useEffect(() => {
+    const getMcqsFromQuiz = async () => {
+      try {
+        const response = await axiosPrivate.get(
+          `/tutor/categories/getMcqs/${categoryId}`
+        );
+        setMcqs(response.data);
+      } catch (error) {
+        if (error.response && error.response.data) {
+          console.log(error.response.data);
+        } else {
+          console.log("An error occurred:", error.message);
+        }
+      }
+    };
+
+    getMcqsFromQuiz();
   }, []);
 
   return (
@@ -62,11 +91,11 @@ export default function McqsByCategory() {
       <Grid
         margin={{ base: "10px 10px", sm: "20px auto" }}
         templateColumns="repeat(3, 1fr)"
-        maxWidth="1180px"
+        maxWidth="1240px"
         gap={{ base: 2, sm: 8 }}
       >
         <GridItem colSpan={{ base: 3, sm: 2 }}>
-          <CategoryInsideCard />
+          <CategoryInsideCard category={category} />
         </GridItem>
         <GridItem colSpan={{ base: 3, sm: 1 }}>
           <Card

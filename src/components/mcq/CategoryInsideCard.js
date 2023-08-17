@@ -15,7 +15,7 @@ import backgroundTemplate from "../../components/mcq/assests/backgroundTemplate.
 import { DeleteIcon, EditIcon, SettingsIcon } from "@chakra-ui/icons";
 import { FaPen } from "react-icons/fa";
 
-export default function CategoryInsideCard() {
+export default function CategoryInsideCard({ category }) {
   return (
     <Card
       direction={{ base: "column", sm: "row" }}
@@ -32,7 +32,7 @@ export default function CategoryInsideCard() {
       />
 
       <Stack>
-        <CardBody padding="10px" minWidth={{ base: "370px", sm: "620px" }}>
+        <CardBody padding="10px" minWidth={{ base: "370px", md: "640px" }}>
           <HStack>
             <Text color="gray" fontSize="16px" mt="3px">
               Category
@@ -52,16 +52,22 @@ export default function CategoryInsideCard() {
           </HStack>
 
           <Heading fontSize={{ base: "20px", sm: "20px" }} mt="5px">
-            {/* {quiz.title} */}
-            Calculation Questions
+            {category.title}
           </Heading>
 
-          <Box >
-  
+          <Text mt="10px" color="gray" fontSize={{ base: "14px", md: "16px" }}>
+            {`Analytical Chemistry / Environmental Chemistry`}
+          </Text>
+
+          <Box>
             <HStack>
-              <Text
-                fontSize={{ base: "14px", md: "16px" }}
-              >{`6 Questions`}</Text>
+              <Text mt="10px" fontSize={{ base: "14px", md: "14px" }}>
+                {`Number of questions: ${
+                  category && Array.isArray(category.question_ids)
+                    ? category.question_ids.length
+                    : 0
+                }`}
+              </Text>
             </HStack>
           </Box>
         </CardBody>

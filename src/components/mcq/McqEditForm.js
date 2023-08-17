@@ -281,9 +281,74 @@ export default function McqEditForm({ mcq, mcqId, onClose, mcqs, setMcqs }) {
           </Stepper.Step>
           <Stepper.Completed>
             Completed! Form values:
-            <Code block mt="xl">
-              {JSON.stringify(form.values, null, 2)}
-            </Code>
+            <Card padding="10px">
+              <TextInput
+                readOnly
+                label="Question"
+                defaultValue={form.values.question}
+              />
+              <MultiSelect
+                readOnly
+                label="Define Options"
+                data={options}
+                placeholder="Define Options"
+                getCreateLabel={(query) => `+ Create ${query}`}
+                defaultValue={form.values.options}
+              />
+              <SimpleGrid cols={2} spacing="xs" verticalSpacing="xs" m="8px">
+                {selectedOptionsForDisplay ? (
+                  selectedOptionsForDisplay.map((option) => (
+                    <Card
+                      p="5px"
+                      fontSize="12px"
+                      fz="12px"
+                      withBorder
+                      key={option}
+                    >
+                      {option}
+                    </Card>
+                  ))
+                ) : (
+                  <></>
+                )}
+              </SimpleGrid>
+              <Textarea
+                readOnly
+                autosize
+                label="Answer Explanation"
+                defaultValue={form.values.explanation}
+              />
+              <SimpleGrid cols={2} mt="md">
+                <Select
+                  readOnly
+                  label="Difficulty Level"
+                  data={[
+                    { value: "Medium", label: "Medium" },
+                    { value: "Hard", label: "Hard" },
+                  ]}
+                  defaultValue={form.values.difficulty_level}
+                />
+                <NumberInput
+                  readOnly
+                  label="Points"
+                  defaultValue={form.values.points}
+                />
+              </SimpleGrid>
+              <SimpleGrid cols={2}>
+                <Select
+                  readOnly
+                  label="Select Subject"
+                  data={subject}
+                  defaultValue={form.values.subject}
+                />
+                <MultiSelect
+                  readOnly
+                  label="Select Subject Areas"
+                  data={subjectAreas}
+                  defaultValue={form.values.subject_areas}
+                />
+              </SimpleGrid>
+            </Card>
           </Stepper.Completed>
         </Stepper>
 
