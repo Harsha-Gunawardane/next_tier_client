@@ -3,7 +3,7 @@ import Header from "../components/Header/Header";
 import ResponsiveSidebar from "../components/Sidebar/ResponsiveSidebar";
 
 import { useState, useEffect, useRef } from "react";
-import { FaUsers, FaUserAlt, FaMoneyBillAlt } from "react-icons/fa";
+import { FaUsers, FaUserAlt, FaMoneyBillAlt, } from "react-icons/fa";
 
 import { Box, Grid, GridItem, useDisclosure } from "@chakra-ui/react";
 import useSidebar from "../hooks/useSidebar";
@@ -15,6 +15,8 @@ import { TiDocumentText } from "react-icons/ti";
 import { FaCompass, FaUserFriends, FaListAlt, FaQuestionCircle } from "react-icons/fa";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import ReportProblemIcon from "@mui/icons-material/ReportProblem";
+import { MdOutlineQuiz } from "react-icons/md";
+import { PiNotebookFill } from "react-icons/pi";
 
 
 
@@ -56,6 +58,20 @@ const SidebarAndHeader = ({ userRole }) => {
 		['stu/tutes', 'tutes'],
 
 		// More routes and active tabs...
+
+
+		//Teacher Routes
+		['tutor/dashboard', 'dashboard'],
+		['tutor/courses/add', 'courses'],
+		['tutor/courses', 'courses'],
+		['tutor/courses/content/:courseid', 'courses'],
+		['tutor/courses/details/:courseid', 'courses'],
+		['courses/content/analyze/:studypackid', 'courses'],
+		['courses/studypackcontent/:courseid', 'courses'],
+		['courses/courses/studypackdetails/:courseid', 'courses'],
+		['courses/courses/addstudypack', 'courses'],
+		['tutor/staffs', 'staffs'],
+		['tutor/quizzes', 'quizzes'],
 	]);
 
 
@@ -98,8 +114,8 @@ const SidebarAndHeader = ({ userRole }) => {
 		{ icon: GridViewRoundedIcon, name: "Dashboard", value: "dashboard", href: "/stu/dashboard" },
 		{ icon: TiDocumentText, name: "Courses", value: "courses", href: "/stu/courses" },
 		{ icon: FaCompass, name: "Content", value: "content", href: "/stu/content" },
-		{ icon: FaListAlt, name: "Quizzes", value: "quizzes", href: "/stu/quizzes" },
-		{ icon: FaQuestionCircle, name: "Tutes", value: "tutes", href: "/stu/tutes" },
+		{ icon: MdOutlineQuiz, name: "Quizzes", value: "quizzes", href: "/stu/quizzes" },
+		{ icon: PiNotebookFill, name: "Tutes", value: "tutes", href: "/stu/tutes" },
 	];
 
 	const AdminOptions = [
@@ -137,13 +153,13 @@ const SidebarAndHeader = ({ userRole }) => {
 			icon: FaListAlt,
 			FaQuestionCircle,
 			name: "Quizzes",
-			value: "Quizzes",
+			value: "quizzes",
 			href: "/tutor/quizzes",
 		},
 		{
 			icon: FaQuestionCircle,
 			name: "Complaints",
-			value: "Complaints",
+			value: "complaints",
 			href: "/tutor/complaints",
 		},
 	];

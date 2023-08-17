@@ -15,6 +15,7 @@ import { BiBook } from "react-icons/bi";
 import { TbPackages } from "react-icons/tb";
 import { MdOutlineVideoLibrary } from "react-icons/md";
 import { FaRegCircleCheck } from "react-icons/fa6";
+import { PiNotebookBold } from "react-icons/pi";
 
 const Dashboard = () => {
 	const sectionTitleFontSize = "16px"
@@ -32,7 +33,7 @@ const Dashboard = () => {
 	return (
 		<Box m="0" p="0" w={"100%"} h={"max-content"} bg={"gray.50"}>
 			<Flex width={"100%"} mb="20px" p={"10px"} direction={"column"} >
-				<SimpleGrid columns={{ base: 2, md: 2, lg: 5 }} px={"5px"} gridRowGap={"10px"} gap={"10px"}>
+				<SimpleGrid columns={{ base: 2, md: 2, lg: 5 }} px={"5px"} gridRowGap={"25px"} gap={"25px"}>
 					<GridItem colSpan={{ base: 2, md: 2, lg: 5 }}>
 						<Text fontSize={sectionTitleFontSize} fontWeight={"600"}>
 							Overview
@@ -51,7 +52,7 @@ const Dashboard = () => {
 						<MiniStat name="My Study Packs" value="18" endContent={<MiniStatCardIcon color={"purple"} icon={TbPackages} />} />
 					</GridItem>
 					<GridItem colSpan={{ base: 1, md: 1, lg: 1 }} display={{ base: "none", lg: "block" }}>
-						<MiniStat name="Courses in Progress" value="03" endContent={<MiniStatCardIcon color={"orange"} icon={BiBook} />} />
+						<MiniStat name="My Notes" value="03" endContent={<MiniStatCardIcon color={"orange"} icon={PiNotebookBold} />} />
 						{/* <CardT /> */}
 					</GridItem>
 				</SimpleGrid>
