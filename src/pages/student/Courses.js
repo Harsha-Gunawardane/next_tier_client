@@ -8,12 +8,18 @@ import {
   TabPanels,
   TabPanel,
   Text,
+  Select,
+  FormLabel,
+  Grid,
+  GridItem,
+
 } from "@chakra-ui/react";
 import { useState } from "react";
 
 import CoursesList from "../common/Courses";
+import SearchBar from "../../components/SearchBar";
 function Courses() {
-  const [focusedTab, setFocusedTab] = useState("New");
+  // const [focusedTab, setFocusedTab] = useState("New");
 
   const newCourses = [
     {
@@ -60,9 +66,11 @@ function Courses() {
   const completedCourse = [];
 
   return (
-    <Box w={"100%"}>
-      <Tabs pl={5} pr={5} mt={2} ml={2}>
-        <TabList style={{ borderBottom: "none" }}>
+
+
+    <Tabs variant={"soft-rounded"} colorScheme={"accent"} w={"100%"} >
+      <Box position={"sticky"} top={0}>
+        <TabList >
           <Flex
             justifyContent={"space-between"}
             alignItems={"center"}
@@ -71,61 +79,63 @@ function Courses() {
           >
             <Flex gap={3}>
               <Tab
-                bg={focusedTab === "New" ? "#383838" : "#E9E9E9"}
-                color={focusedTab === "New" ? "#FFFFFF" : "#454545"}
-                pl={6}
-                pr={6}
-                pt={1.5}
-                pb={1.5}
-                borderRadius={25}
-                onClick={() => setFocusedTab("New")}
-                borderBottom={"none"}
+                _selected={{ color: "#FFFFFF", bg: "#383838" }}
+                color={"#3f3f3f"}
+                bg={"gray.100"}
+                fontWeight={"medium"}
               >
-                New
+                Classes
               </Tab>
               <Tab
-                bg={focusedTab === "In progress" ? "#383838" : "#E9E9E9"}
-                color={focusedTab === "In progress" ? "#FFFFFF" : "#454545"}
-                pl={6}
-                pr={6}
-                pt={1.5}
-                pb={1.5}
-                borderRadius={25}
-                onClick={() => setFocusedTab("In progress")}
-                borderBottom={"none"}
+                _selected={{ color: "#FFFFFF", bg: "#383838" }}
+                color={"#3f3f3f"}
+                bg={"gray.100"}
+                fontWeight={"medium"}
               >
-                In progress
+                Study Packs
               </Tab>
               <Tab
-                bg={focusedTab === "Completed" ? "#383838" : "#E9E9E9"}
-                color={focusedTab === "Completed" ? "#FFFFFF" : "#454545"}
-                pl={6}
-                pr={6}
-                pt={1.5}
-                pb={1.5}
-                borderRadius={25}
-                onClick={() => setFocusedTab("Completed")}
-                borderBottom={"none"}
+                _selected={{ color: "#FFFFFF", bg: "#383838" }}
+                color={"#3f3f3f"}
+                bg={"gray.100"}
+                fontWeight={"medium"}
               >
-                Completed
+                Tutors
               </Tab>
             </Flex>
           </Flex>
         </TabList>
+        <Flex w={"100%"} p="5px" gap="20px" my="10px" justifyContent={"flex-start"} alignItems={"center"} >
+          <SearchBar />
+          <Flex justifyContent={"space-between"} alignItems={"center"} gap="10px">
+            <Select placeholder='Grade' w="200px" >
+              <option value='option1'>Option 1</option>
+              <option value='option2'>Option 2</option>
+              <option value='option3'>Option 3</option>
+            </Select>
+            <Select placeholder='Subject' w="200px">
+              <option value='option1'>Option 1</option>
+              <option value='option2'>Option 2</option>
+              <option value='option3'>Option 3</option>
+            </Select>
+          </Flex>
+        </Flex>
+      </Box>
+      {/* </GridItem> */}
+      <TabPanels>
+        <TabPanel>
 
-        <TabPanels>
-          <TabPanel>
-            <CoursesList courses={newCourses} />
-          </TabPanel>
-          <TabPanel>
-            <CoursesList courses={inProgressCourses} />
-          </TabPanel>
-          <TabPanel>
-            <CoursesList courses={completedCourse} />
-          </TabPanel>
-        </TabPanels>
-      </Tabs>
-    </Box>
+          <CoursesList courses={newCourses} />
+        </TabPanel>
+        <TabPanel>
+          <CoursesList courses={inProgressCourses} />
+        </TabPanel>
+        <TabPanel>
+          <CoursesList courses={completedCourse} />
+        </TabPanel>
+      </TabPanels>
+    </Tabs>
+
   );
 }
 

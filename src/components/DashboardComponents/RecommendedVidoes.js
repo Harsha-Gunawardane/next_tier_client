@@ -11,7 +11,7 @@ const RecommendedVideos = ({ ...rest }) => {
 			time: "2:30",
 			viewcount: "1.2k",
 			link: "/stu/content",
-			image: "https://images.unsplash.com/photo-1612833603929-5b7b3e7b7b0f?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8Y2hpbGRyZW4lMjBwYXJ0eXxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&w=1000&q=80",
+			image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR-q1Fugx0DnDwZztgb9Kb_JQ-Mo91tNL3Pyg&usqp=CAU",
 			uploadDateTime: "2023-07-01T10:00:00.000Z"
 		},
 		{
@@ -20,7 +20,7 @@ const RecommendedVideos = ({ ...rest }) => {
 			time: "2:30",
 			viewcount: "1.2k",
 			link: "/stu/content",
-			image: "https://images.unsplash.com/photo-1612833603929-5b7b3e7b7b0f?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8Y2hpbGRyZW4lMjBwYXJ0eXxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&w=1000&q=80",
+			image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSAL7__z7tTtDKfksudgKknl6YdXdkAASKnYw&usqp=CAU",
 			uploadDateTime: "2023-05-01T10:00:00.000Z"
 		},
 		{

@@ -143,10 +143,10 @@ const Header = ({ full = false, hidden, setHidden, onOpen, minimized, setMinimiz
 				</Flex>
 				<Flex p={"4px"} pr={"10px"} h={"100%"} alignContent={"center"} alignItems={"center"} gap={"10px"}>
 					<Box h={"40px"} textAlign={"right"} display={{ base: "none", lg: "block" }} >
-						<Text fontSize={"16px"} fontWeight={"bold"} fontStyle={"Roboto"}>
+						<Text fontSize={"16px"} fontWeight={"bold"} >
 							{`${fName} ${lName}`}
 						</Text>
-						<Text fontSize={"10px"} fontWeight={"semibold"} color={"gray.400"} fontStyle={"Roboto"}>
+						<Text fontSize={"12px"} fontWeight={"medium"} color={"gray.400"}>
 							{`${userRole}`}
 						</Text>
 					</Box>

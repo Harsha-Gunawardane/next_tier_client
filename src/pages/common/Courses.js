@@ -5,11 +5,10 @@ import CourseCard from './cards/CourseCard'
 
 function Courses({ courses }) {
   return (
-    <Box w={"100%"} p={10}>
+    <Box w={"100%"}>
       <SimpleGrid columns={{ base: 1, sm: 2, md: 2, lg: 3 }} spacing={8}>
         {courses.map((course) => {
           return (
-
             <GridItem colSpan={1}>
               <CourseCard course={course} />
             </GridItem>

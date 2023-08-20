@@ -1,11 +1,11 @@
-import { Outlet, useLocation, useParams } from "react-router-dom";
+import { Outlet, useParams } from "react-router-dom";
 import Header from "../components/Header/Header";
 import ResponsiveSidebar from "../components/Sidebar/ResponsiveSidebar";
 
 import { useState, useEffect, useRef } from "react";
-import { FaUsers, FaUserAlt, FaMoneyBillAlt, } from "react-icons/fa";
+import { FaUsers, FaUserAlt, } from "react-icons/fa";
 
-import { Box, Grid, GridItem, useDisclosure } from "@chakra-ui/react";
+import { Grid, GridItem, useDisclosure } from "@chakra-ui/react";
 import useSidebar from "../hooks/useSidebar";
 
 
@@ -15,8 +15,10 @@ import { TiDocumentText } from "react-icons/ti";
 import { FaCompass, FaUserFriends, FaListAlt, FaQuestionCircle } from "react-icons/fa";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import ReportProblemIcon from "@mui/icons-material/ReportProblem";
-import { MdOutlineQuiz } from "react-icons/md";
+import { MdOutlineQuiz, MdVideoLibrary } from "react-icons/md";
 import { PiNotebookFill } from "react-icons/pi";
+import { IoSchool, IoCompass } from "react-icons/io5";
+import { BiSolidDashboard } from "react-icons/bi"
 
 
 
@@ -29,7 +31,6 @@ const SidebarAndHeader = ({ userRole }) => {
 	const [minimized, setMinimized] = useState({ base: false, md: true, lg: false });
 
 	const { setSidebarOptionHandler } = useSidebar();
-	const { pathname } = useLocation();
 	const params = useParams();
 	const minimizeButtonRef = useRef();
 
@@ -39,11 +40,6 @@ const SidebarAndHeader = ({ userRole }) => {
 		setSidebarOptionHandler(activeTab);
 
 	}, [setSidebarOptionHandler]);
-
-	const startWithMinimize = [
-		"stu/content",
-		"stu/content/watch/:id"
-	]
 
 
 
@@ -119,9 +115,10 @@ const SidebarAndHeader = ({ userRole }) => {
 	var Options = [];
 
 	const StuOptions = [
-		{ icon: GridViewRoundedIcon, name: "Dashboard", value: "dashboard", href: "/stu/dashboard" },
-		{ icon: TiDocumentText, name: "Courses", value: "courses", href: "/stu/courses" },
-		{ icon: FaCompass, name: "Content", value: "content", href: "/stu/content" },
+		{ icon: BiSolidDashboard, name: "Dashboard", value: "dashboard", href: "/stu/dashboard" },
+		{ icon: IoSchool, name: "My Courses", value: "mycourses", href: "/stu/courses" },
+		{ icon: IoCompass, name: "Explore", value: "courses", href: "/stu/courses" },
+		{ icon: MdVideoLibrary, name: "Content", value: "content", href: "/stu/content" },
 		{ icon: MdOutlineQuiz, name: "Quizzes", value: "quizzes", href: "/stu/quizzes" },
 		{ icon: PiNotebookFill, name: "Tutes", value: "tutes", href: "/stu/tutes" },
 	];
