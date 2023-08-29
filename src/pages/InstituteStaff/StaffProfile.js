@@ -172,7 +172,11 @@ function Profile() {
                       Date of Birth
                     </FormLabel>
                     <Input
-                     value={staffDetails.DOB ? new Date(staffDetails.DOB).toLocaleDateString() : ''}
+                      value={
+                        staffDetails.DOB
+                          ? new Date(staffDetails.DOB).toLocaleDateString()
+                          : ""
+                      }
                       fontSize="small"
                       bg="white"
                       readOnly
@@ -218,46 +222,40 @@ function Profile() {
                     />
                   </FormControl>
                   <FormControl>
-                    {/* <FormControl>
-  <FormLabel fontSize="small" mt={3}>
-    Qualifications:
-  </FormLabel>
- 
-  <ul>
-    {staffDetails.instStaff.map((staff) => (
-      <li key={staff.id}>
-        {staff.qualifications.map((qualification, index) => (
-          <span key={index}>
-            {qualification}
-            {index !== staff.qualifications.length - 1 && ", "}
-          </span>
-        ))}
-      </li>
-    ))}
-  </ul>
-  
-</FormControl> */}
                     <FormControl>
                       <FormLabel fontSize="small" mt={3}>
                         Qualifications:
                       </FormLabel>
                       <Textarea
-                        bg="white"
-                        fontSize="small"
-                        readOnly
-                        value={staffDetails.instStaff.map((staff) =>
-                          staff.qualifications
-                            .map(
-                              (qualification, index) =>
-                                `${qualification}${
-                                  index !== staff.qualifications.length - 1
-                                    ? ", "
-                                    : ""
-                                }`
-                            )
-                            .join("")
-                        )}
-                      />
+  bg="white"
+  fontSize="small"
+  readOnly
+  value={
+    staffDetails.instStaff.length === 0
+      ? 'null'
+      : staffDetails.instStaff
+          .map((staff) =>
+            staff.qualifications
+              .map(
+                (qualification, index) =>
+                  `${qualification}${
+                    index !== staff.qualifications.length - 1 ? ", " : ""
+                  }`
+              )
+              .join("")
+          )
+          .join("\n")
+  }
+  style={
+    staffDetails.instStaff.length === 0
+      ? {
+          color: "gray",
+          fontStyle: "italic",
+        }
+      : {}
+  }
+/>
+
                     </FormControl>
                   </FormControl>
                 </SimpleGrid>

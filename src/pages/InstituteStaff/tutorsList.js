@@ -19,41 +19,40 @@ import {
   Switch,
   useToast,
 } from "@chakra-ui/react";
-import data from "./data/data.json";
+// import data from "./data/data.json";
 import { NavLink, useNavigate } from "react-router-dom";
 import { SmallAddIcon } from "@chakra-ui/icons";
-// import useAxiosPrivate from "../../hooks/useAxiosPrivate";
-const tutorData = data.Tutors;
+import useAxiosPrivate from "../../hooks/useAxiosPrivate";
+// const tutorData = data.Tutors;
 
 const TutorsList = () => {
-  const toast = useToast();
 
-  // const axiosPrivate = useAxiosPrivate();
-  // const [tutorData, setTutorData] = useState([]);
-  // const toast = useToast();
+  const axiosPrivate = useAxiosPrivate();
+  const [tutorData, setTutorData] = useState([]);
+  const toast = useToast();
   const [searchTerm, setSearchTerm] = useState("");
   const [sortBy, setSortBy] = useState("fName");
   const [sortOrder, setSortOrder] = useState("asc");
 
-  // useEffect(() => {
-  //   const fetchTutorDetails = async () => {
-  //     try {
-  //       const response = await axiosPrivate.get("/staff/tutor");
-  //       setTutorData(response.data);
-  //     } catch (error) {
-  //       console.error("Error fetching tutor details:", error);
-  //       toast({
-  //         title: "Error",
-  //         description: "Error fetching tutor details. Please try again.",
-  //         status: "error",
-  //         duration: 3000,
-  //         isClosable: true,
-  //       });
-  //     }
-  //   };
+  useEffect(() => {
+    const fetchTutorDetails = async () => {
+      try {
+        const response = await axiosPrivate.get("/staff/tutor");
+        setTutorData(response.data);
+      } catch (error) {
+        console.error("Error fetching tutor details:", error);
+        toast({
+          title: "Error",
+          description: "Error fetching tutor details. Please try again.",
+          status: "error",
+          duration: 3000,
+          isClosable: true,
+        });
+      }
+    };
 
-  //   fetchTutorDetails();
-  // }, [toast]);
+    fetchTutorDetails();
+  }, [toast]);
 
   const handleSearchInputChange = (event) => {
     setSearchTerm(event.target.value);

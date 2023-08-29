@@ -220,6 +220,7 @@ function App() {
                 ></Route>
               </Route>
             </Route>
+            </Route>
 
             {/* </Route> */}
 
@@ -248,12 +249,12 @@ function App() {
                 <Route path="tutors-list" element={<TutorsList />} />
                 <Route path="tutor-profile/:id" element={<TutorProfile />} />
                 <Route
-                  path="tutor-profile/:id/course/:id"
+                  path="course/:id"
                   element={<CourseProfile />}
                 />
               </Route>
             </Route>
-          </Route>
+         
 
            {/* <Route element={<RequireAuth allowedRoles={[ROLES.User]} />}>
             <Route path="user" element={<UserLayout />}>
