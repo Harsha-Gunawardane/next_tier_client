@@ -1,4 +1,4 @@
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 import {
   Box,
   Flex,
@@ -20,13 +20,12 @@ import {
   useToast,
 } from "@chakra-ui/react";
 // import data from "./data/data.json";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate, useLocation } from "react-router-dom";
 import { SmallAddIcon } from "@chakra-ui/icons";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 // const tutorData = data.Tutors;
 
 const TutorsList = () => {
-
   const axiosPrivate = useAxiosPrivate();
   const [tutorData, setTutorData] = useState([]);
   const toast = useToast();
@@ -34,10 +33,31 @@ const TutorsList = () => {
   const [sortBy, setSortBy] = useState("fName");
   const [sortOrder, setSortOrder] = useState("asc");
 
+  // Inside your component
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+
+  // Check if the "success" query parameter is present
+  const isSuccess = queryParams.get("success");
+
+  // Display the toast message if isSuccess is true
+  useEffect(() => {
+    if (isSuccess) {
+      toast({
+        title: "Tutor Registered Successfully",
+        status: "success",
+        duration: 5000,
+        position: "top",
+        isClosable: true,
+      });
+    }
+  }, [isSuccess]);
+
   useEffect(() => {
     const fetchTutorDetails = async () => {
       try {
         const response = await axiosPrivate.get("/staff/tutor");
+
         setTutorData(response.data);
       } catch (error) {
         console.error("Error fetching tutor details:", error);
@@ -52,7 +72,7 @@ const TutorsList = () => {
     };
 
     fetchTutorDetails();
-  }, [toast]);
+  }, [toast, axiosPrivate]);
 
   const handleSearchInputChange = (event) => {
     setSearchTerm(event.target.value);
@@ -82,9 +102,7 @@ const TutorsList = () => {
     } else if (sortBy === "lName") {
       compareValue = (a.lName || "").localeCompare(b.lName || "");
     } else if (sortBy === "joinedDate") {
-      compareValue = (
-        new Date(a.joinedDate) - new Date(b.joinedDate)
-      );
+      compareValue = new Date(a.joinedDate) - new Date(b.joinedDate);
     }
     return compareValue * (sortOrder === "asc" ? 1 : -1);
   });
@@ -96,37 +114,54 @@ const TutorsList = () => {
   };
 
   const buttonSize = useBreakpointValue({ base: "xs", md: "sm" });
- 
-  const handleSwitchChange = (tutorId) => {
-    const tutorToUpdate = tutorData.find((tutor) => tutor.tutor_id === tutorId);
-    const newActiveState = !tutorToUpdate.active;
 
-    // Update the tutor's active state
-    tutorToUpdate.active = newActiveState;
+  const handleSwitchChange = async (tutorId) => {
+    try {
+      const tutorToUpdate = tutorData.find((tutor) => tutor.tutor_id === tutorId);
+      const newActiveState = !tutorToUpdate.active;
 
-    // Display appropriate toast based on the action
-    if (newActiveState) {
-      toast({
-        title: "Tutor Enabled",
-        description: `Tutor ${tutorToUpdate.fName} ${tutorToUpdate.lName} has been activated.`,
-        status: "success",
-        duration: 3000,
-        isClosable: true,
-        position: "top",
+      // Send a PUT request to update the tutor's status on the server
+      await axiosPrivate.put(`/staff/tutor/${tutorId}`, {
+        active: newActiveState,
       });
-    } else {
+
+      // Update the tutor's active state locally
+      tutorToUpdate.active = newActiveState;
+
+      // Display appropriate toast based on the action
+      if (newActiveState) {
+        toast({
+          title: "Tutor Enabled",
+          description: `Tutor ${tutorToUpdate.fName} ${tutorToUpdate.lName} has been activated.`,
+          status: "success",
+          duration: 3000,
+          isClosable: true,
+          position: "top",
+        });
+      } else {
+        toast({
+          title: "Tutor Blocked",
+          description: `Tutor ${tutorToUpdate.fName} ${tutorToUpdate.lName} has been blocked.`,
+          status: "error",
+          duration: 3000,
+          isClosable: true,
+          position: "top",
+        });
+      }
+    } catch (error) {
+      console.error("Error updating tutor status:", error);
       toast({
-        title: "Tutor Blocked",
-        description: `Tutor ${tutorToUpdate.fName} ${tutorToUpdate.lName} has been blocked.`,
+        title: "Error",
+        description: "Error updating tutor status. Please try again.",
         status: "error",
         duration: 3000,
         isClosable: true,
-        position: "top",
       });
     }
   };
+  
   return (
-    <Box backgroundColor="#F9F9F9" width="100%"height="90vh">
+    <Box backgroundColor="#F9F9F9" width="100%" height="90vh">
       <Flex align="center" justify="space-between" p={4}>
         <Text fontSize={20} color="#242424" mb={4} mt={1} fontWeight="bold">
           Tutors
@@ -140,7 +175,13 @@ const TutorsList = () => {
         </NavLink>
       </Flex>
       <Box>
-        <SimpleGrid p="10px" columns={5} spacing={6} minChildWidth={200} mr={10}>
+        <SimpleGrid
+          p="10px"
+          columns={5}
+          spacing={6}
+          minChildWidth={200}
+          mr={10}
+        >
           <Box height="40px" ml={7}>
             <Input
               placeholder="Search for Tutors"
@@ -210,21 +251,44 @@ const TutorsList = () => {
         <Table variant="simple">
           <Thead>
             <Tr>
-              <Th fontSize={["10px", "13px", "md"]} textTransform="capitalize" fontWeight="bold">
-              </Th>
-              <Th fontSize={["10px", "13px", "md"]} textTransform="capitalize" fontWeight="bold">
+              <Th
+                fontSize={["10px", "13px", "md"]}
+                textTransform="capitalize"
+                fontWeight="bold"
+              ></Th>
+              <Th
+                fontSize={["10px", "13px", "md"]}
+                textTransform="capitalize"
+                fontWeight="bold"
+              >
                 Full Name
               </Th>
-              <Th fontSize={["10px", "13px", "md"]} textTransform="capitalize" fontWeight="bold">
+              <Th
+                fontSize={["10px", "13px", "md"]}
+                textTransform="capitalize"
+                fontWeight="bold"
+              >
                 Email
               </Th>
-              <Th fontSize={["10px", "13px", "md"]} textTransform="capitalize" fontWeight="bold">
+              <Th
+                fontSize={["10px", "13px", "md"]}
+                textTransform="capitalize"
+                fontWeight="bold"
+              >
                 Subjects
               </Th>
-              <Th fontSize={["10px", "13px", "md"]} textTransform="capitalize" fontWeight="bold">
+              <Th
+                fontSize={["10px", "13px", "md"]}
+                textTransform="capitalize"
+                fontWeight="bold"
+              >
                 Action
               </Th>
-              <Th fontSize={["10px", "13px", "md"]} textTransform="capitalize" fontWeight="bold">
+              <Th
+                fontSize={["10px", "13px", "md"]}
+                textTransform="capitalize"
+                fontWeight="bold"
+              >
                 Active
               </Th>
             </Tr>
@@ -233,11 +297,9 @@ const TutorsList = () => {
             {sortedTutors.map((tutor) => (
               <Tr key={tutor.tutor_id}>
                 <Td>
-                  
                   <Avatar src={tutor.profileImage} />
                 </Td>
                 <Td fontSize={["8px", "11px", "13px"]}>
-                
                   {tutor.fName} {tutor.lName}
                 </Td>
                 <Td fontSize={["8px", "11px", "13px"]}> {tutor.email}</Td>
@@ -255,9 +317,13 @@ const TutorsList = () => {
                     </Button>
                   </Flex>
                 </Td>
-                <Td >
-                <Switch colorScheme='green' size='md' onChange={() => handleSwitchChange(tutor.tutor_id)}
-    isChecked={tutor.active} />
+                <Td>
+                  <Switch
+                    colorScheme="green"
+                    size="md"
+                    onChange={() => handleSwitchChange(tutor.tutor_id)}
+                    isChecked={tutor.active}
+                  />
                 </Td>
               </Tr>
             ))}
