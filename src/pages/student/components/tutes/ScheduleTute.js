@@ -1,10 +1,25 @@
 import { Box, Flex, Text } from "@chakra-ui/react";
 import { FcReading } from "react-icons/fc";
-import React, { useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useDisclosure } from "@chakra-ui/react";
 
 import SheduleDate from "./SheduleDate";
 import ScheduleReading from "../drawers/ScheduleReading";
+import useAxiosPrivate from "../../../../hooks/useAxiosPrivate";
+
+const reminder = {
+  t_days: {
+    Sun: null,
+    Mon: "Hey there",
+    Tue: null,
+    Wed: "Hey there",
+    Thu: null,
+    Fri: null,
+    Sat: null,
+  },
+};
+
+const TUTE_SCHEDULE_URL = "/stu/tute/schedule";
 
 const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
@@ -29,10 +44,27 @@ function getCurrentWeekDates() {
 function ScheduleTute() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = useRef();
+  const axiosPrivate = useAxiosPrivate();
 
   const dates = getCurrentWeekDates();
   const today = new Date();
   const currentDayOfWeek = today.getDay();
+
+  const [reminders, setReminders] = useState([]);
+
+  const getReminders = async () => {
+    try {
+      const response = await axiosPrivate.get(TUTE_SCHEDULE_URL);
+      console.log(response.data.schedule);
+      setReminders(response.data.schedule);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    getReminders();
+  }, []);
 
   return (
     <>
@@ -77,17 +109,15 @@ function ScheduleTute() {
                 date={date}
                 dateName={days[index]}
                 isToday={currentDayOfWeek === index}
-                isSchedule={dates[index] === 13}
-                reminder={
-                  "This popover is shown when user hovers the target element"
-                }
+                isSchedule={reminders[days[index]] !== null}
+                reminder={reminders[days[index]]}
               />
             ))}
           </Flex>
         </Box>
       </Flex>
 
-      <ScheduleReading isOpen={isOpen} onClose={onClose} btnRef={btnRef} />
+      <ScheduleReading setReminders={setReminders} isOpen={isOpen} onClose={onClose} btnRef={btnRef} />
     </>
   );
 }
