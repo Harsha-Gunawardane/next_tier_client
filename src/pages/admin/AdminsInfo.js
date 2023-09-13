@@ -33,7 +33,7 @@ function AdminsInfo() {
       }
     };
     fetchAdmins();
-  }, []);
+  }, [axiosPrivate, setAdminsInfo, setSelectedAdmin]);
 
   return (
     <Flex>
