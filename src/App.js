@@ -57,6 +57,9 @@ import AdminDashboard from "./pages/admin/Dashboard";
 import AdminsInfo from "./pages/admin/AdminsInfo";
 import AdminSetting from "./pages/admin/Settings";
 
+// parent components
+import ParentDashboard from "./pages/parent/Dashboard"
+
 // tutor components
 import TDashboard from "./pages/tutor/dashboard";
 import TCourses from "./pages/tutor/course";
@@ -156,6 +159,17 @@ function App() {
             </Route>
           </Route>
 
+          {/* <Route element={<RequireAuth allowedRoles={[ROLES.Parent]} />}> */}
+            <Route
+              path="parent"
+              element={<SidebarAndHeader userRole={"parent"} />}
+            >
+              <Route path="dashboard" element={<ParentDashboard />} />
+              {/* <Route path="info" element={<AdminsInfo />} /> */}
+              {/* <Route path="settings" element={<AdminSetting />} /> */}
+            </Route>
+          {/* </Route> */}
+
           <Route element={<RequireAuth allowedRoles={[ROLES.Tutor]} />}>
             <Route
               path="tutor"
@@ -205,40 +219,37 @@ function App() {
               </Route>
             </Route>
 
-            
             {/* </Route> */}
-
-            <Route element={<RequireAuth allowedRoles={[ROLES.Staff]} />}>
+          </Route>
+          <Route element={<RequireAuth allowedRoles={[ROLES.Staff]} />}>
+            <Route
+              path="staff"
+              element={<SidebarAndHeader userRole={"InstituteStaff"} />}
+            >
+              <Route path="dashboard" element={<InstStaffDashboard />} />
+              <Route path="my-profile" element={<MyProfile />} />
+              {/* <Route path="teacher" element={<ViewTeacher />} /> */}
+              <Route path="tutors-list/add" element={<AddTeacher />} />
+              <Route path="class" element={<ApproveClass />} />
+              <Route path="profile/:id" element={<InstStaffProfile />} />
+              <Route path="complaints" element={<InstStaffComplaintsList />} />
+              <Route path="hall" element={<HallSchedule />} />
+              <Route path="hall/view" element={<HallList />} />
+              <Route path="stu-payment" element={<InstStaffStuPayment />} />
+              <Route path="staff-list" element={<InstStaffList />} />
+              <Route path="payment-history" element={<ViewPaymentHistory />} />
+              <Route path="cash-receipt" element={<CashReceipt />} />
+              <Route path="online-receipt" element={<OnlineReceipt />} />
+              <Route path="stu-list" element={<StudentsList />} />
+              <Route path="stu-profile/:id" element={<StudentProfile />} />
+              <Route path="staff-list" element={<InstStaffList />} />
+              <Route path="tutors-list" element={<TutorsList />} />
+              <Route path="tutor-profile/:id" element={<TutorProfile />} />
               <Route
-                path="staff"
-                element={<SidebarAndHeader userRole={"InstituteStaff"} />}
-              >
-                <Route path="dashboard" element={<InstStaffDashboard />} />
-                <Route path="my-profile" element={<MyProfile />} />
-                {/* <Route path="teacher" element={<ViewTeacher />} /> */}
-                <Route path="tutors-list/add" element={<AddTeacher />} />
-                <Route path="class" element={<ApproveClass />} />
-                <Route path="profile/:id" element={<InstStaffProfile />} />
-                <Route path="complaints" element={<InstStaffComplaintsList />} />
-                <Route path="hall" element={<HallSchedule />} />
-                <Route path="hall/view" element={<HallList />} />
-                <Route path="stu-payment" element={<InstStaffStuPayment />} />
-                <Route path="staff-list" element={<InstStaffList />} />
-                <Route path="payment-history" element={<ViewPaymentHistory />} />
-                <Route path="cash-receipt" element={<CashReceipt />} />
-                <Route path="online-receipt" element={<OnlineReceipt />} />
-                <Route path="stu-list" element={<StudentsList />} />
-                <Route path="stu-profile/:id" element={<StudentProfile />} />
-                <Route path="staff-list" element={<InstStaffList />} />
-                <Route path="tutors-list" element={<TutorsList />} />
-                <Route path="tutor-profile/:id" element={<TutorProfile />} />
-                <Route
-                  path="tutor-profile/:id/course/:id"
-                  element={<CourseProfile />}
-                />
-              </Route>
+                path="tutor-profile/:id/course/:id"
+                element={<CourseProfile />}
+              />
             </Route>
-
           </Route>
 
           {/* <Route element={<RequireAuth allowedRoles={[ROLES.User]} />}>
