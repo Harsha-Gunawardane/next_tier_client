@@ -58,7 +58,8 @@ import AdminsInfo from "./pages/admin/AdminsInfo";
 import AdminSetting from "./pages/admin/Settings";
 
 // parent components
-import ParentDashboard from "./pages/parent/Dashboard"
+import ParentDashboard from "./pages/parent/Dashboard";
+import ParentSettings from "./pages/parent/Settings";
 
 // tutor components
 import TDashboard from "./pages/tutor/dashboard";
@@ -159,16 +160,16 @@ function App() {
             </Route>
           </Route>
 
-          {/* <Route element={<RequireAuth allowedRoles={[ROLES.Parent]} />}> */}
+          <Route element={<RequireAuth allowedRoles={[ROLES.Parent]} />}>
             <Route
               path="parent"
               element={<SidebarAndHeader userRole={"parent"} />}
             >
               <Route path="dashboard" element={<ParentDashboard />} />
               {/* <Route path="info" element={<AdminsInfo />} /> */}
-              {/* <Route path="settings" element={<AdminSetting />} /> */}
+              <Route path="settings" element={<ParentSettings />} />
             </Route>
-          {/* </Route> */}
+          </Route>
 
           <Route element={<RequireAuth allowedRoles={[ROLES.Tutor]} />}>
             <Route
