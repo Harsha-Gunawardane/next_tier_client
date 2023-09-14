@@ -206,6 +206,8 @@ function Feedback({
             mt={2}
             justifyContent={"right"}
             gap={2}
+            w={72}
+
           >
             <Button
               h={7}
