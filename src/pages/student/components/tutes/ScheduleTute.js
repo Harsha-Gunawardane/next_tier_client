@@ -7,18 +7,6 @@ import SheduleDate from "./SheduleDate";
 import ScheduleReading from "../drawers/ScheduleReading";
 import useAxiosPrivate from "../../../../hooks/useAxiosPrivate";
 
-const reminder = {
-  t_days: {
-    Sun: null,
-    Mon: "Hey there",
-    Tue: null,
-    Wed: "Hey there",
-    Thu: null,
-    Fri: null,
-    Sat: null,
-  },
-};
-
 const TUTE_SCHEDULE_URL = "/stu/tute/schedule";
 
 const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
@@ -55,13 +43,14 @@ function ScheduleTute() {
   const getReminders = async () => {
     try {
       const response = await axiosPrivate.get(TUTE_SCHEDULE_URL);
-      console.log(response.data.schedule);
-      setReminders(response.data.schedule);
+      console.log(response);
+      setReminders(response.data?.schedule);
     } catch (error) {
       console.error(error);
     }
   };
 
+  console.log(reminders[days[4]]);
   useEffect(() => {
     getReminders();
   }, []);
@@ -109,7 +98,7 @@ function ScheduleTute() {
                 date={date}
                 dateName={days[index]}
                 isToday={currentDayOfWeek === index}
-                isSchedule={reminders[days[index]] !== null}
+                isSchedule={reminders && reminders[days[index]]}
                 reminder={reminders[days[index]]}
               />
             ))}
@@ -117,7 +106,12 @@ function ScheduleTute() {
         </Box>
       </Flex>
 
-      <ScheduleReading setReminders={setReminders} isOpen={isOpen} onClose={onClose} btnRef={btnRef} />
+      <ScheduleReading
+        setReminders={setReminders}
+        isOpen={isOpen}
+        onClose={onClose}
+        btnRef={btnRef}
+      />
     </>
   );
 }
