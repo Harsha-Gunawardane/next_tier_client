@@ -238,11 +238,11 @@ function App() {
                 <Route path="complaints" element={<InstStaffComplaintsList />} />
                 <Route path="hall" element={<HallSchedule />} />
                 <Route path="hall/view" element={<HallList />} />
-                <Route path="stu-payment" element={<InstStaffStuPayment />} />
+                <Route path="stu-payment/:username" element={<InstStaffStuPayment />} />
                 <Route path="staff-list" element={<InstStaffList />} />
-                <Route path="payment-history" element={<ViewPaymentHistory />} />
-                <Route path="cash-receipt" element={<CashReceipt />} />
-                <Route path="online-receipt" element={<OnlineReceipt />} />
+                <Route path="payment-history/:id" element={<ViewPaymentHistory />} />
+                <Route path="physical-payment-receipt/:id" element={<CashReceipt />} />
+                <Route path="online-payment-receipt/:id" element={<OnlineReceipt />} />
                 <Route path="stu-list" element={<StudentsList />} />
                 <Route path="stu-profile/:id" element={<StudentProfile />} />
                 <Route path="staff-list" element={<InstStaffList />} />
