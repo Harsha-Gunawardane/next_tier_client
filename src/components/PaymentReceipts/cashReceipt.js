@@ -17,7 +17,7 @@ import {
 function cashReceipt(props) {
   return (
    <Box  bg="white"  border="0.05px solid #DAE6F0">
-     <Grid templateColumns="repeat(8, 1fr)" gap={0} bg="#BEE3F8" >
+     <Grid templateColumns="repeat(8, 1fr)" gap={0} bg="#BEE3F8" height={{lg:"80px"}}>
         {/**Grid Item 1 */}
         <GridItem
           w="100%"
@@ -33,7 +33,7 @@ function cashReceipt(props) {
           h={{ base: '9vh', lg: '11vh' }}
        
         >  
-        <Box marginLeft={{lg:"550px",base:"6px"}} mt={3} display={{base:"flex"}} flexDirection={{base:"column"}} alignItems={{base:"center"}}>
+        <Box marginLeft={{lg:"490px",base:"6px"}} mt={3} display={{base:"flex"}} flexDirection={{base:"column"}} alignItems={{base:"center"}} >
         <Text fontSize={12} fontWeight="bold">{props.header_title1}</Text>
         <Text fontSize={11}>{props.address}</Text>
         <Text fontSize={11}>{props.email}</Text>
@@ -80,7 +80,7 @@ function cashReceipt(props) {
     <Thead>
       <Tr>
         <Th fontFamily="sans-serif">Course</Th>
-        <Th fontFamily="sans-serif">Study pack ID</Th>
+        <Th fontFamily="sans-serif">Study pack Title</Th>
         <Th fontFamily="sans-serif">Expire Date</Th>
         <Th fontFamily="sans-serif">Amount</Th>
         <Th fontFamily="sans-serif">Paid Amount</Th>
@@ -89,7 +89,7 @@ function cashReceipt(props) {
     <Tbody>
       <Tr>
         <Td  fontSize="small" >{props.course}</Td>
-        <Td  fontSize="small">{props.study_packID}</Td>
+        <Td  fontSize="small">{props.study_pack_title}</Td>
         <Td  fontSize="small">{props.expire_date}</Td>
         <Td  fontSize="small">{props.amount}</Td>
         <Td  fontSize="small">{props.paid_amount}</Td>     
