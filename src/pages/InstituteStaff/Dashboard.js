@@ -1,5 +1,5 @@
-import { Box, SimpleGrid, GridItem, useToast, Text } from "@chakra-ui/react";
-import React, { useState, useEffect } from 'react';
+import { Box, SimpleGrid, GridItem, Flex, Text , Button, useToast} from "@chakra-ui/react";
+import { useState, useEffect } from "react";
 import Classes from "../../components/StaffDashboard/Class";
 import Complain from "../../components/StaffDashboard/Complain";
 import Payment from "../../components/StaffDashboard/Payment";
@@ -177,6 +177,9 @@ function Dashboard() {
           </Text>
           <Box>
             <Payment />
+          </Box>
+          <Box pl="10px">
+            <Button colorScheme="blue" size="md">Download Payment Report </Button>
           </Box>
         </Box>
       </SimpleGrid>
