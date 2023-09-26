@@ -94,6 +94,7 @@ function CourseDetail() {
         <GridItem
           colSpan={{ base: 8, lg: 6, xl: 6 }}
           h={{ base: "78vh", lg: "78vh" }}
+          order={{ base: 2, lg: 2, xl: 1 }}
           ml={4}
         >
           <Tabs
@@ -127,7 +128,7 @@ function CourseDetail() {
                         // key={stu.id}
                         borderWidth="1px"
                         borderRadius="lg"
-                        p="4"
+                        p="3"
                         shadow="md"
                         bg="white"
                         mb="1"
@@ -201,60 +202,68 @@ function CourseDetail() {
                 </Box>
               </TabPanel>
               <TabPanel>
-  <Box height="550px" overflowY="scroll" css={scrollbarStyles}>
-    <TableContainer>
-      <Table variant="simple">
-        <TableCaption>Payment Details</TableCaption>
-        <Thead>
-          <Tr fontSize={13}>
-            <Th>Date</Th>
-            <Th>Student</Th>
-            <Th>Payment Method</Th>
-            <Th>Study Pack ID</Th>
-          </Tr>
-        </Thead>
-        <Tbody>
-          {courseDetails.study_pack.map((pack) =>
-            pack.student_purchase_studypack.map((payment) => (
-              <Tr key={payment.id}>
-                <Td fontSize={13}>
-                  {new Date(payment.purchased_at).toLocaleDateString()}
-                </Td>
-                <Td>
-                  <Flex gap={4}>
-                    <Avatar src={payment.student.profile_picture} />
-                    <Text fontSize={13} marginTop={4}>
-                      {payment.student.first_name} {payment.student.last_name}
-                    </Text>
-                  </Flex>
-                </Td>
-                <Td paddingLeft={-14}>
-                  <Text
-                    marginLeft={4}
-                    textAlign="center"
-                    width="120px"
-                    fontSize={13}
-                    color="white"
-                    borderRadius={15}
-                    px={2}
-                    py={1}
-                    bg={
-                      payment.type === "PHYSICAL" ? "green.500" : "blue.500"
-                    }
-                  >
-                    {payment.type}
-                  </Text>
-                </Td>
-                <Td fontSize={13}>{pack.id}</Td>
-              </Tr>
-            ))
-          )}
-        </Tbody>
-      </Table>
-    </TableContainer>
-  </Box>
-</TabPanel>
-
+                <Box height="550px" overflowY="scroll" css={scrollbarStyles}>
+                  <TableContainer>
+                    <Table variant="simple">
+                      <TableCaption>Payment Details</TableCaption>
+                      <Thead>
+                        <Tr fontSize={13}>
+                          <Th>Date</Th>
+                          <Th>Student</Th>
+                          <Th>Payment Method</Th>
+                          <Th>Title</Th>
+                        </Tr>
+                      </Thead>
+                      <Tbody>
+                        {courseDetails.study_pack.map((pack) =>
+                          pack.student_purchase_studypack
+                          .filter((payment) => payment.status === "PAID" && (payment.payment_for === "PURCHASE" ||payment.payment_for === "EXTEND" ))
+                          .map((payment) => (
+                            <Tr key={payment.id}>
+                              <Td fontSize={13}>
+                                {new Date(
+                                  payment.purchased_at
+                                ).toLocaleDateString()}
+                              </Td>
+                              <Td>
+                                <Flex gap={4}>
+                                  <Avatar
+                                    src={payment.student.profile_picture}
+                                  />
+                                  <Text fontSize={13} marginTop={4}>
+                                    {payment.student.first_name}{" "}
+                                    {payment.student.last_name}
+                                  </Text>
+                                </Flex>
+                              </Td>
+                              <Td paddingLeft={-14}>
+                                <Text
+                                  marginLeft={4}
+                                  textAlign="center"
+                                  width="120px"
+                                  fontSize={13}
+                                  color="white"
+                                  borderRadius={15}
+                                  px={2}
+                                  py={1}
+                                  bg={
+                                    payment.type === "PHYSICAL"
+                                      ? "green.500"
+                                      : "blue.500"
+                                  }
+                                >
+                                  {payment.type}
+                                </Text>
+                              </Td>
+                              <Td fontSize={13}>{pack.title}</Td>
+                            </Tr>
+                          ))
+                        )}
+                      </Tbody>
+                    </Table>
+                  </TableContainer>
+                </Box>
+              </TabPanel>
             </TabPanels>
           </Tabs>
         </GridItem>
@@ -263,6 +272,7 @@ function CourseDetail() {
           h={{ base: "85vh", lg: "85vh" }}
           colSpan={{ base: 8, lg: 2, xl: 2 }}
           borderRadius={15}
+          order={{ base: 1, lg: 1, xl: 2 }}
         >
           <Box
             bg="white"
