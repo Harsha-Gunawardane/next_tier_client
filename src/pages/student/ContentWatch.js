@@ -20,7 +20,7 @@ const videos = [
         time: "2:30",
         viewcount: "1.2k",
         link: "/stu/content",
-        image: "https://images.unsplash.com/photo-1612833603929-5b7b3e7b7b0f?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8Y2hpbGRyZW4lMjBwYXJ0eXxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&w=1000&q=80",
+        image: "https://th.bing.com/th/id/R.3524f816b7bfe8841e05601a9dc3faae?rik=kWn5GLgflgRcpA&pid=ImgRaw&r=0&sres=1&sresct=1",
         uploadDateTime: "2023-07-01T10:00:00.000Z"
     },
     {
@@ -29,7 +29,7 @@ const videos = [
         time: "2:30",
         viewcount: "1.2k",
         link: "/stu/content",
-        image: "https://images.unsplash.com/photo-1612833603929-5b7b3e7b7b0f?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8Y2hpbGRyZW4lMjBwYXJ0eXxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&w=1000&q=80",
+        image: "https://th.bing.com/th/id/R.8b2bd7781eeb7f7bd2b3b1a2ef9d67d6?rik=XSfD9EsCYw5aFw&pid=ImgRaw&r=0",
         uploadDateTime: "2023-05-01T10:00:00.000Z"
     },
     {
@@ -38,7 +38,7 @@ const videos = [
         time: "2:30",
         viewcount: "1.2k",
         link: "/stu/content",
-        image: "https://images.unsplash.com/photo-1612833603929-5b7b3e7b7b0f?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8Y2hpbGRyZW4lMjBwYXJ0eXxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&w=1000&q=80",
+        image: "https://th.bing.com/th/id/OIP.ErMidve2yE1BmCJK0xBvfgHaEK?pid=ImgDet&rs=1",
         uploadDateTime: "2023-01-01T10:00:00.000Z"
     },
     {
@@ -47,7 +47,7 @@ const videos = [
         time: "2:30",
         viewcount: "1.2k",
         link: "/stu/content",
-        image: "https://images.unsplash.com/photo-1612833603929-5b7b3e7b7b0f?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8Y2hpbGRyZW4lMjBwYXJ0eXxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&w=1000&q=80",
+        image: "https://i.ytimg.com/vi/VEIFRWx-O8g/maxresdefault.jpg",
         uploadDateTime: "2023-07-01T10:00:00.000Z"
     }
 
@@ -59,7 +59,7 @@ const ContentWatch = () => {
 
     const [videoDetails, setVideoDetails] = useState();
     const [isLoaded, setIsLoaded] = useState(false);
-    const [minimizeButtonRef] = useOutletContext();
+    const { minimizeButtonRef } = useOutletContext();
 
 
     const { id } = useParams();

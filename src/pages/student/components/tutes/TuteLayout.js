@@ -2,6 +2,7 @@ import { Flex } from "@chakra-ui/react";
 import { Outlet } from "react-router-dom";
 import LeftPanel from "./LeftPanel";
 import { useEffect, useState } from "react";
+import { useOutletContext } from "react-router-dom";
 
 import Loading from "../../../../components/skeleton/Loading";
 import useAxiosPrivate from "../../../../hooks/useAxiosPrivate";
@@ -12,6 +13,8 @@ const TUTES_URL = "/stu/tutes";
 function TuteLayout() {
   const axiosPrivate = useAxiosPrivate();
   const [isLoading, setIsLoading] = useState(true);
+  const { minimizeButtonRef } = useOutletContext();
+
 
   const { setFolders, setTutes } = useFoldersInfo();
 
@@ -32,6 +35,7 @@ function TuteLayout() {
 
   useEffect(() => {
     fetchPages();
+    minimizeButtonRef.current.click();
   }, []);
 
   if (isLoading) return <Loading />;

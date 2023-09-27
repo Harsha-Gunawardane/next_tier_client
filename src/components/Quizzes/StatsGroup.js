@@ -31,7 +31,7 @@ export function StatsGroup() {
             endContent={
               <MiniStatCardIcon
                 bg={"accentFaded"}
-                color={"accent"}
+                color={"blue"}
                 icon={BiBook}
               />
             }
@@ -45,7 +45,7 @@ export function StatsGroup() {
             endContent={
               <MiniStatCardIcon
                 bg={"successFaded"}
-                color={"green.400"}
+                color={"green"}
                 icon={AiOutlineFileDone}
               />
             }
@@ -59,7 +59,7 @@ export function StatsGroup() {
             endContent={
               <MiniStatCardIcon
                 bg={"dangerFaded"}
-                color={"danger"}
+                color={"red"}
                 icon={AiOutlineFileDone}
               />
             }

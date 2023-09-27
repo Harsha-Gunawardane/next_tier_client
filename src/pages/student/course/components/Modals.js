@@ -560,7 +560,55 @@ const ForumGuideline = () => {
     );
 }
 
-export { PostViewModal, PostCreateModal, GuideLineModal }
+const AreYouSureModal = (props) => {
+
+    const {
+        isOpen,
+        onClose,
+        enrollToCourse,
+        onLoadMore,
+
+    } = props
+
+    return (
+        <Modal
+            isOpen={isOpen}
+            onClose={onClose}
+            size={"3xl"}
+            scrollBehavior={"inside"}
+            maxH="80%"
+            isCentered
+            width={"600px"}
+        >
+            < ModalOverlay />
+            <ModalContent px="0">
+                <ModalHeader textAlign={"left"}>
+                    <Text>Please Confirm</Text>
+                </ModalHeader>
+                <ModalCloseButton />
+                <ModalBody>
+                    <Text>Are you sure you want to enroll to this course?</Text>
+                </ModalBody>
+                <ModalFooter>
+                    {/* cancel button */}
+                    <Button variant="ghost" colorScheme="gray" mr={3} onClick={onClose}> No </Button>
+                    {/* submit button */}
+                    <Button colorScheme="blue" onClick={enrollToCourse}> Yes </Button>
+                </ModalFooter>
+            </ModalContent>
+        </Modal >
+    )
+
+}
+
+
+export {
+    PostViewModal,
+    PostCreateModal,
+    GuideLineModal,
+    AreYouSureModal
+
+}
 
 
 

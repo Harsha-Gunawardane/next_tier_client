@@ -84,7 +84,7 @@ const Forum = () => {
 
 
     return (
-        <SimpleGrid templateColumns={{ base: "repeat(1, 1fr)", md: "repeat(12, 1fr)", lg: "repeat(12, 1fr)" }} gap={5} p={"10px"} >
+        <SimpleGrid templateColumns={{ base: "repeat(1, 1fr)", md: "repeat(12, 1fr)", lg: "repeat(12, 1fr)" }} gap={5} p={"0 10px"} >
             <GridItem colSpan={{ base: 1, md: 12, lg: 8 }} h="max-content" bg="white" >
                 <Box position={'sticky'} top={0}>
                     <BreadCrumbForum courseTitle={courseDetails.title} />

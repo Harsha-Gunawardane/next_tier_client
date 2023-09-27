@@ -41,7 +41,6 @@ const RightPanel = (props) => {
                 </AspectRatio>
                 {/* forum title */}
                 <Text fontWeight={"bold"} fontSize={"20px"} color="gray.800" mt="10px" align={"left"} noOfLines={1}>{forumDetails.title}</Text>
-                {/* tutor name with avatar left and tutor qualification right bottom */}
                 <Flex width={"100%"} justifyContent={"space-between"} alignItems={"center"} direction={"row"} mt="5px" gap="10px">
                     <Avatar size={"md"} name='Ryan Florence' src="https://www.picsum.photos/400/400" />
                     <Flex width={"100%"} justifyContent={"center"} alignItems={"flex-start"} direction={"column"} gap="0px">
@@ -49,7 +48,6 @@ const RightPanel = (props) => {
                         <Text fontWeight={"medium"} fontSize={"12px"} color="gray.600">BSc. in Physics</Text>
                     </Flex>
                 </Flex>
-                {/* card to display adhere to te rules and small warning and button to vide rules. colorfull card adapt to the theme and have a image svg illustratable  */}
                 <Card
                     width={"100%"}
                     // height={"200px"}

@@ -1,29 +1,29 @@
 import {
-    Modal,
-    ModalOverlay,
-    ModalContent,
-    ModalHeader,
-    ModalFooter,
-    ModalBody,
-    ModalCloseButton,
-    Button,FormControl,
-    SimpleGrid,
-    Box,
-    Checkbox,
-    FormLabel,Input, IconButton
-  } from '@chakra-ui/react'
-  import { SmallAddIcon} from '@chakra-ui/icons'
-  import { Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react'
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+  Button, FormControl,
+  SimpleGrid,
+  Box,
+  Checkbox,
+  FormLabel, Input, IconButton
+} from '@chakra-ui/react'
+import { SmallAddIcon } from '@chakra-ui/icons'
+import { Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react'
 
-  import React,{useEffect,useState} from "react";
-  import { useDisclosure } from '@chakra-ui/react'
-  import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
- 
-
+import React, { useEffect, useState } from "react";
+import { useDisclosure } from '@chakra-ui/react'
+import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
 
 
 
-const Addcoursecontent = ({ studypackId ,dynamicWeek}) => {
+
+
+const Addcoursecontent = ({ studypackId, dynamicWeek }) => {
 
   const { isOpen, onOpen, onClose } = useDisclosure()
 
@@ -32,14 +32,14 @@ const Addcoursecontent = ({ studypackId ,dynamicWeek}) => {
 
 
 
-  const [contentdata, setcontentData] = useState([]); 
- 
+  const [contentdata, setcontentData] = useState([]);
+
   const axiosPrivate = useAxiosPrivate();
 
 
- 
 
- 
+
+
 
   useEffect(() => {
     const getCourses = async () => {
@@ -69,10 +69,10 @@ const Addcoursecontent = ({ studypackId ,dynamicWeek}) => {
     }
   };
 
- 
 
-  const [existingVideoIds, setExistingVideoIds] = useState([]); 
-  const [price, setPrice] = useState([]); 
+
+  const [existingVideoIds, setExistingVideoIds] = useState([]);
+  const [price, setPrice] = useState([]);
 
 
   useEffect(() => {
@@ -80,26 +80,26 @@ const Addcoursecontent = ({ studypackId ,dynamicWeek}) => {
       try {
         const response = await axiosPrivate.get(`/tutor/studypack/${studypackId}`);
         const contentIds = response.data.content_ids;
-  
+
         // Extract video_ids from content_ids array
         const videoIds = contentIds.find(content => content.week1)?.week1?.video_id || [];
-  
+
         // Set existing video IDs
         setExistingVideoIds(videoIds);
-  
+
         // Set price
         setPrice(response.data.price);
-  
+
         console.log(videoIds);
         console.log(response.data.price);
       } catch (error) {
         console.log(error);
       }
     };
-  
+
     fetchExistingVideoIds();
   }, [isOpen]);
-  
+
 
 
 
@@ -110,7 +110,7 @@ const Addcoursecontent = ({ studypackId ,dynamicWeek}) => {
 
 
   const handleSave = async (event) => {
-    // event.preventDefault();
+    event.preventDefault();
 
     try {
       // Fetch the existing content_ids structure
@@ -143,17 +143,17 @@ const Addcoursecontent = ({ studypackId ,dynamicWeek}) => {
       console.log(error);
     }
   };
-  
-  
-  
-  
-  
+
+
+
+
+
 
 
 
   return (
     <>
-      <IconButton fontSize='20px' size={20}   bg='white'   icon={<SmallAddIcon/>} onClick={onOpen}></IconButton>
+      <IconButton fontSize='20px' size={20} bg='white' icon={<SmallAddIcon />} onClick={onOpen}></IconButton>
 
       <Modal initialFocusRef={initialRef} finalFocusRef={finalRef} isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
@@ -167,35 +167,35 @@ const Addcoursecontent = ({ studypackId ,dynamicWeek}) => {
               <Tab fontSize='15px'>Add new content</Tab>
             </TabList>
             <TabPanels>
-            <form onSubmit={handleSave}>
-              <TabPanel>
-                <ModalBody pb={6}>
-                <SimpleGrid columns={2} spacing={4}>
-                    {videoContent.map((content, index) => (
-                      <Box key={index} p={2} borderWidth={1} borderRadius='md'>
-                        <Checkbox
-                          isChecked={selectedItems.includes(index)}
-                          onChange={() => handleCheckboxChange(index)}
-                        />
-                        <img src={content.thumbnail} alt={`Thumbnail ${index}`} />
-                        <p>{content.title}</p>
-                      </Box>
-                    ))}
-                  </SimpleGrid>
-                </ModalBody>
+              <form onSubmit={handleSave}>
+                <TabPanel>
+                  <ModalBody pb={6}>
+                    <SimpleGrid columns={2} spacing={4}>
+                      {videoContent.map((content, index) => (
+                        <Box key={index} p={2} borderWidth={1} borderRadius='md'>
+                          <Checkbox
+                            isChecked={selectedItems.includes(index)}
+                            onChange={() => handleCheckboxChange(index)}
+                          />
+                          <img src={content.thumbnail} alt={`Thumbnail ${index}`} />
+                          <p>{content.title}</p>
+                        </Box>
+                      ))}
+                    </SimpleGrid>
+                  </ModalBody>
 
-                <ModalFooter>
-                  <Button colorScheme='blue' mr={3} fontSize='18px' height='30px' type='submit'>
-                    Save
-                  </Button>
-                  <Button onClick={onClose} fontSize='18px' height='30px'>
-                    Cancel
-                  </Button>
-                </ModalFooter>
-              </TabPanel>
+                  <ModalFooter>
+                    <Button colorScheme='blue' mr={3} fontSize='18px' height='30px' type='submit'>
+                      Save
+                    </Button>
+                    <Button onClick={onClose} fontSize='18px' height='30px'>
+                      Cancel
+                    </Button>
+                  </ModalFooter>
+                </TabPanel>
               </form>
               <TabPanel>
-             
+
                 {/* Add new content form */}
                 {/* ... (rest of the code remains the same) */}
               </TabPanel>

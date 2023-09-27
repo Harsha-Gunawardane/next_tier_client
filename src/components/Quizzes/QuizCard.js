@@ -5,10 +5,9 @@ import {
   Heading,
   Text,
   Image,
-  HStack,
 } from "@chakra-ui/react";
 
-import backgroundTemplate4 from "../mcq/assests/backgroundTemplate4.jpg";
+import backgroundTemplate2 from "../mcq/assests/backgroundTemplate2.jpg";
 
 function QuizCard({ quiz }) {
   return (
@@ -16,13 +15,13 @@ function QuizCard({ quiz }) {
       direction={{ base: "column", sm: "row" }}
       // overflow="hidden"
       variant="outline"
-      // height={{ base: "160px", sm: "125px" }}
+    // height={{ base: "160px", sm: "125px" }}
     >
       <Image
         objectFit="cover"
         width={{ base: "355px", sm: "120px" }}
         // height={{ base: "40px", sm: "120px" }}
-        src={backgroundTemplate4}
+        src={backgroundTemplate2}
         padding={{ base: "5px", sm: "10px" }}
         borderRadius={{ base: "10px", sm: "15px" }}
       />

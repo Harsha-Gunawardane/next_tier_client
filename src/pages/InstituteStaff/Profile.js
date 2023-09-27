@@ -47,8 +47,8 @@ function Profile() {
       .matches(/^[A-Za-z]+$/, "Only letters allowed")
       .required("Required"),
     NIC: Yup.string()
-      .matches(/^(?:\d{9}[Vv]|\d{12}(?![Vv]))$/, "Invalid NIC format")
-      .required("Required"),
+      .matches(/^(?:\d{9}[Vv]|\d{12}(?![Vv]))$/, "Invalid NIC format"),
+      // .required("Required"),
     phone_number: Yup.string()
       .required("Phone number is required")
       .matches(
@@ -56,7 +56,7 @@ function Profile() {
         "Invalid phone number format. Please enter +94 followed by 9 digits"
       ),
     DOB: Yup.string().required("Required"),
-    address: Yup.string().required("Required"),
+    // address: Yup.string().required("Required"),
   });
 
   useEffect(() => {

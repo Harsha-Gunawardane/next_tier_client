@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Box,
   Text,
@@ -9,9 +9,10 @@ import {
   TabList,
   TabPanel,
   TabPanels,
+  useToast,
 } from "@chakra-ui/react";
-import data from "../../pages/InstituteStaff/data/data";
 import ClassDetails from "./ClassDetails";
+import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 
 function getCurrentTime() {
   const now = new Date();
@@ -26,6 +27,30 @@ function getCurrentTime() {
 }
 
 function Classes() {
+  const toast = useToast();
+  const axiosPrivate = useAxiosPrivate();
+  const [classData, setClassData] = useState([]);
+
+  useEffect(() => {
+    const fetchClasses = async () => {
+      try {
+        const response = await axiosPrivate.get("/staff/class/details", {});
+        setClassData(response.data);
+      } catch (error) {
+        console.error("Error fetching class details:", error.response.data);
+        toast({
+          title: "Error",
+          description: "Error fetching class details. Please try again.",
+          status: "error",
+          duration: 3000,
+          isClosable: true,
+        });
+      }
+    };
+
+    fetchClasses();
+  }, [toast, axiosPrivate]);
+
   const scrollbarStyles = `
     ::-webkit-scrollbar {
       width: 4px;
@@ -59,28 +84,15 @@ function Classes() {
     setModalOpen(false);
   };
 
-  const currentTime = getCurrentTime();
-
-  const doneClasses = data.classes.filter(
-    (classItem) =>
-      classItem.startTime < `${currentTime.hours}:${currentTime.minutes} ` &&
-      classItem.endTime <= `${currentTime.hours}:${currentTime.minutes} `
-  );
-
-  const ongoingClasses = data.classes.filter(
-    (classItem) =>
-      classItem.startTime < `${currentTime.hours}:${currentTime.minutes} ` &&
-      classItem.endTime > `${currentTime.hours}:${currentTime.minutes} `
-  );
-
-  const pendingClasses = data.classes.filter(
-    (classItem) =>
-      classItem.startTime >= `${currentTime.hours}:${currentTime.minutes} ` &&
-      classItem.endTime > `${currentTime.hours}:${currentTime.minutes} `
-  );
   return (
     <Box width="100%">
-      <Tabs mx="5px" my="7px" border="0.05px solid #DAE6F0" borderRadius={15} bg="white">
+      <Tabs
+        mx="5px"
+        my="7px"
+        border="0.05px solid #DAE6F0"
+        borderRadius={15}
+        bg="white"
+      >
         <TabList gap={8} marginLeft={5}>
           <Tab fontSize={13} fontWeight="medium">
             Ongoing
@@ -94,157 +106,180 @@ function Classes() {
         </TabList>
         <TabPanels height="35vh" overflowY="scroll" css={scrollbarStyles}>
           <TabPanel>
-            <SimpleGrid
-              columns={[1, 2, 3, 5]}
-              spacing="6"
-              px={[2, 4]}
-            >
-              {ongoingClasses.map((classItem, id) => (
+            <SimpleGrid columns={[1, 2, 3, 5]} spacing="6" px={[2, 4]}>
+              {classData.map((classItem) => {
+                const currentTime = getCurrentTime();
+                const relevantSchedules = classItem.hall_schedule.filter((schedule) => {
+                  const startTime = new Date(schedule.date + " " + schedule.start_time);
+                  const endTime = new Date(schedule.date + " " + schedule.end_time);
+                  const currentDateTime = new Date();
+
+                  return (
+                    startTime < currentDateTime &&
+                    endTime > currentDateTime
+                  );
+                });
+
+                return relevantSchedules.map((schedule, index) => (
                   <Box
-                  key={classItem.id}
-                  borderWidth="1px"
-                  borderRadius="lg"
-                  p="2" 
-                  shadow="md"
-                  bg="white"
-                  mb="4" 
-                  display="flex"
-                  flexDirection="column"
-                  alignItems="center"
-                  width="100%" 
-                  maxW="300px"
-                  onClick={() => openModal(classItem)}
-                  _hover={{
-                    transform: 'scale(1.05)', 
-                    boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', 
-                    cursor: 'pointer', 
-                    transition: 'transform 0.3s, box-shadow 0.3s',
-                  }}
-                >
-                  <Avatar
-                    src={classItem.profileImage}
-                    my="5"
-                    height={["60px", "80px", "100px"]} 
-                    width={["80px", "100px", "120px"]}
-                    borderRadius={5}
-                  />
-                  <Text fontWeight="bold" fontSize={["13px", "13px", "14px"]}> 
-                    {classItem.teacher}
-                  </Text>
-                  <Text fontSize={["12px", "12px", "12px"]}> 
-                    {` ${classItem.class}`}
-                  </Text>
-                  <Text fontSize={["12px", "12px", "12px"]}> 
-                    {` ${classItem.startTime} - ${classItem.endTime}`}
-                  </Text>
-                </Box>
-              ))}
+                    key={index}
+                    borderWidth="1px"
+                    borderRadius="lg"
+                    p="2"
+                    shadow="md"
+                    bg="white"
+                    mb="4"
+                    display="flex"
+                    flexDirection="column"
+                    alignItems="center"
+                    width="100%"
+                    maxW="300px"
+                    onClick={() => openModal(classItem)}
+                    _hover={{
+                      transform: "scale(1.05)",
+                      boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+                      cursor: "pointer",
+                      transition: "transform 0.3s, box-shadow 0.3s",
+                    }}
+                  >
+                    <Avatar
+                      src={classItem.tutor.user.profile_picture}
+                      my="5"
+                      height={["60px", "80px", "100px"]}
+                      width={["80px", "100px", "120px"]}
+                      borderRadius={5}
+                    />
+                    <Text fontWeight="bold" fontSize={["13px", "13px", "14px"]}>
+                      {` ${classItem.tutor.user.first_name} ${classItem.tutor.user.last_name}`}
+                    </Text>
+                    <Text fontSize={["12px", "12px", "12px"]}>
+                      {` ${classItem.title}`}
+                    </Text>
+                    <Text fontSize={["12px", "12px", "12px"]}>
+                      {` ${schedule.start_time} - ${schedule.end_time}`}
+                    </Text>
+                  </Box>
+                ));
+              })}
             </SimpleGrid>
           </TabPanel>
           <TabPanel>
-            <SimpleGrid
-              columns={[1, 2, 3, 5]}
-              spacing="6"
-              px={[2, 4]}
-            >
-              {pendingClasses.map((classItem, id) => (
-                 <Box
-                 key={classItem.id}
-                 borderWidth="1px"
-                 borderRadius="lg"
-                 p="2" 
-                 shadow="md"
-                 bg="white"
-                 mb="4" 
-                 display="flex"
-                 flexDirection="column"
-                 alignItems="center"
-                 width="100%" 
-                 maxW="300px" 
-                 onClick={() => openModal(classItem)}
-                 _hover={{
-                   transform: 'scale(1.05)', 
-                   boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', 
-                   cursor: 'pointer', 
-                   transition: 'transform 0.3s, box-shadow 0.3s',
-                 }}
-               >
-                 <Avatar
-                   src={classItem.profileImage}
-                   my="5"
-                   height={["60px", "80px", "100px"]} 
-                   width={["80px", "100px", "120px"]} 
-                   borderRadius={5}
-                 />
-                 <Text fontWeight="bold" fontSize={["13px", "13px", "14px"]}> 
-                   {classItem.teacher}
-                 </Text>
-                 <Text fontSize={["12px", "12px", "12px"]}> 
-                   {` ${classItem.class}`}
-                 </Text>
-                 <Text fontSize={["12px", "12px", "12px"]}> 
-                   {` ${classItem.startTime} - ${classItem.endTime}`}
-                 </Text>
-               </Box>
-              ))}
+            <SimpleGrid columns={[1, 2, 3, 5]} spacing="6" px={[2, 4]}>
+              {classData.map((classItem) => {
+                const currentTime = getCurrentTime();
+                const relevantSchedules = classItem.hall_schedule.filter((schedule) => {
+                  const startTime = new Date(schedule.date + " " + schedule.start_time);
+                  const endTime = new Date(schedule.date + " " + schedule.end_time);
+                  const currentDateTime = new Date();
+
+                  return (
+                    startTime >= currentDateTime && endTime > currentDateTime
+                  );
+                });
+
+                return relevantSchedules.map((schedule, index) => (
+                  <Box
+                    key={index}
+                    borderWidth="1px"
+                    borderRadius="lg"
+                    p="2"
+                    shadow="md"
+                    bg="white"
+                    mb="4"
+                    display="flex"
+                    flexDirection="column"
+                    alignItems="center"
+                    width="100%"
+                    maxW="300px"
+                    onClick={() => openModal(classItem)}
+                    _hover={{
+                      transform: "scale(1.05)",
+                      boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+                      cursor: "pointer",
+                      transition: "transform 0.3s, box-shadow 0.3s",
+                    }}
+                  >
+                    <Avatar
+                      src={classItem.tutor.user.profile_picture}
+                      my="5"
+                      height={["60px", "80px", "100px"]}
+                      width={["80px", "100px", "120px"]}
+                      borderRadius={5}
+                    />
+                    <Text fontWeight="bold" fontSize={["13px", "13px", "14px"]}>
+                      {` ${classItem.tutor.user.first_name} ${classItem.tutor.user.last_name}`}
+                    </Text>
+                    <Text fontSize={["12px", "12px", "12px"]}>
+                      {` ${classItem.title}`}
+                    </Text>
+                    <Text fontSize={["12px", "12px", "12px"]}>
+                      {` ${schedule.start_time} - ${schedule.end_time}`}
+                    </Text>
+                  </Box>
+                ));
+              })}
             </SimpleGrid>
           </TabPanel>
           <TabPanel>
-            <SimpleGrid
-              columns={[1, 2, 3, 5]}
-              spacing="6"
-             px={[2, 4]}
-            >
-              {doneClasses.map((classItem, id) => (
-                <Box
-                key={classItem.id}
-                borderWidth="1px"
-                borderRadius="lg"
-                p="2" 
-                shadow="md"
-                bg="white"
-                mb="4" 
-                display="flex"
-                flexDirection="column"
-                alignItems="center"
-                width="100%" 
-                maxW="300px"
-                onClick={() => openModal(classItem)}
-                _hover={{
-                  transform: 'scale(1.05)', 
-                  boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', 
-                  cursor: 'pointer', 
-                  transition: 'transform 0.3s, box-shadow 0.3s',
-                }}
-              >
-                <Avatar
-                  src={classItem.profileImage}
-                  my="5"
-                  height={["60px", "80px", "100px"]} 
-                  width={["80px", "100px", "120px"]} 
-                  borderRadius={5}
-                />
-                <Text fontWeight="bold" fontSize={["13px", "13px", "14px"]}> 
-                  {classItem.teacher}
-                </Text>
-                <Text fontSize={["12px", "12px", "12px"]}> 
-                  {` ${classItem.class}`}
-                </Text>
-                <Text fontSize={["12px", "12px", "12px"]}> 
-                  {` ${classItem.startTime} - ${classItem.endTime}`}
-                </Text>
-              </Box>
-              ))}
+            <SimpleGrid columns={[1, 2, 3, 5]} spacing="6" px={[2, 4]}>
+              {classData.map((classItem) => {
+                const currentTime = getCurrentTime();
+                const relevantSchedules = classItem.hall_schedule.filter((schedule) => {
+                  const startTime = new Date(schedule.date + " " + schedule.start_time);
+                  const endTime = new Date(schedule.date + " " + schedule.end_time);
+                  const currentDateTime = new Date();
+
+                  return (
+                    startTime < currentDateTime && endTime <= currentDateTime
+                  );
+                });
+
+                return relevantSchedules.map((schedule, index) => (
+                  <Box
+                    key={index}
+                    borderWidth="1px"
+                    borderRadius="lg"
+                    p="2"
+                    shadow="md"
+                    bg="white"
+                    mb="4"
+                    display="flex"
+                    flexDirection="column"
+                    alignItems="center"
+                    width="100%"
+                    maxW="300px"
+                    onClick={() => openModal(classItem)}
+                    _hover={{
+                      transform: "scale(1.05)",
+                      boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+                      cursor: "pointer",
+                      transition: "transform 0.3s, box-shadow 0.3s",
+                    }}
+                  >
+                    <Avatar
+                      src={classItem.tutor.user.profile_picture}
+                      my="5"
+                      height={["60px", "80px", "100px"]}
+                      width={["80px", "100px", "120px"]}
+                      borderRadius={5}
+                    />
+                    <Text fontWeight="bold" fontSize={["13px", "13px", "14px"]}>
+                      {` ${classItem.tutor.user.first_name} ${classItem.tutor.user.last_name}`}
+                    </Text>
+                    <Text fontSize={["12px", "12px", "12px"]}>
+                      {` ${classItem.title}`}
+                    </Text>
+                    <Text fontSize={["12px", "12px", "12px"]}>
+                      {` ${schedule.start_time} - ${schedule.end_time}`}
+                    </Text>
+                  </Box>
+                ));
+              })}
             </SimpleGrid>
           </TabPanel>
-          <ClassDetails
-        isOpen={modalOpen}
-        onClose={closeModal}
-        classItem={selectedClass}
-      />
         </TabPanels>
+        <ClassDetails isOpen={modalOpen} onClose={closeModal} classItem={selectedClass} />
       </Tabs>
-      
     </Box>
   );
 }

@@ -10,6 +10,7 @@ import { Spoiler } from '@mantine/core';
 import VideoJS from './VideoPlayer'
 import videojs from 'video.js'
 import VideoPlayer from './VideoPlayer';
+import VideoPlayer3 from './VideoPlayer3';
 
 // import ReactHlsPlayer from "react-hls-player";
 

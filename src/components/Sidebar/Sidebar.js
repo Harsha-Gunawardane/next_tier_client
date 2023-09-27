@@ -35,6 +35,7 @@ import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import logo_icon from "../../assests/logos/png/logo_icon.png";
 import logo_text from "../../assests/logos/png/logo_text.png";
 import { MdOutlineKeyboardArrowLeft } from "react-icons/md";
+import { BiMenuAltRight } from "react-icons/bi";
 
 const USER_SYS_FEEDBACK_URL = "/user/sys/feedback";
 
@@ -59,49 +60,43 @@ const Option = (props) => {
     lg: minimizeStatus.lg ? hide : show,
   });
 
-  return (
-    <Link to={href} _hover={"none"}>
-      <Flex
-        p="10px"
-        borderRadius={"10px"}
-        borderColor={"gray.800"}
-        justifyContent={"flex-start"}
-        width={{
-          base: "180px",
-          md: minimizeStatus.md ? "44px" : "180px",
-          lg: minimizeStatus.lg ? "44px" : "180px",
-        }}
-        minWidth={"max-content"}
-        alignItems={"center"}
-        background={"primary"}
-        gap="10px"
-        _hover={
-          !active && {
-            background: "gray.100",
-            transition: "0.1s",
-          }
-        }
-        bg={active && "accent"}
-        color={active ? "primary" : "#7F7F7F"}
-        boxShadow={active ? "0 0 8px 1px rgba(0, 0, 0, 0.1)" : "none"}
-        transition={"all 0.5s ease"}
-      >
-        <Flex alignItems={"center"} justifyContent={"center"} h="100%">
-          {iconComponent && <Icon fontSize="24" as={iconComponent} />}
-        </Flex>
-        <Flex
-          as={motion.div}
-          // display={{ base: "flex", md: minimizeStatus.md ? "none" : "flex", lg: minimizeStatus.lg ? "none" : "flex" }}
-          width={minimizeStatus.md || minimizeStatus.lg ? "0" : "max-content"}
-          // transition={"all 0.5s ease"}
-          animate={animations}
-          transition={{ duration: 0.5 }}
-        >
-          <Text fontSize={"14px"}>{name}</Text>
-        </Flex>
-      </Flex>
-    </Link>
-  );
+	return (
+		<Link to={href} _hover={"none"} >
+			<Flex
+				p="10px"
+				borderRadius={"10px"}
+				borderColor={"gray.800"}
+				justifyContent={"flex-start"}
+				width={{ base: "180px", md: minimizeStatus.md ? "44px" : "180px", lg: minimizeStatus.lg ? "44px" : "180px" }}
+				minWidth={"max-content"}
+				alignItems={"center"}
+				background={"primary"}
+				gap="10px"
+				_hover={
+					!active && {
+						background: "gray.100",
+						transition: "0.1s",
+					}
+				}
+				bg={active && "accent"}
+				color={active ? "primary" : "#7F7F7F"}
+				boxShadow={active ? "0 0 8px 1px rgba(0, 0, 0, 0.1)" : "none"}
+				transition={"all 0.5s ease"}
+			>
+				<Flex alignItems={"center"} justifyContent={"center"} h="100%">
+					{iconComponent && <Icon fontSize="22" as={iconComponent} />}
+				</Flex>
+				<Flex
+					as={motion.div}
+					width={minimizeStatus.md || minimizeStatus.lg ? "0" : "--webkit-fill-available"}
+					animate={animations}
+					transition={{ duration: 0.5 }}
+				>
+					<Text fontSize={"14px"}>{name}</Text>
+				</Flex>
+			</Flex>
+		</Link >
+	);
 };
 
 const Sidebar = (props) => {
@@ -140,26 +135,6 @@ const Sidebar = (props) => {
     lg: minimized.lg ? hide : show,
   });
 
-  const handleMinimizing = () => {
-    if (onClose) {
-      onClose();
-    } else {
-      const status = {
-        base: minimized.base ? false : false,
-        md: minimized.md ? true : true,
-        lg: minimized.lg ? true : true,
-      };
-      setMinimized((prev) => {
-        const newStatus = {
-          base: prev.base ? false : false,
-          md: prev.md ? true : true,
-          lg: prev.lg ? true : true,
-        };
-        return newStatus;
-      });
-    }
-  };
-
   const settings = {
     icon: MdSettings,
     name: "Settings",
@@ -167,6 +142,21 @@ const Sidebar = (props) => {
     href: "/stu/settings",
   };
   const logout = { icon: TbLogout, name: "Logout", href: "/logout" };
+	const handleMinimizing = () => {
+		if (onClose) {
+			onClose();
+		}
+		else {
+			setMinimized((prev) => {
+				const newStatus = {
+					base: prev.base ? false : false,
+					md: prev.md ? true : true,
+					lg: prev.lg ? true : true,
+				}
+				return newStatus;
+			});
+		}
+	};
 
   const axiosPrivate = useAxiosPrivate();
   const toast = useToast();
