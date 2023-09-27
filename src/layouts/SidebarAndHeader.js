@@ -1,18 +1,22 @@
-import { Outlet, useParams } from "react-router-dom";
+import { Outlet, useLocation, useParams } from "react-router-dom";
 import Header from "../components/Header/Header";
 import ResponsiveSidebar from "../components/Sidebar/ResponsiveSidebar";
 
 import { useState, useEffect, useRef } from "react";
-import { FaUsers, FaUserAlt, } from "react-icons/fa";
+import { FaUsers, FaUserAlt, FaMoneyBillAlt } from "react-icons/fa";
 
 import { Grid, GridItem, useDisclosure } from "@chakra-ui/react";
 import useSidebar from "../hooks/useSidebar";
 
-
 //icons
 import GridViewRoundedIcon from "@mui/icons-material/GridViewRounded";
 import { TiDocumentText } from "react-icons/ti";
-import { FaCompass, FaUserFriends, FaListAlt, FaQuestionCircle } from "react-icons/fa";
+import {
+  FaCompass,
+  FaUserFriends,
+  FaListAlt,
+  FaQuestionCircle,
+} from "react-icons/fa";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import ReportProblemIcon from "@mui/icons-material/ReportProblem";
 import { MdOutlineQuiz, MdVideoLibrary } from "react-icons/md";
@@ -20,52 +24,42 @@ import { PiNotebookFill } from "react-icons/pi";
 import { IoSchool, IoCompass } from "react-icons/io5";
 import { BiSolidDashboard } from "react-icons/bi"
 
-
-
-
-
 const SidebarAndHeader = ({ userRole }) => {
-	//get width of sidebar component and set to state
-	const { isOpen, onOpen, onClose } = useDisclosure();
-	const [hidden, setHidden] = useState(isOpen);
-	const [minimized, setMinimized] = useState({ base: false, md: true, lg: false });
+  //get width of sidebar component and set to state
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const [hidden, setHidden] = useState(isOpen);
+  const [minimized, setMinimized] = useState({
+    base: false,
+    md: true,
+    lg: false,
+  });
 
-	const { setSidebarOptionHandler } = useSidebar();
-	const params = useParams();
-	const minimizeButtonRef = useRef();
+  const { setSidebarOptionHandler } = useSidebar();
+  const { pathname } = useLocation();
+  const params = useParams();
+  const minimizeButtonRef = useRef();
 
+  useEffect(() => {
+    const activeTab = findActiveTab(params);
+    setSidebarOptionHandler(activeTab);
+  }, [setSidebarOptionHandler]);
 
-	useEffect(() => {
-		const activeTab = findActiveTab(params);
-		setSidebarOptionHandler(activeTab);
+  const startWithMinimize = ["stu/content", "stu/content/watch/:id"];
 
-	}, [setSidebarOptionHandler]);
+  const tabsMap = new Map([
+    //Student Routes
+    ["stu/dashboard", "dashboard"],
+    ["stu/courses", "courses"],
+    ["stu/content", "content"],
+    ["stu/content/watch/:id", "content"],
+    ["stu/courses/:courseId/forum", "courses"],
+    ["stu/quizzes", "quizzes"],
+    ["stu/tutes", "tutes"],
 
+    // More routes and active tabs...
 
-
-	const tabsMap = new Map([
-		//Student Routes
-		['stu/dashboard', 'dashboard'],
-		['stu/courses', 'courses'],
-		['stu/tutors', 'courses'],
-		['stu/content', 'content'],
-		['stu/content/watch/:id', 'content'],
-		['stu/courses/:courseId', 'courses'],
-		['stu/courses/:courseId/forum', 'courses'],
-		['stu/studyPacks/:courseId', 'courses'],
-		['stu/quizzes', 'quizzes'],
-		['stu/tutes', 'tutes'],
-		['stu/mycourses', 'mycourses'],
-		['stu/mycourses/:courseId',
-			'mycourses'],
-		['stu/mycourses/:courseId/forum', 'mycourses'],
-
-
-		// More routes and active tabs...
-
-
-		//Teacher Routes
-		['tutor/dashboard', 'dashboard'],
+    //Teacher Routes
+    ['tutor/dashboard', 'dashboard'],
 		['tutor/courses/add', 'courses'],
 		['tutor/courses', 'courses'],
 		['tutor/courses/content/:courseid', 'courses'],
@@ -84,23 +78,22 @@ const SidebarAndHeader = ({ userRole }) => {
 		['staff/staff-list', 'stafflist'],
 		['staff/tutors-list', 'stulist'],
 		['staff/my-profile', 'profile'],
-	]);
+  ]);
 
+  function getRouteWithParams(params) {
+    const route = params["*"];
+    var keys = Object.keys(params).filter((key) => key !== "*");
+    var routeWithParams = route;
 
+    keys.forEach((key) => {
+      if (key !== "*") {
+        routeWithParams = routeWithParams.replace(params[key], ":" + key);
+      }
+    });
+    return routeWithParams;
+  }
 
-	function getRouteWithParams(params) {
-		const route = params["*"];
-		var keys = Object.keys(params).filter((key) => key !== "*");
-		var routeWithParams = route;
-
-		keys.forEach((key) => {
-			if (key !== "*") {
-				routeWithParams = routeWithParams.replace(params[key], ":" + key);
-			}
-		});
-		return (routeWithParams)
-
-	}
+  
 
 	function findActiveTab(params) {
 		return tabsMap.get(getRouteWithParams(params)) || 'dashboard';
@@ -209,7 +202,7 @@ const SidebarAndHeader = ({ userRole }) => {
 	return (
 
 		<Grid
-			templateAreas={'sidebar main'}
+			templateAreas={`'sidebar main'`}
 			templateColumns={
 				// minimized ? { base: "0 1fr", md: "64px 1fr", lg: "64px 1fr" } : { base: "0 1fr", md: "260px 1fr", lg: "260px 1fr" }
 				setTemplateColumns(minimized)

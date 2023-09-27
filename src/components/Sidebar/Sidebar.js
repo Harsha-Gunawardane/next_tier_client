@@ -60,43 +60,51 @@ const Option = (props) => {
     lg: minimizeStatus.lg ? hide : show,
   });
 
-	return (
-		<Link to={href} _hover={"none"} >
-			<Flex
-				p="10px"
-				borderRadius={"10px"}
-				borderColor={"gray.800"}
-				justifyContent={"flex-start"}
-				width={{ base: "180px", md: minimizeStatus.md ? "44px" : "180px", lg: minimizeStatus.lg ? "44px" : "180px" }}
-				minWidth={"max-content"}
-				alignItems={"center"}
-				background={"primary"}
-				gap="10px"
-				_hover={
-					!active && {
-						background: "gray.100",
-						transition: "0.1s",
-					}
-				}
-				bg={active && "accent"}
-				color={active ? "primary" : "#7F7F7F"}
-				boxShadow={active ? "0 0 8px 1px rgba(0, 0, 0, 0.1)" : "none"}
-				transition={"all 0.5s ease"}
-			>
-				<Flex alignItems={"center"} justifyContent={"center"} h="100%">
-					{iconComponent && <Icon fontSize="22" as={iconComponent} />}
-				</Flex>
-				<Flex
-					as={motion.div}
-					width={minimizeStatus.md || minimizeStatus.lg ? "0" : "--webkit-fill-available"}
-					animate={animations}
-					transition={{ duration: 0.5 }}
-				>
-					<Text fontSize={"14px"}>{name}</Text>
-				</Flex>
-			</Flex>
-		</Link >
-	);
+  return (
+    <Link to={href} _hover={"none"}>
+      <Flex
+        p="10px"
+        borderRadius={"10px"}
+        borderColor={"gray.800"}
+        justifyContent={"flex-start"}
+        width={{
+          base: "180px",
+          md: minimizeStatus.md ? "44px" : "180px",
+          lg: minimizeStatus.lg ? "44px" : "180px",
+        }}
+        minWidth={"max-content"}
+        alignItems={"center"}
+        background={"primary"}
+        gap="10px"
+        _hover={
+          !active && {
+            background: "gray.100",
+            transition: "0.1s",
+          }
+        }
+        bg={active && "accent"}
+        color={active ? "primary" : "#7F7F7F"}
+        boxShadow={active ? "0 0 8px 1px rgba(0, 0, 0, 0.1)" : "none"}
+        transition={"all 0.5s ease"}
+      >
+        <Flex alignItems={"center"} justifyContent={"center"} h="100%">
+          {iconComponent && <Icon fontSize="22" as={iconComponent} />}
+        </Flex>
+        <Flex
+          as={motion.div}
+          width={
+            minimizeStatus.md || minimizeStatus.lg
+              ? "0"
+              : "--webkit-fill-available"
+          }
+          animate={animations}
+          transition={{ duration: 0.5 }}
+        >
+          <Text fontSize={"14px"}>{name}</Text>
+        </Flex>
+      </Flex>
+    </Link>
+  );
 };
 
 const Sidebar = (props) => {
@@ -141,22 +149,28 @@ const Sidebar = (props) => {
     value: "settings",
     href: "/stu/settings",
   };
+
+  const feedbackOption = {
+    icon: BsInfoCircle,
+    name: "Send Feedback",
+    value: "feedback",
+  };
+
   const logout = { icon: TbLogout, name: "Logout", href: "/logout" };
-	const handleMinimizing = () => {
-		if (onClose) {
-			onClose();
-		}
-		else {
-			setMinimized((prev) => {
-				const newStatus = {
-					base: prev.base ? false : false,
-					md: prev.md ? true : true,
-					lg: prev.lg ? true : true,
-				}
-				return newStatus;
-			});
-		}
-	};
+  const handleMinimizing = () => {
+    if (onClose) {
+      onClose();
+    } else {
+      setMinimized((prev) => {
+        const newStatus = {
+          base: prev.base ? false : false,
+          md: prev.md ? true : true,
+          lg: prev.lg ? true : true,
+        };
+        return newStatus;
+      });
+    }
+  };
 
   const axiosPrivate = useAxiosPrivate();
   const toast = useToast();
@@ -302,11 +316,15 @@ const Sidebar = (props) => {
 
           <Popover placement="right" onClose={handlePopoverClose}>
             <PopoverTrigger>
-              <Button>
+              {/* <Button>
                 <Flex gap={2} alignItems={"center"}>
                   <BsInfoCircle />
                   <Text>Send Feedback</Text>
                 </Flex>
+              </Button> */}
+              
+              <Button>
+                <Option {...feedbackOption} minimizeStatus={minimized} />
               </Button>
             </PopoverTrigger>
             <PopoverContent>
