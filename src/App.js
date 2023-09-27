@@ -6,6 +6,7 @@ import Unauthorized from "./pages/auth/Unauthorized";
 import UserVerify from "./pages/auth/UserVerify";
 import Landing from "./pages/LandingPage/Landing";
 import ForgottenPassword from "./pages/auth/ForgottenPassword";
+import Logout from "./pages/auth/Logout";
 
 // import auth features
 import PersistLogin from "./features/auth/PersistLogin";
@@ -113,6 +114,7 @@ function App() {
         <Route path="register" element={<Register />} />
         <Route path="verify" element={<UserVerify />} />
         <Route path="forgot-password" element={<ForgottenPassword />} />
+        <Route path="logout" element={<Logout />} />
 
         {/* we want to protect these routes */}
         <Route element={<PersistLogin />}>
