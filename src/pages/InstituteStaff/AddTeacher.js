@@ -22,10 +22,10 @@ import {
   IconButton,
   useToast,
 } from "@chakra-ui/react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { EditIcon } from "@chakra-ui/icons";
 import { BiArrowBack } from "react-icons/bi";
-import { Link, } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import * as yup from "yup";
 import { useFormik } from "formik";
@@ -65,6 +65,7 @@ function AddTeacher() {
 
   // Define validation schema using yup
   const validationSchema = yup.object().shape({
+    image: yup.mixed().required("Image is required"),
     fName: yup.string().required("First Name is required"),
     lName: yup.string().required("Last Name is required"),
     email: yup.string().email("Invalid email").required("Email is required"),
@@ -74,11 +75,13 @@ function AddTeacher() {
     address: yup.string().required("Address is required"),
   });                                                               
 
+  const navigate = useNavigate();
   const [selectedImage, setSelectedImage] = useState("");           
   const [selectedSubjects, setSelectedSubjects] = useState([]);
 
   const formik = useFormik({
     initialValues: {
+      image: "",
       fName: "",
       lName: "",
       email: "",
@@ -92,7 +95,7 @@ function AddTeacher() {
     onSubmit: async (values) => {
       try {
         values.subjects = selectedSubjects;
-
+    
         const addTutor = await axiosPrivate.post(
           REGISTER_URL,
           JSON.stringify(values),
@@ -102,14 +105,10 @@ function AddTeacher() {
           }
         );
         console.log(JSON.stringify(addTutor?.data));
-
-        toast({
-          title: "Tutor Registered Successfully",
-          status: "success",
-          duration: 5000,
-          position: "top",
-          isClosable: true,
-        });
+    
+        // Pass the toast message as a query parameter
+        navigate("/staff/tutors-list?success=true");
+       
       } catch (err) {
         if (!err?.response) {
           toast({
@@ -144,10 +143,33 @@ function AddTeacher() {
     },
   });
 
-  // Function to handle image selection
-  const handleImageChange = (event) => {
-    const file = event.target.files[0];
-    setSelectedImage(file);
+  const location = useLocation();
+const queryParams = new URLSearchParams(location.search);
+
+// Check if the "success" query parameter is present
+const isSuccess = queryParams.get("success");
+
+// Display the toast message if isSuccess is true
+useEffect(() => {
+  if (isSuccess) {
+    toast({
+      title: "Tutor Registered Successfully",
+      status: "success",
+      duration: 5000,
+      position: "top",
+      isClosable: true,
+    });
+  }
+}, [isSuccess]);
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        formik.setFieldValue("image", reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
   };
 
   const handleCancelClick = () => {
@@ -186,7 +208,7 @@ function AddTeacher() {
                   <Avatar
                     width="140px"
                     height="140px"
-                    src="https://bit.ly/code-beast"
+                    src={formik.values.image ||  "https://bit.ly/code-beast"}
                     ml="50px"
                   >
                     <AvatarBadge width="3em" height="3em" bg="gray.400">
@@ -207,11 +229,18 @@ function AddTeacher() {
                   {/* input to allow image selection */}
                   <Input
                     type="file"
-                    id="image"
+                    id="file-upload"
                     accept="image/*"
-                    display="none"
-                    onChange={handleImageChange}
+                    onChange={(e) => {
+                      formik.setFieldValue("image", e.target.files[0]);
+                      handleImageChange(e);
+                    }}
+                    onBlur={formik.handleBlur("image")}
+                    style={{ display: "none" }}
                   />
+                    {formik.touched.image && formik.errors.image ? (
+                  <div style={{ color: "red" }}>{formik.errors.image}</div>
+                ) : null}
                 </FormControl>
                 <FormControl
                   isInvalid={formik.errors.fName && formik.touched.fName}

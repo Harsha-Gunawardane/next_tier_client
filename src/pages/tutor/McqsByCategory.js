@@ -1,15 +1,13 @@
 import {
   Box,
-  Button,
   Card,
   Grid,
   GridItem,
   useDisclosure,
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
-import { NavLink, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
-import api from "../../api/axios";
 
 import McqsView from "../../components/mcq/McqsView";
 import McqsHeaderBar from "../../components/mcq/McqsHeaderBar";

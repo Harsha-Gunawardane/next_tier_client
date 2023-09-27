@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import {
   Box,
   Grid,
@@ -16,14 +17,18 @@ import {
   Heading,
   Divider,
   Button,
+  Icon,
 } from "@chakra-ui/react";
 import React from "react";
 import { Tabs, TabList, TabPanels, Tab, TabPanel } from "@chakra-ui/react";
 import { useParams } from "react-router-dom";
-import data from "./data/data.json";
+import { FaMoneyBillAlt } from "react-icons/fa";
+// import data from "./data/data.json";
 import { useNavigate } from "react-router-dom";
+import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 
 function TutorProfile() {
+  const axiosPrivate = useAxiosPrivate();
   const navigate = useNavigate();
   const scrollbarStyles = `
     ::-webkit-scrollbar {
@@ -47,18 +52,29 @@ function TutorProfile() {
   `;
 
   const { id } = useParams();
-  const tutorData = data.Tutors.find(
-    (tutor) => tutor.tutor_id.toString() === id
-  );
-  console.log("Tutor Data:", tutorData);
+  // const staffData = data.staffs.find((staff) => staff.id.toString() === id);
+  // console.log('Staff Data:', staffData);
+  const [tutorDetails, setTutorDetails] = useState(null);
+  useEffect(() => {
+    const fetchTutorProfile = async () => {
+      try {
+        const response = await axiosPrivate.get(`/staff/tutor-profile/${id}`);
+        setTutorDetails(response.data);
+      } catch (error) {
+        console.error("Error fetching staff profile:", error);
+      }
+    };
 
-  // Check if the staff data is found
-  if (!tutorData) {
-    return <div>Tutor not found</div>;
+    fetchTutorProfile();
+  }, [axiosPrivate, id]);
+
+  if (!tutorDetails) {
+    return <div>Loading...</div>;
   }
-  const handleViewProfile = (tutorId,courseID) => {
-navigate(`/staff/tutor-profile/${tutorId}/course/${courseID}`);
+  const handleViewCourse = (courseID) => {
+    navigate(`/staff/course/${courseID}`);
   };
+
   return (
     <Box backgroundColor="#F9F9F9" width="100%">
       <Grid templateColumns="repeat(8, 1fr)" gap={6} marginBottom={5}>
@@ -87,19 +103,29 @@ navigate(`/staff/tutor-profile/${tutorId}/course/${courseID}`);
               width={200}
               height={200}
               mt={4}
-              src={tutorData.profileImage}
+              src={tutorDetails.profile_picture}
             ></Avatar>
             <Text fontWeight="bold" fontSize={20} mt={3}>
-              {tutorData.fName} {tutorData.lName}
+              {tutorDetails.first_name} {tutorDetails.last_name}
             </Text>
             <Text fontSize={13} mt={1}>
-              {tutorData.gender}
+              {tutorDetails.gender}
             </Text>
             <Text fontSize={13} color="gray" mt={1}>
-              {tutorData.education.qualifications}
+              {tutorDetails.tutor.map((tutor) =>
+                tutor.qualifications
+                  .map(
+                    (qualification, index) =>
+                      `${qualification}${
+                        index !== tutor.qualifications.length - 1 ? ", " : ""
+                      }`
+                  )
+                  .join("")
+              )}
             </Text>
             <Text fontSize={13} mt={1}>
-              Joined Date:{tutorData.joinedDate}
+              Joined Date:{" "}
+              {new Date(tutorDetails.join_date).toLocaleDateString()}{" "}
             </Text>
           </Box>
         </GridItem>
@@ -120,7 +146,7 @@ navigate(`/staff/tutor-profile/${tutorId}/course/${courseID}`);
             variant="enclosed"
           >
             <TabList>
-            <Tab
+              <Tab
                 fontSize={14}
                 fontWeight="bold"
                 _selected={{ color: "white", bg: "blue.500" }}
@@ -143,10 +169,9 @@ navigate(`/staff/tutor-profile/${tutorId}/course/${courseID}`);
               >
                 Educational Background
               </Tab>
-              
             </TabList>
             <TabPanels>
-            <TabPanel>
+              <TabPanel>
                 {/* <SimpleGrid columns={1}>
                   <Box mb={4}>
                     <Flex>
@@ -179,54 +204,75 @@ navigate(`/staff/tutor-profile/${tutorId}/course/${courseID}`);
                 </SimpleGrid> */}
                 {/* More Info */}
                 {/* <Text fontSize={14} mt={3} mb={2} fontWeight="bold">More Information</Text> */}
-                <SimpleGrid
+                {/* <SimpleGrid
                   p="10px"
                   columns={{ base: 1, lg: 3, xl: 3 }}
                   spacing={10}
                 >
-                  {tutorData.courses.map((course) => (
+                  {tutorDetails.tutor.courses.map((course,index) => (
                     <Box
                       minChildWidth="250px"
                       borderColor="#C4C4C4"
                       bg="white"
                       borderRadius={10}
-                    >
-                      <Box padding={0}>
-                        <Image
-                          src={course.CourseImage}
-                          width="100%"
-                          alt="Course Image"
-                        />
-                      </Box>
-
-                      <Stack mt="4" spacing="3">
-                        <Box>
-                          <Heading size="md" fontSize={20} paddingLeft={4}>
-                            {course.course_name}
-                          </Heading>
+                      key={index}
+                    > */}
+                <SimpleGrid
+                  p="10px"
+                  columns={{ base: 1, lg: 3, xl: 3 }}
+                  spacing={10}
+                >
+                  {tutorDetails.tutor.map((tutor, tutorIndex) =>
+                    tutor.courses.map((course, courseIndex) => (
+                      <Box
+                        minChildWidth="250px"
+                        borderColor="#C4C4C4"
+                        bg="white"
+                        borderRadius={10}
+                        key={`${tutorIndex}-${courseIndex}`}
+                      >
+                        <Box padding={0}>
+                          <Image
+                            src={course.thumbnail}
+                            width="100%"
+                            alt="Course Image"
+                          />
                         </Box>
 
-                        <Divider></Divider>
-                        <Flex gap={3} marginLeft={4}>
+                        <Stack mt="4" spacing="3">
                           <Box>
-                            <Text fontSize={11}>{course.price} per month</Text>
+                            <Heading size="md" fontSize={20} paddingLeft={4}>
+                              {course.title}
+                            </Heading>
                           </Box>
-                        </Flex>
-                      </Stack>
 
-                      <Box padding={0} paddingTop={3}>
-                        <Button
-                          width="100%"
-                          colorScheme="blue"
-                          borderTopRightRadius={0}
-                          borderTopLeftRadius={0}
-                          onClick={() => handleViewProfile(tutorData.tutor_id,course.course_id)}
-                        >
-                          View Course
-                        </Button>
+                          <Divider></Divider>
+                          <Flex gap={3} marginLeft={4}>
+                            <Box>
+                              <Icon as={FaMoneyBillAlt} width={6}></Icon>
+                            </Box>
+                            <Box>
+                              <Text fontSize={11}>
+                                {course.monthly_fee} per month
+                              </Text>
+                            </Box>
+                          </Flex>
+                        </Stack>
+
+                        <Box padding={0} paddingTop={3}>
+                          <Button
+                            width="100%"
+                            colorScheme="blue"
+                            borderTopRightRadius={0}
+                            borderTopLeftRadius={0}
+                            onClick={() => handleViewCourse(course.id)}
+                          >
+                            View Course
+                          </Button>
+                        </Box>
                       </Box>
-                    </Box>
-                  ))}
+                    ))
+                  )}
                 </SimpleGrid>
               </TabPanel>
               <TabPanel>
@@ -238,7 +284,7 @@ navigate(`/staff/tutor-profile/${tutorId}/course/${courseID}`);
                       <FormControl>
                         <FormLabel fontSize="small">First Name</FormLabel>
                         <Input
-                          value={tutorData.fName}
+                          value={tutorDetails.first_name}
                           fontSize="small"
                           bg="white"
                           readOnly
@@ -249,7 +295,7 @@ navigate(`/staff/tutor-profile/${tutorId}/course/${courseID}`);
                         <Input
                           bg="white"
                           fontSize="small"
-                          value={tutorData.lName}
+                          value={tutorDetails.last_name}
                           readOnly
                         />
                       </FormControl>
@@ -258,7 +304,11 @@ navigate(`/staff/tutor-profile/${tutorId}/course/${courseID}`);
                           Date of Birth
                         </FormLabel>
                         <Input
-                          value={tutorData.dob}
+                          value={
+                            tutorDetails.DOB
+                              ? new Date(tutorDetails.DOB).toLocaleDateString()
+                              : ""
+                          }
                           fontSize="small"
                           bg="white"
                           readOnly
@@ -269,7 +319,7 @@ navigate(`/staff/tutor-profile/${tutorId}/course/${courseID}`);
                           E-mail
                         </FormLabel>
                         <Input
-                          value={tutorData.email}
+                          value={tutorDetails.username}
                           fontSize="small"
                           bg="white"
                           readOnly
@@ -280,7 +330,7 @@ navigate(`/staff/tutor-profile/${tutorId}/course/${courseID}`);
                           Phone Number
                         </FormLabel>
                         <Input
-                          value={tutorData.phn_num}
+                          value={tutorDetails.phone_number}
                           fontSize="small"
                           bg="white"
                           readOnly
@@ -291,7 +341,7 @@ navigate(`/staff/tutor-profile/${tutorId}/course/${courseID}`);
                           Address
                         </FormLabel>
                         <Textarea
-                          value={tutorData.address}
+                          value={tutorDetails.address}
                           fontSize="small"
                           bg="white"
                           readOnly
@@ -304,14 +354,14 @@ navigate(`/staff/tutor-profile/${tutorId}/course/${courseID}`);
               <TabPanel>
                 {/* More Info */}
                 {/* <Text fontSize={14} mt={3} mb={2} fontWeight="bold">More Information</Text> */}
-                <SimpleGrid columns={1} spacingX={4} spacingY={2}>
-                  <Box>
+                {tutorDetails.tutor.map((tutor, index) => (
+                  <Box key={index}>
                     <FormControl>
                       <FormLabel fontSize="small" mt={3}>
                         School
                       </FormLabel>
                       <Input
-                        value={tutorData.education.school}
+                        value={tutor.school}
                         fontSize="small"
                         bg="white"
                         readOnly
@@ -322,7 +372,7 @@ navigate(`/staff/tutor-profile/${tutorId}/course/${courseID}`);
                         Medium of teaching
                       </FormLabel>
                       <Input
-                        value={tutorData.education.medium}
+                        value={tutor.medium}
                         fontSize="small"
                         bg="white"
                         readOnly
@@ -332,15 +382,23 @@ navigate(`/staff/tutor-profile/${tutorId}/course/${courseID}`);
                       <FormLabel fontSize="small">Qualification</FormLabel>
                       <Textarea
                         fontSize="small"
-                        value={tutorData.education.qualifications}
+                        value={tutor.qualifications
+                          .map(
+                            (qualification, index) =>
+                              `${qualification}${
+                                index !== tutor.qualifications.length - 1
+                                  ? ", "
+                                  : ""
+                              }`
+                          )
+                          .join("")}
                         bg="white"
                         readOnly
                       />
                     </FormControl>
                   </Box>
-                </SimpleGrid>
+                ))}
               </TabPanel>
-              
             </TabPanels>
           </Tabs>
         </GridItem>

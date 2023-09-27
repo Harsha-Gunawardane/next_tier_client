@@ -5,7 +5,6 @@ import {
   Heading,
   Text,
   Image,
-  HStack,
 } from "@chakra-ui/react";
 
 import backgroundTemplate2 from "../mcq/assests/backgroundTemplate2.jpg";
