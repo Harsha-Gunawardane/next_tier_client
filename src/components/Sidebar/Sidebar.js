@@ -1,10 +1,8 @@
 import { Flex, Icon, Text, Image, IconButton, useBreakpointValue, Spacer } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBars } from "@fortawesome/free-solid-svg-icons";
 import { MdSettings } from "react-icons/md";
 import { TbLogout } from "react-icons/tb";
-import { useState, useContext, useEffect } from "react";
+import { useContext } from "react";
 import { SidebarContext } from "../../context/SidebarContext";
 import { motion } from "framer-motion";
 
@@ -12,6 +10,7 @@ import { motion } from "framer-motion";
 import logo_icon from "../../assests/logos/png/logo_icon.png";
 import logo_text from "../../assests/logos/png/logo_text.png";
 import { MdOutlineKeyboardArrowLeft } from "react-icons/md";
+import { BiMenuAltRight } from "react-icons/bi";
 
 
 
@@ -62,13 +61,11 @@ const Option = (props) => {
 				transition={"all 0.5s ease"}
 			>
 				<Flex alignItems={"center"} justifyContent={"center"} h="100%">
-					{iconComponent && <Icon fontSize="24" as={iconComponent} />}
+					{iconComponent && <Icon fontSize="22" as={iconComponent} />}
 				</Flex>
 				<Flex
 					as={motion.div}
-					// display={{ base: "flex", md: minimizeStatus.md ? "none" : "flex", lg: minimizeStatus.lg ? "none" : "flex" }}
-					width={minimizeStatus.md || minimizeStatus.lg ? "0" : "max-content"}
-					// transition={"all 0.5s ease"}
+					width={minimizeStatus.md || minimizeStatus.lg ? "0" : "--webkit-fill-available"}
 					animate={animations}
 					transition={{ duration: 0.5 }}
 				>
@@ -121,11 +118,6 @@ const Sidebar = (props) => {
 			onClose();
 		}
 		else {
-			const status = {
-				base: minimized.base ? false : false,
-				md: minimized.md ? true : true,
-				lg: minimized.lg ? true : true,
-			}
 			setMinimized((prev) => {
 				const newStatus = {
 					base: prev.base ? false : false,
@@ -198,15 +190,15 @@ const Sidebar = (props) => {
 				<IconButton
 					as={motion.div}
 					ref={minimizeButtonRef}
-					variant={"outline"}
+					variant={"ghost"}
 					onClick={() => handleMinimizing()}
 					// display={{ base: "flex", md: minimized.md ? "none" : "flex", lg: minimized.lg ? "none" : "flex" }}
 					animate={animations}
 					transition={{ duration: 0.5 }}
-					borderRadius={"50%"}
+					// borderRadius={"50%"}
 					size={"sm"}
-					color="gray.500"
-					icon={<MdOutlineKeyboardArrowLeft size={"23px"} />}
+					color="gray.800"
+					icon={<BiMenuAltRight size={"23px"} />}
 				>
 				</IconButton>
 			</Flex>

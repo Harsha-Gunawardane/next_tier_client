@@ -59,7 +59,7 @@ const ContentWatch = () => {
 
     const [videoDetails, setVideoDetails] = useState();
     const [isLoaded, setIsLoaded] = useState(false);
-    const [minimizeButtonRef] = useOutletContext();
+    const { minimizeButtonRef } = useOutletContext();
 
 
     const { id } = useParams();

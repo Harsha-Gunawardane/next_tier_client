@@ -47,11 +47,18 @@ const SidebarAndHeader = ({ userRole }) => {
 		//Student Routes
 		['stu/dashboard', 'dashboard'],
 		['stu/courses', 'courses'],
+		['stu/tutors', 'courses'],
 		['stu/content', 'content'],
 		['stu/content/watch/:id', 'content'],
+		['stu/courses/:courseId', 'courses'],
 		['stu/courses/:courseId/forum', 'courses'],
+		['stu/studyPacks/:courseId', 'courses'],
 		['stu/quizzes', 'quizzes'],
 		['stu/tutes', 'tutes'],
+		['stu/mycourses', 'mycourses'],
+		['stu/mycourses/:courseId', 'mycourses'],
+		['stu/mycourses/:courseId/forum', 'mycourses'],
+
 
 		// More routes and active tabs...
 
@@ -116,7 +123,7 @@ const SidebarAndHeader = ({ userRole }) => {
 
 	const StuOptions = [
 		{ icon: BiSolidDashboard, name: "Dashboard", value: "dashboard", href: "/stu/dashboard" },
-		{ icon: IoSchool, name: "My Courses", value: "mycourses", href: "/stu/courses" },
+		{ icon: IoSchool, name: "MyCourses", value: "mycourses", href: "/stu/mycourses" },
 		{ icon: IoCompass, name: "Explore", value: "courses", href: "/stu/courses" },
 		{ icon: MdVideoLibrary, name: "Content", value: "content", href: "/stu/content" },
 		{ icon: MdOutlineQuiz, name: "Quizzes", value: "quizzes", href: "/stu/quizzes" },
@@ -241,7 +248,7 @@ const SidebarAndHeader = ({ userRole }) => {
 					top={0}
 				/>
 				{/* <Box h={"100vh"} w={"100%"} overflowX={"hidden"}> */}
-				<Outlet context={[minimizeButtonRef, minimized]} />
+				<Outlet context={{ minimizeButtonRef, minimized }} />
 				{/* </Box> */}
 			</GridItem>
 		</Grid >

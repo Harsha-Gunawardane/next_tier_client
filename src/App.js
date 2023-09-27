@@ -96,6 +96,12 @@ import Content from "./components/Content";
 import { Routes, Route } from "react-router-dom";
 import { ROLES } from "./config/roles";
 import Test from "./pages/common/Test";
+import Tutors from "./pages/common/Tutors";
+import CourseViewLayout from "./pages/student/course/CourseViewLayout";
+import CourseViewLayoutEnrolled from "./pages/student/course/CourseViewLayoutEnrolled";
+import MyCourses from "./pages/student/MyCourses";
+import StudypackLayout from "./pages/student/course/StudyPackLayout";
+import StudypackViewLayout from "./pages/student/course/StudypackViewLayout";
 
 function App() {
   return (
@@ -128,7 +134,15 @@ function App() {
                 element={<ReviewQuiz />}
               />
               <Route path="courses/:courseId" element={<CourseLayout />}>
-                <Route index element={<Test />} />
+                <Route index element={<CourseViewLayout />} />
+                <Route path="forum" element={<Forum />} />
+              </Route>
+              <Route path="studyPacks/:studypackId" element={<StudypackLayout />}>
+                <Route index element={<StudypackViewLayout />} />
+              </Route>
+              <Route path="mycourses" element={<MyCourses />} />
+              <Route path="mycourses/:courseId" element={<CourseLayout />}>
+                <Route index element={<CourseViewLayoutEnrolled />} />
                 <Route path="forum" element={<Forum />} />
               </Route>
               <Route path="content" element={<ContentPage />} />
@@ -142,6 +156,7 @@ function App() {
                 <Route path=":id" element={<TuteView />} />
               </Route>
               <Route path="settings" element={<Settings />} />
+              <Route path="tutors" element={<Tutors />} />
             </Route>
           </Route>
 

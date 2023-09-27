@@ -21,7 +21,7 @@ import { Loader } from "@mantine/core";
 import StudyPacks from "../common/StudyPacks";
 
 
-function Courses() {
+function MyCourses() {
   // const [focusedTab, setFocusedTab] = useState("New");
   const { minimized } = useOutletContext();
   const [classes, setClasses] = useState([]);
@@ -45,7 +45,7 @@ function Courses() {
 
     try {
 
-      const CLASSES_FETCH_URL = `/stu/courses?skip=${skip}&limit=${limit}`;
+      const CLASSES_FETCH_URL = `/stu/mycourses?skip=${skip}&limit=${limit}`;
 
       if (search) {
         CLASSES_FETCH_URL += `&search=${search}`
@@ -91,7 +91,7 @@ function Courses() {
     const controller = new AbortController();
 
     try {
-      const STUDYPACKS_FETCH_URL = `/stu/studypacks?skip=${skip}&limit=${limit}`;
+      const STUDYPACKS_FETCH_URL = `/stu/mystudypacks?skip=${skip}&limit=${limit}`;
       if (search) {
         STUDYPACKS_FETCH_URL += `&search=${search}`
       }
@@ -180,7 +180,6 @@ function Courses() {
             </Flex>
           </Flex>
           <Flex justifyContent={"flex-end"} alignItems={"center"} gap="10px" pr="10px">
-            <Button variant={"outline"} colorScheme={"blue"} size="sm" onClick={navigateToTutors}>Search by Tutors</Button>
           </Flex>
         </Flex>
       </Box>
@@ -188,14 +187,14 @@ function Courses() {
         <TabPanel p="5px">
           {classesLoading ?
             <Loader /> :
-            <CoursesList courses={classes} />
+            <CoursesList courses={classes} enrolled={true} />
           }
         </TabPanel>
         <TabPanel p="5px">
           {/* <CoursesList courses={inProgressCourses} /> */}
           {studyPacksLoading ?
             <Loader w={"100%"} h={"100%"} /> :
-            <StudyPacks studyPacks={studyPacks} />
+            <StudyPacks studyPacks={studyPacks} purchased={true} />
           }
         </TabPanel>
       </TabPanels>
@@ -204,4 +203,4 @@ function Courses() {
   );
 }
 
-export default Courses;
+export default MyCourses;

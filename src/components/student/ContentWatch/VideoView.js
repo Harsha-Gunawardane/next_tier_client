@@ -10,8 +10,9 @@ import { Spoiler } from '@mantine/core';
 import VideoJS from './VideoPlayer'
 import videojs from 'video.js'
 import VideoPlayer from './VideoPlayer';
+import VideoPlayer3 from './VideoPlayer3';
 
-import ReactHlsPlayer from "react-hls-player";
+// import ReactHlsPlayer from "react-hls-player";
 
 
 
@@ -70,9 +71,10 @@ const VideoView = (props) => {
                         subtitle: false,
                     }}
                 >
-                    {(ref, props) => <ReactHlsPlayer playerRef={ref} {...props} width={"100%"} />}
+                    {/* {(ref, props) => <ReactHlsPlayer playerRef={ref} {...props} width={"100%"} />} */}
 
                 </Player>
+                {/* <VideoPlayer3 videoDetails={videoDetails} /> */}
             </AspectRatio>
 
             <Flex w={"100%"} mt="5px" px="5px" color={"#3f3f3f"}>
