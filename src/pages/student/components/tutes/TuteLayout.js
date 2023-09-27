@@ -18,7 +18,7 @@ function TuteLayout() {
   const fetchPages = async () => {
     try {
       const response = await axiosPrivate.get(TUTES_URL);
-      console.log(response.data?.data.folders);
+      console.log(response.data?.data);
 
       setFolders(response.data?.data.folders)
       setTutes(response.data?.data.pages)
