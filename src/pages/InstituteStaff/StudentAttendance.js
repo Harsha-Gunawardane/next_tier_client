@@ -1,4 +1,4 @@
-import { Box, Card, Text } from '@chakra-ui/react';
+import { Box, Card } from '@chakra-ui/react';
 import QrCode from 'qrcode'
 import { useState, useEffect } from 'react'
 
