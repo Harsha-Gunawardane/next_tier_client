@@ -61,7 +61,7 @@ export default function StaffTable({ staffs, handleDelete, handleEdit }) {
   ));
 
   return (
-    <Card padding="10px" margin="20px" variant="outline">
+    <Card  margin="20px" variant="outline">
       <ScrollArea h={500}>
         <Table
           sx={{ minWidth: 800 }}

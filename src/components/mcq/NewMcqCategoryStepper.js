@@ -15,11 +15,11 @@ import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import { Card, useToast } from "@chakra-ui/react";
 
 export default function NewMcqCategoryStepper({
-  quizId,
+  categoryId,
   mcqs,
   setMcqs,
-  quiz,
-  setQuiz,
+  category,
+  setCategory,
   onClose,
 }) {
   const toast = useToast();
@@ -111,7 +111,7 @@ export default function NewMcqCategoryStepper({
         };
 
         const response = await axiosPrivate.post(
-          `/tutor/quizzes/addMcq/${quizId}`,
+          `/tutor/categories/addMcq/${categoryId}`,
           JSON.stringify(FormValues),
           {
             headers: { "Content-Type": "application/json" },
@@ -123,10 +123,10 @@ export default function NewMcqCategoryStepper({
         //Added to state
         setMcqs([...mcqs, newQuestion]);
 
-        //Added question id to the quiz
-        const updatedQuestionIds = [...quiz.question_ids, response.data.id];
-        const updatedQuiz = { ...quiz, question_ids: updatedQuestionIds };
-        setQuiz(updatedQuiz);
+        //Added question id to the category
+        const updatedQuestionIds = [...category.question_ids, response.data.id];
+        const updatedCategory = { ...category, question_ids: updatedQuestionIds };
+        setCategory(updatedCategory);
 
         console.log(JSON.stringify(response?.data));
         console.log("Form data submitted successfully!");
@@ -135,7 +135,7 @@ export default function NewMcqCategoryStepper({
 
         toast({
           title: "Mcq added.",
-          description: `Mcq added to the ${quiz.title} succesfully.`,
+          description: `Mcq added to the ${category.title} succesfully.`,
           status: "success",
           duration: 9000,
           isClosable: true,

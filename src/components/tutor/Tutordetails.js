@@ -5,11 +5,35 @@ import { ChakraProvider,HStack } from '@chakra-ui/react'
 import { useEffect,useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { IconButton ,Box,Avatar} from '@chakra-ui/react'
+import useAxiosPrivate from "../../hooks/useAxiosPrivate";
+
+
 
 
 
 const Tutordetails = (props) => {
 
+  const [profileInfo, setProfileInfo] = useState(null);
+  const axiosPrivate = useAxiosPrivate();
+
+  useEffect(() => {
+    const getStaffProfile = async () => {
+      const controller = new AbortController();
+      try {
+        const response = await axiosPrivate.get("/tutor/tutordetails", {
+          signal: controller.signal,
+        });
+        if (response.data.join_date) {
+          response.data.join_date = response.data.join_date.split("T")[0];
+        }
+        setProfileInfo(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    getStaffProfile();
+  }, []);
  
   return (
 
@@ -29,17 +53,15 @@ const Tutordetails = (props) => {
           />
   </Box>
   <Box w='70%' h='40px' bg='white' ml={{base:0,xl:-50}}>
-<Heading fontSize='15px'>Mr.Nilantha jayasooriya</Heading>
-<Text fontSize='12px'>Bsc.Eng University of Moratuwa</Text>
+<Heading fontSize='15px'>  {profileInfo?.first_name} {profileInfo?.last_name}</Heading>
+<Text fontSize='12px'>  {profileInfo?.tutor[0]?.qualifications[0] || ""}</Text>
   </Box>
  
 </HStack>
           <br></br>
 
           <Text fontSize='15px' mt={{base:10,sm:10,xl:0}}>
-            Find Physics stock images in HD and millions of other royalty-free
-            stock photos, illustrations and vectors in the Shutterstock
-            collection. Thousands of new, high-quality pictures added every day.
+          {profileInfo?.tutor[0]?.description || ""}
           </Text>
 </Box>
     

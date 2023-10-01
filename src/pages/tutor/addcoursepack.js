@@ -64,7 +64,7 @@ const Addcoursepack= () => {
     
                       description:
                       values.description.trim().length < 1
-                        ? 'Language is Required' :values.description.length >200 ? 'Description must be less than 200 characters' 
+                        ? 'Language is Required' :values.description.length >800 ? 'Description must be less than 800 characters' 
                         : null,
 
                         course_id:
@@ -86,10 +86,7 @@ const Addcoursepack= () => {
             ?  'Subject is Required'
             : null,
   
-            thumbnail:
-            values.thumbnail.trim().length < 1
-              ?  'Course Type is Required'
-              : null,
+        
 
             
                 
@@ -107,23 +104,28 @@ const Addcoursepack= () => {
   ? "Price must be less than 50000"
   : null,
 
+  thumbnail:
+  values.thumbnail.trim().length < 1
+    ?  'Course Type is Required'
+    : null,
+
         days: values.days.length < 1
   ? "Day is Required"
   : parseInt(values.days) >= 365
   ? "Days must be less than 366 days"
   : null,
 
-  months: values.months.length < 1
-  ? "Month is Required"
-  : parseInt(values.months) >= 12
-  ? "Month must be less than 12 months"
-  : null,
+  // months: values.months.length < 1
+  // ? "Month is Required"
+  // : parseInt(values.months) >= 12
+  // ? "Month must be less than 12 months"
+  // : null,
 
-        years: values.years.length < 1
-        ? "Year is Required"
-        : parseInt(values.years) >= 3
-        ? "Year must be less than 3 years"
-        : null,
+  //       years: values.years.length < 1
+  //       ? "Year is Required"
+  //       : parseInt(values.years) >= 3
+  //       ? "Year must be less than 3 years"
+  //       : null,
 
             
       };
@@ -179,15 +181,15 @@ const Addcoursepack= () => {
           form.values.subject_area_4,
         ];
 
-        // const access_period = [
-        //   form.values.years,
-        //   form.values.months,
-        //   form.values.days,
+        const access_period = [
+       
+          form.values.days,
          
-        // ];
+        ];
 
         const updatedFormValues = {
           ...form.values,
+          access_period,
           subject_areas: subjectAreas.filter((area) => area.trim().length > 0),
           // Remove the individual subject area fields from the updatedFormValues object
           subject_area_1: undefined,
@@ -195,11 +197,7 @@ const Addcoursepack= () => {
           subject_area_3: undefined,
           subject_area_4: undefined,
 
-          access_period: {
-            days: form.values.days,
-            months: form.values.months,
-            years: form.values.years,
-          },
+  
        
         };
 
@@ -416,7 +414,16 @@ const Addcoursepack= () => {
 
 
 
-            <TextInput label="Thumbnail" placeholder="Thumbnail" {...form.getInputProps('thumbnail')} h='50px' mb='60px'
+        
+    
+
+        </Stepper.Step>
+
+
+
+        <Stepper.Step label="Final step" description="Social media">
+
+        <FileInput label="Thumbnail" placeholder="Thumbnail" {...form.getInputProps('thumbnail')} h='50px' mb='60px'
              styles={{
               input: { // Styles for the input element
                
@@ -433,13 +440,6 @@ const Addcoursepack= () => {
               },
            
             }} />
-    
-
-        </Stepper.Step>
-
-
-
-        <Stepper.Step label="Final step" description="Social media">
 
        
         <NumberInput
@@ -473,8 +473,8 @@ const Addcoursepack= () => {
 
 
 
-<HStack spacing='40px' mt='20px'>
 
+{/* 
 <NumberInput
                 {...form.getInputProps("years")}
                 defaultValue={18}
@@ -523,14 +523,14 @@ const Addcoursepack= () => {
                     marginBottom: "5px",
                   },
                 }}
-              />
+              />*/}
 
 
 <NumberInput
                 {...form.getInputProps("days")}
                 defaultValue={18}
                 placeholder="Days"
-                label=""
+                label="Access Period"
                 mt='30px'
                 styles={{
                   input: {
@@ -540,7 +540,6 @@ const Addcoursepack= () => {
                     borderRadius: "8px",
                     padding: "10px",
                     height: "60px",
-                    width:'100%'
                   },
                   label: {
                     // Styles for the label element
@@ -549,9 +548,9 @@ const Addcoursepack= () => {
                     marginBottom: "5px",
                   },
                 }}
-              />
+              /> 
 
-</HStack>
+
 
 
 
@@ -656,7 +655,7 @@ const Addcoursepack= () => {
                       <Text>Access Period:</Text>
                     </Box>
                     <Box width="200px">
-                      <Text color='grey'>Days:{form.values.days}    Months:{form.values.months}    Years:{form.values.years}</Text>
+                      <Text color='grey'>Days:{form.values.days} </Text>
                  
                     </Box>
                   </HStack>

@@ -10,7 +10,8 @@ import {
     SimpleGrid,
     Box,
     Checkbox,
-    FormLabel,Input, IconButton
+    Image,
+    FormLabel,Input,useToast, IconButton
   } from '@chakra-ui/react'
   import { SmallAddIcon} from '@chakra-ui/icons'
   import { Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react'
@@ -18,6 +19,7 @@ import {
   import React,{useEffect,useState} from "react";
   import { useDisclosure } from '@chakra-ui/react'
   import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
+  import Addnewtute from "./Addnewtute";
  
 
 
@@ -35,6 +37,7 @@ const Addweekdoccontent = ({ studypackId ,dynamicWeek}) => {
   const [contentdata, setcontentData] = useState([]); 
  
   const axiosPrivate = useAxiosPrivate();
+  const toast = useToast();
 
 
  
@@ -49,7 +52,7 @@ const Addweekdoccontent = ({ studypackId ,dynamicWeek}) => {
           signal: controller.signal,
         });
         setcontentData(response.data);
-        console.log(response.data);
+        // console.log(response.data);
       } catch (error) {
         console.log(error);
       }
@@ -78,7 +81,7 @@ const Addweekdoccontent = ({ studypackId ,dynamicWeek}) => {
   useEffect(() => {
     const fetchExistingVideoIds = async () => {
       try {
-        const response = await axiosPrivate.get(`/tutor/studypack/${studypackId}`);
+        const response = await axiosPrivate.get(`/tutor/weekstudypack/${studypackId}`);
         const contentIds = response.data.content_ids;
   
         // Extract video_ids from content_ids array
@@ -90,8 +93,8 @@ const Addweekdoccontent = ({ studypackId ,dynamicWeek}) => {
         // Set price
         setPrice(response.data.price);
   
-        console.log(videoIds);
-        console.log(response.data.price);
+        // console.log(videoIds);
+        // console.log(response.data.price);
       } catch (error) {
         console.log(error);
       }
@@ -110,11 +113,11 @@ const Addweekdoccontent = ({ studypackId ,dynamicWeek}) => {
 
 
   const handleSave = async (event) => {
-    // event.preventDefault();
+    event.preventDefault();
 
     try {
       // Fetch the existing content_ids structure
-      const response = await axiosPrivate.get(`/tutor/studypack/${studypackId}`);
+      const response = await axiosPrivate.get(`/tutor/weekstudypack/${studypackId}`);
       const existingContentIds = response.data.content_ids;
       const price = response.data.price;
 
@@ -133,12 +136,26 @@ const Addweekdoccontent = ({ studypackId ,dynamicWeek}) => {
       }
 
       // Update the studypack with the modified content_ids structure and the price
-      await axiosPrivate.put(`/tutor/studypack/${studypackId}`, {
+      await axiosPrivate.put(`/tutor/weekstudypack/${studypackId}`, {
         content_ids: existingContentIds,
         price: price,
       });
 
-      onClose(); // Close the modal after saving
+      toast({
+        title: 'Tute Added',
+        description: 'The Tute has been successfully Added.',
+        status: 'success',
+        duration: 1000,
+        isClosable: true,
+        position: 'top',
+        onCloseComplete: () => {
+         
+          window.location.reload();
+        },
+      });
+
+      onClose();
+      // window.location.reload(); // Close the modal after saving
     } catch (error) {
       console.log(error);
     }
@@ -157,7 +174,7 @@ const Addweekdoccontent = ({ studypackId ,dynamicWeek}) => {
 
       <Modal initialFocusRef={initialRef} finalFocusRef={finalRef} isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
-        <ModalContent>
+        <ModalContent size='2xl' maxW='60vw'>
           <ModalHeader>Add Video Content</ModalHeader>
           <ModalCloseButton />
 
@@ -170,14 +187,14 @@ const Addweekdoccontent = ({ studypackId ,dynamicWeek}) => {
             <form onSubmit={handleSave}>
               <TabPanel>
                 <ModalBody pb={6}>
-                <SimpleGrid columns={2} spacing={4}>
+                <SimpleGrid columns={4} spacing={4}>
                     {videoContent.map((content, index) => (
                       <Box key={index} p={2} borderWidth={1} borderRadius='md'>
                         <Checkbox
                           isChecked={selectedItems.includes(index)}
                           onChange={() => handleCheckboxChange(index)}
                         />
-                        <img src={content.thumbnail} alt={`Thumbnail ${index}`} />
+                        <Image src={content.thumbnail} alt={`Thumbnail ${index}`} height='100px' width='100%'/>
                         <p>{content.title}</p>
                       </Box>
                     ))}
@@ -196,8 +213,8 @@ const Addweekdoccontent = ({ studypackId ,dynamicWeek}) => {
               </form>
               <TabPanel>
              
-                {/* Add new content form */}
-                {/* ... (rest of the code remains the same) */}
+               <Addnewtute studypackId={studypackId}
+    dynamicWeek={dynamicWeek}></Addnewtute>
               </TabPanel>
             </TabPanels>
           </Tabs>

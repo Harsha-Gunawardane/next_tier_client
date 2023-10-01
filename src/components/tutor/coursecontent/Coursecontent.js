@@ -25,6 +25,7 @@ import "../../../index.css";
 import { useEffect, useState } from "react";
 import useAxiosPrivate from "../../../hooks/useAxiosPrivate.js";
 
+
 const CourseContent = ({ course }) => {
   const [coursesdata, setCoursesData] = useState(null);
   const navigate = useNavigate();
@@ -36,6 +37,8 @@ const CourseContent = ({ course }) => {
   const [monthToDelete, setMonthToDelete] = useState("");
   const [studyPackDetails, setStudyPackDetails] = useState({});
   const [videoInfoArray, setVideoInfoArray] = useState([]);
+
+
 
   useEffect(() => {
     const getCourses = async () => {
@@ -59,8 +62,9 @@ const CourseContent = ({ course }) => {
           const allStudyPackDetails = await Promise.all(
             coursesdata.studypack_ids.map(async (studyPackId) => {
               const response = await axiosPrivate.get(
-                `/tutor/studypack/${studyPackId}`
+                `/tutor/weekstudypack/${studyPackId}`
               );
+              // console.log(response.data);
               return response.data;
             })
           );
@@ -80,12 +84,16 @@ const CourseContent = ({ course }) => {
 
   const getContentInfo = async (contentId) => {
     try {
-      const response = await axiosPrivate.get(`/tutor/content/${contentId}`);
-      const content = response.data;
+      const contentResponse = await axiosPrivate.get(`/tutor/content/${contentId}`);
+      const content = contentResponse.data;
+    
+  
+  
       return {
         title: content.title,
         thumbnail: content.thumbnail,
         videoId: content.id,
+    
       };
     } catch (error) {
       console.error("Error fetching content details:", error);
@@ -93,19 +101,47 @@ const CourseContent = ({ course }) => {
         title: "",
         thumbnail: "",
         videoId: "",
+       
       };
     }
   };
+
+
+  const getContentInfo2 = async (contentId) => {
+    try {
+      const contentResponse = await axiosPrivate.get(`/tutor/quizzes/${contentId}`);
+      const content = contentResponse.data;
+      
+
+  
+      return {
+        title: content.title,
+       
+        videoId: content.id,
+      
+      };
+    } catch (error) {
+      console.error("Error fetching content details:", error);
+      return {
+        title: "",
+        // thumbnail: "",
+        videoId: "",
+        // quizzes: "",
+      };
+    }
+  };
+  
 
   useEffect(() => {
     const fetchVideoInfo = async (studyPack) => {
       const videoInfoArray = await Promise.all(
         studyPack.content_ids.flatMap((content) => {
+
           const videoInfoPromises = content[
             Object.keys(content)[0]
           ].video_id.map(async (videoId) => {
             const videoInfo = await getContentInfo(videoId);
-            console.log(videoInfo);
+           
             return { ...videoInfo, type: "video" };
           });
 
@@ -118,7 +154,7 @@ const CourseContent = ({ course }) => {
 
           const quizInfoPromises = content[Object.keys(content)[0]].quiz_id.map(
             async (quizId) => {
-              const quizInfo = await getContentInfo(quizId);
+              const quizInfo = await getContentInfo2(quizId);
               return { ...quizInfo, type: "quiz" };
             }
           );
@@ -140,6 +176,38 @@ const CourseContent = ({ course }) => {
     }
   }, [studyPackDetails]);
 
+  const handleNewContentAdded = (newContentInfo) => {
+    // Update videoInfoArray or any other state with the new content info
+    const updatedVideoInfoArray = [...videoInfoArray, newContentInfo];
+    setVideoInfoArray(updatedVideoInfoArray);
+    // You might need to do similar updates for other related states
+  };
+
+  const handleContentRemoval = (removedContentId) => {
+    // Filter out the removed content from the relevant state arrays
+    const updatedVideoInfoArray = videoInfoArray.filter(
+      (info) => info.videoId !== removedContentId
+    );
+    // Update the state of videoInfoArray
+    setVideoInfoArray(updatedVideoInfoArray);
+
+    // If you need to update other related state like studyPackDetails or any other,
+    // make sure to do that here as well
+
+    // Close the modal or perform any other necessary actions
+  };
+
+
+
+  const handleNewStudyPackAdded = (newStudyPackDetails) => {
+    // Update studyPackDetails state by merging the new study pack details
+    setStudyPackDetails((prevDetails) => ({
+      ...prevDetails,
+      [newStudyPackDetails.id]: newStudyPackDetails,
+    }));
+  };
+
+
 
 
   return (
@@ -155,15 +223,15 @@ const CourseContent = ({ course }) => {
                 borderRadius="5px"
                 height="50px"
               >
-
                 <Box as="span" flex="1" textAlign="left" height="30px">
                   <Heading p={1} ml="20px" fontSize="15px">
                     {studyPack.title}
                   </Heading>
                 </Box>
-                <Box mr='10px'>
-                  <Editstudypack course={studyPack.id} ></Editstudypack> </Box>
-                <Box mr='10px'>
+                <Box mr="10px">
+                  <Editstudypack course={studyPack.id}></Editstudypack>{" "}
+                </Box>
+                <Box mr="10px">
                   <Removecontent studypackid={studyPack.id}></Removecontent>
                 </Box>
                 <AccordionIcon />
@@ -171,26 +239,34 @@ const CourseContent = ({ course }) => {
 
               <AccordionPanel pb={4} bg="white">
                 <Tabs variant="soft-rounded" colorScheme="blue">
-                  <TabList>
+                  <TabList gap={"10px"}>
                     {studyPack.content_ids.map((content, contentIndex) => (
                       <Tab
                         key={contentIndex}
                         height="15px"
+                        _selected={{ color: "#FFFFFF", bg: "accent" }}
+                        color={"#3f3f3f"}
+                        bg={"gray.100"}
+                        fontWeight={"medium"}
+                        borderRadius={"md"}
                         onClick={() => setSelectedWeekTab(contentIndex + 1)}
                         // Always set the first tab (Week 1) as active
-                        className={contentIndex === 0 || selectedWeekTab === contentIndex + 1 ? 'active-tab' : ''}
+                        className={
+                          contentIndex === 0 ||
+                          selectedWeekTab === contentIndex + 1
+                            ? "active-tab"
+                            : ""
+                        }
                       >
-                        <Text fontSize="12px">{`Week ${contentIndex + 1
-                          }`}</Text>
+                        <Text fontSize="12px">{`Week ${
+                          contentIndex + 1
+                        }`}</Text>
                       </Tab>
                     ))}
                   </TabList>
 
                   <TabPanels>
-
                     {studyPack.content_ids.map((content, contentIndex) => (
-
-
                       <TabPanel key={contentIndex}>
                         {/* Video Content */}
 
@@ -199,85 +275,98 @@ const CourseContent = ({ course }) => {
                             <Text fontSize="15px">Video Content</Text>
                           </Box>
                           <Box>
-                            <Addcoursecontent studypackId={studyPack.id} dynamicWeek={`week${selectedWeekTab}`}></Addcoursecontent>
+                            <Addcoursecontent
+                              studypackId={studyPack.id}
+                              dynamicWeek={`week${selectedWeekTab}`}
+                              onNewContentAdded={handleNewContentAdded}
+                            ></Addcoursecontent>
                           </Box>
                         </HStack>
 
                         {content[Object.keys(content)[0]].video_id &&
-                          content[Object.keys(content)[0]].video_id.length > 0 && (
-
+                          content[Object.keys(content)[0]].video_id.length >
+                            0 && (
                             <Box>
+                              {content[Object.keys(content)[0]].video_id.map(
+                                (videoId, videoIndex) => {
+                                  const videoInfo = videoInfoArray.find(
+                                    (info) => info.videoId === videoId
+                                  );
+                                  // console.log(videoInfo);
+                                  if (!videoInfo) {
+                                    return null;
+                                  }
 
-                              {content[Object.keys(content)[0]].video_id.map((videoId, videoIndex) => {
-                                const videoInfo = videoInfoArray.find(info => info.videoId === videoId);
-                                console.log(videoInfo);
-                                if (!videoInfo) {
-                                  return null;
-                                }
+                                  return (
+                                    <Box
+                                      // bg="#F0F8FF"
+                                      bg="gray.100"
+                                      p="10px"
+                                      mt="4px"
+                                      className="box1"
+                                      key={videoIndex}
+                                    >
+                                      <HStack spacing={{ base: 90, xl: 300 }}>
+                                        <Box p={2} width="210px">
+                                          <HStack>
+                                            <Image
+                                              boxSize="50%"
+                                              width={{ base: 70, xl: 70 }}
+                                              height="50px"
+                                              objectFit="cover"
+                                              src={videoInfo.thumbnail}
+                                            />
+                                            <Box>
+                                              <Text
+                                                fontSize="14px"
+                                                className="box2"
+                                              >
+                                                {videoInfo.title}
+                                              </Text>
+                                            </Box>
+                                          </HStack>
+                                        </Box>
 
-                                return (
-                                  <Box
-                                    bg="#F0F8FF"
-                                    mt="4px"
-                                    className="box1"
-                                    key={videoIndex}
-                                  >
-                                    <HStack spacing={{ base: 90, xl: 300 }}>
-                                      <Box p={2} width="210px">
-                                        <HStack>
-                                          <Image
-                                            boxSize="50%"
-                                            width={{ base: 70, xl: 70 }}
-                                            height="50px"
-                                            objectFit="cover"
-                                            src={videoInfo.thumbnail}
-                                          />
-                                          <Box>
-                                            <Text
-                                              fontSize="14px"
-                                              className="box2"
+                                        <Box width="90px" ml="5px" mt="-5px">
+                                          <HStack>
+                                            <Button
+                                              fontSize="12px"
+                                              height="20px"
                                             >
-                                              {videoInfo.title}
-                                            </Text>
-                                          </Box>
-                                        </HStack>
-                                      </Box>
-
-                                      <Box width="90px" ml="5px" mt="-5px">
-                                        <HStack>
-                                          <Button
-                                            fontSize="12px"
-                                            height="20px"
-                                          >
-                                            View
-                                          </Button>{" "}
-                                          <Remove
-                                            contentId={videoId}
-                                            part={`week${selectedWeekTab}`}
-                                            studypackId={studyPack.id}
-                                          />
-                                        </HStack>
-                                      </Box>
-                                    </HStack>
-                                  </Box>
-                                );
-                              }
+                                              View
+                                            </Button>{" "}
+                                            <Remove
+                                              contentId={videoId}
+                                              part={`week${selectedWeekTab}`}
+                                              studypackId={studyPack.id}
+                                              // onContentRemoved={
+                                              //   handleContentRemoval
+                                              // }
+                                            />
+                                          </HStack>
+                                        </Box>
+                                      </HStack>
+                                    </Box>
+                                  );
+                                }
                               )}
                             </Box>
                           )}
 
                         {/* Document Content */}
 
-
                         <HStack spacing={{ base: 220, xl: 300 }} mt="10px">
                           <Box width="600px">
                             <Text fontSize="15px">Document Content</Text>
                           </Box>
                           <Box>
-                            <Addcoursedoccontent studypackId={studyPack.id} dynamicWeek={`week${selectedWeekTab}`} />
+                            <Addcoursedoccontent
+                              studypackId={studyPack.id}
+                              dynamicWeek={`week${selectedWeekTab}`}
+                              onNewContentAdded={handleNewContentAdded}
+                            />
                           </Box>
                         </HStack>
-
 
                         {content[Object.keys(content)[0]].tute_id.map(
                           (tuteId, tuteIndex) => {
@@ -290,7 +379,8 @@ const CourseContent = ({ course }) => {
 
                             return (
                               <Box
-                                bg="#F0F8FF"
+                              bg="gray.100"
+                              p="10px"
                                 mt="4px"
                                 className="box1"
                                 key={tuteIndex}
@@ -322,6 +412,7 @@ const CourseContent = ({ course }) => {
                                         contentId={tuteId}
                                         studypackId={studyPack.id}
                                         part={`week${selectedWeekTab}`}
+                                        onContentRemoved={handleContentRemoval}
                                       />
                                     </HStack>
                                   </Box>
@@ -338,8 +429,9 @@ const CourseContent = ({ course }) => {
                             <Text fontSize="15px">Quiz Content</Text>
                           </Box>
                           <Box>
-                            <Addcoursequiz />
-                          </Box>
+                             <Addcoursequiz   studypackId={studyPack.id}
+                              dynamicWeek={`week${selectedWeekTab}`} 
+                              onNewContentAdded={handleNewContentAdded}/> </Box>
                         </HStack>
 
                         {content[Object.keys(content)[0]].quiz_id.map(
@@ -353,21 +445,18 @@ const CourseContent = ({ course }) => {
 
                             return (
                               <Box
-                                bg="#F0F8FF"
+                                 bg="gray.100"
+                                      p="10px"
                                 mt="4px"
                                 className="box1"
                                 key={quizIndex}
                               >
-                                <HStack spacing={{ base: 90, xl: 330 }}>
+                                <HStack spacing={{ base: 90, xl: 300 }}>
                                   <Box p={2} width="210px">
                                     <HStack>
-                                      <Image
-                                        boxSize="50%"
-                                        width={{ base: 70, xl: 70 }}
-                                        height="50px"
-                                        objectFit="cover"
-                                        src={quizInfo.thumbnail}
-                                      />
+                                      
+                                    
+                                      
                                       <Box>
                                         <Text fontSize="14px" className="box2">
                                           {quizInfo.title}
@@ -385,6 +474,7 @@ const CourseContent = ({ course }) => {
                                         contentId={quizId}
                                         studypackId={studyPack.id}
                                         part={`week${selectedWeekTab}`}
+                                        onContentRemoved={handleContentRemoval}
                                       />
                                     </HStack>
                                   </Box>
@@ -392,7 +482,7 @@ const CourseContent = ({ course }) => {
                               </Box>
                             );
                           }
-                        )}
+                        )} 
                       </TabPanel>
                     ))}
                   </TabPanels>

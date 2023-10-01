@@ -11,7 +11,7 @@ import {
   AccordionPanel,
   HStack,
   SimpleGrid,
-  Button,
+  Button,Link,
 } from "@chakra-ui/react";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import { useLocation } from "react-router-dom";
@@ -22,9 +22,10 @@ import Remove from "../../components/tutor/coursepackage/Contentremove";
 import Addcoursedoccontent from "../../components/tutor/coursepackage/Adddoc";
 import Addcoursequiz from "../../components/tutor/coursepackage/Addquiz";
 import Addcoursecontent from "../../components/tutor/coursepackage/Addvideo";
-import TutorDetails from "../../components/tutor/Tutordetails";
+import TutorDetails from "../../components/tutor/TutorDetails2";
 import Fetch from "../../hooks/fetchTitle";
 import Fetcht from "../../hooks/fetchThumb";
+import FetchQuiz from "../../hooks/fetchQuiz";
 import Removecontent from "../../components/tutor/coursepackage/Remove";
 import { Show, Hide } from '@chakra-ui/react'
 
@@ -172,6 +173,83 @@ const Coursepackcontent = () => {
     }
   };
 
+
+  // const handleAddMonth = () => {
+  //   // Create a new month entry with initial empty content
+  //   const newMonth = {
+  //     "New Month Name": {
+  //       video_id: [],
+  //       tute_id: [],
+  //       quiz_id: [],
+  //     },
+  //   };
+  
+  //   // Update the contentIdsData state by adding the new month
+  //   setContentIdsData([...contentIdsData, newMonth]);
+  // };
+
+
+   const handleRemoveMonth = (month) => {
+    // Create a copy of the contentIdsData array and filter out the month to be removed
+    const updatedContentIdsData = contentIdsData.filter(
+      (weekData) => Object.keys(weekData)[0] !== month
+    );
+
+    // Update the state with the modified contentIdsData array
+    setContentIdsData(updatedContentIdsData);
+  };
+
+  
+
+  const handleVideoAdded = (newContentIdsData) => {
+    // Update the contentIdsData state with the new data
+    setContentIdsData(newContentIdsData);
+  };
+
+  const handleDocAdded = (newContentIdsData) => {
+    // Update the contentIdsData state with the new data
+    setContentIdsData(newContentIdsData);
+  };
+
+  const handleQuizAdded = (newContentIdsData) => {
+    // Update the contentIdsData state with the new data
+    setContentIdsData(newContentIdsData);
+  };
+
+
+
+  const handleContentRemove = (month, contentId) => {
+    // Create a copy of the contentIdsData array and filter out the deleted content
+    const updatedContentIdsData = contentIdsData.map((weekData) => {
+      const updatedWeekData = { ...weekData };
+      const weekKey = Object.keys(updatedWeekData)[0];
+      if (weekKey === month) {
+        const weekContent = updatedWeekData[weekKey];
+        if (weekContent) {
+          if (weekContent.video_id && weekContent.video_id.includes(contentId)) {
+            // Remove the deleted content from video_id
+            weekContent.video_id = weekContent.video_id.filter((id) => id !== contentId);
+          } else if (weekContent.tute_id && weekContent.tute_id.includes(contentId)) {
+            // Remove the deleted content from tute_id
+            weekContent.tute_id = weekContent.tute_id.filter((id) => id !== contentId);
+          }
+          else if (weekContent.quiz_id && weekContent.quiz_id.includes(contentId)) {
+            // Remove the deleted content from tute_id
+            weekContent.quiz_id = weekContent.quiz_id.filter((id) => id !== contentId);
+          }
+        }
+      }
+      return updatedWeekData;
+    });
+
+    // Update the state with the modified contentIdsData array
+    setContentIdsData(updatedContentIdsData);
+  };
+
+  const updateContentIds = (newContentIds) => {
+    setContentIdsData(newContentIds);
+  };
+
   return (
     <Box width="100%">
       <SimpleGrid spacing={20} minChildWidth="250px" mt="20px">
@@ -183,6 +261,7 @@ const Coursepackcontent = () => {
                   {studypackdata.title}
                 </Heading>
               )}
+              <Link>
               <Image
                 boxSize="60%"
                 width={{base:420,xl:700}}
@@ -192,8 +271,11 @@ const Coursepackcontent = () => {
                 alt="Course Image"
                 ml='10px'
               />
+              </Link>
+               {/* <Button fontSize="15px" ml='40px' width='80%'mt='40px' colorScheme="blue">View</Button> */}
               <Heading mt='30px' ml='15px'>{selectedTitle}</Heading>
               <Text fontSize="15px" mt='10px' ml='15px'>{selectedDiscription}</Text>
+             
             </Box>
           )}
 
@@ -201,6 +283,7 @@ const Coursepackcontent = () => {
             <Box width="110%" bg="white" position="fixed" top="0">
               <Text fontSize="15px">{selectedTitle}</Text>
               <Text fontSize="15px">{selectedDiscription}</Text>
+              <Button fontSize="15px">View</Button>
             </Box>
           )}
         </Box>
@@ -220,6 +303,7 @@ const Coursepackcontent = () => {
             const weekContent = weekData[weekKey];
 
             if (weekContent) {
+              const formattedWeekKey = weekKey.replace(/%20/g, ' ');
               return (
                 <Accordion allowToggle key={index}>
                   <AccordionItem width={{ base: 400, xl: 400 }}>
@@ -236,7 +320,7 @@ const Coursepackcontent = () => {
                             {weekKey}
                           </Heading>
                         </Box>
-                        <Remove  course={id} month={weekKey}></Remove>
+                        <Remove  course={id} month={weekKey} onMonthRemove={handleRemoveMonth}></Remove>
                         <AccordionIcon />
                       </AccordionButton>
                     </h2>
@@ -247,14 +331,15 @@ const Coursepackcontent = () => {
                         <Text fontSize="15px">Video Content</Text>
                         <Box>
                           {" "}
-                          <Addcoursecontent dynamicWeek={weekKey} studypackId={id} />
+                          <Addcoursecontent dynamicWeek={weekKey} studypackId={id}  onVideoAdded={handleVideoAdded}/>
                         </Box>
                       </HStack>
 
                       {weekContent.video_id &&
                         weekContent.video_id.map((videoId, videoIndex) => (
-                          <Box bg="#F0F8FF" mt="4px" className="box1">
-                            <HStack spacing="50px">
+                          <Box   bg="gray.100"
+                          p="10px" mt="4px" className="box1">
+                            <HStack spacing="40px">
                               <Box p={2} width="210px">
                                 <HStack>
                                   <Fetcht videoId={videoId} />
@@ -282,7 +367,7 @@ const Coursepackcontent = () => {
                                     View
                                   </Button>{" "}
                                   <Removecontent
-                                    contentId={videoId} part={weekKey}
+                                    contentId={videoId}  month={weekKey}  onContentRemove={handleContentRemove} 
                                   ></Removecontent>
                                 </HStack>
                               </Box>
@@ -294,12 +379,13 @@ const Coursepackcontent = () => {
                         <Text fontSize="15px">Tute Content</Text>
                         <Box>
                           {" "}
-                          <Addcoursedoccontent  dynamicWeek={weekKey} studypackId={id} ></Addcoursedoccontent>
+                          <Addcoursedoccontent  dynamicWeek={weekKey} studypackId={id} onDocAdded={handleDocAdded} ></Addcoursedoccontent>
                         </Box>
                       </HStack>
                       {weekContent.tute_id &&
                         weekContent.tute_id.map((tuteId, tuteIndex) => (
-                          <Box bg="#F0F8FF" mt="4px" className="box1">
+                          <Box   bg="gray.100"
+                          p="10px" mt="4px" className="box1">
                             <HStack spacing="50px">
                               <Box p={2} width="210px">
                                 <HStack>
@@ -328,7 +414,7 @@ const Coursepackcontent = () => {
                                     View
                                   </Button>{" "}
                                   <Removecontent
-                                    contentId={tuteId} part={weekKey}
+                                    contentId={tuteId}  month={decodeURIComponent(weekKey)} onContentRemove={handleContentRemove}
                                   ></Removecontent>
                                 </HStack>
                               </Box>
@@ -340,25 +426,20 @@ const Coursepackcontent = () => {
                         <Text fontSize="15px">Quiz Content</Text>
                         <Box>
                           {" "}
-                          <Addcoursedoccontent></Addcoursedoccontent>
+                          <Addcoursequiz  dynamicWeek={weekKey} studypackId={id} onQuizAdded={handleQuizAdded}></Addcoursequiz>
                         </Box>
                       </HStack>
-                      {/* {weekContent.tute_id &&
-                        weekContent.tute_id.map((tuteId, tuteIndex) => (
-                          <Box bg="#F0F8FF" mt="4px" className="box1">
+                      {weekContent.quiz_id &&
+                        weekContent.quiz_id.map((quizId, tuteIndex) => (
+                          <Box   bg="gray.100"
+                          p="10px" mt="4px" className="box1">
                             <HStack spacing="50px">
                               <Box p={2} width="210px">
                                 <HStack>
-                                  <Image
-                                    boxSize="50%"
-                                    width="40%"
-                                    height="50px"
-                                    objectFit="cover"
-                                    src={tuteId}
-                                  />
+                                  {/* <Fetcht videoId={quizId} /> */}
                                   <Box>
                                     <Text fontSize="14px" className="box2">
-                                      {tuteId}
+                                      <FetchQuiz quizId={quizId} />
                                     </Text>
                                   </Box>
                                 </HStack>
@@ -366,25 +447,27 @@ const Coursepackcontent = () => {
                               <Box width="60px" ml="10px" mt="-5px">
                                 <HStack>
                                   <Button
-                                    fontSize="12px"
+                                    fontSize="10px"
                                     height="20px"
-                                    onClick={() =>
-                                      handleViewClickdoc({
-                                        tute: tuteId,
-                                        tutetitle: `Tute Title ${
-                                          tuteIndex + 1
-                                        }`,
-                                      })
-                                    }
+                                    // onClick={() =>
+                                    //   handleViewClickdoc({
+                                    //     tute: quizId,
+                                    //     tutetitle: `${quizId}`,
+                                    //     tutethumbnail: `${quizId}`,
+                                    //     tutediscription: `${quizId}`,
+                                    //   })
+                                    // }
                                   >
-                                    View
+                                    Attempt
                                   </Button>{" "}
-                                  {/* Remove component */}
-                                {/* </HStack>
+                                  <Removecontent
+                                    contentId={quizId}  month={decodeURIComponent(weekKey)} onContentRemove={handleContentRemove}
+                                  ></Removecontent>
+                                </HStack>
                               </Box>
                             </HStack>
                           </Box>
-                        ))} */} 
+                        ))}
 
                       {/* Similar blocks for Quiz content */}
                       {/* ... (Add similar code for Quiz content) */}
@@ -395,7 +478,7 @@ const Coursepackcontent = () => {
             }
             return null;
           })}
-          <Addcontent></Addcontent>
+          <Addcontent  contentIdsData={contentIdsData} setContentIdsData={setContentIdsData}  ></Addcontent>
         </Box>
       </SimpleGrid>
     </Box>
