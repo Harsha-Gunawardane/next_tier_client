@@ -28,7 +28,7 @@ import {
   import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
   import { useLocation } from "react-router-dom";
   
-  const Removecontent = ({  contentId }) => {
+  const Removecontent = ({  contentId,onContentRemove }) => {
     const { isOpen, onOpen, onClose } = useDisclosure();
     const cancelRef = React.useRef();
     const axiosPrivate = useAxiosPrivate();
@@ -37,19 +37,17 @@ import {
     const courseId = location.pathname.split("/").pop();
   
     const handleDelete = () => {
-      // Replace 'YOUR_API_ENDPOINT' with the actual URL of your backend endpoint for removing the content
       axiosPrivate
         .delete(`/tutor/course/public/content/${courseId}/${contentId}`)
         .then((response) => {
-          console.log(`Tute ID ${contentId} removed successfully from course!`);
+          console.log(`Content ID ${contentId} removed successfully from course!`);
           onClose(); // Close the modal after removing the content
-          // Notify parent component about content removal
+          onContentRemove(contentId); // Notify parent component about content removal
         })
         .catch((error) => {
           console.error('Error removing content:', error);
         });
     };
-  
 
 
   return (

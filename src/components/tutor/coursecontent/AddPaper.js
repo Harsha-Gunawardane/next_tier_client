@@ -20,7 +20,7 @@ const Addmonth = ({ onClose }) => {
   const id = location.pathname.split("/").pop();
 
   const handleSubmit = (e) => {
-    e.preventDefault();
+    // e.preventDefault();
 
 
 

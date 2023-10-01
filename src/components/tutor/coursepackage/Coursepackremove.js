@@ -14,6 +14,7 @@ import {
   import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
   import { useNavigate, useParams } from "react-router-dom";
   import { useLocation } from "react-router-dom";
+  import { useToast } from '@chakra-ui/react';
  
 
 
@@ -29,6 +30,8 @@ const Studypackremove = (props) => {
 
     const location = useLocation();
     const iid = location.pathname.split("/").pop();
+    const toast = useToast();
+
   
 
     const handleRemoveCourse = () => {
@@ -37,7 +40,13 @@ const Studypackremove = (props) => {
         axiosPrivate
           .delete(`/tutor/studypack/${iid}`) // Use '/courses/:id' to match the server route
           .then((response) => {
-            alert("Study Pack removed successfully.");
+            toast({
+              title: 'Study Pack Removed',
+              description: 'The study pack has been removed successfully.',
+              status: 'success',
+              duration: 3000,
+              isClosable: true,
+            });
             onClose();
             // Optionally, you can navigate to a different page after deletion
             navigate("/tutor/courses"); // Change the path to the desired destination after deletion
@@ -67,7 +76,7 @@ const Studypackremove = (props) => {
             </AlertDialogHeader>
 
             <AlertDialogBody>
-              Are you sure? You can't undo this action afterwards.
+              Are you sure you want to remove this studypack? You can't undo this action afterwards.
             </AlertDialogBody>
 
             <AlertDialogFooter>

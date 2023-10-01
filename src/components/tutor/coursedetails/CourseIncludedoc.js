@@ -38,9 +38,9 @@ const CourseIncludedoc = () => {
         const courseResponse = await axiosPrivate.get(`/tutor/course/${id}`);
         setCoursesData(courseResponse.data);
 
-        if (courseResponse.data && courseResponse.data.studypack_ids.length > 0) {
+        if (courseResponse.data) {
           const allStudyPackDetails = await Promise.all(
-            courseResponse.data.studypack_ids.map(async (studyPackId) => {
+            courseResponse.data.content_ids.map(async (studyPackId) => {
               const studyPackResponse = await axiosPrivate.get(`/tutor/course/${id}`);
               return studyPackResponse.data;
             })
@@ -85,6 +85,13 @@ const CourseIncludedoc = () => {
     return content ? content.thumbnail : ""; // Replace with actual property name
   };
 
+
+  
+  const handleContentRemoval = (contentId) => {
+    setContentDetails((prevContentDetails) =>
+      prevContentDetails.filter((content) => content.id !== contentId)
+    );
+  };
 
 
   return (
@@ -152,7 +159,7 @@ const CourseIncludedoc = () => {
                                   <Button fontSize="12px" height="20px">
                                     View
                                   </Button>{" "}
-                                  <Remove contentId={tuteId}></Remove>
+                                  <Remove contentId={tuteId} onContentRemove={handleContentRemoval}></Remove>
                                 </HStack>
                               </Box>
                             </HStack>

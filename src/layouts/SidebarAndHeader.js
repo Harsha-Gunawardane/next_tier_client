@@ -54,6 +54,17 @@ const SidebarAndHeader = ({ userRole }) => {
 		['stu/courses/:courseId/forum', 'courses'],
 
 		// More routes and active tabs...
+		// ['tutor/dashboard', 'dashboard'],
+		// ['tutor/courses/add', 'courses'],
+		// ['tutor/courses', 'courses'],
+		// ['tutor/courses/content/:courseid', 'courses'],
+		// ['tutor/courses/details/:courseid', 'courses'],
+		// ['courses/content/analyze/:studypackid', 'courses'],
+		// ['courses/studypackcontent/:courseid', 'courses'],
+		// ['courses/courses/studypackdetails/:courseid', 'courses'],
+		// ['courses/courses/addstudypack', 'courses'],
+
+
 	]);
 
 
@@ -144,6 +155,7 @@ const SidebarAndHeader = ({ userRole }) => {
 			value: "Complaints",
 			href: "/tutor/complaints",
 		},
+	
 	];
 
 	const InstStaffOptions = [

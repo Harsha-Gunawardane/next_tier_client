@@ -10,8 +10,8 @@ import {
   SimpleGrid,
   Box,
   Checkbox,
-  Image,Text,
-  FormLabel,Input, IconButton
+  Image,Text,useToast
+
 } from '@chakra-ui/react'
 import { SmallAddIcon} from '@chakra-ui/icons'
 import { Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react'
@@ -36,6 +36,7 @@ const finalRef = React.useRef(null)
 const [contentdata, setcontentData] = useState([]); 
 
 const axiosPrivate = useAxiosPrivate();
+const toast=useToast();
 
 
 
@@ -123,8 +124,19 @@ const handleSave = async (event) => {
       content_ids: updatedContentIds,
       monthly_fee: price, // Pass the price to the API call
     });
-
-    // onClose(); // Close the modal after saving
+    toast({
+      title: 'Tute Added',
+      description: 'The Tute has been successfully Added.',
+      status: 'success',
+      duration: 1000,
+      isClosable: true,
+      position: 'top',
+      onCloseComplete: () => {
+        // Reload the page after the toast is manually closed
+        window.location.reload();
+      },
+    });
+    onClose(); // Close the modal after saving
   } catch (error) {
     console.log(error);
   }
@@ -139,20 +151,15 @@ return (
 
     <Modal initialFocusRef={initialRef} finalFocusRef={finalRef} isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
-      <ModalContent>
+      <ModalContent size='2xl' maxW='60vw'>
         <ModalHeader>Add Tute Content</ModalHeader>
         <ModalCloseButton />
 
-        <Tabs isFitted variant='enclosed'>
-          <TabList mb='1em'>
-            <Tab fontSize='15px'>Add existing content</Tab>
-            <Tab fontSize='15px'>Add new content</Tab>
-          </TabList>
-          <TabPanels>
+   
           <form onSubmit={handleSave}>
-            <TabPanel>
+         
               <ModalBody pb={6}>
-              <SimpleGrid columns={2} spacing={4}>
+              <SimpleGrid columns={4} spacing={4}>
                   {tuteContent.map((content, index) => (
                     <Box key={index} p={2} borderWidth={1} borderRadius='md'>
                       <Checkbox
@@ -176,15 +183,13 @@ return (
                   Cancel
                 </Button>
               </ModalFooter>
-            </TabPanel>
+           
             </form>
-            <TabPanel>
+           
            
               {/* Add new content form */}
               {/* ... (rest of the code remains the same) */}
-            </TabPanel>
-          </TabPanels>
-        </Tabs>
+          
       </ModalContent>
     </Modal>
   </>

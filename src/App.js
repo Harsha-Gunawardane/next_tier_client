@@ -69,6 +69,9 @@ import Coursecontent from "./pages/tutor/courseContent";
 import Courseedit from "./pages/tutor/courseedit";
 import PaperAnalyze from "./pages/tutor/quizAnalyze";
 import PaperclassContent from "./pages/tutor/paperclasscontent";
+import Complaints from "./pages/tutor/complaints";
+import Profile from "./pages/tutor/profile";
+import Poll from "./pages/tutor/poll";
 
 import TutorStaffs from "./pages/tutor/TutorStaffs";
 import McqsByCategory from "./pages/tutor/McqsByCategory";
@@ -120,7 +123,7 @@ function App() {
             >
               <Route path="dashboard" element={<Dashboard />} />
               <Route path="courses" element={<StudentCourses />} />
-              {/* <Route path="courses/:id/content" element={<Coursecontent />} /> */}
+              <Route path="courses/:id/content" element={<Coursecontent />} />
               <Route path="content" element={<ContentPage />} />
               <Route path="quizzes" element={<QuizDashboard />} />
               <Route path="quizzes/:subject" element={<QuizDashboard />} />
@@ -184,6 +187,9 @@ function App() {
               <Route path="content" element={<Tcontents />} />
               <Route path="courses/add" element={<Addcourse />} />
               <Route path="courses" element={<TCourses />}></Route>
+              <Route path="complaints" element={<Complaints />}></Route>
+              <Route path="profile" element={<Profile />}></Route>
+              <Route path="poll" element={<Poll />}></Route>
               <Route
                 path="courses/content/:courseid"
                 element={<Coursecontent />}
@@ -225,10 +231,10 @@ function App() {
             path="staff"
             element={<SidebarAndHeader userRole={"InstituteStaff"} />}
           >
-            <Route path="dashboard" element={<InstStaffDashboard />} />
-            <Route path="my-profile" element={<MyProfile />} />
-            {/* <Route path="teacher" element={<ViewTeacher />} />  */}
-            <Route path="teacher/add" element={<AddTeacher />} />
+             <Route path="dashboard" element={<InstStaffDashboard />} />
+            <Route path="my-profile" element={<MyProfile />} /> 
+             {/* <Route path="teacher" element={<ViewTeacher />} />   */}
+             <Route path="teacher/add" element={<AddTeacher />} />
             <Route path="class" element={<ApproveClass />} />
             <Route path="profile/:id" element={<InstStaffProfile />} />
             <Route path="complaints" element={<InstStaffComplaintsList />} />
@@ -243,7 +249,7 @@ function App() {
             <Route path="stu-profile/:id" element={<StudentProfile />} />
             <Route path="staff-list" element={<InstStaffList />} />
             <Route path="tutors-list" element={<TutorsList />} />
-            <Route path="tutor-profile/:id" element={<TutorProfile />} />
+            <Route path="tutor-profile/:id" element={<TutorProfile />} /> 
             <Route
               path="tutor-profile/:id/course/:id"
               element={<CourseProfile />}

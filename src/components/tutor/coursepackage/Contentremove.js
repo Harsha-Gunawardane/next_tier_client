@@ -13,7 +13,7 @@ import { useDisclosure } from '@chakra-ui/react';
 import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
 import { useLocation } from "react-router-dom";
 
-const Contentremove = ({  month }) => {
+const Contentremove = ({  month, onMonthRemove }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const cancelRef = React.useRef();
   const axiosPrivate = useAxiosPrivate();
@@ -22,16 +22,13 @@ const Contentremove = ({  month }) => {
   let id = location.pathname.split("/").pop();
 
   const handleDelete = () => {
-    // Replace 'YOUR_API_ENDPOINT' with the actual URL of your backend endpoint for removing the month
-   
-
-    // Make the API call to delete the month using Axios
     axiosPrivate
-    .delete(`/tutor/studypack/content/${id}/${month}`)
+      .delete(`/tutor/studypack/content/${id}/${month}`)
       .then((response) => {
         console.log(`Month ${month} deleted successfully!`);
-        onClose(); // Close the modal after deleting the month
-        window.location.reload();
+        onMonthRemove(month); // Call the onMonthRemove function to update the state
+        onClose();
+        // window.location.reload();
       })
       .catch((error) => {
         console.error('Error deleting month:', error);
@@ -52,7 +49,7 @@ const Contentremove = ({  month }) => {
             </AlertDialogHeader>
 
             <AlertDialogBody fontSize='15px'>
-              Are you sure you want to remove this month? You can't undo this action afterwards.
+              Are you sure you want to remove this Part? You can't undo this action afterwards.
             </AlertDialogBody>
 
             <AlertDialogFooter>

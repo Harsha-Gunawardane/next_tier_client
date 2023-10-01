@@ -4,8 +4,9 @@ import {
   Button,
   FormControl,
   FormLabel,
-  Input,
+  Input,Box,HStack
 } from "@chakra-ui/react";
+import { DatePicker } from '@mantine/dates';
 import {
   Modal,
   ModalOverlay,
@@ -15,7 +16,8 @@ import {
   ModalBody,
   ModalCloseButton,
   FormErrorMessage,
-  Text
+  Text,
+  useToast,
 } from "@chakra-ui/react";
 import { useParams } from "react-router-dom";
 import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
@@ -28,6 +30,7 @@ import {
 } from "@chakra-ui/react";
 import { Select } from "@chakra-ui/react";
  import { useLocation } from "react-router-dom";
+
  
 
 const Studypackedit = ({ course}) => {
@@ -41,9 +44,14 @@ const Studypackedit = ({ course}) => {
   const [subject, setSubject] = useState("");
   const [course_id, setCourse_Id] = useState("");
   const [validation, valchange] = useState(false);
+  const [days, setDays] = useState(0);
+  const [months, setMonths] = useState(0);
+  const [years, setYears] = useState(0);
+  const [expireDate, setExpireDate] = useState(new Date());
 
   const location = useLocation();
   const Studypackid = location.pathname.split("/").pop();
+  const toast = useToast();
 
   useEffect(() => {
     const getStudypack = async () => {
@@ -58,9 +66,14 @@ const Studypackedit = ({ course}) => {
         setTitle(courseData.title);
         setDescription(courseData.description);
         setPrice(courseData.price.toString());
-        setThumbnail(courseData.thumbnail); // Convert to string if necessary
+        // setThumbnail(courseData.thumbnail); // Convert to string if necessary
         setSubject(courseData.subject);
         setCourse_Id(courseData.course_id);
+        setDays(courseData.access_period.days);
+        setMonths(courseData.access_period.months);
+        setYears(courseData.access_period.years);
+        setExpireDate(new Date(courseData.expire_date)); 
+
       } catch (error) {
         console.log(error);
       }
@@ -126,8 +139,9 @@ const Studypackedit = ({ course}) => {
     price.trim().length !== 0 &&
     !isNaN(price) &&
     parseFloat(price) >= 0 &&
-    thumbnail.trim().length !== 0 &&
-    subject.trim().length !== 0 ;
+    // thumbnail.trim().length !== 0 &&
+    subject.trim().length !== 0;
+    // expireDate >= new Date();
 
   if (!isFormValid) {
     alert("Please fill in all the required fields correctly.");
@@ -139,18 +153,28 @@ const Studypackedit = ({ course}) => {
       title,
       description,
       price,
-      thumbnail,
+      // thumbnail,
       subject,
       course_id,
+      // expire_date: expireDate.toISOString(),
    
     };
 
     axiosPrivate
       .put(`/tutor/studypack/${course}`, coursedata)
       .then((response) => {
-        alert("Saved successfully.");
+       
+        toast({
+          title: "Studypack Details Updated",
+          description: "The Studypack details have been updated successfully.",
+          status: "success",
+          duration: 5000,
+          isClosable: true,
+          position: "top",
+        });
         onClose();
-        window.location.reload();
+       
+       
       })
       .catch((error) => {
         console.log(error.message);
@@ -178,6 +202,7 @@ const Studypackedit = ({ course}) => {
       <Button fontSize="10px" colorScheme="blue" height="20px" onClick={onOpen}>
         Edit
       </Button>
+      
 
       <Modal
         initialFocusRef={initialRef}
@@ -188,9 +213,9 @@ const Studypackedit = ({ course}) => {
         <ModalOverlay />
         <ModalContent>
           <form onSubmit={handlesubmit}>
-            <ModalHeader>Update Course Details</ModalHeader>
+            <ModalHeader>Update Study Pack Details</ModalHeader>
             <ModalCloseButton />
-            <ModalBody pb={6}>
+            <ModalBody pb={6} height='500px' overflowY="scroll">
               <FormControl isRequired isInvalid={title.trim().length === 0}>
                 <FormLabel fontSize="15px">Title</FormLabel>
                 <Input
@@ -258,7 +283,7 @@ const Studypackedit = ({ course}) => {
                 <FormErrorMessage>Price is Required</FormErrorMessage>
               </FormControl>
 
-              <FormControl
+              {/* <FormControl
                 mt={4}
                 isRequired
                 isInvalid={thumbnail.trim().length === 0}
@@ -274,7 +299,7 @@ const Studypackedit = ({ course}) => {
                   onChange={(e) => setThumbnail(e.target.value)}
                 />
                 <FormErrorMessage>Thumbnail is required</FormErrorMessage>
-              </FormControl>
+              </FormControl> */}
 
 
 
@@ -343,7 +368,41 @@ const Studypackedit = ({ course}) => {
                 <FormErrorMessage>Subject is required</FormErrorMessage>
               </FormControl>
 
-         
+              <FormControl>
+  <FormLabel fontSize="15px">Current Exp Date</FormLabel>
+  <Input
+    fontSize="15px"
+    value={expireDate.toLocaleDateString()}
+    height="40px"
+    ref={initialRef}
+    readOnly
+    isReadOnly // Disable user input
+ 
+  />
+
+</FormControl>
+
+ 
+
+{/* <FormControl mt={4} isRequired      isInvalid={expireDate < new Date()} >
+  <FormLabel fontSize="15px">Update Exp Date</FormLabel>
+  <DatePicker
+    selected={expireDate}
+    onChange={(date) => {
+      if (date >= new Date()) {
+        setExpireDate(date);
+      }
+    }}
+    dateFormat="yyyy-MM-dd"
+
+  />
+
+    <FormErrorMessage>Expiration date cannot be before today</FormErrorMessage>
+  
+</FormControl> */}
+
+      
+
             </ModalBody>
 
             <ModalFooter>

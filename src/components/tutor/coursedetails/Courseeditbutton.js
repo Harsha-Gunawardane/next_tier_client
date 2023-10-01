@@ -16,6 +16,9 @@ import {
   ModalBody,
   ModalCloseButton,
   FormErrorMessage,
+  RadioGroup,
+  Stack,
+  Radio
 } from "@chakra-ui/react";
 import { useParams } from "react-router-dom";
 import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
@@ -41,6 +44,7 @@ const Courseeditbutton = () => {
   const [description, setDescription] = useState("");
   const [monthly_fee, setMonthlyFee] = useState("");
   const [thumbnail, setThumbnail] = useState("");
+   const [visibility, setVisibility] = useState("");
   // const [subject, setSubject] = useState("");
   const [medium, setMedium] = useState("");
   // const [type, setType] = useState("");
@@ -72,6 +76,7 @@ const Courseeditbutton = () => {
         setThumbnail(courseData.thumbnail); // Convert to string if necessary
        
         setMedium(courseData.medium);
+        setVisibility(courseData.visibility);
        
        
         setSchedule(courseData.schedule);
@@ -91,15 +96,6 @@ const Courseeditbutton = () => {
     getCourses();
   }, [axiosPrivate, courseid]);
 
-  // useEffect(() => {
-  //   setTitle(generateTitle());
-  // }, [subject, grade, type]);
-
-  // useEffect(() => {
-  //   // Extract the last word from the title (assuming title is in the format "Subject Grade Type")
-  //   const lastWord = title.split(" ").pop();
-  //   setType(lastWord);
-  // }, [title]);
 
   const [val, setValidation] = useState(false);
 
@@ -140,8 +136,7 @@ const Courseeditbutton = () => {
     const isFormValid =
       title.trim().length !== 0 &&
       description.trim().length !== 0 &&
-      description.length >= 100 &&
-      description.length <= 300 &&
+      description.length <= 1000 &&
       monthly_fee.trim().length !== 0 &&
       !isNaN(monthly_fee) &&
       parseFloat(monthly_fee) >= 0 &&
@@ -160,6 +155,7 @@ const Courseeditbutton = () => {
       monthly_fee,
       thumbnail,
       medium,
+      visibility,
       schedule: [
         {
           day: day,
@@ -174,9 +170,9 @@ const Courseeditbutton = () => {
       .put(`/tutor/course/${courseid}`, coursedata)
       .then((response) => {
         localStorage.setItem("courseUpdated", "true");
-
+        onClose();
         // Reload the window
-        window.location.reload();
+        // window.location.reload();
       })
       .catch((error) => {
         console.error('Error Updating Course:', error);
@@ -240,7 +236,7 @@ const Courseeditbutton = () => {
                 mt={4}
                 isRequired
                 isInvalid={
-                  description.trim().length === 0 || description.length > 400 || description.length < 200 
+                  description.trim().length === 0 || description.length > 1000
                 }
               >
                 <FormLabel fontSize="15px">Description</FormLabel>
@@ -256,9 +252,9 @@ const Courseeditbutton = () => {
                 <FormErrorMessage>
                 {description.trim().length === 0
           ? "Description is required"
-          : description.length > 400
-          ? "Description cannot exceed 300 characters"
-          : "Description must be at least 100 characters"}
+          : description.length > 1000
+          ? "Description cannot exceed 1000 characters"
+          : null}
                 </FormErrorMessage>
               </FormControl>
 
@@ -340,46 +336,19 @@ const Courseeditbutton = () => {
         {isGradeValid ? "" : "Grade must be in the format: YYYY A/L or YYYY O/L"}
       </FormErrorMessage>
               </FormControl> */}
-{/* 
-              <FormControl mt={4} isRequired>
-                <FormLabel fontSize="15px">Course Type</FormLabel>
-                <Select
-                  fontSize="15px"
-                  value={type}
-                  height="40px"
-                  ref={initialRef}
-                  onMouseDown={(e) => valchange(true)}
-                  onChange={(e) => setType(e.target.value)}
-                >
-                  <option value={type}>{type}</option>
-                  {type === "Theory" && (
-                    <>
-                      <option value="Revision">Revision</option>
-                      <option value="Paper">Paper</option>
-                    </>
-                  )}
-
-                {type === "Revision" && (
-                    <>
-                      <option value="Theory">Theory</option>
-                      <option value="Paper">Paper</option>
-                    </>
-                  )}
-
-                    {type === "Paper" && (
-                    <>
-                      <option value="Theory">Theory</option>
-                      <option value="Revision">Revison</option>
-                    </>
-                  )}
-
-                  {/* <option value='Theory'>Theory</option>
-                       <option value='Revision'>Revision</option>
-                       <option value='Paper'>Paper</option> */}
-                {/* </Select>
-
-                <FormErrorMessage>Course Type is Required</FormErrorMessage>
-              </FormControl> */} 
+ 
+ <FormControl mt={4} isRequired>
+  <FormLabel fontSize="15px">Course Visibility</FormLabel>
+  
+  <RadioGroup value={visibility} onChange={(e) => setVisibility(e)}>
+    <Stack spacing={4} direction="row">
+      <Radio value="PRIVATE">Private</Radio>
+      <Radio value="PUBLIC">Public</Radio>
+    </Stack>
+  </RadioGroup>
+  
+  <FormErrorMessage>Course Type is Required</FormErrorMessage>
+</FormControl> 
 
               <FormControl
                 mt={4}
