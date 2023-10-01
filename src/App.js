@@ -104,12 +104,6 @@ import Content from "./components/Content";
 import { Routes, Route } from "react-router-dom";
 import { ROLES } from "./config/roles";
 import Test from "./pages/common/Test";
-import Tutors from "./pages/common/Tutors";
-import CourseViewLayout from "./pages/student/course/CourseViewLayout";
-import CourseViewLayoutEnrolled from "./pages/student/course/CourseViewLayoutEnrolled";
-import MyCourses from "./pages/student/MyCourses";
-import StudypackLayout from "./pages/student/course/StudyPackLayout";
-import StudypackViewLayout from "./pages/student/course/StudypackViewLayout";
 import MyContent from "./pages/tutor/content/MyContent";
 
 function App() {
@@ -342,18 +336,9 @@ function App() {
           </Route>
 
 
-          {/* <Route element={<RequireAuth allowedRoles={[ROLES.User]} />}>
-            <Route path="user" element={<UserLayout />}>
-              <Route path="profile" element={<UserProfile />} />
-            </Route >
-          </Route > */}
+
         </Route >
 
-        {/* <Route element={<RequireAuth allowedRoles={[ROLES.User]} />}>
-          <Route path="user" element={<UserLayout />}>
-            <Route path="profile" element={<UserProfile />} />
-          </Route>
-        </Route> */}
 
         {/* catch all */}
         <Route path="*" element={<Missing />} />
