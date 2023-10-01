@@ -18,6 +18,11 @@ import {
     ModalOverlay,
     SimpleGrid,
     Text,
+    Heading,
+    List,
+    ListItem,
+    Icon,
+
 
 
 } from "@chakra-ui/react"
@@ -31,6 +36,8 @@ import { useForm } from "@mantine/form";
 import pdf from "../../../../assests/images/pdf.jpg"
 import attachment from "../../../../assests/images/cloud.png"
 import { IoCloseSharp } from "react-icons/io5"
+import { MdCheckCircle } from "react-icons/md"
+
 
 //rte
 import { RichTextEditor, Link } from '@mantine/tiptap';
@@ -269,56 +276,6 @@ const PostCreateModal = (props) => {
     }
 
 
-    // const handleFileUpload = async (file) => {
-    //     if (files.length + file.length > 3) {
-    //         setFileError(true)
-    //         console.log("too many files")
-    //         toast({
-    //             title: "Too many files",
-    //             description: "You can only upload 4 files",
-    //             status: "error",
-    //             duration: 5000,
-    //             isClosable: true,
-    //         })
-
-
-    //     }
-    //     //check if the file is of allowed type
-    //     else if (!allowedFileTypes.includes(file.type)) {
-    //         setFileError(true)
-    //         console.log("wrong file type")
-    //         toast({
-    //             title: "Wrong file type",
-    //             description: "You can only upload images and pdfs",
-    //             status: "error",
-    //             duration: 5000,
-    //             isClosable: true,
-    //         })
-
-    //     }
-    //     //check if the file size is less than 10mb
-    //     else if (file.size > 10000000) {
-    //         setFileError(true)
-    //         console.log("file too big")
-
-    //         toast({
-    //             title: "File too big",
-    //             description: "You can only upload files less than 10mb",
-    //             status: "error",
-    //             duration: 5000,
-    //             isClosable: true,
-    //         })
-
-    //     }
-    //     else {
-    //         setFileError(false)
-    //         setFiles((prev) => {
-    //             const newFiles = [...prev, file]
-    //             return newFiles
-    //         })
-    //     }
-
-    // }
     const handleFileInput = () => {
         document.getElementById("files").click()
     }
@@ -341,7 +298,7 @@ const PostCreateModal = (props) => {
 
         try {
 
-            const URL = `/courses/${courseId}/forum/posts`
+            const URL = `/forum/${courseId}/posts`
 
             const response = await axiosPrivate.post(URL, formData, {
                 headers: { "Content-Type": "multipart/form-data" },
@@ -501,7 +458,157 @@ const PostCreateModal = (props) => {
 
 }
 
-export { PostViewModal, PostCreateModal }
+
+const GuideLineModal = (props) => {
+
+    const {
+        isOpen,
+        onClose,
+        post,
+        onLoadMore,
+
+    } = props
+
+    return (
+        <Modal
+            isOpen={isOpen}
+            onClose={onClose}
+            size={"3xl"}
+            scrollBehavior={"inside"}
+            maxH="80%"
+            isCentered
+            width={"600px"}
+        >
+            < ModalOverlay />
+            <ModalContent px="0">
+                <ModalHeader borderBottom={"1px solid"} borderColor={"gray.100"} textAlign={"center"}>
+                    <Text>Forum Guidelines</Text>
+                </ModalHeader>
+                <ModalCloseButton />
+                <ModalBody>
+                    <ForumGuideline />
+                </ModalBody>
+            </ModalContent>
+        </Modal >
+    )
+
+}
+
+
+const ForumGuideline = () => {
+
+    return (
+        <Box p={6} >
+            <Heading as="h2" size="lg" mb={4}>
+                Tuition Class Forum Guidelines
+            </Heading>
+            <Text fontSize="md" mb={4}>
+                Welcome to the Tuition Class Forum! This space is designed to facilitate productive discussions and enhance your learning experience. Please take a moment to review and follow these guidelines to ensure a respectful and valuable forum environment for everyone.
+            </Text>
+            <List spacing={2}>
+                <ListItem>
+                    <Icon as={MdCheckCircle} color="green.500" mr={2} />
+                    Be Respectful and Courteous
+                </ListItem>
+                <ListItem>
+                    <Icon as={MdCheckCircle} color="green.500" mr={2} />
+                    Stay On-Topic
+                </ListItem>
+                <ListItem>
+                    <Icon as={MdCheckCircle} color="green.500" mr={2} />
+                    Use Descriptive Titles
+                </ListItem>
+                <ListItem>
+                    <Icon as={MdCheckCircle} color="green.500" mr={2} />
+                    Search Before Posting
+                </ListItem>
+                <ListItem>
+                    <Icon as={MdCheckCircle} color="green.500" mr={2} />
+                    Provide Detailed Posts
+                </ListItem>
+                <ListItem>
+                    <Icon as={MdCheckCircle} color="green.500" mr={2} />
+                    No Spamming or Self-Promotion
+                </ListItem>
+                <ListItem>
+                    <Icon as={MdCheckCircle} color="green.500" mr={2} />
+                    Use Proper Formatting
+                </ListItem>
+                <ListItem>
+                    <Icon as={MdCheckCircle} color="green.500" mr={2} />
+                    Engage Constructively
+                </ListItem>
+                <ListItem>
+                    <Icon as={MdCheckCircle} color="green.500" mr={2} />
+                    Respect Privacy
+                </ListItem>
+                <ListItem>
+                    <Icon as={MdCheckCircle} color="green.500" mr={2} />
+                    Report Inappropriate Content
+                </ListItem>
+                <ListItem>
+                    <Icon as={MdCheckCircle} color="green.500" mr={2} />
+                    Be Patient
+                </ListItem>
+                <ListItem>
+                    <Icon as={MdCheckCircle} color="green.500" mr={2} />
+                    Follow Class Rules
+                </ListItem>
+            </List>
+            {/* Add additional content, buttons, etc. as needed */}
+        </Box>
+    );
+}
+
+const AreYouSureModal = (props) => {
+
+    const {
+        isOpen,
+        onClose,
+        enrollToCourse,
+        onLoadMore,
+
+    } = props
+
+    return (
+        <Modal
+            isOpen={isOpen}
+            onClose={onClose}
+            size={"3xl"}
+            scrollBehavior={"inside"}
+            maxH="80%"
+            isCentered
+            width={"600px"}
+        >
+            < ModalOverlay />
+            <ModalContent px="0">
+                <ModalHeader textAlign={"left"}>
+                    <Text>Please Confirm</Text>
+                </ModalHeader>
+                <ModalCloseButton />
+                <ModalBody>
+                    <Text>Are you sure you want to enroll to this course?</Text>
+                </ModalBody>
+                <ModalFooter>
+                    {/* cancel button */}
+                    <Button variant="ghost" colorScheme="gray" mr={3} onClick={onClose}> No </Button>
+                    {/* submit button */}
+                    <Button colorScheme="blue" onClick={enrollToCourse}> Yes </Button>
+                </ModalFooter>
+            </ModalContent>
+        </Modal >
+    )
+
+}
+
+
+export {
+    PostViewModal,
+    PostCreateModal,
+    GuideLineModal,
+    AreYouSureModal
+
+}
 
 
 

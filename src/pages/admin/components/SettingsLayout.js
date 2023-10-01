@@ -7,7 +7,7 @@ import {
   Box,
   Text,
 } from "@chakra-ui/react";
-import React, { useState } from "react";
+import React from "react";
 
 import ProfileSettings from "./ProfileSettings";
 import SecurityInfo from "../../student/components/settings/SecurityInfo";

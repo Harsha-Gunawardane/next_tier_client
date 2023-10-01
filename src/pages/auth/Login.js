@@ -81,11 +81,13 @@ const Login = () => {
         if (roles.includes(ROLES.Student)) {
           navigate("/stu/dashboard");
         } else if (roles.includes(ROLES.Staff)) {
-            navigate("/staff/dashboard");
+          navigate("/staff/dashboard");
         } else if (roles.includes(ROLES.Tutor)) {
-          navigate("/tutor/dashboard")
+          navigate("/tutor/dashboard");
         } else if (roles.includes(ROLES.Admin)) {
-          navigate("/admin/dashboard")
+          navigate("/admin/dashboard");
+        } else if (roles.includes(ROLES.Parent)) {
+          navigate("/parent/dashboard");
         }
       } else {
         navigate(from, { replace: true });

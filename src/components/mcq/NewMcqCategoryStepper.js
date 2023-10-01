@@ -12,14 +12,17 @@ import {
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
-import { Card } from "@chakra-ui/react";
+import { Card, useToast } from "@chakra-ui/react";
 
-export default function NewMcqStepper({
+export default function NewMcqCategoryStepper({
   quizId,
-  mcqsForQuiz,
-  setMcqsForQuiz,
+  mcqs,
+  setMcqs,
+  quiz,
+  setQuiz,
   onClose,
 }) {
+  const toast = useToast();
   const [active, setActive] = useState(0);
   const axiosPrivate = useAxiosPrivate();
 
@@ -116,13 +119,28 @@ export default function NewMcqStepper({
           }
         );
 
+        const newQuestion = response.data;
         //Added to state
-        setMcqsForQuiz([...mcqsForQuiz, response.data]);
+        setMcqs([...mcqs, newQuestion]);
+
+        //Added question id to the quiz
+        const updatedQuestionIds = [...quiz.question_ids, response.data.id];
+        const updatedQuiz = { ...quiz, question_ids: updatedQuestionIds };
+        setQuiz(updatedQuiz);
 
         console.log(JSON.stringify(response?.data));
         console.log("Form data submitted successfully!");
 
         onClose();
+
+        toast({
+          title: "Mcq added.",
+          description: `Mcq added to the ${quiz.title} succesfully.`,
+          status: "success",
+          duration: 9000,
+          isClosable: true,
+          position: "top-right",
+        });
       } catch (error) {
         console.error("Error sending data:", error);
       }
@@ -295,11 +313,13 @@ export default function NewMcqStepper({
               </SimpleGrid>
               <SimpleGrid cols={2}>
                 <Select
+                  readOnly
                   label="Select Subject"
                   data={subject}
                   defaultValue={form.values.subject}
                 />
                 <MultiSelect
+                  readOnly
                   label="Select Subject Areas"
                   data={subjectAreas}
                   defaultValue={form.values.subject_areas}

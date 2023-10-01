@@ -30,6 +30,7 @@ import {
   FormControl,
   FormLabel,
   useToast,
+  GridItem,
 } from "@chakra-ui/react";
 
 import { useState, useEffect } from "react";
@@ -53,6 +54,15 @@ import allComplaints from "./Assets/AllComplaints.png";
 import pending from "./Assets/pendingcomplaints.png";
 import resolved from "./Assets/completedComplaints.png";
 import ignored from "./Assets/removedcomplaints.png";
+import MiniStat from "./../../../components/Card/MiniStat";
+import MiniStatCardIcon from "./../../../components/icons/MiniStatCardIcon";
+import { BiBook } from "react-icons/bi";
+import {
+  BsEnvelopeExclamationFill,
+  BsEnvelopeCheckFill,
+  BsEnvelopeDashFill,
+  BsEnvelopeFill,
+} from "react-icons/bs";
 
 function ComplaintsListView() {
   // const complaints = data.complaints;
@@ -73,7 +83,6 @@ function ComplaintsListView() {
     pendingCount: 0,
     resolvedCount: 0,
   });
-
 
   useEffect(() => {
     // Fetch complaints from the backend API
@@ -146,7 +155,6 @@ function ComplaintsListView() {
   };
 
   const handleEditSubmit = () => {
-
     if (!formData.action) {
       toast({
         title: "Action is required",
@@ -193,7 +201,6 @@ function ComplaintsListView() {
   };
 
   const handleIgnoreSubmit = () => {
-
     if (formData.action) {
       toast({
         title: "Action should be empty",
@@ -289,89 +296,50 @@ function ComplaintsListView() {
         Complaints
       </Heading>
       <SimpleGrid
-        p="10px"
-        columns={4}
-        spacing={20}
-        minChildWidth="250px"
-        ml={13}
-        mr={13}
+        columns={{ base: 2, md: 2, lg: 4 }}
+        px={"5px"}
+        gridRowGap={"10px"}
+        gap={"10px"}
       >
-        <Box height="92px" shadow="base" bg="white" borderRadius={15}>
-          <Box>
-            <Text fontSize="16px" fontWeight="bold" pl={4} pt={2}>
-              All Complaints
-            </Text>
-          </Box>
-          <Box>
-            <Flex justify="space-around">
-              <Box pt={3}>
-                <Text fontSize="22px"> {complaints.length}</Text>
-              </Box>
-              <Box>
-                <Image
-                  src={allComplaints}
-                  width="40px"
-                  height="40px"
-                  mt={1}
-                ></Image>
-              </Box>
-            </Flex>
-          </Box>
-        </Box>
-
-        <Box height="92px" shadow="base" bg="white" borderRadius={15}>
-          <Box>
-            <Text fontSize="16px" fontWeight="bold" pl={4} pt={2}>
-              Resolved Complaints
-            </Text>
-          </Box>
-          <Box>
-            <Flex justify="space-around">
-              <Box pt={3}>
-                <Text fontSize="22px">{complaintCounts.resolvedCount}</Text>
-              </Box>
-              <Box>
-                <Image src={resolved} width="40px" height="40px" mt={1}></Image>
-              </Box>
-            </Flex>
-          </Box>
-        </Box>
-
-        <Box height="92px" shadow="base" bg="white" borderRadius={15}>
-          <Box>
-            <Text fontSize="16px" fontWeight="bold" pl={4} pt={2}>
-              Pending Complaints
-            </Text>
-          </Box>
-          <Box>
-            <Flex justify="space-around">
-              <Box pt={3}>
-                <Text fontSize="22px"> {complaintCounts.pendingCount}</Text>
-              </Box>
-              <Box>
-                <Image src={pending} width="40px" height="40px" mt={1}></Image>
-              </Box>
-            </Flex>
-          </Box>
-        </Box>
-
-        <Box height="92px" shadow="base" bg="white" borderRadius={15}>
-          <Box>
-            <Text fontSize="16px" fontWeight="bold" pl={4} pt={2}>
-              Ignored Complaints
-            </Text>
-          </Box>
-          <Box>
-            <Flex justify="space-around">
-              <Box pt={3}>
-                <Text fontSize="22px">{complaintCounts.ignoredCount}</Text>
-              </Box>
-              <Box>
-                <Image src={ignored} width="40px" height="40px" mt={1}></Image>
-              </Box>
-            </Flex>
-          </Box>
-        </Box>
+        <GridItem colSpan={{ base: 1, md: 1, lg: 1 }}>
+          <MiniStat
+            name="All complaints"
+            value={complaints.length}
+            endContent={
+              <MiniStatCardIcon color={"red"} icon={BsEnvelopeFill} />
+            }
+          />
+        </GridItem>
+        <GridItem colSpan={{ base: 1, md: 1, lg: 1 }}>
+          <MiniStat
+            name="Resolved Complaints"
+            value={complaintCounts.resolvedCount}
+            endContent={
+              <MiniStatCardIcon color={"green"} icon={BsEnvelopeCheckFill} />
+            }
+          />
+        </GridItem>
+        <GridItem colSpan={{ base: 1, md: 1, lg: 1 }}>
+          <MiniStat
+            name="Pending Complaints"
+            value={complaintCounts.pendingCount}
+            endContent={
+              <MiniStatCardIcon
+                color={"yellow"}
+                icon={BsEnvelopeExclamationFill}
+              />
+            }
+          />
+        </GridItem>
+        <GridItem colSpan={{ base: 1, md: 1, lg: 1 }}>
+          <MiniStat
+            name="Ignored Complaints"
+            value={complaintCounts.ignoredCount}
+            endContent={
+              <MiniStatCardIcon color={"gray"} icon={BsEnvelopeDashFill} />
+            }
+          />
+        </GridItem>
       </SimpleGrid>
 
       <SimpleGrid column={1}>
@@ -545,13 +513,15 @@ function ComplaintsListView() {
                                     <FormControl>
                                       <FormLabel>Date</FormLabel>
                                       <Input
-    value={
-      selectedComplaintForViewResolved?.posted_at
-        ? new Date(selectedComplaintForViewResolved.posted_at).toLocaleDateString()
-        : ''
-    }
-    isReadOnly
-  />
+                                        value={
+                                          selectedComplaintForViewResolved?.posted_at
+                                            ? new Date(
+                                                selectedComplaintForViewResolved.posted_at
+                                              ).toLocaleDateString()
+                                            : ""
+                                        }
+                                        isReadOnly
+                                      />
                                     </FormControl>
                                     <FormControl>
                                       <FormLabel>Description</FormLabel>
@@ -669,21 +639,22 @@ function ComplaintsListView() {
                                         }
                                         isReadOnly
                                       /> */}
-                                        <FormLabel>Date</FormLabel>
+                                      <FormLabel>Date</FormLabel>
                                       <Input
-    value={
-      selectedComplaint?.posted_at
-        ? new Date(selectedComplaint.posted_at).toLocaleDateString()
-        : ''
-    }
-    isReadOnly
-  />
+                                        value={
+                                          selectedComplaint?.posted_at
+                                            ? new Date(
+                                                selectedComplaint.posted_at
+                                              ).toLocaleDateString()
+                                            : ""
+                                        }
+                                        isReadOnly
+                                      />
                                     </FormControl>
                                     <FormControl>
                                       <FormLabel>Description</FormLabel>
                                       <Textarea
                                         value={selectedComplaint?.message}
-                                        
                                         isReadOnly
                                       />
                                     </FormControl>
@@ -824,15 +795,17 @@ function ComplaintsListView() {
                                         }
                                         isReadOnly
                                       /> */}
-                                        <FormLabel>Date</FormLabel>
+                                      <FormLabel>Date</FormLabel>
                                       <Input
-    value={
-      selectedComplaintForViewIgnored?.posted_at
-        ? new Date(selectedComplaintForViewIgnored.posted_at).toLocaleDateString()
-        : ''
-    }
-    isReadOnly
-  />
+                                        value={
+                                          selectedComplaintForViewIgnored?.posted_at
+                                            ? new Date(
+                                                selectedComplaintForViewIgnored.posted_at
+                                              ).toLocaleDateString()
+                                            : ""
+                                        }
+                                        isReadOnly
+                                      />
                                     </FormControl>
                                     <FormControl>
                                       <FormLabel>Description</FormLabel>

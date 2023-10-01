@@ -8,7 +8,7 @@ import capsFirst from "../../../../utils/capsFirst";
 
 const BreadCrumbForum = (props) => {
 
-    const { courseTitle, ...rest } = props;
+    const { courseTitle, studyPack, ...rest } = props;
 
 
 
@@ -24,9 +24,12 @@ const BreadCrumbForum = (props) => {
         return routeArr;
     }
 
-    const routeArr = getRouteArr(params, ["stu"], [{ from: ":courseId", to: courseTitle }]);
-
-
+    let routeArr;
+    if (studyPack) {
+        routeArr = getRouteArr(params, ["stu"], [{ from: ":studypackId", to: courseTitle }]);
+    } else {
+        routeArr = getRouteArr(params, ["stu"], [{ from: ":courseId", to: courseTitle }]);
+    }
     var href = "/stu";
 
 

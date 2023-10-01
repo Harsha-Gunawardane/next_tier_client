@@ -81,7 +81,7 @@ const LikeDislike = (props) => {
             switch (type) {
                 case "post":
                     //query params
-                    REACTION_API = `/courses/forum/posts/react?post_id=${refid}`
+                    REACTION_API = `/forum/posts/react?post_id=${refid}`
                     break;
                 default:
                     REACTION_API = `/${type}/${refid}/react`

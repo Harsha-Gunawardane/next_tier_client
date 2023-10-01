@@ -22,6 +22,8 @@ import { Link } from "react-router-dom";
 import generateTimeAgoString from "../../../utils/timesAgo"
 import countToString from "../../../utils/countToString"
 import CardsCarousel from "./components/carouselCard"
+import { useEffect, useState } from "react";
+import { axiosPrivate } from "../../../api/axios";
 
 const { rest } = require("lodash")
 
@@ -213,6 +215,33 @@ const ContentPage = (props) => {
 
     const { ...rest } = props
 
+    const [recommendedVids, setRecommendedVids] = useState([])
+
+    useEffect(() => {
+        fetchRecommmendedContent();
+    }, [])
+
+    const fetchRecommmendedContent = async () => {
+        let isMounted = true;
+        const controller = new AbortController();
+
+        try {
+            const response = await axiosPrivate.get(`/content`, {
+                signal: controller.signal
+            });
+
+            const data = response.data;
+            console.log(data);
+
+            if (isMounted) {
+                setRecommendedVids(data);
+            }
+        } catch (error) {
+            console.log(error);
+        }
+
+    }
+
 
     return (
         <Box w="100%" p="10px" >
@@ -279,7 +308,7 @@ const ContentPage = (props) => {
                         <TabPanels>
                             <TabPanel>
                                 <SimpleGrid columns={12} gap={3} >
-                                    {Videolist.map((video) => {
+                                    {recommendedVids && recommendedVids.map((video) => {
                                         return (
                                             <GridItem colSpan={3} >
                                                 <VideoCard videoDetails={video} />
@@ -332,7 +361,7 @@ const VideoCard = (props) => {
                                 <Text fontSize={"12px"} fontWeight={""} >{videoDetails.user.name}</Text>
                             </Flex>
                             <Flex gap={"5px"} color={"gray.400"}>
-                                <Text fontSize={"11px"} fontWeight={"medium"} >{countToString(videoDetails._count.content_views)} views</Text>
+                                <Text fontSize={"11px"} fontWeight={"medium"} >{countToString(videoDetails.reactions.views)} views</Text>
                                 <Text fontSize={"11px"} fontWeight={"medium"} >•</Text>
                                 <Text fontSize={"11px"} fontWeight={"medium"} >{generateTimeAgoString(videoDetails.uploaded_at)}</Text>
                             </Flex>

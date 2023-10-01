@@ -26,7 +26,7 @@ function TuteDashboard() {
         mt={4}
         mb={1}
       >
-        Tute Dashboard
+        Tutes overview
       </Text>
       <Flex gap={6} mb={5}>
         <QuoteCard />

@@ -1,8 +1,12 @@
-import { Box, Button, Card, Grid, GridItem, useDisclosure } from "@chakra-ui/react";
+import {
+  Box,
+  Card,
+  Grid,
+  GridItem,
+  useDisclosure,
+} from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
-import { NavLink, useParams } from "react-router-dom";
-
-import api from "../../api/axios";
+import { useParams } from "react-router-dom";
 
 
 import McqsView from "../../components/mcq/McqsView";
@@ -11,20 +15,22 @@ import BreadCrumbs from "../../components/BreadCrumbs/BreadCrumbs";
 import CategoryInsideCard from "../../components/mcq/CategoryInsideCard";
 import DonutChartCategory from "../../components/mcq/DonutChartCategory";
 import ModalPopupCommon from "../../components/Quizzes/ModalPopupCommon";
-import NewMcqStepper from "../../components/Quizzes/NewMcqStepper";
+import NewMcqStepper from "../../components/Quizzes/NewMcqQuizStepper";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 
 export default function McqsByCategory() {
+  const { categoryId } = useParams();
 
-  const { id } = useParams();
-  const useAxiosPrivate = useAxiosPrivate();
+  console.log(categoryId);
 
-  const handleDeleteMcq = (id) =>{
+  const axiosPrivate = useAxiosPrivate();
 
-  }
+  const handleDeleteMcq = (id) => {};
 
   const [mcqs, setMcqs] = useState([]);
   const [search, setSearch] = useState("");
+  const [category, setCategory] = useState([]);
+
 
   const {
     isOpen: isNewMcqPopupOpen,
@@ -32,23 +38,44 @@ export default function McqsByCategory() {
     onClose: onNewMcqPopupClose,
   } = useDisclosure();
 
-   useEffect(() => {
 
-     const getMcqs = async () => {
-       try {
-         const response = await useAxiosPrivate.get("/tutor/mcqs");
-         setMcqs(response.data);
-       } catch (error) {
-         console.log(error.response.data);
-       }
-     };
+  useEffect(() => {
+    const getQuiz = async () => {
+      try {
+        const response = await axiosPrivate.get(`/tutor/categories/${categoryId}`);
+        setCategory(response.data);
+      } catch (error) {
+        if (error.response && error.response.data) {
+          console.log(error.response.data);
+        } else {
+          console.log("An error occurred:", error.message);
+        }
+      }
+    };
 
-     getMcqs();
-   }, []);
+    getQuiz();
+  }, []);
 
-  
+  //Get mcqs in the quiz
+  useEffect(() => {
+    const getMcqsFromQuiz = async () => {
+      try {
+        const response = await axiosPrivate.get(
+          `/tutor/categories/getMcqs/${categoryId}`
+        );
+        setMcqs(response.data);
+      } catch (error) {
+        if (error.response && error.response.data) {
+          console.log(error.response.data);
+        } else {
+          console.log("An error occurred:", error.message);
+        }
+      }
+    };
 
-  
+    getMcqsFromQuiz();
+  }, []);
+
   return (
     <Box width="100%">
       <BreadCrumbs />
@@ -62,11 +89,11 @@ export default function McqsByCategory() {
       <Grid
         margin={{ base: "10px 10px", sm: "20px auto" }}
         templateColumns="repeat(3, 1fr)"
-        maxWidth="1180px"
+        maxWidth="1240px"
         gap={{ base: 2, sm: 8 }}
       >
         <GridItem colSpan={{ base: 3, sm: 2 }}>
-          <CategoryInsideCard />
+          <CategoryInsideCard category={category} />
         </GridItem>
         <GridItem colSpan={{ base: 3, sm: 1 }}>
           <Card

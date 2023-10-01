@@ -1,8 +1,8 @@
 import { Text, Flex } from "@chakra-ui/react";
 import { useDisclosure } from "@mantine/hooks";
-import { Popover, Button } from "@mantine/core";
+import { Popover } from "@mantine/core";
 
-function SheduleDate({ dateName, date, isToday, isSchedule }) {
+function SheduleDate({ dateName, date, isToday, isSchedule, reminder }) {
   const [opened, { close, open }] = useDisclosure(false);
 
   return (
@@ -43,9 +43,7 @@ function SheduleDate({ dateName, date, isToday, isSchedule }) {
       </Popover.Target>
 
       <Popover.Dropdown md={{ pointerEvents: "none" }}>
-        <Text size="md">
-          This popover is shown when user hovers the target element
-        </Text>
+        <Text size="md">{reminder}</Text>
       </Popover.Dropdown>
     </Popover>
   );

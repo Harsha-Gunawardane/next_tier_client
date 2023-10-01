@@ -19,7 +19,7 @@ const rightTextStyle = {
 function onlineReceipt(props) {
 
   return (
-    <Box bg="white" border="0.05px solid #DAE6F0" width={{ lg: "40%", base: "100%" }} ml={{ lg: "360px", base: "0px" }}>
+    <Box bg="white" border="0.05px solid #DAE6F0" width={{ lg: "45%", base: "100%" }} ml={{ lg: "300px", base: "0px" }}>
       <SimpleGrid columns={1}>
         <Box display="Flex" flexDirection="column" alignItems="center">
           <Image src={Logo} width={140} height={35} mt={3}></Image>
@@ -30,8 +30,8 @@ function onlineReceipt(props) {
         <Divider mt={5}></Divider>
         <Box mt={15}>
           <Flex justify="space-between">
-            <Text style={leftTextStyle}>Reference Number</Text>
-            <Text style={rightTextStyle}>{props.ref_num}</Text>
+            <Text style={leftTextStyle}>Transaction ID</Text>
+            <Text style={rightTextStyle}>{props.transaction_id}</Text>
           </Flex>
           <Flex justify="space-between" mt={3}>
             <Text style={leftTextStyle}>Date</Text>
@@ -66,17 +66,14 @@ function onlineReceipt(props) {
             <Text style={rightTextStyle}>{props.course}</Text>
           </Flex>
           <Flex justify="space-between" mt={3}>
-            <Text style={leftTextStyle}>Study Pack ID</Text>
+            <Text style={leftTextStyle}>Study Pack Title</Text>
             <Text style={rightTextStyle}>{props.stdpck_ID}</Text>
           </Flex>
           <Flex justify="space-between" mt={3}>
             <Text style={leftTextStyle}>Expire Date</Text>
             <Text style={rightTextStyle}>{props.exp_date}</Text>
           </Flex>
-          <Flex justify="space-between" mt={3}>
-            <Text style={leftTextStyle}>Transaction ID</Text>
-            <Text style={rightTextStyle}>{props.trans_ID}</Text>
-          </Flex>
+          
           <Flex justify="space-between" mt={3}>
             <Text style={leftTextStyle}>Price</Text>
             <Text style={rightTextStyle}>Rs.{props.price}</Text>

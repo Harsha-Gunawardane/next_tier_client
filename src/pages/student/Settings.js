@@ -23,10 +23,8 @@ import useSidebar from "../../hooks/useSidebar";
 
 const STUDENT_INFO_URL = "/stu/info";
 const PROFILE_UPLOAD_URL = "/user/profile-image";
-const BASE_URL = "http://localhost:3500";
 
 function Settings() {
-  const toast = useToast();
   const axiosPrivate = useAxiosPrivate();
   const { setSidebarOptionHandler } = useSidebar();
 

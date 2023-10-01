@@ -10,7 +10,7 @@ export default function McqsView({ mcqs, handleDelete, handleEdit }) {
       variant="separated"
       chevronPosition="left"
       m="20px"
-      style={{ overflow: "auto", maxHeight: "330px" }}
+      style={{ overflow: "auto", maxHeight: "270px" }}
     >
       {mcqs.map((mcq) => (
         <Accordion.Item key={mcq.id} value={mcq.question}>
@@ -28,7 +28,7 @@ export default function McqsView({ mcqs, handleDelete, handleEdit }) {
           </Box>
           <Accordion.Panel>
             <Flex color="gray.500">
-              <FormLabel fontWeight="400">Medium Level</FormLabel>
+              <FormLabel fontWeight="400">{`${mcq.difficulty_level} Level`}</FormLabel>
               <Spacer />
               <FormLabel fontWeight="400">Points : {mcq.points}</FormLabel>
             </Flex>

@@ -5,53 +5,56 @@ import ResponsiveSidebar from "../components/Sidebar/ResponsiveSidebar";
 import { useState, useEffect, useRef } from "react";
 import { FaUsers, FaUserAlt, FaMoneyBillAlt } from "react-icons/fa";
 
-import { Box, Grid, GridItem, useDisclosure } from "@chakra-ui/react";
+import { Grid, GridItem, useDisclosure } from "@chakra-ui/react";
 import useSidebar from "../hooks/useSidebar";
-
 
 //icons
 import GridViewRoundedIcon from "@mui/icons-material/GridViewRounded";
 import { TiDocumentText } from "react-icons/ti";
-import { FaCompass, FaUserFriends, FaListAlt, FaQuestionCircle } from "react-icons/fa";
+import {
+  FaCompass,
+  FaUserFriends,
+  FaListAlt,
+  FaQuestionCircle,
+} from "react-icons/fa";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import ReportProblemIcon from "@mui/icons-material/ReportProblem";
-
-
-
-
+import { MdOutlineQuiz, MdVideoLibrary } from "react-icons/md";
+import { PiNotebookFill } from "react-icons/pi";
+import { IoSchool, IoCompass } from "react-icons/io5";
+import { BiSolidDashboard } from "react-icons/bi"
 
 const SidebarAndHeader = ({ userRole }) => {
-	//get width of sidebar component and set to state
-	const { isOpen, onOpen, onClose } = useDisclosure();
-	const [hidden, setHidden] = useState(isOpen);
-	const [minimized, setMinimized] = useState({ base: false, md: true, lg: false });
+  //get width of sidebar component and set to state
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const [hidden, setHidden] = useState(isOpen);
+  const [minimized, setMinimized] = useState({
+    base: false,
+    md: true,
+    lg: false,
+  });
 
-	const { setSidebarOptionHandler } = useSidebar();
-	const { pathname } = useLocation();
-	const params = useParams();
-	const minimizeButtonRef = useRef();
+  const { setSidebarOptionHandler } = useSidebar();
+  const { pathname } = useLocation();
+  const params = useParams();
+  const minimizeButtonRef = useRef();
 
+  useEffect(() => {
+    const activeTab = findActiveTab(params);
+    setSidebarOptionHandler(activeTab);
+  }, [setSidebarOptionHandler]);
 
-	useEffect(() => {
-		const activeTab = findActiveTab(params);
-		setSidebarOptionHandler(activeTab);
+  const startWithMinimize = ["stu/content", "stu/content/watch/:id"];
 
-	}, [setSidebarOptionHandler]);
-
-	const startWithMinimize = [
-		"stu/content",
-		"stu/content/watch/:id"
-	]
-
-
-
-	const tabsMap = new Map([
-		//Student Routes
-		['stu/dashboard', 'dashboard'],
-		['stu/courses', 'courses'],
-		['stu/content', 'content'],
-		['stu/content/watch/:id', 'content'],
-		['stu/courses/:courseId/forum', 'courses'],
+  const tabsMap = new Map([
+    //Student Routes
+    ["stu/dashboard", "dashboard"],
+    ["stu/courses", "courses"],
+    ["stu/content", "content"],
+    ["stu/content/watch/:id", "content"],
+    ["stu/courses/:courseId/forum", "courses"],
+    ["stu/quizzes", "quizzes"],
+    ["stu/tutes", "tutes"],
 
 		// More routes and active tabs...
 		// ['tutor/dashboard', 'dashboard'],
@@ -69,19 +72,20 @@ const SidebarAndHeader = ({ userRole }) => {
 
 
 
-	function getRouteWithParams(params) {
-		const route = params["*"];
-		var keys = Object.keys(params).filter((key) => key !== "*");
-		var routeWithParams = route;
+  function getRouteWithParams(params) {
+    const route = params["*"];
+    var keys = Object.keys(params).filter((key) => key !== "*");
+    var routeWithParams = route;
 
-		keys.forEach((key) => {
-			if (key !== "*") {
-				routeWithParams = routeWithParams.replace(params[key], ":" + key);
-			}
-		});
-		return (routeWithParams)
+    keys.forEach((key) => {
+      if (key !== "*") {
+        routeWithParams = routeWithParams.replace(params[key], ":" + key);
+      }
+    });
+    return routeWithParams;
+  }
 
-	}
+  
 
 	function findActiveTab(params) {
 		return tabsMap.get(getRouteWithParams(params)) || 'dashboard';
@@ -104,11 +108,12 @@ const SidebarAndHeader = ({ userRole }) => {
 	var Options = [];
 
 	const StuOptions = [
-		{ icon: GridViewRoundedIcon, name: "Dashboard", value: "dashboard", href: "/stu/dashboard" },
-		{ icon: TiDocumentText, name: "Courses", value: "courses", href: "/stu/courses" },
-		{ icon: FaCompass, name: "Content", value: "content", href: "/stu/content" },
-		{ icon: FaListAlt, name: "Quizzes", value: "quizzes", href: "/stu/quizzes" },
-		{ icon: FaQuestionCircle, name: "Tutes", value: "tutes", href: "/stu/tutes" },
+		{ icon: BiSolidDashboard, name: "Dashboard", value: "dashboard", href: "/stu/dashboard" },
+		{ icon: IoSchool, name: "MyCourses", value: "mycourses", href: "/stu/mycourses" },
+		{ icon: IoCompass, name: "Explore", value: "courses", href: "/stu/courses" },
+		{ icon: MdVideoLibrary, name: "Content", value: "content", href: "/stu/content" },
+		{ icon: MdOutlineQuiz, name: "Quizzes", value: "quizzes", href: "/stu/quizzes" },
+		{ icon: PiNotebookFill, name: "Tutes", value: "tutes", href: "/stu/tutes" },
 	];
 
 	const AdminOptions = [
@@ -146,13 +151,13 @@ const SidebarAndHeader = ({ userRole }) => {
 			icon: FaListAlt,
 			FaQuestionCircle,
 			name: "Quizzes",
-			value: "Quizzes",
+			value: "quizzes",
 			href: "/tutor/quizzes",
 		},
 		{
 			icon: FaQuestionCircle,
 			name: "Complaints",
-			value: "Complaints",
+			value: "complaints",
 			href: "/tutor/complaints",
 		},
 	
@@ -160,11 +165,11 @@ const SidebarAndHeader = ({ userRole }) => {
 
 	const InstStaffOptions = [
 		{ icon: GridViewRoundedIcon, name: 'Dashboard', value: 'dashboard', href: '/staff/dashboard' },
-		{ icon: TiDocumentText, name: "Class Request", value: "approveClass", href: "/staff/class" },
+		{ icon: TiDocumentText, name: "Class Request", value: "approveclass", href: "/staff/class" },
 		{ icon: ReportProblemIcon, name: 'Complaints', value: 'complaints', href: '/staff/complaints' },
-		{ icon: TiDocumentText, name: "Halls", value: "hallSchedule", href: "/staff/hall" },
-		{ icon: FaUserAlt, name: 'Staff', value: 'staff-list', href: '/staff/staff-list' },
-		{ icon: FaUsers, name: 'Tutors', value: 'stu-list', href: '/staff/tutors-list' },
+		{ icon: TiDocumentText, name: "Halls", value: "hallschedule", href: "/staff/hall" },
+		{ icon: FaUserAlt, name: 'Staff', value: 'stafflist', href: '/staff/staff-list' },
+		{ icon: FaUsers, name: 'Tutors', value: 'stulist', href: '/staff/tutors-list' },
 		// { icon: FaMoneyBillAlt, name: 'Student Payments', value: 'payments', href: '/staff/stu-payment' },
 		{ icon: AccountCircleIcon, name: 'Settings', value: 'profile', href: '/staff/my-profile' }
 	]
@@ -230,7 +235,7 @@ const SidebarAndHeader = ({ userRole }) => {
 					top={0}
 				/>
 				{/* <Box h={"100vh"} w={"100%"} overflowX={"hidden"}> */}
-				<Outlet context={[minimizeButtonRef, minimized]} />
+				<Outlet context={{ minimizeButtonRef, minimized }} />
 				{/* </Box> */}
 			</GridItem>
 		</Grid >

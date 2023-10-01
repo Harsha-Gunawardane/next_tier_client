@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import {
   Button,
   Drawer,
@@ -11,10 +11,11 @@ import {
   FormControl,
   FormLabel,
   Textarea,
+  useToast,
 } from "@chakra-ui/react";
-import { ActionIcon, MultiSelect } from "@mantine/core";
-import { TimeInput } from "@mantine/dates";
-import { IconClock } from "@tabler/icons-react";
+import { MultiSelect } from "@mantine/core";
+
+import useAxiosPrivate from "../../../../hooks/useAxiosPrivate";
 
 const data = [
   { value: "Sun", label: "Sun" },
@@ -26,19 +27,46 @@ const data = [
   { value: "Sat", label: "Sat" },
 ];
 
-function ScheduleReading({ isOpen, onClose, btnRef }) {
-  const ref = useRef();
+const TUTE_SCHEDULE_URL = "/stu/tute/schedule";
+
+function ScheduleReading({ isOpen, onClose, btnRef, setReminders }) {
+  const axiosPrivate = useAxiosPrivate();
+  const toast = useToast();
 
   const [note, setNote] = useState("");
-  const [time, setTime] = useState(null);
   const [date, setDate] = useState([]);
 
-  const onSaveHandler = () => {
-    console.log(note, time, date);
+  const onSaveHandler = async () => {
+    try {
+      const response = await axiosPrivate.post(TUTE_SCHEDULE_URL, {
+        message: note,
+        days: date,
+      });
+
+      toast({
+        title: "Scheduled reading",
+        description: note + " is scheduled",
+        status: "success",
+        duration: 5000,
+        position: "top-right",
+        isClosable: true,
+      });
+
+      onClose();
+      console.log(response.data);
+      setReminders(response.data.data);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
-    <Drawer isOpen={isOpen} placement="right" onClose={onClose} finalFocusRef={btnRef}>
+    <Drawer
+      isOpen={isOpen}
+      placement="right"
+      onClose={onClose}
+      finalFocusRef={btnRef}
+    >
       <DrawerOverlay />
       <DrawerContent>
         <DrawerCloseButton />
@@ -56,18 +84,6 @@ function ScheduleReading({ isOpen, onClose, btnRef }) {
                 placeholder="Enter remind note"
               />
 
-              <FormLabel>Choose a time</FormLabel>
-              <TimeInput
-                value={time}
-                onChange={(e) => setTime(e.target.value)}
-                ref={ref}
-                rightSection={
-                  <ActionIcon onClick={() => ref.current.showPicker()}>
-                    <IconClock size="1rem" stroke={1.5} />
-                  </ActionIcon>
-                }
-              />
-
               <FormLabel mt={3}>Pick day for reading</FormLabel>
               <MultiSelect
                 value={date}
@@ -81,7 +97,13 @@ function ScheduleReading({ isOpen, onClose, btnRef }) {
         </DrawerBody>
 
         <DrawerFooter>
-          <Button fontWeight={"normal"} bg={"#666666"} color={"#FFFFFF"} mr={5} onClick={onClose}>
+          <Button
+            fontWeight={"normal"}
+            bg={"#666666"}
+            color={"#FFFFFF"}
+            mr={5}
+            onClick={onClose}
+          >
             Cancel
           </Button>
           <Button

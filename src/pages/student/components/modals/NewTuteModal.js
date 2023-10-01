@@ -6,7 +6,6 @@ import {
   Input,
   FormHelperText,
   FormControl,
-  Divider,
   useToast,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
@@ -19,12 +18,13 @@ import ModalLayout from "../../../../components/ModalLayout";
 import { createTute } from "../../../../hooks/reduxReducers/tuteReducer";
 import useAxiosPrivate from "../../../../hooks/useAxiosPrivate";
 import { addPage } from "../../../../hooks/reduxReducers/tutesReducer";
+import { useFoldersInfo } from "../../../../store/student/useFoldersInfo";
 
 const TUTE_URL = "/stu/tute";
 // form validations
 const NAMING_REGEX = /^[a-zA-Z ]{3,50}$/;
 
-function NewTuteModal({ isOpen, handleCloseModal }) {
+function NewTuteModal({ isOpen, handleCloseModal, folderName = null }) {
   const axiosPrivate = useAxiosPrivate();
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -33,23 +33,13 @@ function NewTuteModal({ isOpen, handleCloseModal }) {
   const [tuteName, setTuteName] = useState("");
   const [validTuteName, setValidTuteName] = useState(false);
   const [errMsg, setErrMsg] = useState("");
-  const [selectedFile, setSelectedFile] = useState(null);
+
+  const { addNewTute } = useFoldersInfo();
 
   useEffect(() => {
     console.log(tuteName);
-    setValidTuteName(NAMING_REGEX.test(tuteName));
+    setValidTuteName(NAMING_REGEX.test(tuteName.trim()));
   }, [tuteName]);
-
-  useEffect(() => {
-    console.log(selectedFile);
-  }, [selectedFile]);
-
-  const onChangeFile = (e) => {
-    e.preventDefault();
-
-    const file = e.target.files[0];
-    setSelectedFile(file);
-  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -69,28 +59,17 @@ function NewTuteModal({ isOpen, handleCloseModal }) {
 
     dispatch(createTute(tuteId, tuteName, ""));
 
-    // save data on local storage
-    localStorage.setItem("tuteName", tuteName);
-    localStorage.setItem("tuteId", tuteId);
-
-    const formData = new FormData();
-
-    // if (selectedFile) {
-    //   formData.append("file", selectedFile);
-    // }
-
-    formData.append("file", selectedFile);
-    formData.append("id", tuteId);
-    formData.append("name", tuteName);
-
-    console.log(formData);
-
     try {
-      const response = await axiosPrivate.post(TUTE_URL, formData, {
-        headers: { "Content-Type": "multipart/form-data" },
+      const response = await axiosPrivate.post(TUTE_URL, {
+        id: tuteId,
+        name: tuteName,
+        folderName,
       });
       console.log("Request successful:", response.data);
       dispatch(addPage(tuteId, tuteName));
+
+      setTuteName("");
+      if (!folderName) addNewTute({ id: tuteId, name: tuteName, folderId: "" });
 
       navigate(`new/${tuteId}`);
     } catch (err) {
@@ -101,6 +80,15 @@ function NewTuteModal({ isOpen, handleCloseModal }) {
       } else {
         setErrMsg("Something went wrong");
       }
+
+      toast({
+        title: "Warning",
+        description: errMsg,
+        status: "warning",
+        isClosable: true,
+        position: "top-right",
+      });
+      setTuteName("");
     } finally {
       handleCloseModal();
     }
@@ -110,7 +98,6 @@ function NewTuteModal({ isOpen, handleCloseModal }) {
   const modalheader = "Create new tute";
   const modalbody = (
     <>
-      <Text display={errMsg ? "block" : "none"}>{errMsg}</Text>
       <form onSubmit={handleSubmit}>
         <FormControl>
           <FormLabel
@@ -155,44 +142,8 @@ function NewTuteModal({ isOpen, handleCloseModal }) {
             mt={2}
             color="#D57974"
           >
-            use atleast 3 characters
+            use atleast 3 characters with no numerical values
           </FormHelperText>
-
-          {/* <Divider mt={10} mb={5} />
-          <Flex justifyContent={"center"}>
-            <Text fontSize={13} color={"#444444"}>
-              You can upload your tute as well.
-            </Text>
-          </Flex>
-
-          <FormLabel mt={3}>
-            <Text
-              fontSize={16}
-              color="#555555"
-              fontWeight="regular"
-              fontStyle="Roboto"
-              htmlFor="file"
-            >
-              Upload your tute
-            </Text>
-          </FormLabel>
-          <Flex justifyContent="center" w="95%">
-            <Input
-              type="file"
-              accept="application/pdf"
-              size="lg"
-              // id="file"
-              placeholder="Upload your tute"
-              h={9}
-              bg="#e9e9e9"
-              border="1px solid #D9D9D9"
-              fontSize={14}
-              w="95%"
-              onChange={onChangeFile}
-            />
-          </Flex> */}
-
-          {/* <Button type="submit">Upload</Button> */}
         </FormControl>
       </form>
     </>

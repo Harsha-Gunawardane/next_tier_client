@@ -37,14 +37,14 @@ const Addcoursecontent = ({ studypackId ,dynamicWeek,onNewContentAdded}) => {
 
 
 
-  const [contentdata, setcontentData] = useState([]); 
- 
+  const [contentdata, setcontentData] = useState([]);
+
   const axiosPrivate = useAxiosPrivate();
 
 
- 
 
- 
+
+
 
   useEffect(() => {
     const getCourses = async () => {
@@ -74,10 +74,10 @@ const Addcoursecontent = ({ studypackId ,dynamicWeek,onNewContentAdded}) => {
     }
   };
 
- 
 
-  const [existingVideoIds, setExistingVideoIds] = useState([]); 
-  const [price, setPrice] = useState([]); 
+
+  const [existingVideoIds, setExistingVideoIds] = useState([]);
+  const [price, setPrice] = useState([]);
 
 
   // useEffect(() => {
@@ -181,7 +181,7 @@ const Addcoursecontent = ({ studypackId ,dynamicWeek,onNewContentAdded}) => {
 
   return (
     <>
-      <IconButton fontSize='20px' size={20}   bg='white'   icon={<SmallAddIcon/>} onClick={onOpen}></IconButton>
+      <IconButton fontSize='20px' size={20} bg='white' icon={<SmallAddIcon />} onClick={onOpen}></IconButton>
 
       <Modal initialFocusRef={initialRef} finalFocusRef={finalRef} isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
@@ -212,15 +212,15 @@ const Addcoursecontent = ({ studypackId ,dynamicWeek,onNewContentAdded}) => {
                   </SimpleGrid>
                 </ModalBody>
 
-                <ModalFooter>
-                  <Button colorScheme='blue' mr={3} fontSize='18px' height='30px' type='submit'>
-                    Save
-                  </Button>
-                  <Button onClick={onClose} fontSize='18px' height='30px'>
-                    Cancel
-                  </Button>
-                </ModalFooter>
-              </TabPanel>
+                  <ModalFooter>
+                    <Button colorScheme='blue' mr={3} fontSize='18px' height='30px' type='submit'>
+                      Save
+                    </Button>
+                    <Button onClick={onClose} fontSize='18px' height='30px'>
+                      Cancel
+                    </Button>
+                  </ModalFooter>
+                </TabPanel>
               </form>
               <TabPanel>
               <ModalBody pb={6} height='350px' overflowY="scroll">

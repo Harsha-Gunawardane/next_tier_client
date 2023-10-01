@@ -1,28 +1,40 @@
-import React from 'react';
-import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, ModalFooter, Button, useBreakpointValue, Stack } from '@chakra-ui/react';
+import React from "react";
+import {
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalCloseButton,
+  ModalBody,
+  ModalFooter,
+  Button,
+  useBreakpointValue,
+  Stack,
+} from "@chakra-ui/react";
 
-function Status({ isOpen, onClose, teacher, onApprove, actionType }) {
-  const modalSize = useBreakpointValue({ base: 'xs', sm: 'md', md: 'lg' });
-
-    // Determine the colorScheme based on tableType
-    const colorScheme = actionType === 'approve' ? 'green' : 'red';
+function Status({ isOpen, onClose, teacher, onApprove, onReject }) {
+  const modalSize = useBreakpointValue({ base: "xs", sm: "md", md: "lg" });
 
   return (
     <Modal isOpen={isOpen} onClose={onClose} size={modalSize}>
       <ModalOverlay />
       <ModalContent>
-        <ModalHeader>
-        {actionType === 'approve' ? `Confirm Approval` : `Confirm Rejection` }
-        </ModalHeader>
+        <ModalHeader>Confirm Action</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
-        {actionType === 'approve' && `Are you sure you want to approve ${teacher && teacher.fullName}'s request?`}
-        {actionType === 'reject' && `Are you sure you want to reject ${teacher && teacher.fullName}'s request?`}
+          Are you sure you want to {teacher && teacher.actionType}{" "}
+          {teacher && teacher.tutor.user.first_name}{" "}
+          {teacher && teacher.tutor.user.last_name}'s class request for{" "}
+          {teacher && teacher.title}?
         </ModalBody>
+
         <ModalFooter>
-          <Stack direction={['row', 'row']} spacing="2">
-            <Button colorScheme={colorScheme} flex="1" onClick={onApprove}>
-            {actionType === 'approve' ? 'Approve' : 'Reject'}
+          <Stack direction={["row", "row"]} spacing="2">
+            <Button colorScheme="green" flex="1" onClick={onApprove}>
+              Approve
+            </Button>
+            <Button colorScheme="red" flex="1" onClick={onReject}>
+              Reject
             </Button>
             <Button flex="1" variant="ghost" onClick={onClose}>
               Cancel

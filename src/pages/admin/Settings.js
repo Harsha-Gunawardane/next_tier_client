@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import SelectedProfile from "./components/SelectedProfile";
 import { Flex } from "@chakra-ui/react";
 
@@ -26,7 +26,7 @@ function Settings() {
       }
     };
     fetchAdmin();
-  }, []);
+  }, [axiosPrivate, setProfile]);
 
   useEffect(() => {
     console.log(profile)

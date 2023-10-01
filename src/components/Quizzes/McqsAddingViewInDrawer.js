@@ -1,57 +1,90 @@
-import {
-  Accordion,
-  AccordionItem,
-  AccordionButton,
-  AccordionPanel,
-  Box,
-  AccordionIcon,
-  FormLabel,
-  Flex,
-  Spacer,
-  Card,
-  SimpleGrid,
-  Text,
-  Button,
-} from "@chakra-ui/react";
+import { Button, Card, Flex, FormLabel, Spacer } from "@chakra-ui/react";
+import { Accordion, ActionIcon, Box, SimpleGrid } from "@mantine/core";
 
 import { IoIosAddCircleOutline } from "react-icons/io";
+import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 
-export default function McqsAddingViewInDrawer({ mcqs, handleDeleteMcq }) {
+export default function McqsAddingViewInDrawer({
+  allMcqs,
+  setAllMcqs,
+  quizMcqs,
+  setQuizMcqs,
+  quizId,
+  quiz,
+  setQuiz,
+}) {
+  const axiosPrivate = useAxiosPrivate();
+  const importMcqToQuiz = async (mcqId) => {
+    const McqId = {
+      id: mcqId,
+    };
+
+    try {
+      const response = await axiosPrivate.post(
+        `/tutor/quizzes/addMcqId/${quizId}`,
+        JSON.stringify(McqId),
+        {
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true,
+        }
+      );
+
+      console.log(response.data);
+
+      const newQuestion = response.data;
+      //Added to state
+      setQuizMcqs([...quizMcqs, newQuestion]);
+
+      const updatedMcqs = allMcqs.filter((mcq) => mcq.id !== mcqId);
+      setAllMcqs(updatedMcqs);
+
+      //Quiz state update
+      const updatedQuestionIds = [...quiz.question_ids, mcqId];
+      const updatedNumberOfQuestions = quiz.number_of_questions + 1;
+
+      const updatedQuiz = {
+        ...quiz,
+        question_ids: updatedQuestionIds,
+        number_of_questions: updatedNumberOfQuestions,
+      };
+
+      setQuiz(updatedQuiz);
+
+
+
+
+    } catch (error) {
+      console.error("Error sending data:", error);
+    }
+  };
+
   return (
     <Accordion
-      defaultIndex={[0]}
-      allowMultiple
-      margin="10px"
-      padding="10px"
-      maxH="500px"
-      overflowY="auto"
+      variant="separated"
+      chevronPosition="left"
+      mt="20px"
+      pr="10px"
+      style={{ overflow: "auto", maxHeight: "460px" }}
     >
-      {mcqs.map((mcq) => (
-        <AccordionItem key={mcq.id}>
-          <h2>
-            <AccordionButton mb="2px">
-              <Box as="span" flex="1" textAlign="left" pt="8px">
-                <Text
-                  fontSize={{ base: "14px", md: "16px" }}
-                >{`${mcq.id}) ${mcq.question}`}</Text>
-              </Box>
-              <Button
-                colorScheme="blue"
-                variant="outline"
-                size="sm"
-                mt="10px"
-                mr="5px"
-              >
-                <IoIosAddCircleOutline
-                  size="16px"
-                  style={{ marginRight: "4px" }}
-                />
-                Add Question
-              </Button>
-              <AccordionIcon size="1.2rem" stroke={1.3} />
-            </AccordionButton>
-          </h2>
-          <AccordionPanel>
+      {allMcqs.map((mcq) => (
+        <Accordion.Item key={mcq.id} value={mcq.question}>
+          <Box sx={{ display: "flex", alignItems: "center" }}>
+            <Accordion.Control>{mcq.question}</Accordion.Control>
+            <Button
+              colorScheme="blue"
+              variant="outline"
+              size="sm"
+              mr="5px"
+              onClick={() => importMcqToQuiz(mcq.id)}
+            >
+              <IoIosAddCircleOutline
+                size="16px"
+                style={{ marginRight: "4px" }}
+              />
+              Add Question
+            </Button>
+          </Box>
+          <Accordion.Panel>
             <Flex color="gray.500">
               <FormLabel fontWeight="400">Medium Level</FormLabel>
               <Spacer />
@@ -59,32 +92,38 @@ export default function McqsAddingViewInDrawer({ mcqs, handleDeleteMcq }) {
             </Flex>
 
             <Card variant="outline" padding="10px" mb="5px">
-              <FormLabel fontWeight="400">Choices:</FormLabel>
-
-              <SimpleGrid
-                minChildWidth="300px"
-                maxWidth="1100px"
-                fontSize="12px"
-              >
-                <FormLabel fontWeight="400">{mcq.choice1}</FormLabel>
-                <FormLabel fontWeight="400">{mcq.choice2}</FormLabel>
-                <FormLabel fontWeight="400">{mcq.choice3}</FormLabel>
-                <FormLabel fontWeight="400">{mcq.choice4}</FormLabel>
-                <FormLabel fontWeight="400">{mcq.choice5}</FormLabel>
+              <FormLabel>Answer Choices</FormLabel>
+              <SimpleGrid cols={2} mb="xs" spacing="xs" verticalSpacing="xs">
+                {mcq.options.map((choice) => (
+                  <Card
+                    // variant="outline"
+                    shadow="md"
+                    padding="5px"
+                    paddingLeft="10px"
+                    margin="2px"
+                    fontWeight="400"
+                  >
+                    {choice}
+                  </Card>
+                ))}
               </SimpleGrid>
             </Card>
 
             <Card variant="outline" padding="10px" mb="5px">
-              <FormLabel fontWeight="400">Answer: {mcq.answer}</FormLabel>
+              <FormLabel>Correct Answer</FormLabel>
+              <Card shadow="md" padding="5px" mb="5px" paddingLeft="15px">
+                {mcq.options[mcq.correct_answer]}
+              </Card>
             </Card>
 
-            <Card variant="outline" padding="10px">
-              <FormLabel fontWeight="400">
-                Explanation : {mcq.explanation}
-              </FormLabel>
+            <Card variant="outline" padding="10px" mb="5px">
+              <FormLabel>Explanation</FormLabel>
+              <Card shadow="md" padding="10px">
+                {mcq.explanation}
+              </Card>
             </Card>
-          </AccordionPanel>
-        </AccordionItem>
+          </Accordion.Panel>
+        </Accordion.Item>
       ))}
     </Accordion>
   );

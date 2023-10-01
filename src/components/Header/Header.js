@@ -1,5 +1,5 @@
 import { Box, Flex, Text, Image, Avatar, IconButton, Button, FormControl, InputGroup, InputLeftElement, Input, Spacer } from "@chakra-ui/react";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 // import ToggleColorMode from "../ToggleColorMode";
 // import { SidebarContext } from "../../context/SidebarContext";
 
@@ -25,7 +25,8 @@ const USER_INFO_URL = "/user/info";
 const Header = ({ full = false, hidden, setHidden, onOpen, minimized, setMinimized, ...rest }) => {
 
 	const axiosPrivate = useAxiosPrivate();
-	const { fName, lName, userRole, setFName, setLName, setUserRole } = useUserInfo();
+	const { fName, lName, userRole, profilePicture, setFName, setLName, setUserRole, setProfilePicture } = useUserInfo();
+	const [profilePic, setProfilePic] = useState("");
 
 	useEffect(() => {
 		const getUserInfo = async () => {
@@ -43,6 +44,9 @@ const Header = ({ full = false, hidden, setHidden, onOpen, minimized, setMinimiz
 
 					setFName(userInfo.fName);
 					setLName(userInfo.lName);
+					setProfilePicture(userInfo.profile_picture);
+					console.log(profilePicture);
+					console.log(userInfo.profile_picture);
 
 					console.log(userInfo.fName);
 
@@ -65,6 +69,11 @@ const Header = ({ full = false, hidden, setHidden, onOpen, minimized, setMinimiz
 		getUserInfo();
 	}, []);
 
+	useEffect(() => {
+		setProfilePic(profilePicture);
+		console.log(profilePic);
+		console.log(profilePicture);
+	}, [profilePicture]);
 
 
 	return (
@@ -143,14 +152,14 @@ const Header = ({ full = false, hidden, setHidden, onOpen, minimized, setMinimiz
 				</Flex>
 				<Flex p={"4px"} pr={"10px"} h={"100%"} alignContent={"center"} alignItems={"center"} gap={"10px"}>
 					<Box h={"40px"} textAlign={"right"} display={{ base: "none", lg: "block" }} >
-						<Text fontSize={"16px"} fontWeight={"bold"} fontStyle={"Roboto"}>
+						<Text fontSize={"16px"} fontWeight={"bold"} >
 							{`${fName} ${lName}`}
 						</Text>
-						<Text fontSize={"10px"} fontWeight={"semibold"} color={"gray.400"} fontStyle={"Roboto"}>
+						<Text fontSize={"12px"} fontWeight={"medium"} color={"gray.400"}>
 							{`${userRole}`}
 						</Text>
 					</Box>
-					<Avatar h="48px" w="48px" name="Dan Abrahmov" src="https://bit.ly/dan-abramov" />
+					<Avatar h="48px" w="48px" name="Dan Abrahmov" src={profilePic} />
 				</Flex>
 			</Flex>
 		</Flex>

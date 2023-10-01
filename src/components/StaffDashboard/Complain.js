@@ -1,6 +1,5 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Box, Text, Badge, Flex, Avatar } from "@chakra-ui/react";
-import data from "../../pages/InstituteStaff/data/data";
 import { Link } from "react-router-dom";
 import {
   Table,
@@ -11,13 +10,51 @@ import {
   Th,
   Td,
   TableContainer,
+  useToast,
 } from "@chakra-ui/react";
+import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 
 function Complain() {
+  const toast = useToast();
+  const [complainData, setComplainData] = useState([]);
+  const [firstThreeComplaints, setFirstThreeComplaints] = useState([]);
+  const axiosPrivate = useAxiosPrivate();
+
+  useEffect(() => {
+    const fetchComplains = async () => {
+      try {
+        const response = await axiosPrivate.get("/staff/complaints", {});
+
+        // Set all complaints in the state
+        setComplainData(response.data);
+
+        // Set the first three complaints to display initially
+        setFirstThreeComplaints(response.data.slice(0, 3));
+      } catch (error) {
+        console.error("Error fetching complain details:", error.response.data);
+        toast({
+          title: "Error",
+          description: "Error fetching complain details. Please try again.",
+          status: "error",
+          duration: 3000,
+          isClosable: true,
+        });
+      }
+    };
+
+    fetchComplains();
+  }, [toast, axiosPrivate]);
+
+  // Define a function to format the date
+function formatDate(dateString) {
+  const options = { year: 'numeric', month: 'numeric', day: 'numeric' };
+  return new Date(dateString).toLocaleDateString(undefined, options);
+}
+
   return (
     <Box marginTop={13} marginLeft={13}>
       <Box>
-        <TableContainer >
+        <TableContainer>
           <Table variant="simple" size="sm">
             <Thead>
               <Tr fontSize={13}>
@@ -28,24 +65,34 @@ function Complain() {
               </Tr>
             </Thead>
             <Tbody>
-              {data.complain.map((complain) => (
-                <Tr key={complain.id} >
+              {firstThreeComplaints.map((complain) => (
+                <Tr key={complain.id}>
                   <Td>
                     <Flex gap={4}>
-                      <Avatar src={complain.profileName} />
+                    <Avatar src={complain.user.profile_picture} />
                       <Text fontSize={13} marginTop={4}>
-                        {complain.name}
+                        {complain.user.first_name}
                       </Text>
                     </Flex>
                   </Td>
                   <Td>
-                    <Badge variant="solid" colorScheme="green">
-                      {complain.status}
-                    </Badge>
-                  </Td>
-                  <Td fontSize={13}>{complain.description}</Td>
-                  <Td fontSize={13}>{complain.date}</Td>
-                 
+                  <Badge
+                    variant="solid"
+                    colorScheme={
+                      complain.status === "PENDING"
+                        ? "blue"
+                        : complain.status === "RESOLVED"
+                        ? "green"
+                        : complain.status === "IGNORED"
+                        ? "red"
+                        : "gray" 
+                    }
+                  >
+                    {complain.status}
+                  </Badge>
+                </Td>
+                  <Td fontSize={13}>{complain.message}</Td>
+                  <Td fontSize={13}>{formatDate(complain.posted_at)}</Td>
                 </Tr>
               ))}
             </Tbody>

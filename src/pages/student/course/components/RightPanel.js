@@ -22,7 +22,7 @@ import { BsPostcardHeartFill } from "react-icons/bs"
 
 const RightPanel = (props) => {
 
-    const { forumDetails } = props
+    const { forumDetails, onGuideLineOpen } = props
     const { courseDetails } = useOutletContext
 
     useEffect(() => {
@@ -37,11 +37,10 @@ const RightPanel = (props) => {
             </Flex>
             <Flex width={"100%"} px="20px" justifyContent={"flex-start"} alignItems={"flex-start"} direction={"column"} gap={"10px"}>
                 <AspectRatio ratio={4 / 1} w="100%" borderRadius={"10px"} overflow={"hidden"}>
-                    <Image src="https://www.picsum.photos/400/100" alt="Segun Adebayo" />
+                    <Image src={forumDetails.course.thumbnail} alt="Segun Adebayo" />
                 </AspectRatio>
                 {/* forum title */}
                 <Text fontWeight={"bold"} fontSize={"20px"} color="gray.800" mt="10px" align={"left"} noOfLines={1}>{forumDetails.title}</Text>
-                {/* tutor name with avatar left and tutor qualification right bottom */}
                 <Flex width={"100%"} justifyContent={"space-between"} alignItems={"center"} direction={"row"} mt="5px" gap="10px">
                     <Avatar size={"md"} name='Ryan Florence' src="https://www.picsum.photos/400/400" />
                     <Flex width={"100%"} justifyContent={"center"} alignItems={"flex-start"} direction={"column"} gap="0px">
@@ -49,7 +48,6 @@ const RightPanel = (props) => {
                         <Text fontWeight={"medium"} fontSize={"12px"} color="gray.600">BSc. in Physics</Text>
                     </Flex>
                 </Flex>
-                {/* card to display adhere to te rules and small warning and button to vide rules. colorfull card adapt to the theme and have a image svg illustratable  */}
                 <Card
                     width={"100%"}
                     // height={"200px"}
@@ -69,7 +67,7 @@ const RightPanel = (props) => {
                                 <Text fontWeight={"semibold"} fontSize={"18px"} color="gray.700" textAlign={"left"}>Follow Forum Rules</Text>
                                 <Text fontWeight={"medium"} fontSize={"14px"} color="gray.600" textAlign={"left"}>Click to learn how to participate responsibly and respectfully in our student community forum.</Text>
                             </Flex>
-                            <Button variant="solid" bg={"accent"} color={"white"} size="sm" width={"max-content"} >Read Rules</Button>
+                            <Button variant="solid" bg={"accent"} color={"white"} size="sm" width={"max-content"} onClick={onGuideLineOpen}>Read Rules</Button>
                         </Flex>
                         {/* <Flex width={"40%"} overflow={"visible"} position={"relative"}> */}
                         <Image src={rulesImg} alt="Segun Adebayo" position={"absolute"} width={"50%"} bottom={0} right={0} objectFit={"cover"} zIndex={0} />
