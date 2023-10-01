@@ -52,6 +52,40 @@ const Coursepackedit = () => {
     getStudyPack();
   }, [axiosPrivate]);
 
+  const countAllIds = () => {
+    let totalVideoIds = 0;
+    let totalTuteIds = 0;
+    let totalQuizIds = 0;
+  
+    if (studypackdata.content_ids && Array.isArray(studypackdata.content_ids)) {
+      studypackdata.content_ids.forEach((part) => {
+        // Iterate through the dynamic keys (e.g., "Part-1")
+        Object.keys(part).forEach((key) => {
+          const subPart = part[key];
+  
+          if (subPart.video_id && Array.isArray(subPart.video_id)) {
+            totalVideoIds += subPart.video_id.length;
+          }
+          if (subPart.tute_id && Array.isArray(subPart.tute_id)) {
+            totalTuteIds += subPart.tute_id.length;
+          }
+          if (subPart.quiz_id && Array.isArray(subPart.quiz_id)) {
+            totalQuizIds += subPart.quiz_id.length;
+          }
+        });
+      });
+    }
+  
+
+    return {
+      totalVideoIds,
+      totalTuteIds,
+      totalQuizIds,
+    };
+  };
+
+  const totalIds = countAllIds();
+
   const [isPublic, setIsPublic] = useState(false);
   const handleToggleVisibility = () => {
     // Update the isPublic state locally without making an API call
@@ -132,14 +166,24 @@ const Coursepackedit = () => {
                 {" "}
                 <Text fontSize="15px">Medium-Sinhala</Text>
               </ListItem>
+                   <ListItem>
+                {" "}
+                <Text fontSize="15px">  Total Videos: {totalIds.totalVideoIds}</Text>
+              </ListItem>
+                   <ListItem>
+                {" "}
+                <Text fontSize="15px">Total Tutes: {totalIds.totalTuteIds}</Text>
+              </ListItem>
+              <ListItem>
+                {" "}
+                <Text fontSize="15px">Total Quizs: {totalIds.totalQuizIds}</Text>
+              </ListItem>
             </UnorderedList>
 
             <br></br>
-            <Heading fontSize="20px" mb="10px">
-              Course Includes
-            </Heading>
-
-            <CourseInclude></CourseInclude>
+        
+{/* <CourseInclude></CourseInclude> */}
+          
 
             <HStack spacing="30px" mt="20px">
               <Courseeditbutton></Courseeditbutton>
@@ -147,13 +191,9 @@ const Coursepackedit = () => {
 
               <FormControl display="flex" alignItems="center" mt={2}>
                 <FormLabel htmlFor="course-visibility" mb="0" mr={2}>
-                  Course Visibility
+                {studypackdata.visibility}
                 </FormLabel>
-                <Switch
-                  id="course-visibility"
-                  isChecked={isPublic}
-                  onChange={handleToggleVisibility}
-                />
+               
               </FormControl>
             </HStack>
           </Box>

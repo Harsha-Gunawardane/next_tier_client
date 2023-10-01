@@ -1,6 +1,6 @@
 import { Text, Flex } from "@chakra-ui/react";
 import { useDisclosure } from "@mantine/hooks";
-import { Popover, Button } from "@mantine/core";
+import { Popover } from "@mantine/core";
 
 function SheduleDate({ dateName, date, isToday, isSchedule, reminder }) {
   const [opened, { close, open }] = useDisclosure(false);

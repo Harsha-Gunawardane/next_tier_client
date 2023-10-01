@@ -13,21 +13,29 @@ import { useDisclosure } from '@chakra-ui/react';
 import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
 import { useLocation } from "react-router-dom";
 
-const Remove = ({  contentId,part }) => {
+const Remove = ({  contentId,month,onContentRemove  }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const cancelRef = React.useRef();
   const axiosPrivate = useAxiosPrivate();
-
+  const part = decodeURIComponent(month);
+  console.log(part);
   const location = useLocation();
   const studentpackId = location.pathname.split("/").pop();
 
+  const url = `/tutor/studypack/remove/${studentpackId}/${decodeURIComponent(month)}/${contentId}`;
+  console.log(url);
+
+  
+
   const handleDelete = () => {
+
     // Replace 'YOUR_API_ENDPOINT' with the actual URL of your backend endpoint for removing the content
     axiosPrivate
-      .delete(`/tutor/studypack/removecontent/${studentpackId}/${part}/${contentId}`)
+      .delete(url)
       .then((response) => {
         console.log(`Tute ID ${contentId} removed successfully from study pack!`);
-        onClose(); // Close the modal after removing the content
+        onClose(); 
+        onContentRemove(month, contentId);// Close the modal after removing the content
         // Notify parent component about content removal
       })
       .catch((error) => {
@@ -57,7 +65,7 @@ const Remove = ({  contentId,part }) => {
                 Cancel
               </Button>
               <Button colorScheme='red' onClick={handleDelete} ml={3} fontSize='12px' height='35px'>
-                Delete
+                Remove
               </Button>
             </AlertDialogFooter>
           </AlertDialogContent>

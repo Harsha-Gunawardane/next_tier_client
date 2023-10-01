@@ -1,7 +1,7 @@
 import { Button, Flex } from "@chakra-ui/react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
-function FeedbackFilters() {
+function FeedbackFilters({ setFilter }) {
   const [focusedTab, setFocusedTab] = useState("New");
 
   const tabs = [
@@ -9,6 +9,10 @@ function FeedbackFilters() {
     { value: "All", label: "All" },
     { value: "In Action", label: "In Action" },
   ];
+
+  useEffect(() => {
+    setFilter(focusedTab);
+  }, [focusedTab, setFilter]);
 
   return (
     <Flex mt={3}>

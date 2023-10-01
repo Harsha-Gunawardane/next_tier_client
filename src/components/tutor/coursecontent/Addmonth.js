@@ -83,7 +83,7 @@ const Addmonth = ({ onClose }) => {
               <Heading fontSize="20px" mb="10px">
                 Add Content
               </Heading>
-            <Select
+            {/* <Select
                 fontSize="15px"
                 height="30px"
                 onMouseDown={(e) => setValidation(true)}
@@ -96,16 +96,26 @@ const Addmonth = ({ onClose }) => {
                        {course.title}
                     </option>
                   ))}
-              </Select>
+              </Select> */}
 
-              <Input
-                fontSize="15px"
-                height="30px"
-                onMouseDown={(e) => setValidation(true)}
-                onChange={(e) => setName(e.target.value)} 
-                className="form-control"
-                placeholder="Name"
-              />
+<Input
+  fontSize="15px"
+  height="30px"
+  onChange={(e) => {
+    const inputValue = e.target.value;
+    // Check if the input value contains spaces
+    if (inputValue.includes(" ")) {
+      // If a space is found, replace it with an empty string
+      const sanitizedValue = inputValue.replace(/ /g, "");
+      setName(sanitizedValue);
+    } else {
+      // If no space is found, update the name state as usual
+      setName(inputValue);
+    }
+  }}
+  className="form-control"
+  placeholder="Name"
+/>
               
               
 

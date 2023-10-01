@@ -10,6 +10,7 @@ import {
   SimpleGrid,
   Box,
   Checkbox,
+  Image,
   FormLabel,Input, IconButton
 } from '@chakra-ui/react'
 import { SmallAddIcon} from '@chakra-ui/icons'
@@ -23,7 +24,7 @@ import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
 
 
 
-const Adddoc = ({ studypackId ,dynamicWeek}) => {
+const Adddoc = ({ studypackId ,dynamicWeek,onDocAdded}) => {
 
 const { isOpen, onOpen, onClose } = useDisclosure()
 
@@ -137,7 +138,8 @@ const handleSave = async (event) => {
       content_ids: existingContentIds,
       price: price,
     });
-
+    
+    onDocAdded(existingContentIds);
     onClose(); // Close the modal after saving
   } catch (error) {
     console.log(error);
@@ -157,7 +159,7 @@ return (
 
     <Modal initialFocusRef={initialRef} finalFocusRef={finalRef} isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
-      <ModalContent>
+      <ModalContent size='2xl' maxW='60vw'>
         <ModalHeader>Add Video Content</ModalHeader>
         <ModalCloseButton />
 
@@ -170,14 +172,14 @@ return (
           <form onSubmit={handleSave}>
             <TabPanel>
               <ModalBody pb={6}>
-              <SimpleGrid columns={2} spacing={4}>
+              <SimpleGrid columns={4} spacing={4}>
                   {tuteContent.map((content, index) => (
                     <Box key={index} p={2} borderWidth={1} borderRadius='md'>
                       <Checkbox
                         isChecked={selectedItems.includes(index)}
                         onChange={() => handleCheckboxChange(index)}
                       />
-                      <img src={content.thumbnail} alt={`Thumbnail ${index}`} />
+                      <Image src={content.thumbnail} alt={`Thumbnail ${index}`} />
                       <p>{content.title}</p>
                     </Box>
                   ))}

@@ -38,9 +38,9 @@ const CourseInclude = () => {
         const courseResponse = await axiosPrivate.get(`/tutor/course/${id}`);
         setCoursesData(courseResponse.data);
 
-        if (courseResponse.data && courseResponse.data.studypack_ids.length > 0) {
+        if (courseResponse.data) {
           const allStudyPackDetails = await Promise.all(
-            courseResponse.data.studypack_ids.map(async (studyPackId) => {
+            courseResponse.data.content_ids.map(async (studyPackId) => {
               const studyPackResponse = await axiosPrivate.get(`/tutor/course/${id}`);
               return studyPackResponse.data;
             })
@@ -87,8 +87,20 @@ const CourseInclude = () => {
 
 
 
+  const handleContentRemoval = (contentId) => {
+    setContentDetails((prevContentDetails) =>
+      prevContentDetails.filter((content) => content.id !== contentId)
+    );
+  };
+
+  const addNewVideo = (newContent) => {
+    // Update contentDetails state with the newly added content
+    setContentDetails((prevContentDetails) => [...prevContentDetails, newContent]);
+  };
+  
   return (
     <ChakraProvider>
+   
       <Accordion allowToggle>
         {Object.keys(studyPackDetails).map((studyPackKey, index) => {
           const studyPack = studyPackDetails[studyPackKey];
@@ -120,7 +132,7 @@ const CourseInclude = () => {
               <HStack spacing={{ base: 220, xl: 300 }}>
      
           <Box>
-            <Addcoursecontent studypackId={id}></Addcoursecontent>
+            <Addcoursecontent studypackId={id} addNewVideo={addNewVideo}></Addcoursecontent>
           </Box>
         </HStack>
                 {/* Video Content */}
@@ -152,7 +164,7 @@ const CourseInclude = () => {
                                   <Button fontSize="12px" height="20px">
                                     View
                                   </Button>{" "}
-                                  <Remove contentId={videoId}></Remove>
+                                  <Remove contentId={videoId} onContentRemove={handleContentRemoval}></Remove>
                                 </HStack>
                               </Box>
                             </HStack>
@@ -161,59 +173,8 @@ const CourseInclude = () => {
                       </Box>
                     )}
 
-                    {/* Document Content */}
+     
                     
-
-{/* <HStack spacing={{ base: 220, xl: 300 }} mt='10px'>
-          <Box width="600px">
-            <Text fontSize="15px">Document Content</Text>
-          </Box>
-          <Box>
-            <Addcoursedoccontent studypackId={studyPack.id}></Addcoursedoccontent>
-          </Box>
-        </HStack>
-
-
-                
-{content && content.tute_id && content.tute_id.length > 0 && (
-  <Box mt="10px">
-    {content.tute_id.map((tuteId, tuteIndex) => (
-      <Box bg="#F0F8FF" mt="4px" className="box1" key={tuteIndex}>
-        <HStack spacing={{ base: 90, xl: 330 }}>
-          <Box p={2} width="210px">
-            <HStack>
-              <Image
-                boxSize="50%"
-                width={{ base: 70, xl: 70 }}
-                height="50px"
-                objectFit="cover"
-                src={getContentThumbnail(tuteId)}
-              />
-              <Box>
-                <Text fontSize="14px" className="box2">
-                  {getContentTitle(tuteId)}
-                </Text>
-              </Box>
-            </HStack>
-          </Box>
-          <Box width="90px" ml="5px" mt="-5px">
-            <HStack>
-              <Button fontSize="12px" height="20px">
-                View
-              </Button>{" "}
-              {/* <Remove contentId={tuteId} part={studyPack.id}></Remove> */}
-            {/* </HStack>
-          </Box>
-        </HStack>
-      </Box>
-    ))}
-  </Box>
-)} */} 
-                    
-                    
-
-                    {/* Quiz Content */}
-                    {/* ... similar logic for quiz content ... */}
                   </Box>
                 ))}
               </AccordionPanel>

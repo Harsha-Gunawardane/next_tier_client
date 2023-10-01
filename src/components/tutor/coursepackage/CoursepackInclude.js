@@ -1,112 +1,51 @@
+import React, { useEffect, useState } from "react";
+import { Box, Accordion, AccordionItem, AccordionButton, AccordionPanel, AccordionIcon } from "@chakra-ui/react";
+import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
+import { useParams, useLocation } from "react-router-dom";
 
-import React from "react";
-import {
-    Accordion,
-    AccordionItem,
-    AccordionButton,
-    AccordionPanel,
-    AccordionIcon,
-  } from '@chakra-ui/react'
+const Coursepackedit = () => {
+  const { id } = useParams();
+  const axiosPrivate = useAxiosPrivate();
+  const [studypackdata, setstudypackdata] = useState({});
+  const location = useLocation();
+  const iid = location.pathname.split("/").pop();
 
-import { Box } from '@chakra-ui/react'
-import Remove from "../coursecontent/Coursecontentremove";
-import Addvideo from "./Addvideo";
-import Adddoc from "./Adddoc";
-import { Image,HStack,Avatar,Progress,Heading,Text,Button } from '@chakra-ui/react'
+  useEffect(() => {
+    const getStudyPack = async () => {
+      const controller = new AbortController();
+      try {
+        const response = await axiosPrivate.get(`/tutor/studypack/${iid}`, {
+          signal: controller.signal,
+        });
+        setstudypackdata(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getStudyPack();
+  }, [axiosPrivate]);
 
-const coursepackInclude = (props) => {
-  
   return (
-
-
-  
-
-    <Accordion allowToggle>
-    <AccordionItem width={{base:300,xl:400}}>
-      <h2>
-        <AccordionButton bg='#eee' border='2px solid white' borderRadius='5px' height='50px' >
-          <Box as="span" flex='1' textAlign='left'  height='30px'>
-          <Heading p={1} ml='10px' fontSize='15px'>Video Contents</Heading>
-          </Box>
-          <AccordionIcon />
-        </AccordionButton>
-      </h2>
-      <AccordionPanel pb={4} bg='white'>
-  <br></br>
-  
-
- 
-  <Box bg='#F0F8FF'mt='4px' className="box1" >
-    <HStack spacing='50px'>
-    <Box p={2}  width='210px'><HStack>  <Image
-              boxSize="50%"
-              width="40%"
-              height='50px'
-              objectFit="cover"
-              src="https://www.ufs.ac.za/images/librariesprovider22/default-album/shutterstock_1140894395.jpg?sfvrsn=554a8521_0"
-           
-            
-            />
-           <Box ><Text fontSize='14px' className="box2">Physics Part 02</Text></Box> 
-            </HStack></Box> 
-    <Box width='70px' ml='10px' mt='-5px' > <HStack><Button fontSize='12px' height='20px' >View</Button> <Remove></Remove></HStack></Box>
-  
-  
-    </HStack>
-  </Box>
-  <Addvideo></Addvideo>
-
-      </AccordionPanel>
-    </AccordionItem>
-
-
-    <AccordionItem width={{base:300,xl:400}}>
-      <h2>
-        <AccordionButton bg='#eee' border='2px solid white' borderRadius='5px' height='50px' >
-          <Box as="span" flex='1' textAlign='left'  height='30px'>
-          <Heading p={1} ml='10px' fontSize='15px'>Document Contents</Heading>
-          </Box>
-          <AccordionIcon />
-        </AccordionButton>
-      </h2>
-      <AccordionPanel pb={4} bg='white'>
-  <br></br>
-  
-
-  
-  <Box bg='#F0F8FF'mt='4px' className="box1" >
-    <HStack spacing='50px'>
-    <Box p={2}  width='210px'><HStack>  <Image
-              boxSize="50%"
-              width="40%"
-              height='50px'
-              objectFit="cover"
-              src="https://www.ufs.ac.za/images/librariesprovider22/default-album/shutterstock_1140894395.jpg?sfvrsn=554a8521_0"
-           
-            
-            />
-           <Box ><Text fontSize='14px' className="box2">Physics Part 02</Text></Box> 
-            </HStack></Box> 
-    <Box width='60px' ml='10px' mt='-5px' > <HStack><Button fontSize='12px' height='20px' >View</Button> </HStack></Box>
-  
-  
-    </HStack>
-  </Box>
-  <Adddoc></Adddoc>
-
-      </AccordionPanel>
-    </AccordionItem>
-  
-  
-  </Accordion>
-
-
-
-
-
-
-
-);
+    <Box overflowY="scroll">
+      {studypackdata && (
+        <Accordion allowToggle>
+          <AccordionItem>
+            <AccordionButton>
+              <Box flex="1" textAlign="left">
+                Video IDs
+              </Box>
+              <AccordionIcon />
+            </AccordionButton>
+            <AccordionPanel>
+              {studypackdata.public_ids[0].video_id.map((videoId) => (
+                <p key={videoId}>{videoId}</p>
+              ))}
+            </AccordionPanel>
+          </AccordionItem>
+        </Accordion>
+      )}
+    </Box>
+  );
 };
 
-export default coursepackInclude;
+export default Coursepackedit;

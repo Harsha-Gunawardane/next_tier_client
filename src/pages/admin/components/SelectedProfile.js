@@ -6,6 +6,8 @@ import Profile from "../../../assests/images/profile.jpg";
 import Qualification from "./cards/Qualification";
 
 function SelectedProfile({ profile }) {
+
+  console.log(profile);
   return (
     <Box mt={28} ml={10}>
       <Indicator

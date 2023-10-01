@@ -1,29 +1,37 @@
-import { Table as ChakraTable, Thead, Tbody, Tr, Th, Td, Box } from '@chakra-ui/react';
-import { EditIcon } from '@chakra-ui/icons';
+import {
+  Table as ChakraTable,
+  Thead,
+  Tbody,
+  Tr,
+  Th,
+  Td,
+  Box,
+} from "@chakra-ui/react";
+import { EditIcon } from "@chakra-ui/icons";
 
 function ViewTable({ data, tableType, onIconClick }) {
   const getStatusBackgroundColor = (status) => {
     switch (status) {
-      case 'Approved':
-        return 'green.600';
-      case 'Pending':
-        return 'blue.500';
-      case 'Rejected':
-        return 'red.500';
+      case "APPROVED":
+        return "green.600";
+      case "PENDING":
+        return "blue.500";
+      case "REJECTED":
+        return "red.500";
       default:
-        return 'transparent';
+        return "transparent";
     }
   };
 
   return (
-    <ChakraTable  variant="simple">
+    <ChakraTable variant="simple">
       <Thead>
         <Tr>
           <Th fontSize="md" fontWeight="bold" textTransform="capitalize">
-            ID
+            Full Name
           </Th>
           <Th fontSize="md" fontWeight="bold" textTransform="capitalize">
-            Full Name
+            Email
           </Th>
           <Th fontSize="md" fontWeight="bold" textTransform="capitalize">
             Subject
@@ -31,12 +39,12 @@ function ViewTable({ data, tableType, onIconClick }) {
           <Th fontSize="md" fontWeight="bold" textTransform="capitalize">
             Class
           </Th>
-          {tableType === 'allRequests' && (
+          {tableType === "allRequests" && (
             <Th fontSize="md" fontWeight="bold" textTransform="capitalize">
               Status
             </Th>
           )}
-          {(tableType === 'Pending' || tableType === 'Rejected') && (
+          {(tableType === "Pending") && (
             <Th fontSize="md" fontWeight="bold" textTransform="capitalize">
               Action
             </Th>
@@ -46,11 +54,11 @@ function ViewTable({ data, tableType, onIconClick }) {
       <Tbody>
         {data.map((teacher) => (
           <Tr key={teacher.id}>
-            <Td fontSize={13}>{teacher.id}</Td>
-            <Td fontSize={13}>{teacher.fullName}</Td>
+            <Td fontSize={13}> {teacher.tutor.user.first_name} {teacher.tutor.user.last_name}</Td>
+            <Td fontSize={13}>{teacher.tutor.email}</Td>
             <Td fontSize={13}>{teacher.subject}</Td>
-            <Td fontSize={13}>{teacher.class}</Td>
-            {tableType === 'allRequests' && (
+            <Td fontSize={13}>{teacher.title}</Td>
+            {tableType === "allRequests" && (
               <Td fontSize={13}>
                 <Box
                   backgroundColor={getStatusBackgroundColor(teacher.status)}
@@ -64,9 +72,9 @@ function ViewTable({ data, tableType, onIconClick }) {
                 </Box>
               </Td>
             )}
-            {(tableType === 'Pending' || tableType === 'Rejected') && (
+            {(tableType === "Pending") && (
               <Td fontSize={13}>
-                 <Box ml={6} onClick={() => onIconClick(teacher)}>
+                <Box ml={6} onClick={() => onIconClick(teacher)}>
                   <EditIcon size={20} color="gray" />
                 </Box>
               </Td>

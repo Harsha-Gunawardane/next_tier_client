@@ -1,132 +1,141 @@
-import React, { useState, useEffect } from "react";
-import { Document, Page, pdfjs } from "react-pdf";
-import { Box, Flex, Text, Button } from "@chakra-ui/react";
-import {
-  TbCircleArrowRightFilled,
-  TbCircleArrowLeftFilled,
-} from "react-icons/tb";
-import { useParams } from "react-router-dom";
-import pako from "pako";
+import React, { useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { Box, Button, Flex, Text } from "@chakra-ui/react";
+import { useState } from "react";
+import { AiOutlineEdit } from "react-icons/ai";
+import { MdDeleteOutline } from "react-icons/md";
 
 import "../../../../assests/css/pdfView.css";
 import useAxiosPrivate from "../../../../hooks/useAxiosPrivate";
-import { Loader } from "@mantine/core";
+import ModalLayout from "../../../../components/ModalLayout";
 
-const PDF_URL = "/stu/pdf";
-
-pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
+const TUTE_URL = "/stu/tute";
 
 const PDFView = () => {
   const axiosPrivate = useAxiosPrivate();
   const { id } = useParams();
+  const navigate = useNavigate();
 
-  const [pdfData, setPdfData] = useState(null);
-  const [numPages, setNumPages] = useState(null);
-  const [pageNumber, setPageNumber] = useState(1);
-  const [loading, setLoading] = useState(true);
-  const [pdfName, setPDFName] = useState("");
+  const [tute, setTute] = useState("");
+  const [heading, setHeading] = useState("");
+
+  // for delete confirmation
+  const [isOpen, setIsOpen] = useState(false);
+
+  const handleCloseModal = () => {
+    setIsOpen(false);
+  };
+  const handleOpenModal = () => {
+    setIsOpen(true);
+  };
+
+  const handleDelete = () => {
+    alert("Are you sure you want to delete" + id);
+  };
+
+  const title = "Are you sure?";
+  const body = (
+    <>
+      <Text>{`Do you want to delete ${heading}?`}</Text>
+    </>
+  );
+  const footer = (
+    <>
+      <Flex gap={2}>
+        <Button onClick={handleCloseModal}>Cancel</Button>
+        <Button onClick={handleDelete} bg={"#fa5252"} color={"#fff"}>
+          Delete
+        </Button>
+      </Flex>
+    </>
+  );
+
+  const queryString = new URLSearchParams({ id: id }).toString();
+  console.log(id);
 
   useEffect(() => {
     const fetchPdf = async () => {
-      setPdfData(null);
-      setNumPages(null);
-      setPageNumber(1);
-      setLoading(true);
-      setPDFName("");
-      const queryString = new URLSearchParams({ id: id }).toString();
-
       try {
-        const response = await axiosPrivate.get(`${PDF_URL}?${queryString}`);
-
-        console.log(response?.data?.response);
-        const fileBufferData = response?.data?.response?.file?.data;
-        setPDFName(response?.data?.response?.name);
-
-        const decompressedData = pako.inflate(fileBufferData);
-
-        setPdfData(decompressedData);
-        pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
-
-        setLoading(true);
-
-        const doc = await pdfjs.getDocument(new Uint8Array(decompressedData))
-          .promise;
-        setNumPages(doc.numPages);
-
-        setLoading(false);
-      } catch (error) {
-        console.log(error);
+        const response = await axiosPrivate.get(`${TUTE_URL}?${queryString}`);
+        setTute(response.data?.tute?.content);
+        setHeading(response.data?.tute?.name);
+        console.log(response.data?.tute);
+      } catch (err) {
+        console.log(err);
       }
     };
     fetchPdf();
-  }, [id]);
+  }, [axiosPrivate, queryString]);
 
-  const handlePrevPage = () => {
-    setPageNumber((prevPage) => Math.max(prevPage - 1, 1));
-  };
-
-  const handleNextPage = () => {
-    setPageNumber((prevPage) => Math.min(prevPage + 1, numPages));
-  };
+  const renderedContent = (
+    <div dangerouslySetInnerHTML={{ __html: tute }}></div>
+  );
 
   return (
-    <Box>
-      <Flex>
-        <Text>{pdfName} </Text>
-      </Flex>
-      {loading ? (
+    <>
+      <Box justifyContent={"center"} w={"100%"}>
         <Flex
-          w={"calc(100vw - 400px)"}
-          h={"calc(100vh - 40px)"}
+          mt={5}
+          mb={3}
+          w={"100%"}
+          fontSize={20}
+          fontWeight={"semibold"}
+          color={"#333"}
           justifyContent={"center"}
         >
-          <Loader size="xl" variant="dots" />
+          <Text>{heading}</Text>
         </Flex>
-      ) : (
-        pdfData &&
-        !loading && (
-          <Document
-            file={{
-              data: new Uint8Array(pdfData),
-              httpHeaders: { "Content-Type": "application/pdf" },
-            }}
-            onLoadSuccess={({ numPages }) => setNumPages(numPages)}
+
+        <Flex w={"100%"} justifyContent={"center"}>
+          <Box
+            minH={605}
+            borderRadius={8}
+            border={"1px solid #E9E9E9"}
+            p={"1in"}
+            w="8.27in"
+            // bg={"#EAF8FF"}
           >
-            <Page
-              pageNumber={pageNumber}
-              scale={1.5}
-              width={600}
-              renderTextLayer={false}
-            />
-          </Document>
-        )
-      )}
-      <Flex justifyContent={"space-around"}>
-        <Text>
-          {pageNumber} of {numPages}
-        </Text>
-        <Flex gap={2.5}>
-          <TbCircleArrowLeftFilled
-            p={2}
-            fontSize={28}
-            cursor={"pointer"}
-            fontWeight={"bold"}
-            color={"#383838"}
-            onClick={handlePrevPage}
-            disabled={pageNumber === 1}
-          />
-          <TbCircleArrowRightFilled
-            p={2}
-            fontSize={28}
-            cursor={"pointer"}
-            fontWeight={"bold"}
-            color={"#383838"}
-            onClick={handleNextPage}
-            disabled={pageNumber === numPages}
-          />
+            {renderedContent}
+          </Box>
         </Flex>
-      </Flex>
-    </Box>
+        <Flex justifyContent={"right"} mr={"15%"} mt={5} mb={5}>
+          <Flex>
+            <Button
+              bg={"#868e96"}
+              mr={10}
+              onClick={() => navigate(`/stu/tutes/new/${id}`)}
+            >
+              <Flex gap={2} alignItems={"center"} pl={2} pr={2}>
+                <AiOutlineEdit fontSize={20} />
+                <Text fontWeight={"normal"} fontSize={16}>
+                  edit
+                </Text>
+              </Flex>
+            </Button>
+            <Button
+              bg={"#fa5252"}
+              color={"#fff"}
+              mr={10}
+              onClick={handleOpenModal}
+            >
+              <Flex gap={2} alignItems={"center"} pl={2} pr={2}>
+                <MdDeleteOutline fontSize={20} />
+                <Text fontWeight={"normal"} fontSize={16}>
+                  delete
+                </Text>
+              </Flex>
+            </Button>
+          </Flex>
+        </Flex>
+      </Box>
+      <ModalLayout
+        title={title}
+        body={body}
+        footer={footer}
+        isOpen={isOpen}
+        handleCloseModal={handleCloseModal}
+      />
+    </>
   );
 };
 

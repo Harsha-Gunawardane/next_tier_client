@@ -68,15 +68,15 @@ const Addcourse = () => {
           description:
             values.description.trim().length < 1
               ? "Description is Required"
-              : values.description.length > 300
-              ? "Description Too Long"
+              : values.description.length > 800
+              ? "Description must be less than 800 characters"
               : null,
 
           subject:
             values.subject.trim().length < 1
               ? "Subject is Required"
-              : values.subject.length > 25
-              ? "Subject cannot have more than 25 characters"
+              : values.subject.length > 50
+              ? "Subject cannot have more than 50 characters"
               : null,
         };
       }
@@ -98,7 +98,12 @@ const Addcourse = () => {
       }
 
       return {
-        start_date: values.day.length < 1 ? "Start Date is Required" : null,
+        start_date:
+        values.day.length < 1
+          ? "Start Date is Required"
+          : new Date(values.day) < new Date().setHours(0, 0, 0, 0)
+          ? "Start Date must be greater than today's date"
+          : null,
 
         day: values.day.trim().length < 1 ? "Day is Required" : null,
 
@@ -108,7 +113,8 @@ const Addcourse = () => {
         end_time: values.end_time.length < 1 ? "End time is Required" : null,
 
         monthly_fee:
-          values.monthly_fee.length < 1 ? "Monthlyfee is Required" : null,
+          values.monthly_fee.length < 1 ? "Monthlyfee is Required" :  values.monthly_fee < 0 || values.monthly_fee > 1000000
+          ? "Monthly fee must be between 0 and 1,000,000":null,
       };
     },
   });
@@ -146,6 +152,7 @@ const Addcourse = () => {
 
   const handleThumbnailChange = (files) => {
     setThumbnailFile(files[0]);
+    
   };
 
 
@@ -170,15 +177,18 @@ const Addcourse = () => {
 
     if (!form.validate().hasErrors) {
       try {
-        console.log(form.values);
+        // console.log(form.values);
+        // console.log(thumbnailFile);
 
-        const { grade, type, subject } = form.values;
+        const { grade, type, subject,thumbnail } = form.values;
         const title = `${subject} ${grade} ${type}`;
+        
         // Create a new object containing all form values and the schedule
         const updatedFormValues = {
           ...form.values,
           title: title,
           start_date: startDate.toISOString(),
+          // thumbnail: thumbnailFile.name,
           schedule: {
             day: form.values.day,
             start_time: form.values.start_time,
@@ -324,7 +334,7 @@ const Addcourse = () => {
                 }}
               />
 
-               <TextInput
+               <FileInput
                 {...form.getInputProps("thumbnail")}
                 defaultValue={18}
                 placeholder="Thumbnail"
@@ -349,7 +359,7 @@ const Addcourse = () => {
 
               {/* <FileInput
                 label="Thumbnail"
-                accept="image/*" // Specify the accepted file types (here, images)
+                // accept="image/*" // Specify the accepted file types (here, images)
                 onChange={handleThumbnailChange}
                 {...form.getInputProps("thumbnail")} // Set the selected thumbnail file to state
                 styles={{

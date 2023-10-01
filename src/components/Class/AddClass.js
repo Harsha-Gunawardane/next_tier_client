@@ -1,4 +1,6 @@
-import { useState } from 'react';
+import React, { useState, useEffect } from "react";
+import { useFormik } from "formik";
+import * as Yup from "yup";
 import {
   Button,
   FormControl,
@@ -18,65 +20,148 @@ import {
   Checkbox,
   CheckboxGroup,
   Stack,
-  Radio,
-  RadioGroup,
   useBreakpointValue,
-} from '@chakra-ui/react';
-import data from '../../pages/InstituteStaff/data/data';
-
-const { viewTeacher } = data;
-const { halls } = data;
+  useToast,
+  Alert,
+  AlertIcon,
+} from "@chakra-ui/react";
+import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 
 const ButtonStyles = {
-  backgroundColor: 'blue.400',
-  color: 'white',
-  borderRadius: '5px',
+  backgroundColor: "blue.400",
+  color: "white",
+  borderRadius: "5px",
   _hover: {
-    backgroundColor: 'blue.300',
+    backgroundColor: "blue.300",
   },
 };
 
+const validationSchema = Yup.object().shape({
+  tutor_id: Yup.string().required("Teacher Name is required"),
+  title: Yup.string()
+    .required('Class Title is required')
+    .test('title-format', 'Invalid title format', (value) => {
+      if (!value) {
+        return true;
+      }
+
+      // Regular expression to match the format "Subject Year Grade"
+      const regex = /^[A-Z][A-Z]+ [0-9]{4} (?:A\/L|O\/L) Theory$/;
+
+      return regex.test(value);
+    }),
+  medium: Yup.array().min(1, "Teaching Medium is required"),
+  subject: Yup.string().required("Subject is required"),
+  grade: Yup.string().required("Grade is required"),
+  price: Yup.string()
+    .required('Monthly fee is required')
+    .test('is-integer', 'Monthly fee must be an integer', (value) => {
+      if (value === undefined || value === null || value.trim() === '') {
+        return true; 
+      }
+      return /^[0-9]+$/.test(value);
+    }),
+  date: Yup.string().required("Class Starting Date is required"),
+  hallId: Yup.string().required("Hall is required"),
+  schedule: Yup.string().required("Class Schedule is required"),
+});
 
 function AddClass({ onAddClass }) {
+  const [tutorData, setTutorData] = useState([]);
+  const [hallData, setHallData] = useState([]);
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [name, setName] = useState('');
-  const [title, setTitle] = useState('');
-  const [medium, setMedium] = useState('');
-  const [subject, setSubject] = useState('');
-  const [stream, setStream] = useState('');
-  const [price, setPrice] = useState('');
-  const [date, setDate] = useState('');
-  const [payment, setPayment] = useState('');
-  const [hall, setHall] = useState('');
-  const [details, setDetails] = useState('');
+  const [isFormSubmitted, setIsFormSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const toast = useToast();
+  const axiosPrivate = useAxiosPrivate();
 
-  const modalSize = useBreakpointValue({ base: 'xs', sm: 'md', md: 'lg' });
+  const formik = useFormik({
+    initialValues: {
+      tutor_id: "",
+      title: "",
+      medium: "", 
+      subject: "",
+      grade: "",
+      price: "",
+      date: "",
+      hallId: "",
+      schedule: "",
+      details: "",
+    },
 
-  const handleSubmit = () => {
-    // Validate and submit form data
-    if (name && title && medium && subject && stream && price && date && payment && hall && details) {
-      // Call the onAddClass function with the form data
-      onAddClass({ name, title, subject, stream, price, date, payment, hall, details });
+    validationSchema: validationSchema,
 
-      // Reset form fields
-      setName('');
-      setTitle('');
-      setMedium('');
-      setSubject('');
-      setStream('');
-      setPrice('');
-      setDate('');
-      setPayment('');
-      setHall('');
-      setDetails('');
+    onSubmit: async (values) => {
+      setIsSubmitting(true);
+      try {
+        const response = await axiosPrivate.post("/staff/class", values);
+        onAddClass(response.data);
+        toast({
+          title: "Success",
+          description: "New Class Registered Successfully!",
+          status: "success",
+          duration: 3000,
+          isClosable: true,
+          position: "top",
+        });
+        formik.resetForm();
+      } catch (error) {
+        toast({
+          title: "Error",
+          description: "Class not added. Please try again.",
+          status: "error",
+          duration: 3000,
+          isClosable: true,
+          position: "top",
+        });
+      } finally {
+        setIsFormSubmitted(true);
+        setIsSubmitting(false);
+      }
+    },
+  });
 
-      // Close the modal
-      onClose();
-    } else {
-      // Show validation error message if form data is incomplete
-      alert('Please fill in all the fields');
-    }
-  };
+  useEffect(() => {
+    const fetchTutorDetails = async () => {
+      try {
+        const response = await axiosPrivate.get("/staff/tutor");
+        setTutorData(response.data);
+      } catch (error) {
+        console.error("Error fetching tutor details:", error);
+        toast({
+          title: "Error",
+          description: "Error fetching tutor details. Please try again.",
+          status: "error",
+          duration: 3000,
+          isClosable: true,
+        });
+      }
+    };
+
+    fetchTutorDetails();
+  }, [toast, axiosPrivate]);
+
+  useEffect(() => {
+    const fetchHallDetails = async () => {
+      try {
+        const response = await axiosPrivate.get("/staff/hall");
+        setHallData(response.data);
+      } catch (error) {
+        console.error("Error fetching hall details:", error);
+        toast({
+          title: "Error",
+          description: "Error fetching hall details. Please try again.",
+          status: "error",
+          duration: 3000,
+          isClosable: true,
+        });
+      }
+    };
+
+    fetchHallDetails();
+  }, [toast, axiosPrivate]);
+
+  const modalSize = useBreakpointValue({ base: "xs", sm: "md", md: "lg" });
 
   return (
     <>
@@ -86,100 +171,213 @@ function AddClass({ onAddClass }) {
 
       <Modal isOpen={isOpen} onClose={onClose} centerContent size={modalSize}>
         <ModalOverlay />
-        <ModalContent style={{ width: '100%', maxWidth: '800px' }}>
+        <ModalContent style={{ width: "100%", maxWidth: "800px" }}>
           <ModalHeader>Add Class</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <Box border="1px solid" borderColor="gray.300" borderRadius="md" p="4">
-              <Stack direction={['column', 'row']} spacing="20px">
-                <Box flex="1">
-                  <FormControl mb="4">
-                    <FormLabel>Teacher Name</FormLabel>
-                    <Select value={name} onChange={(e) => setName(e.target.value)}>
-                      <option value="">Select a Teacher</option>
-                      {viewTeacher.map((teacher) => (
-                        <option key={teacher.id} value={teacher.fullName}>
-                          {teacher.fullName}
-                        </option>
-                      ))}
-                    </Select>
-                  </FormControl>
-                  <FormControl mb="4">
-                    <FormLabel>Title</FormLabel>
-                    <Input value={title} onChange={(e) => setTitle(e.target.value)} />
-                  </FormControl>
-                  <FormControl mb="4">
-                    <FormLabel>Medium</FormLabel>
-                    <CheckboxGroup value={medium} onChange={(e) => setMedium(e.target.value)} colorScheme="blue">
-                      <Stack spacing={[1, 5]} direction={['column', 'row']}>
-                        <Checkbox value="sinhala">Sinhala</Checkbox>
-                        <Checkbox value="english">English</Checkbox>
-                        <Checkbox value="tamil">Tamil</Checkbox>
-                      </Stack>
-                    </CheckboxGroup>
-                  </FormControl>
-                  <FormControl mb="4">
-                    <FormLabel>Subject</FormLabel>
-                    <Input value={subject} onChange={(e) => setSubject(e.target.value)} />
-                  </FormControl>
-                  <FormControl mb="4">
-                    <FormLabel>Stream</FormLabel>
-                    <Select value={stream} onChange={(e) => setStream(e.target.value)}>
-                      <option value="option1">Biological Science</option>
-                      <option value="option2">Physical Science</option>
-                      <option value="option3">Art</option>
-                      <option value="option3">Commerce</option>
-                      <option value="option3">Technology</option>
-                    </Select>
-                  </FormControl>
+            <form onSubmit={formik.handleSubmit}>
+              <Box
+                {...(isFormSubmitted && (
+                  <Alert status="success" mb={4}>
+                    <AlertIcon />
+                    Form submitted successfully!
+                  </Alert>
+                ))}
+              >
+                <Box
+                  border="1px solid"
+                  borderColor="gray.300"
+                  borderRadius="md"
+                  p="4"
+                >
+                  <Stack direction={["column", "row"]} spacing="20px">
+                    <Box flex="1">
+                      <FormControl mb="4">
+                        <FormLabel>Teacher Name</FormLabel>
+                        <Select
+                          value={formik.values.tutor_id}
+                          onChange={formik.handleChange("tutor_id")}
+                          onBlur={formik.handleBlur("tutor_id")}
+                          style={{ maxWidth: "50vh", width: "100%" }}
+                        >
+                          <option value="" disabled>
+                            Select a tutor
+                          </option>
+                          {tutorData.map((option) => (
+                            <option
+                              key={option.tutor_id}
+                              value={option.tutor_id}
+                            >
+                              {option.email}
+                            </option>
+                          ))}
+                        </Select>
+                        {formik.touched.tutor_id && formik.errors.tutor_id ? (
+                          <div style={{ color: "red" }}>
+                            {formik.errors.tutor_id}
+                          </div>
+                        ) : null}
+                      </FormControl>
+                      <FormControl mb="4">
+                        <FormLabel>Title</FormLabel>
+                        <Input
+                          placeholder="Ex:- Physics 2024 A/L Theory"
+                          value={formik.values.title}
+                          onChange={formik.handleChange("title")}
+                          onBlur={formik.handleBlur("title")}
+                        />
+                        {formik.touched.title && formik.errors.title ? (
+                          <div style={{ color: "red" }}>
+                            {formik.errors.title}
+                          </div>
+                        ) : null}
+                      </FormControl>
+                      <FormControl mb="8">
+                        <FormLabel>Medium</FormLabel>
+                        <CheckboxGroup
+                          value={formik.values.medium}
+                          onChange={formik.handleChange("medium")}
+                          onBlur={formik.handleBlur("medium")}
+                          colorScheme="blue"
+                        >
+                          <Stack spacing={[1, 5]} direction={["column", "row"]}>
+                            <Checkbox value="sinhala">Sinhala</Checkbox>
+                            <Checkbox value="english">English</Checkbox>
+                            <Checkbox value="tamil">Tamil</Checkbox>
+                          </Stack>
+                        </CheckboxGroup>
+    
+                        {formik.touched.medium && formik.errors.medium ? (
+                          <div style={{ color: "red" }}>
+                            {formik.errors.medium}
+                          </div>
+                        ) : null}
+                      </FormControl>
+                      <FormControl mb="4">
+                        <FormLabel>Subject</FormLabel>
+                        <Input
+                        placeholder="Ex:- Physics"
+                          value={formik.values.subject}
+                          onChange={formik.handleChange("subject")}
+                          onBlur={formik.handleBlur("subject")}
+                        />
+                      </FormControl>
+                      <FormControl mb="4">
+                        <FormLabel>Grade</FormLabel>
+                        <Input
+                        placeholder="Ex:- 2024 A/L"
+                          value={formik.values.grade}
+                          onChange={formik.handleChange("grade")}
+                          onBlur={formik.handleBlur("grade")}
+                        />
+                        {formik.touched.grade && formik.errors.grade ? (
+                          <div style={{ color: "red" }}>
+                            {formik.errors.grade}
+                          </div>
+                        ) : null}
+                      </FormControl>
+                    </Box>
+
+                    <Box flex="1">
+                      <FormControl mb="4">
+                        <FormLabel>Price</FormLabel>
+                        <Input
+                          value={formik.values.price}
+                          onChange={formik.handleChange("price")}
+                          onBlur={formik.handleBlur("price")}
+                        />
+                        {formik.touched.price && formik.errors.price ? (
+                          <div style={{ color: "red" }}>
+                            {formik.errors.price}
+                          </div>
+                        ) : null}
+                      </FormControl>
+                      <FormControl mb="4">
+                        <FormLabel>Start Date</FormLabel>
+                        <Input
+                          type="date"
+                          value={formik.values.date}
+                          onChange={formik.handleChange("date")}
+                          onBlur={formik.handleBlur("date")}
+                        />
+                        {formik.touched.date && formik.errors.date ? (
+                          <div style={{ color: "red" }}>
+                            {formik.errors.date}
+                          </div>
+                        ) : null}
+                      </FormControl>
+                      <FormControl mb="4">
+                        <FormLabel>Hall No</FormLabel>
+                        <Select
+                          value={formik.values.hallId}
+                          onChange={formik.handleChange("hallId")}
+                          onBlur={formik.handleBlur("hallId")}
+                          style={{ maxWidth: "50vh", width: "100%" }}
+                        >
+                          <option value="" disabled>
+                            Select a hall
+                          </option>
+                          {hallData.map((option) => (
+                            <option key={option.id} value={option.id}>
+                              {option.name}
+                            </option>
+                          ))}
+                        </Select>
+                        {formik.touched.hallId && formik.errors.hallId ? (
+                          <div style={{ color: "red" }}>
+                            {formik.errors.hallId}
+                          </div>
+                        ) : null}
+                      </FormControl>
+                      <FormControl mb="4">
+                        <FormLabel>Schedule</FormLabel>
+                        <Input
+                          value={formik.values.schedule}
+                          onChange={formik.handleChange("schedule")}
+                          onBlur={formik.handleBlur("schedule")}
+                        />
+                        {formik.touched.schedule && formik.errors.schedule ? (
+                          <div style={{ color: "red" }}>
+                            {formik.errors.schedule}
+                          </div>
+                        ) : null}
+                      </FormControl>
+                      <FormControl mb="4">
+                        <FormLabel>Description</FormLabel>
+                        <Textarea
+                          placeholder="Provide Additional Details"
+                          value={formik.values.details}
+                          onChange={formik.handleChange("details")}
+                          onBlur={formik.handleBlur("details")}
+                        />
+                      </FormControl>
+                    </Box>
+                  </Stack>
                 </Box>
 
-                <Box flex="1">
-                  <FormControl mb="4">
-                    <FormLabel>Price</FormLabel>
-                    <Input value={price} onChange={(e) => setPrice(e.target.value)} />
-                  </FormControl>
-                  <FormControl mb="4">
-                    <FormLabel>Start Date</FormLabel>
-                    <Input type="date" value={date} onChange={(e) => setDate(e.target.value)} />
-                  </FormControl>
-                  <FormControl mb="4">
-                    <FormLabel>Payment Method</FormLabel>
-                    <RadioGroup value={payment} onChange={(e) => setPayment(e.target.value)}>
-                      <Stack spacing={15} direction="row">
-                        <Radio value="1">Online</Radio>
-                        <Radio value="2">Physical</Radio>
-                        <Radio value="3">Both</Radio>
-                      </Stack>
-                    </RadioGroup>
-                  </FormControl>
-                  <FormControl mb="4">
-                    <FormLabel>Hall No</FormLabel>
-                    <Select value={hall} onChange={(e) => setHall(e.target.value)}>
-                      <option value=""></option>
-                      {halls.map((hall) => (
-                        <option key={hall.id} value={hall.hallNo}>
-                          {hall.hallNo}
-                        </option>
-                      ))}
-                    </Select>
-                  </FormControl>
-                  <FormControl mb="4">
-                    <FormLabel>Description</FormLabel>
-                    <Textarea placeholder="Provide Additional Details" value={details} onChange={(e) => setDetails(e.target.value)} />
-                  </FormControl>
-                </Box>
-              </Stack>
-            </Box>
+                <ModalFooter>
+                  <Button
+                    colorScheme="blue"
+                    type="submit"
+                    isLoading={isSubmitting}
+                  >
+                    Submit
+                  </Button>
+                  <Button
+                    ml="2"
+                    onClick={() => {
+                      formik.resetForm();
+                    }}
+                  >
+                    Clear
+                  </Button>
+                  <Button ml="2" onClick={onClose}>
+                    Cancel
+                  </Button>
+                </ModalFooter>
+              </Box>
+            </form>
           </ModalBody>
-          <ModalFooter>
-            <Button colorScheme="blue" onClick={handleSubmit}>
-              Submit
-            </Button>
-            <Button ml="2" onClick={onClose}>
-              Cancel
-            </Button>
-          </ModalFooter>
         </ModalContent>
       </Modal>
     </>
@@ -187,3 +385,4 @@ function AddClass({ onAddClass }) {
 }
 
 export default AddClass;
+

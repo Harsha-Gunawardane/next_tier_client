@@ -8,7 +8,7 @@ function CourseCardComponent({ props }) {
   return (
     <Box width={270} border={`0.05px solid ${props.borderColor}`} borderRadius={props.borderRadius}>
       <Box padding={0}>
-        <Image src={props.Courseimg} alt='Course Image' />
+        <Image src={props.Courseimg} alt='Course Image'  />
       </Box>
 
       <Stack mt='4' spacing='3' textColor={textColorPrimary}>

@@ -8,7 +8,7 @@ import { Tabs, TabList, TabPanels, Tab, TabPanel, Box } from '@chakra-ui/react'
 import Addcoursedoccontent from "./Adddoc.js";
 
 // import Remove from "./Papercontentremove.js";
-
+import Remove from "./Removecontent.js";
 
 import { useNavigate, useLocation } from "react-router-dom";
 import "../../../index.css"
@@ -38,9 +38,9 @@ const CourseIncludedoc = () => {
         const courseResponse = await axiosPrivate.get(`/tutor/course/${id}`);
         setCoursesData(courseResponse.data);
 
-        if (courseResponse.data && courseResponse.data.studypack_ids.length > 0) {
+        if (courseResponse.data) {
           const allStudyPackDetails = await Promise.all(
-            courseResponse.data.studypack_ids.map(async (studyPackId) => {
+            courseResponse.data.content_ids.map(async (studyPackId) => {
               const studyPackResponse = await axiosPrivate.get(`/tutor/course/${id}`);
               return studyPackResponse.data;
             })
@@ -86,6 +86,13 @@ const CourseIncludedoc = () => {
   };
 
 
+  
+  const handleContentRemoval = (contentId) => {
+    setContentDetails((prevContentDetails) =>
+      prevContentDetails.filter((content) => content.id !== contentId)
+    );
+  };
+
 
   return (
     <ChakraProvider>
@@ -130,8 +137,8 @@ const CourseIncludedoc = () => {
                       <Box mt="10px">
                         {content.tute_id.map((tuteId, tuteIndex) => (
                           <Box bg="#F0F8FF" mt="4px" className="box1" key={tuteIndex}>
-                            <HStack spacing={{ base: 90, xl: 330 }}>
-                              <Box p={2} width="210px">
+                            <HStack spacing={{ base: 40, xl: 100 }}>
+                              <Box p={2} width="180px">
                                 <HStack>
                                   <Image
                                     boxSize="50%"
@@ -147,12 +154,12 @@ const CourseIncludedoc = () => {
                                   </Box>
                                 </HStack>
                               </Box>
-                              <Box width="90px" ml="5px" mt="-5px">
+                              <Box width="50px" ml="-15px" mt="-5px">
                                 <HStack>
                                   <Button fontSize="12px" height="20px">
                                     View
                                   </Button>{" "}
-                                  {/* <Remove contentId={videoId} part={studyPack.id}></Remove> */}
+                                  <Remove contentId={tuteId} onContentRemove={handleContentRemoval}></Remove>
                                 </HStack>
                               </Box>
                             </HStack>

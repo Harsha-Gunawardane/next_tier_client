@@ -8,6 +8,8 @@ import { Link, useNavigate } from "react-router-dom";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import { useDisclosure } from '@chakra-ui/react'
 import { useLocation } from "react-router-dom";
+import { DatePicker } from '@mantine/dates';
+import { useToast } from "@chakra-ui/react";
 
 import {
     Modal,
@@ -31,6 +33,8 @@ const Addstudypack= () => {
   const [active, setActive] = useState(0);
   const location = useLocation();
   let id = location.pathname.split("/").pop();
+  const toast = useToast();
+
 
 
   
@@ -51,6 +55,7 @@ const Addstudypack= () => {
       price: '',
       access_period: '',
       type: 'NORMAL',
+      start_date:'',
       
       subject_area_1: '',
       subject_area_2: '',
@@ -108,10 +113,10 @@ const Addstudypack= () => {
             ?  'Subject is Required':values.subject.length >25 ? 'Subject should be less than 25 Characters' 
             : null,
   
-            thumbnail:
-            values.thumbnail.trim().length < 1
-              ?  'Course Type is Required'
-              : null,
+            // thumbnail:
+            // values.thumbnail.trim().length < 1
+            //   ?  'Course Type is Required'
+            //   : null,
 
             
                 
@@ -129,23 +134,23 @@ const Addstudypack= () => {
         ? "Price must be less than 50000"
         : null,
 
-        days: values.days.length < 1
-        ? "Day is Required"
-        : parseInt(values.days) >= 365
-        ? "Days must be less than 366 days"
-        : null,
+        // days: values.days.length < 1
+        // ? "Day is Required"
+        // : parseInt(values.days) >= 365
+        // ? "Days must be less than 366 days"
+        // : null,
       
-        months: values.months.length < 1
-        ? "Month is Required"
-        : parseInt(values.months) >= 12
-        ? "Month must be less than 12 months"
-        : null,
+        // months: values.months.length < 1
+        // ? "Month is Required"
+        // : parseInt(values.months) >= 12
+        // ? "Month must be less than 12 months"
+        // : null,
       
-              years: values.years.length < 1
-              ? "Year is Required"
-              : parseInt(values.years) >= 3
-              ? "Year must be less than 3 years"
-              : null,
+        //       years: values.years.length < 1
+        //       ? "Year is Required"
+        //       : parseInt(values.years) >= 3
+        //       ? "Year must be less than 3 years"
+        //       : null,
 
             
       };
@@ -183,6 +188,34 @@ const Addstudypack= () => {
 
 
 
+
+useEffect(() => {
+  // Check if there is a success message in localStorage
+  const successMessage = localStorage.getItem("studyPackAddedSuccess");
+
+  if (successMessage) {
+    // Display the success message as a toast
+    toast({
+      title: "Study Pack Added",
+      description: successMessage,
+      status: "success",
+      duration: 5000,
+      isClosable: true,
+      position: 'top',
+    });
+
+    // Remove the success message from localStorage
+    localStorage.removeItem("studyPackAddedSuccess");
+  }
+}, []); // Run this effect only once on component mount
+
+
+
+
+
+
+
+
 const handleSubmit = async (event) => {
   event.preventDefault();
   const controller = new AbortController();
@@ -206,9 +239,9 @@ const handleSubmit = async (event) => {
         subject_area_3: undefined,
         subject_area_4: undefined,
         access_period: {
-          days: form.values.days,
-          months: form.values.months,
-          years: form.values.years,
+          // days: form.values.days,
+          // months: form.values.months,
+          // years: form.values.years,
         },
       };
 
@@ -237,33 +270,54 @@ const handleSubmit = async (event) => {
       // Step 4: Set default content_ids up to week 4 while preserving the existing price
       const defaultContentIds = [
         {
-          week1: {
-            tute_id: [],
-            video_id: [],
-            quiz_id: [],
-          },
-        },
-        {
-          week2: {
-            tute_id: [],
-            video_id: [],
-            quiz_id: [],
-          },
-        },
-        {
-          week3: {
-            tute_id: [],
-            video_id: [],
-            quiz_id: [],
-          },
-        },
-        {
-          week4: {
-            tute_id: [],
-            video_id: [],
-            quiz_id: [],
-          },
-        },
+          "title": "week1",
+          "quiz_id": [
+              " "
+          ],
+          "tute_id": [
+              " "
+          ],
+          "video_id": [
+              " "
+          
+          ]
+      },
+      {
+          "title": "week2",
+          "quiz_id": [
+              " "
+          ],
+          "tute_id": [
+              " "
+          ],
+          "video_id": [
+              " "
+          ]
+      },
+      {
+          "title": "week3",
+          "quiz_id": [
+              " "
+          ],
+          "tute_id": [
+              " "
+          ],
+          "video_id": [
+              " "
+          ]
+      },
+      {
+          "title": "week4",
+          "quiz_id": [
+              " "
+          ],
+          "tute_id": [
+              " "
+          ],
+          "video_id": [
+              " "
+          ]
+      }
       ];
 
       const studypackUpdateData = {
@@ -275,6 +329,8 @@ const handleSubmit = async (event) => {
 
       console.log('Studypack content_ids updated with default values:', studypackUpdateResponse);
 
+      window.location.reload();
+      localStorage.setItem("studyPackAddedSuccess", "Your study pack has been added successfully!");
     } catch (error) {
       console.error('Error sending data:', error);
     }
@@ -285,11 +341,12 @@ const handleSubmit = async (event) => {
 
 
 
-//   if (coursesdata === null) {
-//     return <div>Loading...</div>;
-//   }
 
-
+// const handleStudyPackAdded = (newStudyPackDetails) => {
+//   // Call the callback function from the parent component
+//   onStudyPackAdded(newStudyPackDetails);
+//   // Additional logic, such as closing modals or clearing form fields
+// };
 
 
 
@@ -499,7 +556,7 @@ const handleSubmit = async (event) => {
 
 
 
-            <TextInput label="Thumbnail" placeholder="Thumbnail" {...form.getInputProps('thumbnail')} h='50px' mb='30px'
+            {/* <TextInput label="Thumbnail" placeholder="Thumbnail" {...form.getInputProps('thumbnail')} h='50px' mb='30px'
              styles={{
               input: { // Styles for the input element
                
@@ -515,14 +572,14 @@ const handleSubmit = async (event) => {
                 marginBottom: '5px',
               },
            
-            }} />
+            }} /> */}
     
 
         </Stepper.Step>
 
 
 
-        <Stepper.Step  description="Social media">
+        <Stepper.Step  description="Price Details">
 
        
         <NumberInput
@@ -556,9 +613,9 @@ const handleSubmit = async (event) => {
 
 
 
-<HStack spacing='40px' mt='20px'>
 
-<NumberInput
+
+{/* <NumberInput
                 {...form.getInputProps("years")}
                 defaultValue={18}
                 placeholder="Years"
@@ -580,9 +637,9 @@ const handleSubmit = async (event) => {
                     marginBottom: "5px",
                   },
                 }}
-              />
+              /> */}
 
-
+{/* 
 <NumberInput
                 {...form.getInputProps("months")}
                 defaultValue={18}
@@ -606,9 +663,9 @@ const handleSubmit = async (event) => {
                     marginBottom: "5px",
                   },
                 }}
-              />
+              /> */}
 
-
+{/* 
 <NumberInput
                 {...form.getInputProps("days")}
                 defaultValue={18}
@@ -632,9 +689,9 @@ const handleSubmit = async (event) => {
                     marginBottom: "5px",
                   },
                 }}
-              />
+              /> */}
 
-</HStack>
+
 
 
 
@@ -764,7 +821,7 @@ const handleSubmit = async (event) => {
           </Button>
         )}
         {active !== 3 && <Button onClick={nextStep} fontSize='12px' colorScheme="blue">Next step</Button>}
-        {active === 3 && <Button type='submit' fontSize='12px' colorScheme="blue">Submit</Button>}
+        {active === 3 && <Button type='submit' fontSize='12px' colorScheme="blue"  >Submit</Button>}
       </Group>
     </Box>
     </form>

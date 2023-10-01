@@ -37,7 +37,14 @@ const Courseremove = (props) => {
             // Optionally, you can navigate to a different page after deletion
          // Change the path to the desired destination after deletion
             // localStorage.setItem("courseremoved", "true");
-            window.location.reload();
+            toast({
+              title: 'Study Pack Removed',
+              description: 'The study pack has been removed successfully.',
+              status: 'success',
+              duration: 3000,
+              isClosable: true,
+            });
+            onClose();
             navigate("/tutor/courses"); 
         
           })

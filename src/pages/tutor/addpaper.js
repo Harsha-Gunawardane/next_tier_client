@@ -23,7 +23,7 @@ import {
   } from '@chakra-ui/react'
 
 
-const Addpaper= () => {
+const Addpaper= ({onStudyPackAdd}) => {
 
 
   const navigate = useNavigate();
@@ -33,6 +33,7 @@ const Addpaper= () => {
   const [active, setActive] = useState(0);
   const location = useLocation();
   let id = location.pathname.split("/").pop();
+  const [newPaper, setNewPaper] = useState("");
 
 
   
@@ -138,23 +139,23 @@ const Addpaper= () => {
   ? "Price must be less than 50000"
   : null,
 
-  days: values.days.length < 1
-  ? "Day is Required"
-  : parseInt(values.days) >= 365
-  ? "Days must be less than 366 days"
-  : null,
+  // days: values.days.length < 1
+  // ? "Day is Required"
+  // : parseInt(values.days) >= 365
+  // ? "Days must be less than 366 days"
+  // : null,
 
-  months: values.months.length < 1
-  ? "Month is Required"
-  : parseInt(values.months) >= 12
-  ? "Month must be less than 12 months"
-  : null,
+  // months: values.months.length < 1
+  // ? "Month is Required"
+  // : parseInt(values.months) >= 12
+  // ? "Month must be less than 12 months"
+  // : null,
 
-        years: values.years.length < 1
-        ? "Year is Required"
-        : parseInt(values.years) >= 3
-        ? "Year must be less than 3 years"
-        : null,
+  //       years: values.years.length < 1
+  //       ? "Year is Required"
+  //       : parseInt(values.years) >= 3
+  //       ? "Year must be less than 3 years"
+  //       : null,
 
             
       };
@@ -171,6 +172,28 @@ const Addpaper= () => {
 
   const prevStep = () => setActive((current) => (current > 0 ? current - 1 : current));
 
+
+
+
+  useEffect(() => {
+    // Check if there is a success message in localStorage
+    const successMessage = localStorage.getItem("studyPackAddedSuccess");
+  
+    if (successMessage) {
+      // Display the success message as a toast
+      toast({
+        title: "Study Pack Added",
+        description: successMessage,
+        status: "success",
+        duration: 5000,
+        isClosable: true,
+        position: 'top',
+      });
+  
+      // Remove the success message from localStorage
+      localStorage.removeItem("studyPackAddedSuccess");
+    }
+  }, []);
 
 const handleSubmit = async (event) => {
   event.preventDefault();
@@ -195,9 +218,9 @@ const handleSubmit = async (event) => {
         subject_area_3: undefined,
         subject_area_4: undefined,
         access_period: {
-          days: form.values.days,
-          months: form.values.months,
-          years: form.values.years,
+          // days: form.values.days,
+          // months: form.values.months,
+          // years: form.values.years,
         },
       };
 
@@ -225,10 +248,7 @@ const handleSubmit = async (event) => {
 
       // Step 4: Set default content_ids up to week 4 while preserving the existing price
       const defaultContentIds = [
-        {
-          tute_id: [],
-          video_id: [],
-        },
+      
         // Repeat the above structure for additional weeks if needed
       ];
 
@@ -241,10 +261,12 @@ const handleSubmit = async (event) => {
 
       console.log('Studypack content_ids updated with default values:', studypackUpdateResponse);
 
-      localStorage.setItem('formSubmitted', 'true');
+      // localStorage.setItem('formSubmitted', 'true');
+      // onStudyPackAdd(studypackId);
 
-      // Reload the page
+   
       window.location.reload();
+      localStorage.setItem("studyPackAddedSuccess", "Your study pack has been added successfully!");
     } catch (error) {
       console.error('Error sending data:', error);
     }
@@ -252,26 +274,11 @@ const handleSubmit = async (event) => {
 };
  
 
-const formSubmitted = localStorage.getItem('formSubmitted');
-
-if (formSubmitted === 'true') {
-  // Show the toast notification
-  // toast({
-  //   title: 'Form submitted successfully!',
-  //   status: 'success',
-  //   duration: 3000,
-  //   isClosable: true,
-  // });
-
-  // Remove the key from local storage
-}
-  
-
   return (
 
 <>
 
-<Button  fontSize='15px' width={{base:400,xl:700}} height='35px' bg='white' border='2px dotted black' onClick={onOpen} >+Add Paper</Button>
+<Button  fontSize='15px' width={{base:400,xl:700}} height='35px' bg='white' border='2px dotted black' onClick={onOpen} >+Add Studypack</Button>
      
    
 
@@ -476,7 +483,7 @@ if (formSubmitted === 'true') {
 
 
 
-        <Stepper.Step  description="Social media">
+        <Stepper.Step  description="Price Details">
 
        
         <NumberInput
@@ -511,8 +518,8 @@ if (formSubmitted === 'true') {
 
 
 
-<HStack spacing='40px' mt='20px'>
-
+{/* <HStack spacing='40px' mt='20px'> */}
+{/* 
 <NumberInput
                 {...form.getInputProps("years")}
                 defaultValue={18}
@@ -535,10 +542,10 @@ if (formSubmitted === 'true') {
                     marginBottom: "5px",
                   },
                 }}
-              />
+              /> */}
 
 
-<NumberInput
+{/* <NumberInput
                 {...form.getInputProps("months")}
                 defaultValue={18}
                 placeholder="Months"
@@ -561,9 +568,9 @@ if (formSubmitted === 'true') {
                     marginBottom: "5px",
                   },
                 }}
-              />
+              /> */}
 
-
+{/* 
 <NumberInput
                 {...form.getInputProps("days")}
                 defaultValue={18}
@@ -589,7 +596,7 @@ if (formSubmitted === 'true') {
                 }}
               />
 
-</HStack>
+</HStack> */}
 
 
 

@@ -20,10 +20,37 @@ import { Table } from '@mantine/core';
   import { CircularProgress, CircularProgressLabel } from '@chakra-ui/react'
   import { Divider } from '@chakra-ui/react'
   import Barchart from "../../components/charts/BarChart"
+  import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import useAxiosPrivate from "../../hooks/useAxiosPrivate";
+import { useLocation } from "react-router-dom";
 
 
 
-const quiz = () => {
+const Quiz = () => {
+
+  const location = useLocation();
+  const iid = location.pathname.split("/").pop();
+  
+  const axiosPrivate = useAxiosPrivate();
+
+  const [studypackdata, setstudypackdata] = useState({});
+
+  useEffect(() => {
+    const getStudyPack = async () => {
+      const controller = new AbortController();
+      try {
+        const response = await axiosPrivate.get(`/tutor/studypack/${iid}`, {
+          signal: controller.signal,
+        });
+        setstudypackdata(response.data);
+        console.log(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getStudyPack();
+  }, [axiosPrivate]);
 
   const elements = [
     { name: 'Thisura', course: 'Physics 2024 Theory', marks: '90', rank: '1' },
@@ -51,8 +78,9 @@ const quiz = () => {
 
       <Box>
       
-        
-        <Heading fontSize='25px' mt='5px' ml='10px'>2024 AL Paper Classs-Paper 03 - Analyze</Heading>
+      {studypackdata && (    
+        <Heading fontSize='25px' mt='5px' ml='10px'>2024 AL Paper Classs-Paper 03 - Analyze {studypackdata.title}</Heading>
+      )}
 <SimpleGrid spacing={20} minChildWidth='250px'>
 
 </SimpleGrid>
@@ -129,7 +157,7 @@ const quiz = () => {
 </Box>
 
 
-<Box bg='white' width={{base:200,lg:200,xl:450}}  p={4} color='black' ml={{base:0,lg:200,xl:360}}>
+<Box bg='white' width={{base:200,lg:200,xl:400}}  p={4} color='black' ml={{base:0,lg:200,xl:170}}>
 <Box bg='#F0F8FF'  w='100%' height='190px' p={4} color='black' mt='20px' borderRadius={'10px'} boxShadow='0 3px 10px rgb(0 0 0 / 0.2)'>
 
 <HStack spacing='24px'>
@@ -189,4 +217,4 @@ const quiz = () => {
   );
 };
 
-export default quiz;
+export default Quiz;

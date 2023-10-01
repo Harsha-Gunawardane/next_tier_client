@@ -1,18 +1,22 @@
-import { Outlet, useParams } from "react-router-dom";
+import { Outlet, useLocation, useParams } from "react-router-dom";
 import Header from "../components/Header/Header";
 import ResponsiveSidebar from "../components/Sidebar/ResponsiveSidebar";
 
 import { useState, useEffect, useRef } from "react";
-import { FaUsers, FaUserAlt, } from "react-icons/fa";
+import { FaUsers, FaUserAlt, FaMoneyBillAlt } from "react-icons/fa";
 
 import { Grid, GridItem, useDisclosure } from "@chakra-ui/react";
 import useSidebar from "../hooks/useSidebar";
 
-
 //icons
 import GridViewRoundedIcon from "@mui/icons-material/GridViewRounded";
 import { TiDocumentText } from "react-icons/ti";
-import { FaCompass, FaUserFriends, FaListAlt, FaQuestionCircle } from "react-icons/fa";
+import {
+  FaCompass,
+  FaUserFriends,
+  FaListAlt,
+  FaQuestionCircle,
+} from "react-icons/fa";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import ReportProblemIcon from "@mui/icons-material/ReportProblem";
 import { MdOutlineQuiz, MdQuiz, MdVideoLibrary } from "react-icons/md";
@@ -22,30 +26,29 @@ import { BiListUl, BiSolidDashboard } from "react-icons/bi"
 import { IoIosPaper } from "react-icons/io";
 import { faListCheck } from "@fortawesome/free-solid-svg-icons";
 
-
-
-
-
 const SidebarAndHeader = ({ userRole }) => {
-	//get width of sidebar component and set to state
-	const { isOpen, onOpen, onClose } = useDisclosure();
-	const [hidden, setHidden] = useState(isOpen);
-	const [minimized, setMinimized] = useState({ base: false, md: true, lg: false });
+  //get width of sidebar component and set to state
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const [hidden, setHidden] = useState(isOpen);
+  const [minimized, setMinimized] = useState({
+    base: false,
+    md: true,
+    lg: false,
+  });
 
-	const { setSidebarOptionHandler } = useSidebar();
-	const params = useParams();
-	const minimizeButtonRef = useRef();
+  const { setSidebarOptionHandler } = useSidebar();
+  const { pathname } = useLocation();
+  const params = useParams();
+  const minimizeButtonRef = useRef();
 
+  useEffect(() => {
+    const activeTab = findActiveTab(params);
+    setSidebarOptionHandler(activeTab);
+  }, [setSidebarOptionHandler]);
 
-	useEffect(() => {
-		const activeTab = findActiveTab(params);
-		setSidebarOptionHandler(activeTab);
+  const startWithMinimize = ["stu/content", "stu/content/watch/:id"];
 
-	}, [setSidebarOptionHandler]);
-
-
-
-	const tabsMap = new Map([
+  const tabsMap = new Map([
     //Student Routes
     ["stu/dashboard", "dashboard"],
     ["stu/courses", "courses"],
@@ -55,7 +58,16 @@ const SidebarAndHeader = ({ userRole }) => {
     ["stu/quizzes", "quizzes"],
     ["stu/tutes", "tutes"],
 
-    // More routes and active tabs...
+		// More routes and active tabs...
+		// ['tutor/dashboard', 'dashboard'],
+		// ['tutor/courses/add', 'courses'],
+		// ['tutor/courses', 'courses'],
+		// ['tutor/courses/content/:courseid', 'courses'],
+		// ['tutor/courses/details/:courseid', 'courses'],
+		// ['courses/content/analyze/:studypackid', 'courses'],
+		// ['courses/studypackcontent/:courseid', 'courses'],
+		// ['courses/courses/studypackdetails/:courseid', 'courses'],
+		// ['courses/courses/addstudypack', 'courses'],
 
     //Teacher Routes
     ["tutor/dashboard", "dashboard"],
@@ -83,19 +95,20 @@ const SidebarAndHeader = ({ userRole }) => {
 
 
 
-	function getRouteWithParams(params) {
-		const route = params["*"];
-		var keys = Object.keys(params).filter((key) => key !== "*");
-		var routeWithParams = route;
+  function getRouteWithParams(params) {
+    const route = params["*"];
+    var keys = Object.keys(params).filter((key) => key !== "*");
+    var routeWithParams = route;
 
-		keys.forEach((key) => {
-			if (key !== "*") {
-				routeWithParams = routeWithParams.replace(params[key], ":" + key);
-			}
-		});
-		return (routeWithParams)
+    keys.forEach((key) => {
+      if (key !== "*") {
+        routeWithParams = routeWithParams.replace(params[key], ":" + key);
+      }
+    });
+    return routeWithParams;
+  }
 
-	}
+  
 
 	function findActiveTab(params) {
 		return tabsMap.get(getRouteWithParams(params)) || 'dashboard';
@@ -119,7 +132,7 @@ const SidebarAndHeader = ({ userRole }) => {
 
 	const StuOptions = [
 		{ icon: BiSolidDashboard, name: "Dashboard", value: "dashboard", href: "/stu/dashboard" },
-		{ icon: IoSchool, name: "My Courses", value: "mycourses", href: "/stu/courses" },
+		{ icon: IoSchool, name: "MyCourses", value: "mycourses", href: "/stu/mycourses" },
 		{ icon: IoCompass, name: "Explore", value: "courses", href: "/stu/courses" },
 		{ icon: MdVideoLibrary, name: "Content", value: "content", href: "/stu/content" },
 		{ icon: MdOutlineQuiz, name: "Quizzes", value: "quizzes", href: "/stu/quizzes" },
@@ -249,7 +262,7 @@ const SidebarAndHeader = ({ userRole }) => {
 					top={0}
 				/>
 				{/* <Box h={"100vh"} w={"100%"} overflowX={"hidden"}> */}
-				<Outlet context={[minimizeButtonRef, minimized]} />
+				<Outlet context={{ minimizeButtonRef, minimized }} />
 				{/* </Box> */}
 			</GridItem>
 		</Grid >

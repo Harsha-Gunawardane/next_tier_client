@@ -1,4 +1,4 @@
-import { Flex, Box } from "@chakra-ui/react";
+import { Flex } from "@chakra-ui/react";
 import { useEffect } from "react";
 import SelectedProfile from "./components/SelectedProfile";
 import AdminProfiles from "./components/AdminProfiles";
@@ -33,7 +33,7 @@ function AdminsInfo() {
       }
     };
     fetchAdmins();
-  }, []);
+  }, [axiosPrivate, setAdminsInfo, setSelectedAdmin]);
 
   return (
     <Flex>

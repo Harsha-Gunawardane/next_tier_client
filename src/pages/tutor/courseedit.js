@@ -3,7 +3,7 @@ import React from "react";
 import { Box, Button } from "@chakra-ui/react";
 import { Image, Heading, Text,Link } from "@chakra-ui/react";
 
-import { HStack } from "@chakra-ui/react";
+import { HStack,ListItem,UnorderedList } from "@chakra-ui/react";
 import { SimpleGrid } from "@chakra-ui/react";
 import { TimeIcon, CalendarIcon } from "@chakra-ui/icons";
 
@@ -66,7 +66,7 @@ const Courseedit = () => {
 
             <Heading fontSize="25px">{coursedata.title}</Heading>
 
-            <HStack spacing="24px" mt="20px">
+            {/* <HStack spacing="24px" mt="20px">
               <Box w="50%" h="30px" bg="white">
                 {coursedata.schedule && coursedata.schedule.length > 0 ? (
                   <Text color="black" fontSize="12px" mt="-0px">
@@ -101,13 +101,13 @@ const Courseedit = () => {
                   {coursedata.medium}
                 </Text>
               </Box>
-            </HStack>
+            </HStack> */}
 
-            <br></br>
+            {/* <br></br>
 
             <Heading fontSize="22px">Description</Heading>
-            <br></br>
-            <Box width="90%">
+            <br></br> */}
+            <Box width="90%" mt='10px'>
               {" "}
               <Text fontSize="15px">{coursedata.description}</Text>
             </Box>
@@ -122,7 +122,36 @@ const Courseedit = () => {
               Course Details
             </Heading>
 
-            <CourseDetails></CourseDetails>
+  <UnorderedList spacing={3} mb='10px' mt='5px'>
+  <ListItem>   {coursedata.schedule && coursedata.schedule.length > 0 ? (
+                  <Text color="black" fontSize="14px" mt="-0px">
+                Day -   {coursedata.schedule[0].day}
+                  </Text>
+                ) : (
+                  <Text color="black" fontSize="14px" mt="-0px">
+                 No Day Available
+                  </Text>
+                )}</ListItem>
+
+  <ListItem mt='10px'>    {coursedata.schedule && coursedata.schedule.length > 0 ? (
+                  <Text color="black" fontSize="14px" mt="-0px">
+                Time - {coursedata.schedule[0].start_time} -{" "}
+                    {coursedata.schedule[0].end_time}
+                  </Text>
+                ) : (
+                  <Text color="black" fontSize="14px" mt="-0px">
+                  No Schedule Available
+                  </Text>
+                )}</ListItem>
+
+  <ListItem>  <Text  fontSize="14px">
+  Monthly Fee -    Rs.{coursedata.monthly_fee}
+                </Text></ListItem>
+  <ListItem>  <Text  fontSize="14px">
+  Medium -   {coursedata.medium}
+                </Text></ListItem>
+</UnorderedList>
+  
             <br></br>
             <Heading fontSize="20px" mb="10px">
               Course Includes
@@ -137,13 +166,9 @@ const Courseedit = () => {
 
               <FormControl display="flex" alignItems="center" mt={2}>
                 <FormLabel htmlFor="course-visibility" mb="0" mr={2}>
-                  Course Visibility
+                {coursedata.visibility}
                 </FormLabel>
-                <Switch
-                  id="course-visibility"
-                  isChecked={isPublic}
-                  onChange={handleToggleVisibility}
-                />
+               
               </FormControl>
             </HStack>
           </Box>

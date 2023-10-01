@@ -1,82 +1,132 @@
+import React, { useEffect, useState } from "react";
 import {
-    Box,
-    SimpleGrid,
-  
-    CardHeader,
-    Flex,
-    HStack,Text,Button
+  CardBody,
+  Button,
+  Text,
+  Stack,
+  Heading,
+  Divider,
+  SimpleGrid,
+  GridItem,
+  Box
+} from "@chakra-ui/react";
+import { Card, Image, Badge, Group } from '@mantine/core';
+import { CalendarIcon, TimeIcon, EditIcon } from "@chakra-ui/icons";
+import { ChakraProvider, HStack, Link } from "@chakra-ui/react";
+import { useNavigate } from "react-router-dom";
+import { IconButton } from "@chakra-ui/react";
+import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 
-   
-  } from "@chakra-ui/react";
-  import { Card, Image, Badge, Group } from '@mantine/core';
-  // import {  Image, Text, Badge, Button, Group } from '@mantine/core';
-  import { TimeIcon, CalendarIcon,ArrowForwardIcon } from "@chakra-ui/icons";
-  
-  function Coursecard() {
-   
-  
-    return (
+const Coursecard = (props) => {
+  const [coursesdata, setCoursesData] = useState(null);
+  const navigate = useNavigate();
+  const axiosPrivate = useAxiosPrivate();
 
-  <Box>
-      <Card shadow="sm" padding="lg" radius="md" withBorder>
-        <Card.Section>
-          <Image
-            src="https://th.bing.com/th/id/R.63c6ff86b42346482cab5281aad8eb13?rik=LTwVcuzk9175YA&riu=http%3a%2f%2fbuzz2fone.com%2fwp-content%2fuploads%2fphysics.jpg&ehk=zNyEIEd3lFQo1pJNa6U0KxXtk0CYBmtIb9ZIOP%2bw9sY%3d&risl=&pid=ImgRaw&r=0"
-            height={180}
-            alt="Norway"
-          />
-        </Card.Section>
-  
-        <Group position="apart" mt="md" mb="xs">
-          <Text weight={600} fontSize='15px'>Physics 2024 A/L Thory</Text>
-          <Badge color="blue" variant="light">
-            On Going
-          </Badge>
-        </Group>
-       
-  
-  
-        <HStack spacing="24px" mt="20px">
-                <Box w="50%" h="30px" bg="white">
-               
-                    <Text color="grey" fontSize="10px" mt="-0px">
-                      <TimeIcon mr='5px' />8.00 a.m. - 12.00 p.m. 
-                    </Text>
-          
-                    <Text color="black" fontSize="12px" mt="-0px"></Text>
-               
-         
-                </Box>
-  
-  
-                <Box w="50%" h="30px" bg="white">
-               
-               <Text color="grey" fontSize="10px" mt="-0px">
-                 <TimeIcon mr='5px' />Hall 07 Ground Floar 
-               </Text>
-     
-               <Text color="black" fontSize="12px" mt="-0px"></Text>
-          
-    
-           </Box>
-  
-            
-            
-              
-              </HStack>
-  
-  
-        <Button variant="light" colorScheme="blue" bg='#2b8ecc' fontSize='12px' radius="md" mt='10px' color='white'>
-          Access Course <ArrowForwardIcon></ArrowForwardIcon>
-        </Button>
-      </Card>
+  const LoadDetail = (id) => {
+    navigate("/tutor/courses/details/" + id);
+  };
 
-      </Box>
-  
-  
-     
-    );
-  }
-  
-  export default Coursecard;
-  
+  const Coursecontent = (id) => {
+    navigate("/tutor/courses/content/" + id);
+  };
+
+  const getCurrentDay = () => {
+    const daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thurseday", "Friday", "Saturday"];
+    const currentDayIndex = new Date().getDay();
+    return daysOfWeek[currentDayIndex];
+  };
+
+  const getCourses = async () => {
+    const controller = new AbortController();
+    try {
+      const response = await axiosPrivate.get(`/tutor/course`, {
+        signal: controller.signal,
+      });
+      setCoursesData(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getCourses();
+  }, [axiosPrivate]);
+
+  const currentDay = getCurrentDay();
+
+  return (
+    <>
+      <ChakraProvider>
+        <SimpleGrid minChildWidth="300px" spacing="40px" mt='-40px'>
+          <GridItem colSpan={3}> </GridItem>
+          {coursesdata != null && coursesdata.length > 0 ? (
+            coursesdata.map((item) => {
+              const courseHasCurrentDay = item.schedule && item.schedule.some(schedule => schedule.day === currentDay);
+
+              if (courseHasCurrentDay) {
+                return (
+                  <Card key={item.id} shadow="sm" padding="lg" radius="md" withBorder>
+                    <Card.Section>
+                      <Image
+                        src={item.thumbnail}
+                        height={180}
+                        alt="Norway"
+                      />
+                    </Card.Section>
+                    <Group position="apart" mt="md" mb="xs">
+                      <Text weight={600} fontSize='15px'>{item.title}</Text>
+                      <Badge color="blue" variant="light">
+                        Today
+                      </Badge>
+                    </Group>
+                    <HStack spacing="24px" mt="20px">
+                      <Box w="50%" h="30px" bg="white">
+                      
+                         {item.schedule && item.schedule.length > 0 ? (
+                  <Text color="grey" fontSize="10px" mt="-0px">
+                <TimeIcon mr='5px' />   {item.schedule[0].start_time} -{" "}
+                    {item.schedule[0].end_time}
+                  </Text>
+                ) : (
+                  <Text color="black" fontSize="10px" mt="-0px">
+                  No Schedule Available
+                  </Text>
+                )}
+                       
+                        <Text color="black" fontSize="12px" mt="-0px"></Text>
+                      </Box>
+                      <Box w="50%" h="30px" bg="white">
+                        <Text color="grey" fontSize="10px" mt="-0px">
+                          <TimeIcon mr='5px' />Hall 07 Ground Floar 
+                        </Text>
+                        <Text color="black" fontSize="12px" mt="-0px"></Text>
+                      </Box>
+                    </HStack>
+                    <Button variant="light" colorScheme="blue" bg='#2b8ecc' fontSize='12px' radius="md" mt='10px' color='white'      onClick={() => {
+                      Coursecontent(item.id);
+                    }}>
+                      Access Course 
+                    </Button>
+                  </Card>
+                );
+              } else {
+                return null; // Don't render this course
+              }
+            })
+          ) : null /* Remove the message here */
+          }
+        </SimpleGrid>
+
+        {coursesdata != null && coursesdata.length === 0 && (
+          <Box mt="150px">
+            {/* <Heading fontSize="25px" ml="400px" color='black'>
+              No Course Packages Available
+            </Heading> */}
+          </Box>
+        )}
+      </ChakraProvider>
+    </>
+  );
+};
+
+export default Coursecard;

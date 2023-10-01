@@ -3,12 +3,12 @@ import { useParams } from 'react-router-dom'
 import useSidebar from "../../hooks/useSidebar";
 import { Flex, Box, SimpleGrid, GridItem, Text, Skeleton, Button } from '@chakra-ui/react';
 import VideoList from '../../components/DashboardComponents/VideoList';
-import CommentSection from '../../components/student/ContentWatch/CommentSection';
+import CommentSection from '../../components/student/contentWatch/CommentSection';
 import { useOutletContext } from 'react-router-dom';
 
 //icons 
 import SearchBar from '../../components/SearchBar';
-import VideoView from '../../components/student/ContentWatch/VideoView';
+import VideoView from '../../components/student/contentWatch/VideoView';
 import { axiosPrivate } from '../../api/axios';
 
 //back end api endpoints
@@ -59,7 +59,7 @@ const ContentWatch = () => {
 
     const [videoDetails, setVideoDetails] = useState();
     const [isLoaded, setIsLoaded] = useState(false);
-    const [minimizeButtonRef] = useOutletContext();
+    const { minimizeButtonRef } = useOutletContext();
 
 
     const { id } = useParams();
