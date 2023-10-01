@@ -11,17 +11,16 @@ import {
 } from "@chakra-ui/react";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 
-export default function McqDeleteFromQuizAlertDialog({
+export default function McqDeleteFromCategoryAlertDialog({
   isOpen,
   onClose,
   handleDelete,
   mcqIdToDelete,
   mcqs,
   setMcqs,
-  quiz,
-  setQuiz,
+  category,
+  setCategory,
 }) {
-
   const axiosPrivate = useAxiosPrivate();
 
   const toast = useToast();
@@ -29,30 +28,31 @@ export default function McqDeleteFromQuizAlertDialog({
 
   const handleConfirmDelete = async () => {
     try {
-      await axiosPrivate.delete(`/tutor/quizzes/deleteMcq/${quiz.id}/${mcqIdToDelete}`);
+      await axiosPrivate.delete(
+        `/tutor/categories/deleteMcq/${category.id}/${mcqIdToDelete}`
+      );
 
       const updatedMcqList = mcqs.filter((mcq) => mcq.id !== mcqIdToDelete);
       setMcqs(updatedMcqList);
 
-       setQuiz((prevQuiz) => ({
-         ...prevQuiz,
-         number_of_questions: prevQuiz.number_of_questions - 1,
-         question_ids: prevQuiz.question_ids.filter(
-           (id) => id !== mcqIdToDelete
-         ),
-       }));
+      setCategory((prevCategory) => ({
+        ...prevCategory,
+        number_of_questions: prevCategory.number_of_questions - 1,
+        question_ids: prevCategory.question_ids.filter(
+          (id) => id !== mcqIdToDelete
+        ),
+      }));
 
       onClose(); // Close the dialog after successful deletion
 
       toast({
-          title: "Mcq deleted.",
-          description: `Mcq deleted from the ${quiz.title} succesfully.`,
-          status: "success",
-          duration: 9000,
-          isClosable: true,
-          position: "top-right",
-        });
-
+        title: "Mcq deleted.",
+        description: `Mcq deleted from the ${category.title} succesfully.`,
+        status: "success",
+        duration: 9000,
+        isClosable: true,
+        position: "top-right",
+      });
     } catch (err) {
       console.log(`Error: ${err.message}`);
       onClose(); // Close the dialog even if there's an error

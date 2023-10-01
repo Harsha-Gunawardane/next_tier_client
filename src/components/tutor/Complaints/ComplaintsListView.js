@@ -53,8 +53,10 @@ import allComplaints from "./Assets/AllComplaints.png";
 import pending from "./Assets/pendingcomplaints.png";
 import resolved from "./Assets/completedComplaints.png";
 import ignored from "./Assets/removedcomplaints.png";
+import MiniStat from "../../Card/MiniStat";
+import MiniStatCardIcon from "../../icons/MiniStatCardIcon";
 
-function ComplaintsListView() {
+function TutorComplaintsListView() {
   // const complaints = data.complaints;
   // const complaintstable = data.complaintstable;
   const toast = useToast();
@@ -280,29 +282,64 @@ function ComplaintsListView() {
     }
   `;
 
+  const textColorSecondary = "gray.600";
+
+
+
   return (
-    <div style={{ backgroundColor: "#F9F9F9", width: "100%" }}>
-      <Heading marginLeft={13} fontSize={20} marginTop={13} color="#242424">
+    <div style={{ width: "100%" }}>
+      <Heading marginLeft={13} fontSize={16} marginTop={5} color="#242424">
         Complaints
       </Heading>
+
       <SimpleGrid
-        p="10px"
-        columns={4}
-        spacing={20}
-        minChildWidth="250px"
-        ml={13}
-        mr={13}
+        cols={4}
+        spacing={10}
+        minChildWidth="140px"
+        maxChildWidth="200px"
+        padding="15px"
+        margin="2px auto"
+        marginTop="10px"
+        maxWidth="1120px"
       >
-        <Box height="92px" shadow="base" bg="white" borderRadius={15}>
+        <Box
+          h="100px"
+          boxShadow="rgba(0, 0, 0, 0.1) 0px 4px 12px;"
+          hover={{
+            boxShadow: "0 0 0 1px rgba(0, 0, 0, 0.05)",
+          }}
+          borderRadius={10}
+          padding="15px"
+        >
           <Box>
-            <Text fontSize="16px" fontWeight="bold" pl={4} pt={2}>
+            <Text
+              fontSize={{
+                base: "0.8rem",
+                md: "1rem",
+                lg: "1rem",
+              }}
+              fontWeight="bold"
+              color={textColorSecondary}
+            >
               All Complaints
             </Text>
           </Box>
           <Box>
             <Flex justify="space-around">
-              <Box pt={3}>
-                <Text fontSize="22px"> {complaints.length}</Text>
+              <Box>
+                <Text
+                  color="#333"
+                  fontSize={{
+                    base: "2.4rem",
+                    md: "2.5rem",
+                    lg: "2.6rem",
+                  }}
+                  fontWeight={"semi-bold"}
+                  my={0}
+                  height={"100%"}
+                >
+                  {complaints.length}
+                </Text>
               </Box>
               <Box>
                 <Image
@@ -316,16 +353,44 @@ function ComplaintsListView() {
           </Box>
         </Box>
 
-        <Box height="92px" shadow="base" bg="white" borderRadius={15}>
+        <Box
+          h="100px"
+          boxShadow="rgba(0, 0, 0, 0.1) 0px 4px 12px;"
+          hover={{
+            boxShadow: "0 0 0 1px rgba(0, 0, 0, 0.05)",
+          }}
+          borderRadius={10}
+          padding="15px"
+        >
           <Box>
-            <Text fontSize="16px" fontWeight="bold" pl={4} pt={2}>
+            <Text
+              fontSize={{
+                base: "0.8rem",
+                md: "1rem",
+                lg: "1rem",
+              }}
+              fontWeight="bold"
+              color={textColorSecondary}
+            >
               Resolved Complaints
             </Text>
           </Box>
           <Box>
             <Flex justify="space-around">
-              <Box pt={3}>
-                <Text fontSize="22px">{complaintCounts.resolvedCount}</Text>
+              <Box>
+                <Text
+                  color="#333"
+                  fontSize={{
+                    base: "2.4rem",
+                    md: "2.5rem",
+                    lg: "2.6rem",
+                  }}
+                  fontWeight={"semi-bold"}
+                  my={0}
+                  height={"100%"}
+                >
+                  {complaintCounts.resolvedCount}
+                </Text>
               </Box>
               <Box>
                 <Image src={resolved} width="40px" height="40px" mt={1}></Image>
@@ -334,16 +399,45 @@ function ComplaintsListView() {
           </Box>
         </Box>
 
-        <Box height="92px" shadow="base" bg="white" borderRadius={15}>
+        <Box
+          h="100px"
+          boxShadow="rgba(0, 0, 0, 0.1) 0px 4px 12px;"
+          hover={{
+            boxShadow: "0 0 0 1px rgba(0, 0, 0, 0.05)",
+          }}
+          borderRadius={10}
+          padding="15px"
+        >
           <Box>
-            <Text fontSize="16px" fontWeight="bold" pl={4} pt={2}>
+            <Text
+              fontSize={{
+                base: "0.8rem",
+                md: "1rem",
+                lg: "1rem",
+              }}
+              fontWeight="bold"
+              color={textColorSecondary}
+            >
               Pending Complaints
             </Text>
           </Box>
           <Box>
             <Flex justify="space-around">
-              <Box pt={3}>
-                <Text fontSize="22px"> {complaintCounts.pendingCount}</Text>
+              <Box>
+                <Text
+                  color="#333"
+                  fontSize={{
+                    base: "2.4rem",
+                    md: "2.5rem",
+                    lg: "2.6rem",
+                  }}
+                  fontWeight={"semi-bold"}
+                  my={0}
+                  height={"100%"}
+                >
+                  {" "}
+                  {complaintCounts.pendingCount}
+                </Text>
               </Box>
               <Box>
                 <Image src={pending} width="40px" height="40px" mt={1}></Image>
@@ -352,16 +446,44 @@ function ComplaintsListView() {
           </Box>
         </Box>
 
-        <Box height="92px" shadow="base" bg="white" borderRadius={15}>
+        <Box
+          h="100px"
+          boxShadow="rgba(0, 0, 0, 0.1) 0px 4px 12px;"
+          hover={{
+            boxShadow: "0 0 0 1px rgba(0, 0, 0, 0.05)",
+          }}
+          borderRadius={10}
+          padding="15px"
+        >
           <Box>
-            <Text fontSize="16px" fontWeight="bold" pl={4} pt={2}>
+            <Text
+              fontSize={{
+                base: "0.8rem",
+                md: "1rem",
+                lg: "1rem",
+              }}
+              fontWeight="bold"
+              color={textColorSecondary}
+            >
               Ignored Complaints
             </Text>
           </Box>
           <Box>
             <Flex justify="space-around">
-              <Box pt={3}>
-                <Text fontSize="22px">{complaintCounts.ignoredCount}</Text>
+              <Box>
+                <Text
+                  color="#333"
+                  fontSize={{
+                    base: "2.4rem",
+                    md: "2.5rem",
+                    lg: "2.6rem",
+                  }}
+                  fontWeight={"semi-bold"}
+                  my={0}
+                  height={"100%"}
+                >
+                  {complaintCounts.ignoredCount}
+                </Text>
               </Box>
               <Box>
                 <Image src={ignored} width="40px" height="40px" mt={1}></Image>
@@ -872,4 +994,4 @@ function ComplaintsListView() {
   );
 }
 
-export default ComplaintsListView;
+export default TutorComplaintsListView;

@@ -36,11 +36,6 @@ const [contentdata, setcontentData] = useState([]);
 
 const axiosPrivate = useAxiosPrivate();
 
-
-
-
-
-
 useEffect(() => {
   const getCourses = async () => {
     const controller = new AbortController();
@@ -68,7 +63,6 @@ const handleCheckboxChange = (index) => {
     setSelectedItems([...selectedItems, index]);
   }
 };
-
 
 
 const [existingVideoIds, setExistingVideoIds] = useState([]); 

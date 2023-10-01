@@ -1,4 +1,4 @@
-import { Button, useToast } from "@chakra-ui/react";
+import { Button } from "@chakra-ui/react";
 import { useRef } from "react";
 
 import {
@@ -10,48 +10,25 @@ import {
   AlertDialogOverlay,
 } from "@chakra-ui/react";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
+import { useNavigate } from "react-router-dom";
 
-export default function McqDeleteFromQuizAlertDialog({
+export default function PaperDeleteAlertDialog({
   isOpen,
   onClose,
-  handleDelete,
-  mcqIdToDelete,
-  mcqs,
-  setMcqs,
-  quiz,
-  setQuiz,
+  paperIdToDelete,
+  
 }) {
-
   const axiosPrivate = useAxiosPrivate();
+  const navigate = useNavigate();
 
-  const toast = useToast();
   const cancelRef = useRef();
 
   const handleConfirmDelete = async () => {
     try {
-      await axiosPrivate.delete(`/tutor/quizzes/deleteMcq/${quiz.id}/${mcqIdToDelete}`);
-
-      const updatedMcqList = mcqs.filter((mcq) => mcq.id !== mcqIdToDelete);
-      setMcqs(updatedMcqList);
-
-       setQuiz((prevQuiz) => ({
-         ...prevQuiz,
-         number_of_questions: prevQuiz.number_of_questions - 1,
-         question_ids: prevQuiz.question_ids.filter(
-           (id) => id !== mcqIdToDelete
-         ),
-       }));
+      await axiosPrivate.delete(`/tutor/papers/${paperIdToDelete}`);
 
       onClose(); // Close the dialog after successful deletion
-
-      toast({
-          title: "Mcq deleted.",
-          description: `Mcq deleted from the ${quiz.title} succesfully.`,
-          status: "success",
-          duration: 9000,
-          isClosable: true,
-          position: "top-right",
-        });
+      navigate("/tutor/papers")
 
     } catch (err) {
       console.log(`Error: ${err.message}`);
@@ -69,7 +46,7 @@ export default function McqDeleteFromQuizAlertDialog({
         <AlertDialogOverlay>
           <AlertDialogContent>
             <AlertDialogHeader fontSize="lg" fontWeight="bold">
-              Remove mcq
+              Remove paper
             </AlertDialogHeader>
 
             <AlertDialogBody>

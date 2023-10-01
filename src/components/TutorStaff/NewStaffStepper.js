@@ -195,7 +195,7 @@ export default function NewStaffStepper({ setStaffs, staffs, onClose }) {
                 clearable
                 label="Birthday"
                 placeholder="Birthday"
-                valueFormat="YYYY MMM DD"
+                valueFormat="YYYY MM DD"
                 minDate={minBirthdate}
                 maxDate={maxBirthdate}
                 {...form.getInputProps("DOB")}

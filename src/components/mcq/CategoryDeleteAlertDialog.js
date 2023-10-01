@@ -1,4 +1,4 @@
-import { Button, useToast } from "@chakra-ui/react";
+import { Button } from "@chakra-ui/react";
 import { useRef } from "react";
 
 import {
@@ -10,48 +10,31 @@ import {
   AlertDialogOverlay,
 } from "@chakra-ui/react";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
+import { useNavigate } from "react-router-dom";
 
-export default function McqDeleteFromQuizAlertDialog({
+export default function CategoryDeleteAlertDialog({
   isOpen,
   onClose,
-  handleDelete,
-  mcqIdToDelete,
-  mcqs,
-  setMcqs,
-  quiz,
-  setQuiz,
+  categoryIdToDelete,
+  categories,
+  setCategory,
 }) {
-
   const axiosPrivate = useAxiosPrivate();
+  const navigate = useNavigate();
 
-  const toast = useToast();
   const cancelRef = useRef();
 
   const handleConfirmDelete = async () => {
     try {
-      await axiosPrivate.delete(`/tutor/quizzes/deleteMcq/${quiz.id}/${mcqIdToDelete}`);
+      await axiosPrivate.delete(`/tutor/categories/${categoryIdToDelete}`);
 
-      const updatedMcqList = mcqs.filter((mcq) => mcq.id !== mcqIdToDelete);
-      setMcqs(updatedMcqList);
-
-       setQuiz((prevQuiz) => ({
-         ...prevQuiz,
-         number_of_questions: prevQuiz.number_of_questions - 1,
-         question_ids: prevQuiz.question_ids.filter(
-           (id) => id !== mcqIdToDelete
-         ),
-       }));
+      const updatedQuizList = categories.filter(
+        (category) => category.id !== categoryIdToDelete
+      );
+      setCategory(updatedQuizList);
 
       onClose(); // Close the dialog after successful deletion
-
-      toast({
-          title: "Mcq deleted.",
-          description: `Mcq deleted from the ${quiz.title} succesfully.`,
-          status: "success",
-          duration: 9000,
-          isClosable: true,
-          position: "top-right",
-        });
+      navigate("/tutor/categories")
 
     } catch (err) {
       console.log(`Error: ${err.message}`);

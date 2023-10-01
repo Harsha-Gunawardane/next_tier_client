@@ -15,10 +15,12 @@ import { TiDocumentText } from "react-icons/ti";
 import { FaCompass, FaUserFriends, FaListAlt, FaQuestionCircle } from "react-icons/fa";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import ReportProblemIcon from "@mui/icons-material/ReportProblem";
-import { MdOutlineQuiz, MdVideoLibrary } from "react-icons/md";
+import { MdOutlineQuiz, MdQuiz, MdVideoLibrary } from "react-icons/md";
 import { PiNotebookFill } from "react-icons/pi";
 import { IoSchool, IoCompass } from "react-icons/io5";
-import { BiSolidDashboard } from "react-icons/bi"
+import { BiListUl, BiSolidDashboard } from "react-icons/bi"
+import { IoIosPaper } from "react-icons/io";
+import { faListCheck } from "@fortawesome/free-solid-svg-icons";
 
 
 
@@ -44,39 +46,40 @@ const SidebarAndHeader = ({ userRole }) => {
 
 
 	const tabsMap = new Map([
-		//Student Routes
-		['stu/dashboard', 'dashboard'],
-		['stu/courses', 'courses'],
-		['stu/content', 'content'],
-		['stu/content/watch/:id', 'content'],
-		['stu/courses/:courseId/forum', 'courses'],
-		['stu/quizzes', 'quizzes'],
-		['stu/tutes', 'tutes'],
+    //Student Routes
+    ["stu/dashboard", "dashboard"],
+    ["stu/courses", "courses"],
+    ["stu/content", "content"],
+    ["stu/content/watch/:id", "content"],
+    ["stu/courses/:courseId/forum", "courses"],
+    ["stu/quizzes", "quizzes"],
+    ["stu/tutes", "tutes"],
 
-		// More routes and active tabs...
+    // More routes and active tabs...
 
+    //Teacher Routes
+    ["tutor/dashboard", "dashboard"],
+    ["tutor/courses/add", "courses"],
+    ["tutor/courses", "courses"],
+    ["tutor/courses/content/:courseid", "courses"],
+    ["tutor/courses/details/:courseid", "courses"],
+    ["courses/content/analyze/:studypackid", "courses"],
+    ["courses/studypackcontent/:courseid", "courses"],
+    ["courses/courses/studypackdetails/:courseid", "courses"],
+    ["courses/courses/addstudypack", "courses"],
+    ["tutor/staffs", "staffs"],
+    ["tutor/papers", "papers"],
+    ["tutor/quizzes", "quizzes"],
+    ["tutor/complaints", "complaints"],
 
-		//Teacher Routes
-		['tutor/dashboard', 'dashboard'],
-		['tutor/courses/add', 'courses'],
-		['tutor/courses', 'courses'],
-		['tutor/courses/content/:courseid', 'courses'],
-		['tutor/courses/details/:courseid', 'courses'],
-		['courses/content/analyze/:studypackid', 'courses'],
-		['courses/studypackcontent/:courseid', 'courses'],
-		['courses/courses/studypackdetails/:courseid', 'courses'],
-		['courses/courses/addstudypack', 'courses'],
-		['tutor/staffs', 'staffs'],
-		['tutor/quizzes', 'quizzes'],
-
-		['staff/dashboard', 'dashboard'],
-		['staff/class', 'approveclass'],
-		['sttaff/complaints', 'complaints'],
-		['staff/hall', 'hallschedule'],
-		['staff/staff-list', 'stafflist'],
-		['staff/tutors-list', 'stulist'],
-		['staff/my-profile', 'profile'],
-	]);
+    ["staff/dashboard", "dashboard"],
+    ["staff/class", "approveclass"],
+    ["sttaff/complaints", "complaints"],
+    ["staff/hall", "hallschedule"],
+    ["staff/staff-list", "stafflist"],
+    ["staff/tutors-list", "stulist"],
+    ["staff/my-profile", "profile"],
+  ]);
 
 
 
@@ -130,44 +133,49 @@ const SidebarAndHeader = ({ userRole }) => {
 	]
 
 	const TeacherOptions = [
-		{
-			icon: GridViewRoundedIcon,
-			name: "Dashboard",
-			value: "dashboard",
-			href: "/tutor/dashboard",
-		},
-		{
-			icon: TiDocumentText,
-			name: "Courses",
-			value: "courses",
-			href: "/tutor/courses",
-		},
-		{
-			icon: FaCompass,
-			name: "Contents",
-			value: "contents",
-			href: "/tutor/contents",
-		},
-		{
-			icon: FaUserFriends,
-			name: "Staff",
-			value: "staffs",
-			href: "/tutor/staffs",
-		},
-		{
-			icon: FaListAlt,
-			FaQuestionCircle,
-			name: "Quizzes",
-			value: "quizzes",
-			href: "/tutor/quizzes",
-		},
-		{
-			icon: FaQuestionCircle,
-			name: "Complaints",
-			value: "complaints",
-			href: "/tutor/complaints",
-		},
-	];
+    {
+      icon: GridViewRoundedIcon,
+      name: "Dashboard",
+      value: "dashboard",
+      href: "/tutor/dashboard",
+    },
+    {
+      icon: TiDocumentText,
+      name: "Courses",
+      value: "courses",
+      href: "/tutor/courses",
+    },
+    {
+      icon: FaCompass,
+      name: "Contents",
+      value: "contents",
+      href: "/tutor/contents",
+    },
+    {
+      icon: FaUserFriends,
+      name: "Staffs",
+      value: "staffs",
+      href: "/tutor/staffs",
+    },
+    {
+      icon: IoIosPaper,
+      name: "Papers",
+      value: "papers",
+      href: "/tutor/papers",
+    },
+    {
+      icon: BiListUl,
+      name: "Quizzes",
+      value: "quizzes",
+      href: "/tutor/quizzes",
+    },
+    {
+      icon: FaQuestionCircle,
+      name: "Complaints",
+      value: "complaints",
+      href: "/tutor/complaints",
+    },
+  ];
 
 	const InstStaffOptions = [
 		{ icon: GridViewRoundedIcon, name: 'Dashboard', value: 'dashboard', href: '/staff/dashboard' },

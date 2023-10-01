@@ -9,7 +9,6 @@ import {
   InputGroup,
   InputLeftElement,
 } from "@chakra-ui/react";
-import { IconSearch } from "@tabler/icons-react";
 import React from "react";
 import { AiOutlineImport } from "react-icons/ai";
 import { IoIosAddCircleOutline } from "react-icons/io";
