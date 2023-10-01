@@ -2,7 +2,8 @@ import React, { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Box, Button, Flex, Text } from "@chakra-ui/react";
 import { useState } from "react";
-import { AiOutlineEdit } from "react-icons/ai";
+import { AiOutlineEdit, AiFillStar, AiOutlineStar } from "react-icons/ai";
+import { BsArchiveFill, BsArchive } from "react-icons/bs";
 import { MdDeleteOutline } from "react-icons/md";
 
 import "../../../../assests/css/pdfView.css";
@@ -18,6 +19,35 @@ const PDFView = () => {
 
   const [tute, setTute] = useState("");
   const [heading, setHeading] = useState("");
+  const [starred, setStarred] = useState(false);
+  const [archived, setArchived] = useState(false);
+
+  const handleStarred = async () => {
+    const tempStarred = starred;
+    setStarred(!starred);
+
+    try {
+      await axiosPrivate.put(`${TUTE_URL}/star`, {
+        id,
+        starred: !tempStarred,
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  const handleArchived = async () => {
+    const tempArchived = archived;
+    setArchived(!archived);
+
+    try {
+      await axiosPrivate.put(`${TUTE_URL}/archive`, {
+        id,
+        archived: !tempArchived,
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   // for delete confirmation
   const [isOpen, setIsOpen] = useState(false);
@@ -59,6 +89,9 @@ const PDFView = () => {
         const response = await axiosPrivate.get(`${TUTE_URL}?${queryString}`);
         setTute(response.data?.tute?.content);
         setHeading(response.data?.tute?.name);
+        setStarred(response.data?.tute?.starred);
+        setArchived(response.data?.tute?.archived);
+
         console.log(response.data?.tute);
       } catch (err) {
         console.log(err);
@@ -84,6 +117,59 @@ const PDFView = () => {
           justifyContent={"center"}
         >
           <Text>{heading}</Text>
+        </Flex>
+        <Flex
+          mt={5}
+          mb={3}
+          w={"100%"}
+          fontSize={20}
+          color={"#333"}
+          justifyContent={"right"}
+        >
+          <Flex gap={3} alignItems={"center"} mr={20}>
+            <Flex
+              gap={2}
+              alignItems={"center"}
+              border={"1px solid #E9E9E9"}
+              borderRadius={3}
+              pl={2}
+              pr={2}
+              pt={1}
+              pb={1}
+              cursor={"pointer"}
+              onClick={handleStarred}
+            >
+              <Text fontSize={14}>{starred ? "starred" : "unstar"}</Text>
+              <Box>
+                {starred ? (
+                  <AiFillStar fontSize={14} color="#ECC330" />
+                ) : (
+                  <AiOutlineStar fontSize={14} color="#ECC330" />
+                )}
+              </Box>
+            </Flex>
+            <Flex
+              gap={2}
+              alignItems={"center"}
+              border={"1px solid #E9E9E9"}
+              borderRadius={3}
+              pl={2}
+              pr={2}
+              pt={1}
+              pb={1}
+              cursor={"pointer"}
+              onClick={handleArchived}
+            >
+              <Text fontSize={14}>{archived ? "archived" : "unarchive"}</Text>
+              <Box>
+                {archived ? (
+                  <BsArchiveFill fontSize={14} color="#6CB86C" />
+                ) : (
+                  <BsArchive fontSize={14} color="#6CB86C" />
+                )}
+              </Box>
+            </Flex>
+          </Flex>
         </Flex>
 
         <Flex w={"100%"} justifyContent={"center"}>
