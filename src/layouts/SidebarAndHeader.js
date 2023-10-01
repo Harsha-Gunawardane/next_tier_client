@@ -12,10 +12,10 @@ import useSidebar from "../hooks/useSidebar";
 import GridViewRoundedIcon from "@mui/icons-material/GridViewRounded";
 import { TiDocumentText } from "react-icons/ti";
 import {
-  FaCompass,
-  FaUserFriends,
-  FaListAlt,
-  FaQuestionCircle,
+	FaCompass,
+	FaUserFriends,
+	FaListAlt,
+	FaQuestionCircle,
 } from "react-icons/fa";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import ReportProblemIcon from "@mui/icons-material/ReportProblem";
@@ -25,41 +25,41 @@ import { IoSchool, IoCompass } from "react-icons/io5";
 import { BiSolidDashboard } from "react-icons/bi"
 
 const SidebarAndHeader = ({ userRole }) => {
-  //get width of sidebar component and set to state
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  const [hidden, setHidden] = useState(isOpen);
-  const [minimized, setMinimized] = useState({
-    base: false,
-    md: true,
-    lg: false,
-  });
+	//get width of sidebar component and set to state
+	const { isOpen, onOpen, onClose } = useDisclosure();
+	const [hidden, setHidden] = useState(isOpen);
+	const [minimized, setMinimized] = useState({
+		base: false,
+		md: true,
+		lg: false,
+	});
 
-  const { setSidebarOptionHandler } = useSidebar();
-  const { pathname } = useLocation();
-  const params = useParams();
-  const minimizeButtonRef = useRef();
+	const { setSidebarOptionHandler } = useSidebar();
+	const { pathname } = useLocation();
+	const params = useParams();
+	const minimizeButtonRef = useRef();
 
-  useEffect(() => {
-    const activeTab = findActiveTab(params);
-    setSidebarOptionHandler(activeTab);
-  }, [setSidebarOptionHandler]);
+	useEffect(() => {
+		const activeTab = findActiveTab(params);
+		setSidebarOptionHandler(activeTab);
+	}, [setSidebarOptionHandler]);
 
-  const startWithMinimize = ["stu/content", "stu/content/watch/:id"];
+	const startWithMinimize = ["stu/content", "stu/content/watch/:id"];
 
-  const tabsMap = new Map([
-    //Student Routes
-    ["stu/dashboard", "dashboard"],
-    ["stu/courses", "courses"],
-    ["stu/content", "content"],
-    ["stu/content/watch/:id", "content"],
-    ["stu/courses/:courseId/forum", "courses"],
-    ["stu/quizzes", "quizzes"],
-    ["stu/tutes", "tutes"],
+	const tabsMap = new Map([
+		//Student Routes
+		["stu/dashboard", "dashboard"],
+		["stu/courses", "courses"],
+		["stu/content", "content"],
+		["stu/content/watch/:id", "content"],
+		["stu/courses/:courseId/forum", "courses"],
+		["stu/quizzes", "quizzes"],
+		["stu/tutes", "tutes"],
 
-    // More routes and active tabs...
+		// More routes and active tabs...
 
-    //Teacher Routes
-    ['tutor/dashboard', 'dashboard'],
+		//Teacher Routes
+		['tutor/dashboard', 'dashboard'],
 		['tutor/courses/add', 'courses'],
 		['tutor/courses', 'courses'],
 		['tutor/courses/content/:courseid', 'courses'],
@@ -78,22 +78,22 @@ const SidebarAndHeader = ({ userRole }) => {
 		['staff/staff-list', 'stafflist'],
 		['staff/tutors-list', 'stulist'],
 		['staff/my-profile', 'profile'],
-  ]);
+	]);
 
-  function getRouteWithParams(params) {
-    const route = params["*"];
-    var keys = Object.keys(params).filter((key) => key !== "*");
-    var routeWithParams = route;
+	function getRouteWithParams(params) {
+		const route = params["*"];
+		var keys = Object.keys(params).filter((key) => key !== "*");
+		var routeWithParams = route;
 
-    keys.forEach((key) => {
-      if (key !== "*") {
-        routeWithParams = routeWithParams.replace(params[key], ":" + key);
-      }
-    });
-    return routeWithParams;
-  }
+		keys.forEach((key) => {
+			if (key !== "*") {
+				routeWithParams = routeWithParams.replace(params[key], ":" + key);
+			}
+		});
+		return routeWithParams;
+	}
 
-  
+
 
 	function findActiveTab(params) {
 		return tabsMap.get(getRouteWithParams(params)) || 'dashboard';
@@ -131,43 +131,12 @@ const SidebarAndHeader = ({ userRole }) => {
 	]
 
 	const TeacherOptions = [
-		{
-			icon: GridViewRoundedIcon,
-			name: "Dashboard",
-			value: "dashboard",
-			href: "/tutor/dashboard",
-		},
-		{
-			icon: TiDocumentText,
-			name: "Courses",
-			value: "courses",
-			href: "/tutor/courses",
-		},
-		{
-			icon: FaCompass,
-			name: "Contents",
-			value: "contents",
-			href: "/tutor/contents",
-		},
-		{
-			icon: FaUserFriends,
-			name: "Staff",
-			value: "staffs",
-			href: "/tutor/staffs",
-		},
-		{
-			icon: FaListAlt,
-			FaQuestionCircle,
-			name: "Quizzes",
-			value: "quizzes",
-			href: "/tutor/quizzes",
-		},
-		{
-			icon: FaQuestionCircle,
-			name: "Complaints",
-			value: "complaints",
-			href: "/tutor/complaints",
-		},
+		{ icon: GridViewRoundedIcon, name: "Dashboard", value: "dashboard", href: "/tutor/dashboard" },
+		{ icon: TiDocumentText, name: "Courses", value: "courses", href: "/tutor/courses" },
+		{ icon: MdVideoLibrary, name: "Contents", value: "contents", href: "/tutor/content", },
+		{ icon: FaUserFriends, name: "Staff", value: "staffs", href: "/tutor/staffs" },
+		{ icon: FaListAlt, FaQuestionCircle, name: "Quizzes", value: "quizzes", href: "/tutor/quizzes" },
+		{ icon: FaQuestionCircle, name: "Complaints", value: "complaints", href: "/tutor/complaints" }
 	];
 
 	const InstStaffOptions = [
@@ -185,7 +154,7 @@ const SidebarAndHeader = ({ userRole }) => {
 		case "student":
 			Options = StuOptions;
 			break;
-		case "teacher":
+		case "tutor":
 			Options = TeacherOptions;
 			break;
 		case ('InstituteStaff'):

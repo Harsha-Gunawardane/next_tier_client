@@ -33,7 +33,7 @@ export default function generateTimeAgoString(datetime) {
         const yearsAgo = Math.floor(timeDiff / year);
         timeAgo = `${yearsAgo} year${yearsAgo > 1 ? 's' : ''} ago`;
     } else {
-        timeAgo = 'just now bla bla' + timeDiff + ' ' + timestamp + ' ' + currentTime;
+        timeAgo = 'just now' + timeDiff + ' ' + timestamp + ' ' + currentTime;
     }
 
     return timeAgo;

@@ -9,10 +9,7 @@ import { Spoiler } from '@mantine/core';
 
 import VideoJS from './VideoPlayer'
 import videojs from 'video.js'
-import VideoPlayer from './VideoPlayer';
-import VideoPlayer3 from './VideoPlayer3';
-
-// import ReactHlsPlayer from "react-hls-player";
+import ReactVideoPlayer from './ReactVideoPlayer';
 
 
 
@@ -31,49 +28,12 @@ const VideoView = (props) => {
     const playerRef = React.useRef(null);
 
 
-    const videoUrl = "https://cdn.glitch.me/cbf2cfb4-aa52-4a1f-a73c-461eef3d38e8/1080.mp4"
+    const videoUrl = "https://storage.googleapis.com/hls-streaming-gcp-processed-files-fluted-clock-395620/sample.mp4/manifest.m3u8"
 
     return (
         <Flex width={"100%"} height={"max-content"} justifyContent={"flex-start"} alignItems={"flex-start"} direction={"column"}>
-            <AspectRatio minW="100%" ratio={16 / 9} overflow={"hidden"}>
-
-                <Player
-                    src={[
-                        {
-                            quality: "Original",
-                            url:
-                                `http://localhost:3500/video/${videoDetails.file_path}/hls`,
-                        },
-                        {
-                            quality: "1080p",
-                            url:
-                                `http://localhost:3500/video/${videoDetails.file_path}/hls/1080p`,
-                        },
-                        {
-                            quality: "720p",
-                            url: `http://localhost:3500/video/${videoDetails.file_path}/hls/720p`,
-                        },
-                        {
-                            quality: "360p",
-                            url: `http://localhost:3500/video/${videoDetails.file_path}/hls/360p`,
-                        },
-                    ]}
-
-                    poster={videoDetails.thumbnail}
-
-                    keyboardShortcut={{
-                        play: false,
-                        pause: false,
-                        forward: false,
-                        rewind: false,
-                        fullScreen: false,
-                        mute: false,
-                        subtitle: false,
-                    }}
-                >
-                    {/* {(ref, props) => <ReactHlsPlayer playerRef={ref} {...props} width={"100%"} />} */}
-
-                </Player>
+            <AspectRatio minW="100%" w="100%" ratio={16 / 9} overflow={"hidden"} position={"relative"} borderRadius={"10px"}>
+                <ReactVideoPlayer videoUrl={videoUrl} />
             </AspectRatio>
 
             <Flex w={"100%"} mt="5px" px="5px" color={"#3f3f3f"}>

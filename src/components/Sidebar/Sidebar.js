@@ -315,18 +315,18 @@ const Sidebar = (props) => {
           <Option {...logout} minimizeStatus={minimized} />
 
           <Popover placement="right" onClose={handlePopoverClose}>
-            <PopoverTrigger>
-              {/* <Button>
+            {/* <PopoverTrigger>
+              <Button>
                 <Flex gap={2} alignItems={"center"}>
                   <BsInfoCircle />
                   <Text>Send Feedback</Text>
                 </Flex>
-              </Button> */}
+              </Button>
               
               <Button>
                 <Option {...feedbackOption} minimizeStatus={minimized} />
               </Button>
-            </PopoverTrigger>
+            </PopoverTrigger> */}
             <PopoverContent>
               <PopoverHeader fontWeight="semibold">Send feedback</PopoverHeader>
               <PopoverArrow />

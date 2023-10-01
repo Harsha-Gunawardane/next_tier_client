@@ -180,12 +180,6 @@ const PostCreateModal = (props) => {
     } = props
 
 
-    //useForm Mantine
-
-
-
-
-
     //get users first name and last name from zustand
     const { fName, lName } = useUserInfo
     const { courseId } = useParams()
@@ -606,7 +600,8 @@ export {
     PostViewModal,
     PostCreateModal,
     GuideLineModal,
-    AreYouSureModal
+    AreYouSureModal,
+    MyRichTextEditor
 
 }
 

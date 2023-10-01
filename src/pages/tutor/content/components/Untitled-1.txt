@@ -1,0 +1,83 @@
+{/* <Flex w="100%" direction={"column"} gap="10px">
+                        <Box>
+                            <Text fontSize={"0.9rem"} fontWeight={"normal"} color={"gray.500"}>Creating post as:</Text>
+                            <Flex justifyContent={"space-between"} alignItems={"center"} direction={"row"} py="5px">
+                                <Flex justifyContent={"flex-start"} alignItems={"center"} gap={"10px"} direction={"row"}>
+                                    <Avatar size="xs" name="Dan Abrahmov" src="https://bit.ly/dan-abramov" />
+                                    <Flex alignItems={"flex-start"} justifyContent={"center"} direction={"column"}>
+                                        <Text fontWeight={"bold"} color={"#3f3f3f"}>
+                                            {fName} {lName}
+                                        </Text>
+                                    </Flex>
+                                </Flex>
+                                <Text fontSize={"0.9rem"} fontWeight={"semi-bold"} color={"gray.400"} pointer={"pointer"}>2024 AL Theory</Text>
+                            </Flex>
+                        </Box>
+                        <form onSubmit={(e) => e.preventDefault()} encType="multipart/form-data">
+                            <Flex direction="column" gap="10px">
+                                <TextInput
+                                    placeholder="Title"
+                                    label="Title"
+                                    fontSize={"1.2rem"}
+                                    size="lg"
+                                {...form.getInputProps("title")}
+                                />
+                                <label htmlFor="description">Description</label>
+                                <MyRichTextEditor
+                                    form={form}
+                                />
+                                <Flex direction="column" w="100%">
+                                    <label htmlFor="description">Attachments</label>
+                                    <Flex direction="row" w="100%" border="1px solid" borderColor={"gray.200"} borderRadius={"5px"} p={"10px"} onDragEnter={handleDragEnter} onDragLeave={handleDragLeave} onDragOver={handleDragOver} onDrop={handleDrop} alignItems={"center"} justifyContent={"center"} cursor={"pointer"} onClick={handleFileInput} gap="20px">
+
+                                        <FileInput
+                                            id="files"
+                                            accept="image/*, .pdf"
+                                            style={{ display: "none" }}
+                                            multiple={true}
+                                            onChange={handleFileChange}
+                                        />
+
+                                        <Image src={attachment} alt="attachment" width={"50px"} opacity={"0.5"} />
+                                        <Box>
+                                            <Text fontSize={"0.9rem"} fontWeight={"semi-bold"} color={"gray.400"}>Drag and drop files here or click to upload</Text>
+                                            <Text fontSize={"0.9rem"} fontWeight={"semi-bold"} color={"gray.400"}>Allowed file types: jpg, png, pdf</Text>
+                                        </Box>
+                                    </Flex>
+                                    <SimpleGrid direction="column" w="100%" mt={"10px"} gap={"10px"} columns={4}>
+                                        {form.values.files.length > 0 && form.values.files.map((file, index) => {
+                                            return (
+                                                <GridItem key={index} colSpan={1} rowSpan={1} w="100%" h="100%" border="1px solid" borderColor={"gray.200"} borderRadius={"5px"} p={"10px"} position={"relative"}>
+                                                    {file.type === "application/pdf" ?
+                                                        <Center w="100%" h="100%">
+                                                        </Center>
+                                                        :
+                                                        <Center w="100%" h="100%">
+                                                            <Image src={URL.createObjectURL(file)} alt="pdf" objectFit={"cover"} />
+                                                        </Center>
+                                                    }
+                                                    <IconButton
+                                                        aria-label="delete"
+                                                        icon={<IoCloseSharp />}
+                                                        size="sm"
+                                                        variant="solid"
+                                                        colorScheme="red"
+                                                        position={"absolute"}
+                                                        top={"5px"}
+                                                        right={"5px"}
+                                                        onClick={() => {
+                                                            const newFiles = [...form.values.files]
+                                                            newFiles.splice(index, 1)
+                                                            form.setFieldValue("files", newFiles)
+                                                        }}
+                                                        borderRadius={"50%"}
+                                                    />
+                                                </GridItem>
+                                            )
+                                        })}
+                                    </SimpleGrid>
+                                </Flex>
+
+                            </Flex>
+                        </form>
+                    </Flex> */}
