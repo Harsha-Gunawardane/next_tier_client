@@ -96,6 +96,8 @@ import SidebarAndHeader from "./layouts/SidebarAndHeader";
 
 import { Routes, Route } from "react-router-dom";
 import { ROLES } from "./config/roles";
+import Test from "./pages/common/Test";
+import MyContent from "./pages/tutor/content/MyContent";
 
 function App() {
   return (
@@ -166,7 +168,7 @@ function App() {
               element={<SidebarAndHeader userRole={"tutor"} />}
             >
               <Route path="dashboard" element={<TDashboard />} />
-              <Route path="content" element={<Tcontents />} />
+              <Route path="content" element={<MyContent />} />
               <Route path="courses/add" element={<Addcourse />} />
               <Route path="courses" element={<TCourses />}></Route>
               <Route
@@ -218,10 +220,9 @@ function App() {
           <Route element={<RequireAuth allowedRoles={[ROLES.Tutor]} />}>
             <Route
               path="tutor"
-              element={<SidebarAndHeader userRole={"teacher"} />}
+              element={<SidebarAndHeader userRole={"tutor"} />}
             >
               <Route path="dashboard" element={<TDashboard />} />
-              <Route path="content" element={<Tcontents />} />
               <Route path="courses/add" element={<Addcourse />} />
               <Route path="courses" element={<TCourses />}></Route>
               <Route path="complaints" element={<Complaints />}></Route>
@@ -315,9 +316,19 @@ function App() {
               <Route path="complaints" element={<InstStaffComplaintsList />} />
               <Route path="hall" element={<HallSchedule />} />
               <Route path="hall/view" element={<HallList />} />
+              <Route path="stu-payment/:username" element={<InstStaffStuPayment />} />
+              <Route path="staff-list" element={<InstStaffList />} />
+              <Route path="payment-history/:id" element={<ViewPaymentHistory />} />
+              <Route path="physical-payment-receipt/:id" element={<CashReceipt />} />
+              <Route path="online-payment-receipt/:id" element={<OnlineReceipt />} />
+              <Route path="stu-list" element={<StudentsList />} />
+              <Route path="stu-profile/:id" element={<StudentProfile />} />
+              <Route path="staff-list" element={<InstStaffList />} />
+              <Route path="tutors-list" element={<TutorsList />} />
+              <Route path="tutor-profile/:id" element={<TutorProfile />} />
               <Route
-                path="stu-payment/:username"
-                element={<InstStaffStuPayment />}
+                path="course/:id"
+                element={<CourseProfile />}
               />
               <Route path="staff-list" element={<InstStaffList />} />
               <Route
@@ -341,23 +352,15 @@ function App() {
             </Route>
           </Route>
 
-          {/* <Route element={<RequireAuth allowedRoles={[ROLES.User]} />}>
-            <Route path="user" element={<UserLayout />}>
-              <Route path="profile" element={<UserProfile />} />
-            </Route>
-          </Route> */}
-        </Route>
 
-        {/* <Route element={<RequireAuth allowedRoles={[ROLES.User]} />}>
-          <Route path="user" element={<UserLayout />}>
-            <Route path="profile" element={<UserProfile />} />
-          </Route>
-        </Route> */}
+
+        </Route >
+
 
         {/* catch all */}
         <Route path="*" element={<Missing />} />
-      </Route>
-    </Routes>
+      </Route >
+    </Routes >
   );
 }
 
