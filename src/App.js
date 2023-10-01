@@ -25,12 +25,10 @@ import TuteView from "./pages/student/components/tutes/TuteView";
 import PdfView from "./pages/student/components/tutes/PdfView";
 import Forum from "./pages/student/course/Forum.js";
 import CourseLayout from "./pages/student/course/CourseLayout";
-import CourseTemp from "./pages/student/course/CourseTemp";
-// import Videocontent from "./pages/student/course/Videocontent";
 import ContentWatch from "./pages/student/ContentWatch";
 import ContentPage from "./pages/student/content/ContentPage";
-
-// import StudentCourses from "./pages/student/Courses";
+import StarredTutes from "./pages/student/StarredTutes";
+import ArchivedTutes from "./pages/student/ArchivedTutes";
 
 // instituteStaff components
 import InstStaffDashboard from "./pages/InstituteStaff/Dashboard";
@@ -82,7 +80,6 @@ import McqsByCategory from "./pages/tutor/McqsByCategory";
 import PaperMarking from "./pages/tutor/PaperMarking";
 import TutorQuiz from "./pages/tutor/TutorQuiz";
 import TutorQuizzes from "./pages/tutor/TutorQuizzes";
-import TutorComplaintsListView from "./components/tutor/Complaints/ComplaintsListView";
 import StudentAttedance from "./pages/InstituteStaff/StudentAttendance";
 import TutorPapers from "./pages/tutor/TutorPapers";
 import StudentAttendanceMarking from "./pages/tutor/StudentAttendanceMarking";
@@ -96,10 +93,6 @@ import StudypackViewLayout from "./pages/student/course/StudypackViewLayout";
 // import layouts
 import Layout from "./layouts/Layout";
 import SidebarAndHeader from "./layouts/SidebarAndHeader";
-
-// incorrect structure
-import Courses from "./components/Courses";
-import Content from "./components/Content";
 
 import { Routes, Route } from "react-router-dom";
 import { ROLES } from "./config/roles";
@@ -141,7 +134,10 @@ function App() {
                 <Route index element={<CourseViewLayout />} />
                 <Route path="forum" element={<Forum />} />
               </Route>
-              <Route path="studyPacks/:studypackId" element={<StudypackLayout />}>
+              <Route
+                path="studyPacks/:studypackId"
+                element={<StudypackLayout />}
+              >
                 <Route index element={<StudypackViewLayout />} />
               </Route>
               <Route path="mycourses" element={<MyCourses />} />
@@ -158,6 +154,8 @@ function App() {
                 <Route path="edit/:id" element={<NewTute />} />
                 <Route path="view/:id" element={<PdfView />} />
                 <Route path=":id" element={<TuteView />} />
+                <Route path="starred" element={<StarredTutes />} />
+                <Route path="archived" element={<ArchivedTutes />} />
               </Route>
               <Route path="settings" element={<Settings />} />
               <Route path="tutors" element={<Tutors />} />
@@ -332,6 +330,25 @@ function App() {
                 path="course/:id"
                 element={<CourseProfile />}
               />
+              <Route path="staff-list" element={<InstStaffList />} />
+              <Route
+                path="payment-history/:id"
+                element={<ViewPaymentHistory />}
+              />
+              <Route
+                path="physical-payment-receipt/:id"
+                element={<CashReceipt />}
+              />
+              <Route
+                path="online-payment-receipt/:id"
+                element={<OnlineReceipt />}
+              />
+              <Route path="stu-list" element={<StudentsList />} />
+              <Route path="stu-profile/:id" element={<StudentProfile />} />
+              <Route path="staff-list" element={<InstStaffList />} />
+              <Route path="tutors-list" element={<TutorsList />} />
+              <Route path="tutor-profile/:id" element={<TutorProfile />} />
+              <Route path="course/:id" element={<CourseProfile />} />
             </Route>
           </Route>
 

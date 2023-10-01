@@ -35,6 +35,14 @@ function LeftPanel() {
     setIsFOpen(true);
   };
 
+  const goToStarredTutes = () => {
+    navigate("/stu/tutes/starred");
+  };
+
+  const goToArchivedTutes = () => {
+    navigate("/stu/tutes/archived");
+  };
+
   // const pages = useSelector((state) => state.tutes.pages);
   const { tutes, folders } = useFoldersInfo();
 
@@ -79,15 +87,17 @@ function LeftPanel() {
           <LeftPanelTab
             title={"Starred"}
             icon={<AiFillStar color="#ECC330" />}
+            onClickHandler={goToStarredTutes}
           />
           <LeftPanelTab
             title={"Archived"}
             icon={<BsArchiveFill color="#6CB86C" />}
+            onClickHandler={goToArchivedTutes}
           />
-          <LeftPanelTab
+          {/* <LeftPanelTab
             title={"Trashed"}
             icon={<BsFillTrashFill color="#D57974" />}
-          />
+          /> */}
           <Flex justifyContent="center">
             <Divider mt={5} mb={6} w="80%" color="#222222" />
           </Flex>
