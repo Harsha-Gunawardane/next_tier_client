@@ -13,7 +13,7 @@ import { useDisclosure } from '@chakra-ui/react';
 import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
 import { useLocation } from "react-router-dom";
 
-const Coursecontentremove = ({ studypackId, contentId,part }) => {
+const Coursecontentremove = ({ studypackId, contentId,part,onContentRemoved }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const cancelRef = React.useRef();
   const axiosPrivate = useAxiosPrivate();
@@ -21,13 +21,14 @@ const Coursecontentremove = ({ studypackId, contentId,part }) => {
 
 
   const handleDelete = () => {
-    // Replace 'YOUR_API_ENDPOINT' with the actual URL of your backend endpoint for removing the content
     axiosPrivate
       .delete(`/tutor/studypack/removecontent/${studypackId}/${part}/${contentId}`)
       .then((response) => {
-        console.log(`Tute ID ${contentId} removed successfully from study pack!`);
-        onClose(); // Close the modal after removing the content
+        console.log(`Content ID ${contentId} removed successfully from study pack!`);
+        onClose();
+        window.location.reload();
         // Notify parent component about content removal
+        // onContentRemoved(contentId); // Pass the removed contentId
       })
       .catch((error) => {
         console.error('Error removing content:', error);

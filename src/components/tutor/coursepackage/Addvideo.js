@@ -23,7 +23,7 @@ import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
 
 
 
-const Addvideo = ({ studypackId ,dynamicWeek}) => {
+const Addvideo = ({ studypackId ,dynamicWeek,onVideoAdded}) => {
 
 const { isOpen, onOpen, onClose } = useDisclosure()
 
@@ -35,11 +35,6 @@ const finalRef = React.useRef(null)
 const [contentdata, setcontentData] = useState([]); 
 
 const axiosPrivate = useAxiosPrivate();
-
-
-
-
-
 
 useEffect(() => {
   const getCourses = async () => {
@@ -68,7 +63,6 @@ const handleCheckboxChange = (index) => {
     setSelectedItems([...selectedItems, index]);
   }
 };
-
 
 
 const [existingVideoIds, setExistingVideoIds] = useState([]); 
@@ -137,8 +131,8 @@ const handleSave = async (event) => {
       content_ids: existingContentIds,
       price: price,
     });
-
-    onClose(); // Close the modal after saving
+    onVideoAdded(existingContentIds);
+    onClose(); 
   } catch (error) {
     console.log(error);
   }
@@ -157,7 +151,7 @@ return (
 
     <Modal initialFocusRef={initialRef} finalFocusRef={finalRef} isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
-      <ModalContent>
+      <ModalContent size='2xl' maxW='60vw'>
         <ModalHeader>Add Video Content</ModalHeader>
         <ModalCloseButton />
 
@@ -170,7 +164,7 @@ return (
           <form onSubmit={handleSave}>
             <TabPanel>
               <ModalBody pb={6}>
-              <SimpleGrid columns={2} spacing={4}>
+              <SimpleGrid columns={4} spacing={4}>
                   {videoContent.map((content, index) => (
                     <Box key={index} p={2} borderWidth={1} borderRadius='md'>
                       <Checkbox

@@ -41,12 +41,7 @@ const TutorStaffs = () => {
 
 
   useEffect(() => {
-    getStaffs();
-
-  }, []);
-
-
-  const getStaffs = async () => {
+    const getStaffs = async () => {
     try {
       const response = await axiosPrivate.get("/tutor/staffs");
       setStaffs(response.data);
@@ -59,7 +54,11 @@ const TutorStaffs = () => {
     }
   };
 
-  console.log(staffs)
+  getStaffs();
+
+  }, []);
+
+ 
 
     const handleDelete = (id) => {
       try {

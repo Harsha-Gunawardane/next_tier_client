@@ -19,6 +19,7 @@ import {
 import CourseContent from "../../components/tutor/coursecontent/Coursecontent";
 import PaperContent from "../../components/tutor/coursecontent/Paperclasscontent";
 import Announcement from "../../components/tutor/coursecontent/Announcement";
+import Poll from "../../components/tutor/coursecontent/Addpoll";
 import Forum from "../../components/tutor/coursecontent/Forum";
 import { Show, Hide } from '@chakra-ui/react'
 import { useParams } from "react-router-dom";
@@ -26,6 +27,7 @@ import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import { useLocation } from "react-router-dom";
 import AddNew from "./addstudypack";
 import Addpaper from "./addpaper";
+import TutorDetails from "../../components/tutor/TutorDetails2";
 
 
 const Coursecontent = () => {
@@ -73,7 +75,7 @@ const Coursecontent = () => {
       }
     }
     // If coursedata or coursedata.title is not available, you can return a loading component or a placeholder here
-    return <p>Loading...</p>;
+    // return <p>Loading...</p>;
   };
 
 
@@ -90,7 +92,7 @@ const Coursecontent = () => {
       }
     }
     // If coursedata or coursedata.title is not available, you can return a loading component or a placeholder here
-    return <p>Loading...</p>;
+    // return <p>Loading...</p>;
   };
 
   return (
@@ -103,24 +105,24 @@ const Coursecontent = () => {
             <Heading fontSize='27px' mb='30px' fontWeight='xl'>{coursedata.title}</Heading>
           }
           <Hide below='md'>
-            <SimpleGrid spacing={2} minChildWidth="250px">
-              <Box bg='white' width={{ base: 160, xl: 750 }} height={{ base: 120, xl: 200 }}>
+       
+              <Box bg='white' width={{ base: 160, xl: 750 }} height={{ base: 80, xl: 100 }}>
                 {coursedata &&
                   <Image
                     src={coursedata.thumbnail}
                     alt='Green double couch with wooden legs'
-                    height={{ base: 120, xl: 150 }}
-                    width='260px'
+                    height={{ base: 40, xl: 100 }}
+                    width='96%'
 
 
                   />
                 }
               </Box>
-              <Box bg='white' height='200px' p={5} >
+              {/* <Box bg='white' height='100px' p={5} >
                 {coursedata &&
-                  <Text fontSize='15px' ml={{ base: -20, xl: -50 }} mt='-20px'>{coursedata.description}</Text>
-                } </Box>
-            </SimpleGrid>
+                  <Text fontSize='15px' ml={{ base: -20, xl: -50 }} mt='-10px'>{coursedata.description}</Text>
+                } </Box> */}
+           
           </Hide>
           <Heading fontSize='20px' mt='40px' mb='20px' fontWeight='xl'>Course Content</Heading>
 
@@ -135,24 +137,9 @@ const Coursecontent = () => {
 
 
         <Box width="72%" ml="20%" bg="white" p={10} borderRadius="10px">
+        <TutorDetails></TutorDetails>
 
-          <HStack spacing='10px' mt='-15px'>
-            <Box w='30%' h='40px' ml={{ base: -20, xl: 0 }} bg='white'>
-              <Avatar
-                width="40px"
-                height='40px'
-                name="Dan Abrahmov"
-                src="https://bit.ly/dan-abramov"
-                borderRadius='50%'
-                ml='20px'
-              />
-            </Box>
-            <Box w='70%' h='40px' bg='white' ml='-20px'>
-              <Heading fontSize='15px'>Mr.Nilantha jayasooriya</Heading>
-              <Text fontSize='12px'>Bsc.Eng University of Moratuwa</Text>
-            </Box>
-
-          </HStack>
+    
           <br></br>
 
           <Announcement></Announcement>
@@ -162,6 +149,7 @@ const Coursecontent = () => {
 
 
           <Forum></Forum>
+          <Poll></Poll>
 
 
         </Box>

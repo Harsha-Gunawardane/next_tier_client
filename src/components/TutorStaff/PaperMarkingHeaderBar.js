@@ -1,70 +1,54 @@
 import {
+  Card,
   FormControl,
-  HStack,
   Input,
   InputGroup,
   InputLeftElement,
   InputRightElement,
 } from "@chakra-ui/react";
-import { HiSearch } from "react-icons/hi";
-import { IoIosCloseCircle } from "react-icons/io";
+import { IoCloseCircleSharp } from "react-icons/io5";
+import { IconSearch } from "@tabler/icons-react";
 
-// import SearchBarOne from "../SearchBars/SearchBarOne";
 
-// import { Form } from "react-router-dom";
-
-export default function PaperMarkingHeaderBar({ search, setSearch }) {
+export default function PaperMarkingHeaderBar({ search, setSearch, onOpen }) {
   return (
-    <HStack
-      marginBottom="40px"
-      marginTop="20px"
-      maxWidth="1250px"
-      padding="10px"
-      justifyContent="center"
-    >
-      {/* <SearchBarOne search={search} setSearch={setSearch} /> */}
-      <form onSubmit={(e) => e.preventDefault()}>
-        <FormControl>
-          <InputGroup
-            borderColor="#E0E1E7"
-            // h={"60px"}
-            maxWidth={{ base: "200px" }}
-            minWidth={{ base: "160px", md: "300px", lg: "400px" }}
-            marginLeft={{ base: "10px", lg: "30px" }}
-          >
-            <InputLeftElement
-              pointerEvents="none"
-              fontSize="18px"
-              children={<HiSearch boxSize={5} h="50px" color="gray" />}
-              h={"40px"}
-              w={"40px"}
-            />
-            <Input
-              variant="filled"
-              placeholder="Search"
-              h={"40px"}
-              size="sm"
-              fontSize="16px"
-              borderRadius={"10px"}
-              value={search}
-              onChange={(e) => {
-                setSearch(e.target.value);
-              }}
-            />
-            <InputRightElement
-              fontSize="22px"
-              children={
-                <IoIosCloseCircle h="50px" color="gray" cursor="pointer" />
-              }
-              h={"40px"}
-              w={"40px"}
-              onClick={() => {
-                setSearch("");
-              }}
-            />
-          </InputGroup>
-        </FormControl>
-      </form>
-    </HStack>
+    <Card variant="outline" >
+          <FormControl>
+            <InputGroup borderColor="#E0E1E7">
+              <InputLeftElement
+                pointerEvents="none"
+                fontSize="12px"
+                pb="3px"
+                children={<IconSearch size="1rem" color="gray"  />}
+              />
+
+              <Input
+                variant="outline"
+                placeholder="Search by name"
+                paddingLeft="35px"
+                h={"35px"}
+                size="sm"
+                fontSize={{ base: "14px", sm: "14px" }}
+                borderRadius={"5px"}
+                value={search}
+                onChange={(e) => {
+                  setSearch(e.target.value);
+                }}
+              />
+              <InputRightElement
+                fontSize="22px"
+                pb="6px"
+                children={
+                  <IoCloseCircleSharp h="40px" color="gray" cursor="pointer" />
+                }
+                h={"40px"}
+                w={"40px"}
+                onClick={() => {
+                  setSearch("");
+                }}
+              />
+            </InputGroup>
+          </FormControl>
+    </Card>
   );
 }

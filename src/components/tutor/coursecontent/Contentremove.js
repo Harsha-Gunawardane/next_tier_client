@@ -13,7 +13,7 @@ import { useDisclosure } from '@chakra-ui/react';
 import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
 import { useLocation } from "react-router-dom";
 
-const Contentremove = ({ course,studypackid }) => {
+const Contentremove = ({ course,studypackid, onStudyPackRemoved }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const cancelRef = React.useRef();
   const axiosPrivate = useAxiosPrivate();
@@ -29,32 +29,47 @@ const Contentremove = ({ course,studypackid }) => {
       .delete(`/tutor/course/${id}/${studypackid}`)
       .then((response) => {
         // Show success toast message
-   
+        // toast({
+        //   title: 'Study Pack Removed',
+        //   description: 'The study pack has been successfully removed.',
+        //   status: 'success',
+        //   duration: 5000,
+        //   isClosable: true,
+        //   position: 'top',
+        // });
 
         // Persist success message before reloading the window
-        localStorage.setItem("studyPackRemoved", "true");
-
-        // Reload the window
         window.location.reload();
+        localStorage.setItem('studyPackRemoved', 'true');
+
+        
+        // onStudyPackRemoved(studypackid);
+
+       
+      
+        
+     
       })
       .catch((error) => {
         console.error('Error deleting study pack:', error);
       });
   };
 
-  // Check if a study pack was removed and show the toast accordingly
-  const isStudyPackRemoved = localStorage.getItem("studyPackRemoved");
-  if (isStudyPackRemoved) {
-    localStorage.removeItem("studyPackRemoved");
-    toast({
-      title: "Study Pack Removed",
-      description: "The study pack has been successfully removed.",
-      status: "success",
-      duration: 5000,
-      isClosable: true,
-      position: "top",
-    });
-  }
+  useEffect(() => {
+    // Check if a study pack was removed and show the toast accordingly
+    const isStudyPackRemoved = localStorage.getItem('studyPackRemoved');
+    if (isStudyPackRemoved) {
+      localStorage.removeItem('studyPackRemoved');
+      toast({
+        title: 'Study Pack Removed',
+        description: 'The study pack has been successfully removed.',
+        status: 'success',
+        duration: 5000,
+        isClosable: true,
+        position: 'top',
+      });
+    }
+  }, [toast]);
 
   return (
     <>

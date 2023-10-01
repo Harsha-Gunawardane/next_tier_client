@@ -5,7 +5,9 @@ import {
   FormControl,
   FormLabel,
   Input,
-  Textarea
+  Textarea,
+  MenuGroup,Radio,
+  Stack,RadioGroup,useToast
 } from "@chakra-ui/react";
 import {
   Modal,
@@ -20,6 +22,7 @@ import {
 } from "@chakra-ui/react";
 import { useParams } from "react-router-dom";
 import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
+import { DatePicker } from '@mantine/dates';
 import {
   NumberInput,
   NumberInputField,
@@ -42,9 +45,12 @@ const Coursepackedit = () => {
   const [subject, setSubject] = useState("");
   const [course_id, setCourse_Id] = useState("");
   const [validation, valchange] = useState(false);
+  const [visibility, setVisibility] = useState("");
+  const [expireDate, setExpireDate] = useState("");
 
   const location = useLocation();
   const Studypackid = location.pathname.split("/").pop();
+  const toast = useToast(); 
 
   useEffect(() => {
     const getStudypack = async () => {
@@ -61,6 +67,8 @@ const Coursepackedit = () => {
         setPrice(courseData.price.toString());
         setThumbnail(courseData.thumbnail); // Convert to string if necessary
         setSubject(courseData.subject);
+        setVisibility(courseData.visibility);
+        setExpireDate(courseData.expire_date);
         setCourse_Id(courseData.course_id);
       } catch (error) {
         console.log(error);
@@ -143,15 +151,18 @@ const Coursepackedit = () => {
       thumbnail,
       subject,
       course_id,
+      visibility,
+      expireDate,
    
     };
 
     axiosPrivate
       .put(`/tutor/studypack/${Studypackid}`, coursedata)
       .then((response) => {
-        alert("Saved successfully.");
+        
+        localStorage.setItem("courseUpdated", "true");
         onClose();
-        window.location.reload();
+        // window.location.reload();
       })
       .catch((error) => {
         console.log(error.message);
@@ -167,6 +178,18 @@ const Coursepackedit = () => {
     return <div>Loading...</div>;
   }
 
+  const isStudyPackRemoved = localStorage.getItem("courseUpdated");
+  if (isStudyPackRemoved) {
+    localStorage.removeItem("courseUpdated");
+    toast({
+      title: "Course Details Updated",
+      description: "The Course details has been updated successfully.",
+      status: "success",
+      duration: 5000,
+      isClosable: true,
+      position: "top",
+    });
+  };
 
 
 
@@ -303,6 +326,19 @@ const Coursepackedit = () => {
       </FormControl>
 
 
+      <FormControl mt={4} isRequired>
+  <FormLabel fontSize="15px">Course Visibility</FormLabel>
+  
+  <RadioGroup value={visibility} onChange={(e) => setVisibility(e)}>
+    <Stack spacing={4} direction="row">
+      <Radio value="PRIVATE">Private</Radio>
+      <Radio value="PUBLIC">Public</Radio>
+    </Stack>
+  </RadioGroup>
+  
+  <FormErrorMessage>Course Type is Required</FormErrorMessage>
+</FormControl> 
+
 
 
               <FormControl
@@ -323,6 +359,40 @@ const Coursepackedit = () => {
                 <FormErrorMessage>Subject is required</FormErrorMessage>
               </FormControl>
 
+
+
+              <FormControl>
+  <FormLabel fontSize="15px">Current Exp Date</FormLabel>
+  <Input
+    fontSize="15px"
+    value={expireDate}
+    height="40px"
+    ref={initialRef}
+    readOnly
+    isReadOnly // Disable user input
+ 
+  />
+
+</FormControl>
+
+ 
+
+<FormControl mt={4} isRequired      isInvalid={expireDate < new Date()} >
+  <FormLabel fontSize="15px">Update Exp Date</FormLabel>
+  <DatePicker
+    selected={expireDate}
+    onChange={(date) => {
+      if (date >= new Date()) {
+        setExpireDate(date);
+      }
+    }}
+    dateFormat="yyyy-MM-dd"
+
+  />
+
+    <FormErrorMessage>Expiration date cannot be before today</FormErrorMessage>
+  
+</FormControl> 
          
             </ModalBody>
 

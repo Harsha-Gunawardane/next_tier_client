@@ -19,10 +19,12 @@ import {
 } from "react-icons/fa";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import ReportProblemIcon from "@mui/icons-material/ReportProblem";
-import { MdOutlineQuiz, MdVideoLibrary } from "react-icons/md";
+import { MdOutlineQuiz, MdQuiz, MdVideoLibrary } from "react-icons/md";
 import { PiNotebookFill } from "react-icons/pi";
 import { IoSchool, IoCompass } from "react-icons/io5";
-import { BiSolidDashboard } from "react-icons/bi"
+import { BiListUl, BiSolidDashboard } from "react-icons/bi"
+import { IoIosPaper } from "react-icons/io";
+import { faListCheck } from "@fortawesome/free-solid-svg-icons";
 
 const SidebarAndHeader = ({ userRole }) => {
 	//get width of sidebar component and set to state

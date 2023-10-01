@@ -1,11 +1,4 @@
-import {
-  Card,
-  CardBody,
-  Stack,
-  Heading,
-  Text,
-  Image,
-} from "@chakra-ui/react";
+import { Card, CardBody, Stack, Heading, Text, Image } from "@chakra-ui/react";
 
 import backgroundTemplate2 from "../mcq/assests/backgroundTemplate2.jpg";
 
@@ -15,7 +8,7 @@ function QuizCard({ quiz }) {
       direction={{ base: "column", sm: "row" }}
       // overflow="hidden"
       variant="outline"
-    // height={{ base: "160px", sm: "125px" }}
+      // height={{ base: "160px", sm: "125px" }}
     >
       <Image
         objectFit="cover"
@@ -35,15 +28,15 @@ function QuizCard({ quiz }) {
             {quiz.title}
           </Heading>
 
-          <Stack mt="3px">
-            <Text fontSize="14px">{quiz.subject}</Text>
-            <Text fontSize="14px">{`${quiz.number_of_questions} Questions`}</Text>
-            <Text color="gray" fontSize={{ base: "14px", md: "14px" }}>
-              {Array.isArray(quiz.subject_areas)
-                ? quiz.subject_areas.join(" / ")
-                : ""}
-            </Text>
-          </Stack>
+          <Text fontSize="14px" mt="3px">
+            {quiz.subject}
+          </Text>
+          <Text fontSize="14px">{`${quiz.number_of_questions} Questions`}</Text>
+          <Text color="gray" fontSize={{ base: "14px", md: "14px" }}>
+            {Array.isArray(quiz.subject_areas)
+              ? quiz.subject_areas.join(" / ")
+              : ""}
+          </Text>
         </CardBody>
       </Stack>
     </Card>

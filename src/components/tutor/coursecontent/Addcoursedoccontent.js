@@ -9,6 +9,7 @@ import {
   Button,FormControl,
   SimpleGrid,
   Box,
+  Image,
   Checkbox,
   FormLabel,Input, IconButton
 } from '@chakra-ui/react'
@@ -138,7 +139,7 @@ return (
 
     <Modal initialFocusRef={initialRef} finalFocusRef={finalRef} isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
-      <ModalContent>
+      <ModalContent size='2xl' maxW='60vw'>
         <ModalHeader>Add Video Content</ModalHeader>
         <ModalCloseButton />
 
@@ -151,14 +152,14 @@ return (
           <form onSubmit={handleSave}>
             <TabPanel>
               <ModalBody pb={6}>
-              <SimpleGrid columns={2} spacing={4}>
+              <SimpleGrid columns={4} spacing={4}>
                   {tuteContent.map((content, index) => (
                     <Box key={index} p={2} borderWidth={1} borderRadius='md'>
                       <Checkbox
                         isChecked={selectedItems.includes(index)}
                         onChange={() => handleCheckboxChange(index)}
                       />
-                      <img src={content.thumbnail} alt={`Thumbnail ${index}`} />
+                      <Image src={content.thumbnail} alt={`Thumbnail ${index}`} />
                       <p>{content.title}</p>
                     </Box>
                   ))}
