@@ -351,7 +351,7 @@ function App() {
           </Route>
 
           {/* </Route> */}
-        </Route>
+      
         <Route element={<RequireAuth allowedRoles={[ROLES.Staff]} />}>
           <Route
             path="staff"
@@ -366,73 +366,31 @@ function App() {
             <Route path="complaints" element={<InstStaffComplaintsList />} />
             <Route path="hall" element={<HallSchedule />} />
             <Route path="hall/view" element={<HallList />} />
-            <Route path="stu-payment" element={<InstStaffStuPayment />} />
+            <Route
+              path="stu-payment/:username"
+              element={<InstStaffStuPayment />}
+            />
             <Route path="staff-list" element={<InstStaffList />} />
-            <Route path="payment-history" element={<ViewPaymentHistory />} />
-            <Route path="cash-receipt" element={<CashReceipt />} />
-            <Route path="online-receipt" element={<OnlineReceipt />} />
+            <Route path="payment-history/:id" element={<ViewPaymentHistory />} />
+            <Route
+              path="physical-payment-receipt/:id"
+              element={<CashReceipt />}
+            />
+            <Route
+              path="online-payment-receipt/:id"
+              element={<OnlineReceipt />}
+            />
             <Route path="stu-list" element={<StudentsList />} />
             <Route path="stu-profile/:id" element={<StudentProfile />} />
             <Route path="staff-list" element={<InstStaffList />} />
             <Route path="tutors-list" element={<TutorsList />} />
             <Route path="tutor-profile/:id" element={<TutorProfile />} />
             <Route
-              path="staff"
-              element={<SidebarAndHeader userRole={"InstituteStaff"} />}
-            >
-              <Route path="dashboard" element={<InstStaffDashboard />} />
-              <Route path="my-profile" element={<MyProfile />} />
-              {/* <Route path="teacher" element={<ViewTeacher />} /> */}
-              <Route path="tutors-list/add" element={<AddTeacher />} />
-              <Route path="class" element={<ApproveClass />} />
-              <Route path="profile/:id" element={<InstStaffProfile />} />
-              <Route path="complaints" element={<InstStaffComplaintsList />} />
-              <Route path="hall" element={<HallSchedule />} />
-              <Route path="hall/view" element={<HallList />} />
-              <Route
-                path="stu-payment/:username"
-                element={<InstStaffStuPayment />}
-              />
-              <Route path="staff-list" element={<InstStaffList />} />
-              <Route
-                path="payment-history/:id"
-                element={<ViewPaymentHistory />}
-              />
-              <Route
-                path="physical-payment-receipt/:id"
-                element={<CashReceipt />}
-              />
-              <Route
-                path="online-payment-receipt/:id"
-                element={<OnlineReceipt />}
-              />
-              <Route path="stu-list" element={<StudentsList />} />
-              <Route path="stu-profile/:id" element={<StudentProfile />} />
-              <Route path="staff-list" element={<InstStaffList />} />
-              <Route path="tutors-list" element={<TutorsList />} />
-              <Route path="tutor-profile/:id" element={<TutorProfile />} />
-              <Route path="course/:id" element={<CourseProfile />} />
-              <Route path="staff-list" element={<InstStaffList />} />
-              <Route
-                path="payment-history/:id"
-                element={<ViewPaymentHistory />}
-              />
-              <Route
-                path="physical-payment-receipt/:id"
-                element={<CashReceipt />}
-              />
-              <Route
-                path="online-payment-receipt/:id"
-                element={<OnlineReceipt />}
-              />
-              <Route path="stu-list" element={<StudentsList />} />
-              <Route path="stu-profile/:id" element={<StudentProfile />} />
-              <Route path="staff-list" element={<InstStaffList />} />
-              <Route path="tutors-list" element={<TutorsList />} />
-              <Route path="tutor-profile/:id" element={<TutorProfile />} />
-              <Route path="course/:id" element={<CourseProfile />} />
-            </Route>
+                  path="course/:id"
+                  element={<CourseProfile />}
+                />
           </Route>
+        </Route>
         </Route>
 
         {/* catch all */}
