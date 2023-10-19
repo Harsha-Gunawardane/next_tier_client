@@ -7,8 +7,8 @@ import {
   Box,
   Heading,
   Textarea,
-} from '@chakra-ui/react';
-import React, { useState, useEffect } from 'react';
+} from "@chakra-ui/react";
+import React, { useState, useEffect } from "react";
 import {
   Drawer,
   DrawerBody,
@@ -18,30 +18,32 @@ import {
   DrawerContent,
   DrawerCloseButton,
   HStack,
-  Text,useDisclosure,useToast
-} from '@chakra-ui/react';
-import axios from 'axios';
-import useAxiosPrivate from '../../../hooks/useAxiosPrivate';
-import { useLocation } from 'react-router-dom';
+  Text,
+  useDisclosure,
+  useToast,
+} from "@chakra-ui/react";
+import axios from "axios";
+import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
+import { useLocation } from "react-router-dom";
 
 const Addannouncement = ({ setannouncementData }) => {
   const axiosPrivate = useAxiosPrivate();
   const location = useLocation();
-  const id = location.pathname.split('/').pop();
+  const id = location.pathname.split("/").pop();
   const toast = useToast();
 
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = React.useRef();
   const [announcementData, setAnnouncementData] = useState([]);
-  const [heading, setHeading] = useState('');
-  const [message, setMessage] = useState('');
+  const [heading, setHeading] = useState("");
+  const [message, setMessage] = useState("");
   const [monthly_fee, setMonthlyFee] = useState("");
-   const [formSubmitted, setFormSubmitted] = useState(false);
+  const [formSubmitted, setFormSubmitted] = useState(false);
 
   const defaultDate = new Date().toISOString().slice(0, 10);
   const defaultTime = new Date().toLocaleTimeString([], {
-    hour: '2-digit',
-    minute: '2-digit',
+    hour: "2-digit",
+    minute: "2-digit",
   });
 
   const getAnnouncementData = async () => {
@@ -52,7 +54,7 @@ const Addannouncement = ({ setannouncementData }) => {
       setAnnouncementData(courseData.announcements);
       setMonthlyFee(courseData.monthly_fee.toString());
     } catch (error) {
-      console.log('Error fetching announcement data:', error);
+      console.log("Error fetching announcement data:", error);
     }
   };
 
@@ -61,15 +63,19 @@ const Addannouncement = ({ setannouncementData }) => {
   }, [axiosPrivate, id]);
 
   const reversedAnnouncementData = [...announcementData].reverse();
-  
+
   const handleAddAnnouncement = async (e) => {
     e.preventDefault();
     setFormSubmitted(true);
 
-    if (heading.trim() === '' || heading.length > 50 || message.trim() === ''||message.length>200) {
+    if (
+      heading.trim() === "" ||
+      heading.length > 50 ||
+      message.trim() === "" ||
+      message.length > 200
+    ) {
       return;
     }
-  
 
     const newAnnouncement = {
       day: defaultDate,
@@ -84,26 +90,27 @@ const Addannouncement = ({ setannouncementData }) => {
         announcements: [...announcementData, newAnnouncement], // Add the new announcement to existing announcements
       });
       getAnnouncementData();
-      setannouncementData((prevAnnouncements) => [...prevAnnouncements, newAnnouncement]);
-      setHeading('');
-      setMessage('');
+      setannouncementData((prevAnnouncements) => [
+        ...prevAnnouncements,
+        newAnnouncement,
+      ]);
+      setHeading("");
+      setMessage("");
       onClose();
       setFormSubmitted(false);
 
       toast({
-        title: 'Announcement Added',
-        description: 'Your announcement has been added successfully.',
-        status: 'success',
+        title: "Announcement Added",
+        description: "Your announcement has been added successfully.",
+        status: "success",
         duration: 3000,
         isClosable: true,
-        position: 'top',
+        position: "top",
       });
-
     } catch (error) {
-      console.error('Error adding new announcement:', error);
+      console.error("Error adding new announcement:", error);
     }
   };
-
 
   const handleRemoveAnnouncement = (index) => {
     const updatedAnnouncements = [...announcementData].reverse();
@@ -118,7 +125,7 @@ const Addannouncement = ({ setannouncementData }) => {
         setAnnouncementData(updatedAnnouncements);
       })
       .catch((error) => {
-        console.error('Error removing announcement:', error);
+        console.error("Error removing announcement:", error);
       });
   };
 
@@ -127,104 +134,128 @@ const Addannouncement = ({ setannouncementData }) => {
       <Button
         ref={btnRef}
         onClick={onOpen}
-        width='60%'
-        height='35px'
-        mb='10px'
-        ml='130px'
-        mt='25px'
-        fontSize='12px'
-        colorScheme='blue'>
+        width="60%"
+        height="35px"
+        mb="10px"
+        ml="130px"
+        mt="25px"
+        fontSize="12px"
+        colorScheme="blue"
+      >
         Add Announcement
       </Button>
-      <Drawer isOpen={isOpen} placement='right' onClose={onClose} finalFocusRef={btnRef} size="sm">
+      <Drawer
+        isOpen={isOpen}
+        placement="right"
+        onClose={onClose}
+        finalFocusRef={btnRef}
+        size="sm"
+      >
         <DrawerOverlay />
         <DrawerContent p={5}>
           <DrawerCloseButton />
-          <DrawerHeader fontSize='20px'>Add Announcement</DrawerHeader>
+          <DrawerHeader fontSize="20px">Add Announcement</DrawerHeader>
           <form onSubmit={handleAddAnnouncement}>
-          <FormControl isRequired   isInvalid={
-    formSubmitted &&
-    (heading.trim().length === 0 || heading.length > 10) // Check for both conditions
-  }>
-              <FormLabel fontSize='15px'>Title</FormLabel>
+            <FormControl
+              isRequired
+              isInvalid={
+                formSubmitted &&
+                (heading.trim().length === 0 || heading.length > 10) // Check for both conditions
+              }
+            >
+              <FormLabel fontSize="15px">Title</FormLabel>
               <Input
-                fontSize='15px'
-                height='40px'
-                placeholder='Title'
+                fontSize="15px"
+                height="40px"
+                placeholder="Title"
                 value={heading}
                 onChange={(e) => setHeading(e.target.value)}
               />
-                 {formSubmitted && heading.trim().length === 0 && (
-    <FormErrorMessage>Title is required</FormErrorMessage>
-  )}
-  {formSubmitted && heading.length > 10 && (
-    <FormErrorMessage>Title must not exceed 50 characters</FormErrorMessage>
-  )}
+              {formSubmitted && heading.trim().length === 0 && (
+                <FormErrorMessage>Title is required</FormErrorMessage>
+              )}
+              {formSubmitted && heading.length > 10 && (
+                <FormErrorMessage>
+                  Title must not exceed 50 characters
+                </FormErrorMessage>
+              )}
             </FormControl>
 
-            <FormControl isRequired isInvalid={formSubmitted && message.trim().length === 0}>
-              <FormLabel fontSize='15px'>Message</FormLabel>
+            <FormControl
+              isRequired
+              isInvalid={formSubmitted && message.trim().length === 0}
+            >
+              <FormLabel fontSize="15px">Message</FormLabel>
               <Textarea
-                fontSize='15px'
-                height='80px'
-                placeholder='Message'
+                fontSize="15px"
+                height="80px"
+                placeholder="Message"
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
               />
-                 <FormErrorMessage>Title is required</FormErrorMessage>
+              <FormErrorMessage>Title is required</FormErrorMessage>
             </FormControl>
 
-            <Button colorScheme='blue' mr={3} fontSize='14px' height='30px' type='submit' mt='10px'>
+            <Button
+              colorScheme="blue"
+              mr={3}
+              fontSize="14px"
+              height="30px"
+              type="submit"
+              mt="10px"
+            >
               Save
             </Button>
-            <Button onClick={onClose} fontSize='14px' height='30px' mt='10px'>
+            <Button onClick={onClose} fontSize="14px" height="30px" mt="10px">
               Cancel
             </Button>
           </form>
 
           <DrawerBody>
-            <Heading fontSize='15px' mt='60px'>
+            <Heading fontSize="15px" mt="60px">
               All Announcements
             </Heading>
 
-            {reversedAnnouncementData != null && reversedAnnouncementData.length > 0 ? (
-          reversedAnnouncementData.map((item, index) => (
+            {reversedAnnouncementData != null &&
+            reversedAnnouncementData.length > 0 ? (
+              reversedAnnouncementData.map((item, index) => (
                 <Box
                   key={index}
-                  bg='white'
-                  mt='20px'
+                  bg="white"
+                  mt="20px"
                   p={2}
-                  boxShadow='0 3px 10px rgb(0 0 0 / 0.2)'
-                  borderLeft='6px solid red'>
-                  <Text fontSize='16px' color='black'>
+                  boxShadow="0 3px 10px rgb(0 0 0 / 0.2)"
+                  borderLeft="6px solid red"
+                >
+                  <Text fontSize="16px" color="black">
                     {item.heading}
                   </Text>
-                  <Text fontSize='12px' color='grey'>
+                  <Text fontSize="12px" color="grey">
                     {item.message}
                   </Text>
-                  <HStack mt='8px' spacing='30px'>
-                    <Text fontSize='12px' color='grey'>
+                  <HStack mt="8px" spacing="30px">
+                    <Text fontSize="12px" color="grey">
                       {item.day}
                     </Text>
-                    <Text fontSize='12px' color='grey'>
+                    <Text fontSize="12px" color="grey">
                       {item.time}
                     </Text>
                   </HStack>
                   <Button
-                      onClick={() => handleRemoveAnnouncement(index)}
-                      size='sm'
-                      colorScheme='red'
-                      width='44px'
-                      height='14px'
-                      fontSize='10px'
-                    >
-                      Remove
-                    </Button>
+                    onClick={() => handleRemoveAnnouncement(index)}
+                    size="sm"
+                    colorScheme="red"
+                    width="48px"
+                    height="18px"
+                    fontSize="10px"
+                  >
+                    Remove
+                  </Button>
                 </Box>
               ))
             ) : (
-              <Box mt='10' ml='40px'>
-                <Heading fontSize='15px' color='grey' ml='30px'>
+              <Box mt="10" ml="40px">
+                <Heading fontSize="15px" color="grey" ml="30px">
                   No Announcements
                 </Heading>
               </Box>

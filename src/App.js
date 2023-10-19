@@ -34,24 +34,24 @@ import CourseInfo from "./pages/common/courseContent";
 import StudentCourses from "./pages/student/Courses";
 
 // instituteStaff components
-import InstStaffDashboard from "./pages/InstituteStaff/Dashboard";
-import AddTeacher from "./pages/InstituteStaff/AddTeacher";
-import InstStaffProfile from "./pages/InstituteStaff/StaffProfile";
-import InstStaffComplaintsList from "./pages/InstituteStaff/Complaints/ComplaintsListView";
-import ApproveClass from "./pages/InstituteStaff/ApproveClass";
-import HallList from "./pages/InstituteStaff/HallList";
-import HallSchedule from "./pages/InstituteStaff/HallSchedule";
-import InstStaffStuPayment from "./pages/InstituteStaff/StuPayment";
-import InstStaffList from "./pages/InstituteStaff/StaffList";
-import ViewPaymentHistory from "./pages/InstituteStaff/viewPaymentHistory";
-import MyProfile from "./pages/InstituteStaff/Profile";
-import CashReceipt from "./pages/InstituteStaff/cashReceiptStaff";
-import OnlineReceipt from "./pages/InstituteStaff/onlineReceiptStaff";
-import StudentsList from "./pages/InstituteStaff/StudentsList";
-import StudentProfile from "./pages/InstituteStaff/StudentProfile";
-import TutorsList from "./pages/InstituteStaff/tutorsList";
-import TutorProfile from "./pages/InstituteStaff/TutorProfile";
-import CourseProfile from "./pages/InstituteStaff/CourseDetail";
+// import InstStaffDashboard from "./pages/InstituteStaff/Dashboard";
+// import AddTeacher from "./pages/InstituteStaff/AddTeacher";
+// import InstStaffProfile from "./pages/InstituteStaff/StaffProfile";
+// import InstStaffComplaintsList from "./pages/InstituteStaff/Complaints/ComplaintsListView";
+// import ApproveClass from "./pages/InstituteStaff/ApproveClass";
+// import HallList from "./pages/InstituteStaff/HallList";
+// import HallSchedule from "./pages/InstituteStaff/HallSchedule";
+// import InstStaffStuPayment from "./pages/InstituteStaff/StuPayment";
+// import InstStaffList from "./pages/InstituteStaff/StaffList";
+// import ViewPaymentHistory from "./pages/InstituteStaff/viewPaymentHistory";
+// import MyProfile from "./pages/InstituteStaff/Profile";
+// import CashReceipt from "./pages/InstituteStaff/cashReceiptStaff";
+// import OnlineReceipt from "./pages/InstituteStaff/onlineReceiptStaff";
+// import StudentsList from "./pages/InstituteStaff/StudentsList";
+// import StudentProfile from "./pages/InstituteStaff/StudentProfile";
+// import TutorsList from "./pages/InstituteStaff/tutorsList";
+// import TutorProfile from "./pages/InstituteStaff/TutorProfile";
+// import CourseProfile from "./pages/InstituteStaff/CourseDetail";
 
 // admin components
 import AdminDashboard from "./pages/admin/Dashboard";
@@ -77,6 +77,7 @@ import PaperclassContent from "./pages/tutor/paperclasscontent";
 import Complaints from "./pages/tutor/complaints";
 import Profile from "./pages/tutor/profile";
 import Poll from "./pages/tutor/poll";
+import MyContent from "./pages/tutor/content/MyContent";
 
 import TutorStaffs from "./pages/tutor/TutorStaffs";
 import McqsByCategory from "./pages/tutor/McqsByCategory";
@@ -169,7 +170,7 @@ function App() {
             </Route>
           </Route>
 
-          <Route element={<RequireAuth allowedRoles={[ROLES.Tutor]} />}>
+          {/* <Route element={<RequireAuth allowedRoles={[ROLES.Tutor]} />}>
             <Route path='tutor' element={<SidebarAndHeader userRole={"tutor"} />}>
               <Route path="dashboard" element={<TDashboard />} />
               <Route path="content" element={<Tcontents />} />
@@ -183,7 +184,7 @@ function App() {
               <Route path="courses/addstudypack" element={<Addstudypack/>} />
            </Route>
           
-          </Route>
+          </Route> */}
 
           <Route element={<RequireAuth allowedRoles={[ROLES.Admin]} />}>
             <Route
@@ -213,7 +214,7 @@ function App() {
               element={<SidebarAndHeader userRole={"teacher"} />}
             >
               <Route path="dashboard" element={<TDashboard />} />
-              <Route path="content" element={<Tcontents />} />
+              <Route path="content" element={<MyContent />} />
               <Route path="courses/add" element={<Addcourse />} />
               <Route path="courses" element={<TCourses />}></Route>
               <Route path="complaints" element={<Complaints />}></Route>
@@ -267,10 +268,10 @@ function App() {
               path="staff"
               element={<SidebarAndHeader userRole={"InstituteStaff"} />}
             >
-              <Route path="dashboard" element={<InstStaffDashboard />} />
-              <Route path="my-profile" element={<MyProfile />} />
+              {/* <Route path="dashboard" element={<InstStaffDashboard />} />
+              <Route path="my-profile" element={<MyProfile />} /> */}
               {/* <Route path="teacher" element={<ViewTeacher />} /> */}
-              <Route path="tutors-list/add" element={<AddTeacher />} />
+              {/* <Route path="tutors-list/add" element={<AddTeacher />} />
               <Route path="class" element={<ApproveClass />} />
               <Route path="profile/:id" element={<InstStaffProfile />} />
               <Route path="complaints" element={<InstStaffComplaintsList />} />
@@ -285,21 +286,21 @@ function App() {
               <Route path="stu-profile/:id" element={<StudentProfile />} />
               <Route path="staff-list" element={<InstStaffList />} />
               <Route path="tutors-list" element={<TutorsList />} />
-              <Route path="tutor-profile/:id" element={<TutorProfile />} />
+              <Route path="tutor-profile/:id" element={<TutorProfile />} /> */}
               <Route
                 path="staff"
                 element={<SidebarAndHeader userRole={"InstituteStaff"} />}
               >
-                <Route path="dashboard" element={<InstStaffDashboard />} />
-                <Route path="my-profile" element={<MyProfile />} />
+                {/* <Route path="dashboard" element={<InstStaffDashboard />} />
+                <Route path="my-profile" element={<MyProfile />} /> */}
                 {/* <Route path="teacher" element={<ViewTeacher />} /> */}
-                <Route path="tutors-list/add" element={<AddTeacher />} />
+                {/* <Route path="tutors-list/add" element={<AddTeacher />} />
                 <Route path="class" element={<ApproveClass />} />
                 <Route path="profile/:id" element={<InstStaffProfile />} />
                 <Route path="complaints" element={<InstStaffComplaintsList />} />
                 <Route path="hall" element={<HallSchedule />} />
-                <Route path="hall/view" element={<HallList />} />
-                <Route path="stu-payment/:username" element={<InstStaffStuPayment />} />
+                <Route path="hall/view" element={<HallList />} /> */}
+                {/* <Route path="stu-payment/:username" element={<InstStaffStuPayment />} />
                 <Route path="staff-list" element={<InstStaffList />} />
                 <Route path="payment-history/:id" element={<ViewPaymentHistory />} />
                 <Route path="physical-payment-receipt/:id" element={<CashReceipt />} />
@@ -307,12 +308,12 @@ function App() {
                 <Route path="stu-list" element={<StudentsList />} />
                 <Route path="stu-profile/:id" element={<StudentProfile />} />
                 <Route path="staff-list" element={<InstStaffList />} />
-                <Route path="tutors-list" element={<TutorsList />} />
-                <Route path="tutor-profile/:id" element={<TutorProfile />} />
-                <Route
+                <Route path="tutors-list" element={<TutorsList />} /> */}
+                {/* <Route path="tutor-profile/:id" element={<TutorProfile />} /> */}
+                {/* <Route
                   path="course/:id"
                   element={<CourseProfile />}
-                />
+                /> */}
               </Route>
             </Route>
          

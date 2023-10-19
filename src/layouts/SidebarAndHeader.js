@@ -139,7 +139,7 @@ const SidebarAndHeader = ({ userRole }) => {
 			icon: FaCompass,
 			name: "Contents",
 			value: "contents",
-			href: "/tutor/contents",
+			href: "/tutor/content",
 		},
 		{
 			icon: FaUserFriends,
@@ -167,9 +167,7 @@ const SidebarAndHeader = ({ userRole }) => {
 		{ icon: GridViewRoundedIcon, name: 'Dashboard', value: 'dashboard', href: '/staff/dashboard' },
 		{ icon: TiDocumentText, name: "Class Request", value: "approveclass", href: "/staff/class" },
 		{ icon: ReportProblemIcon, name: 'Complaints', value: 'complaints', href: '/staff/complaints' },
-		{ icon: TiDocumentText, name: "Halls", value: "hallschedule", href: "/staff/hall" },
-		{ icon: FaUserAlt, name: 'Staff', value: 'stafflist', href: '/staff/staff-list' },
-		{ icon: FaUsers, name: 'Tutors', value: 'stulist', href: '/staff/tutors-list' },
+		{ icon: TiDocumentText, name: "Halls", value: "hallschedule", href: "/staff/hall" },		{ icon: FaUsers, name: 'Tutors', value: 'stulist', href: '/staff/tutors-list' },
 		// { icon: FaMoneyBillAlt, name: 'Student Payments', value: 'payments', href: '/staff/stu-payment' },
 		{ icon: AccountCircleIcon, name: 'Settings', value: 'profile', href: '/staff/my-profile' }
 	]

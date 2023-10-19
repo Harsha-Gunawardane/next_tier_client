@@ -49,10 +49,10 @@ import {
   TableContainer,
 } from "@chakra-ui/react";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
-// import allComplaints from "./Assets/AllComplaints.png";
-// import pending from "./Assets/pendingcomplaints.png";
-// import resolved from "./Assets/completedComplaints.png";
-// import ignored from "./Assets/removedcomplaints.png";
+import allComplaints from "../../assests/images/AllComplaints.png";
+import pending from "../../assests/images/pendingcomplaints.png";
+// import resolved from "./assests/images/completedComplaints.png";
+// import ignored from "./assests/images/removedcomplaints.png";
 
 function ComplaintsListView() {
   // const complaints = data.complaints;
@@ -286,7 +286,7 @@ function ComplaintsListView() {
 
   return (
     <div style={{ backgroundColor: "#F9F9F9", width: "100%" }}>
-      <Heading marginLeft={13} fontSize={20} marginTop={12} color="#242424">
+      <Heading marginLeft={13} fontSize={20} marginTop={6} mb='10px' color="#242424">
         Complaints
       </Heading>
 
