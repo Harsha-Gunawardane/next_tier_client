@@ -2,6 +2,7 @@ import { Carousel } from "@mantine/carousel";
 import { Box } from "@chakra-ui/react";
 
 import TuteCard from "../cards/TuteCard";
+import timesAgo from "../../../../utils/timesAgo";
 
 const colors = ["#E9F8FF", "#FFE1E1", "#FEEDD3", "#D3F3D2", "#EBD2FF"];
 function getColor() {
@@ -11,10 +12,7 @@ function getColor() {
 
 function TuteCardList({ tuteList }) {
   return (
-    <Box
-      mt={5}
-      ml={5}
-    >
+    <Box mt={5} ml={5} w={730}>
       <Carousel
         withIndicators
         height={322}
@@ -31,10 +29,11 @@ function TuteCardList({ tuteList }) {
         {tuteList.map((tute) => (
           <Carousel.Slide>
             <TuteCard
-              title={tute.title}
-              time={tute.time}
+              id={tute.id}
+              title={tute.name}
+              time={timesAgo(tute.recent_activity)}
               icon={tute.icon}
-              content={tute.content}
+              content={tute.description}
               bg={getColor}
             />
           </Carousel.Slide>

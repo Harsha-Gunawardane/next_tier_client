@@ -7,6 +7,7 @@ import {
   FormHelperText,
   FormControl,
   useToast,
+  Textarea,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { CheckIcon, CloseIcon } from "@chakra-ui/icons";
@@ -23,6 +24,7 @@ import { useFoldersInfo } from "../../../../store/student/useFoldersInfo";
 const TUTE_URL = "/stu/tute";
 // form validations
 const NAMING_REGEX = /^[a-zA-Z ]{3,50}$/;
+const DESCRIPTION_REGEX = /^[a-zA-Z ]{3,150}$/;
 
 function NewTuteModal({ isOpen, handleCloseModal, folderName = null }) {
   const axiosPrivate = useAxiosPrivate();
@@ -31,22 +33,24 @@ function NewTuteModal({ isOpen, handleCloseModal, folderName = null }) {
   const toast = useToast();
 
   const [tuteName, setTuteName] = useState("");
+  const [description, setDescription] = useState("");
   const [validTuteName, setValidTuteName] = useState(false);
+  const [validDescription, setValidDescription] = useState(false);
   const [errMsg, setErrMsg] = useState("");
 
   const { addNewTute } = useFoldersInfo();
 
   useEffect(() => {
-    console.log(tuteName);
     setValidTuteName(NAMING_REGEX.test(tuteName.trim()));
-  }, [tuteName]);
+    setValidDescription(DESCRIPTION_REGEX.test(description.trim()));
+  }, [tuteName, description]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!validTuteName) {
+    if (!validTuteName || !validDescription) {
       toast({
-        title: "Please enter valid tute name",
+        title: "Please enter valid data",
         status: "warning",
         isClosable: true,
         position: "top-right",
@@ -63,6 +67,7 @@ function NewTuteModal({ isOpen, handleCloseModal, folderName = null }) {
       const response = await axiosPrivate.post(TUTE_URL, {
         id: tuteId,
         name: tuteName,
+        description: description,
         folderName,
       });
       console.log("Request successful:", response.data);
@@ -91,6 +96,8 @@ function NewTuteModal({ isOpen, handleCloseModal, folderName = null }) {
       setTuteName("");
     } finally {
       handleCloseModal();
+      setTuteName("");
+      setDescription("");
     }
     console.log(tuteName);
   };
@@ -128,6 +135,52 @@ function NewTuteModal({ isOpen, handleCloseModal, folderName = null }) {
               required
               placeholder="Enter tute name"
               onChange={(e) => setTuteName(e.target.value)}
+              h={9}
+              bg="#e9e9e9"
+              border="1px solid #D9D9D9"
+              fontSize={14}
+              w="95%"
+            />
+          </Flex>
+          <FormHelperText
+            display={tuteName && !validTuteName ? "block" : "none"}
+            fontSize={13}
+            ml={5}
+            mt={2}
+            color="#D57974"
+          >
+            use atleast 3 characters with no numerical values
+          </FormHelperText>
+
+          <FormLabel
+            mt={3}
+            fontSize={16}
+            color="#555555"
+            fontWeight="regular"
+            fontStyle="Roboto"
+            htmlFor="fName"
+          >
+            <Flex justifyContent="space-between" w="95%" alignItems="center">
+              Tute description
+              <CheckIcon
+                color="#15BD66"
+                fontWeight="bold"
+                display={validDescription ? "flex" : "none"}
+              />
+              <CloseIcon
+                color="#D93400"
+                fontWeight="bold"
+                display={validDescription || !description ? "none" : "flex"}
+              />
+            </Flex>
+          </FormLabel>
+          <Flex justifyContent="center" w="95%">
+            <Textarea
+              id="tuteName"
+              type="text"
+              required
+              placeholder="Enter tute name"
+              onChange={(e) => setDescription(e.target.value)}
               h={9}
               bg="#e9e9e9"
               border="1px solid #D9D9D9"

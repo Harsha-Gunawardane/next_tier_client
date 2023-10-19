@@ -15,7 +15,7 @@ import backgroundTemplate from "../../components/mcq/assests/backgroundTemplate.
 import { DeleteIcon, EditIcon, SettingsIcon } from "@chakra-ui/icons";
 import { FaPen } from "react-icons/fa";
 
-export default function CategoryInsideCard({ category }) {
+export default function CategoryInsideCard({ category, handleDelete, handleEdit }) {
   return (
     <Card
       direction={{ base: "column", sm: "row" }}
@@ -42,12 +42,14 @@ export default function CategoryInsideCard({ category }) {
               size="xs"
               variant="outline"
               icon={<FaPen color="gray" />}
+              onClick={() => handleEdit(category.id)}
             />
             <IconButton
               size="xs"
               variant="outline"
               marginLeft="4px"
               icon={<DeleteIcon w={4} h={4} color="red.500" />}
+              onClick={() => handleDelete(category.id)}
             />
           </HStack>
 

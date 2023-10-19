@@ -1,65 +1,64 @@
 import { Box, Text, Flex } from "@chakra-ui/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AiFillStar } from "react-icons/ai";
 
 import FilterTab from "../tabs/FilterTab";
 import TuteCard from "../cards/TuteCard";
 import truncate from "../../../../utils/truncateString";
 import TuteCardList from "./TuteCardList";
+import useAxiosPrivate from "../../../../hooks/useAxiosPrivate";
+
+const TUTE_ACTIVITY_URL = "stu/dash/tutes";
+
+const cheerio = require("cheerio");
 
 function RecentTutes() {
-  const [focusedTab, setFocusedTab] = useState("Recent");
+  const content = "<p>final test</p>";
 
-  const recentCards = [
-    {
-      title: truncate("Important of Power", 12),
-      time: "24 min ago",
-      icon: <AiFillStar color="#ECC330" fontSize={22} />,
-      content: truncate(
-        "Overview everithing is here ti for final waslk thoughOverview everithing is here ti for final waslk thoughOverview everithing is here ti for final waslk thoughOverview everithing is here ti for final waslk though and close checklist and one it search title and find it so now",
-        170
-      ),
-    },
-    {
-      title: truncate("Important of Power", 12),
-      time: "24 min ago",
-      icon: <AiFillStar color="#ECC330" fontSize={22} />,
-      content: truncate(
-        "Overview everithing is here ti for final waslk thoughOverview everithing is here ti for final waslk thoughOverview everithing is here ti for final waslk thoughOverview everithing is here ti for final waslk though and close checklist and one it search title and find it so now",
-        170
-      ),
-    },
-    {
-      title: truncate("Important of Power", 12),
-      time: "24 min ago",
-      icon: <AiFillStar color="#ECC330" fontSize={22} />,
-      content: truncate(
-        "Overview everithing is here ti for final waslk thoughOverview everithing is here ti for final waslk thoughOverview everithing is here ti for final waslk thoughOverview everithing is here ti for final waslk though and close checklist and one it search title and find it so now",
-        170
-      ),
-    },
-    {
-      title: truncate("Important of Power", 12),
-      time: "24 min ago",
-      icon: <AiFillStar color="#ECC330" fontSize={22} />,
-      content: truncate(
-        "Overview everithing is here ti for final waslk thoughOverview everithing is here ti for final waslk thoughOverview everithing is here ti for final waslk thoughOverview everithing is here ti for final waslk though and close checklist and one it search title and find it so now",
-        170
-      ),
-    },
-  ];
+  // Load the content into cheerio
+  const $ = cheerio.load(content);
+
+  // Remove all HTML tags and get plain text
+  const plainText = $.text();
+
+  console.log(plainText);
+
+  const [focusedTab, setFocusedTab] = useState("Recent");
+  const [recentTuteCards, setRecentTuteCards] = useState([]);
+
+  const axiosPrivate = useAxiosPrivate();
+
+  const getRecentTutes = async () => {
+    try {
+      const response = await axiosPrivate.get(TUTE_ACTIVITY_URL);
+      console.log(response.data);
+      setRecentTuteCards(response.data);
+
+      recentTuteCards.forEach((tuteCard) => {
+        const test = cheerio.load(tuteCard.content);
+        tuteCard.content = test.text();
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  console.log(recentTuteCards)
+  
+  useEffect(() => {
+    getRecentTutes();
+  }, []);
+
+
   return (
     <Box
-      shadow={
-        "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px"
-      }
+      shadow={"rgba(99, 99, 99, 0.2) 0px 2px 8px 0px"}
       p={3}
       borderRadius={8}
       mt={3}
       bg={"#F2F2F2"}
     >
       <Text
-        
         ml={3}
         mb={2}
         fontSize={18}
@@ -84,7 +83,7 @@ function RecentTutes() {
           onclickHandler={setFocusedTab}
         />
       </Flex>
-      <TuteCardList tuteList={recentCards} />
+      <TuteCardList tuteList={recentTuteCards} />
     </Box>
   );
 }
