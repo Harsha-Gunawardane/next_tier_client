@@ -31,24 +31,24 @@ import StarredTutes from "./pages/student/StarredTutes";
 import ArchivedTutes from "./pages/student/ArchivedTutes";
 
 // instituteStaff components
-// import InstStaffDashboard from "./pages/InstituteStaff/Dashboard";
-// import AddTeacher from "./pages/InstituteStaff/AddTeacher";
-// import InstStaffProfile from "./pages/InstituteStaff/StaffProfile";
-// import InstStaffComplaintsList from "./pages/InstituteStaff/Complaints/ComplaintsListView";
-// import ApproveClass from "./pages/InstituteStaff/ApproveClass";
-// import HallList from "./pages/InstituteStaff/HallList";
-// import HallSchedule from "./pages/InstituteStaff/HallSchedule";
-// import InstStaffStuPayment from "./pages/InstituteStaff/StuPayment";
-// import InstStaffList from "./pages/InstituteStaff/StaffList";
-// import ViewPaymentHistory from "./pages/InstituteStaff/viewPaymentHistory";
-// import MyProfile from "./pages/InstituteStaff/Profile";
-// import CashReceipt from "./pages/InstituteStaff/cashReceiptStaff";
-// import OnlineReceipt from "./pages/InstituteStaff/onlineReceiptStaff";
-// import StudentsList from "./pages/InstituteStaff/StudentsList";
-// import StudentProfile from "./pages/InstituteStaff/StudentProfile";
-// import TutorsList from "./pages/InstituteStaff/tutorsList";
-// import TutorProfile from "./pages/InstituteStaff/TutorProfile";
-// import CourseProfile from "./pages/InstituteStaff/CourseDetail";
+import InstStaffDashboard from "./pages/InstituteStaff/Dashboard";
+import AddTeacher from "./pages/InstituteStaff/AddTeacher";
+import InstStaffProfile from "./pages/InstituteStaff/StaffProfile";
+import InstStaffComplaintsList from "./pages/InstituteStaff/Complaints/ComplaintsListView";
+import ApproveClass from "./pages/InstituteStaff/ApproveClass";
+import HallList from "./pages/InstituteStaff/HallList";
+import HallSchedule from "./pages/InstituteStaff/HallSchedule";
+import InstStaffStuPayment from "./pages/InstituteStaff/StuPayment";
+import InstStaffList from "./pages/InstituteStaff/StaffList";
+import ViewPaymentHistory from "./pages/InstituteStaff/viewPaymentHistory";
+import MyProfile from "./pages/InstituteStaff/Profile";
+import CashReceipt from "./pages/InstituteStaff/cashReceiptStaff";
+import OnlineReceipt from "./pages/InstituteStaff/onlineReceiptStaff";
+import StudentsList from "./pages/InstituteStaff/StudentsList";
+import StudentProfile from "./pages/InstituteStaff/StudentProfile";
+import TutorsList from "./pages/InstituteStaff/tutorsList";
+import TutorProfile from "./pages/InstituteStaff/TutorProfile";
+import CourseProfile from "./pages/InstituteStaff/CourseDetail";
 
 // admin components
 import AdminDashboard from "./pages/admin/Dashboard";
