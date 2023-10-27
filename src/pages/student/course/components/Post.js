@@ -26,12 +26,12 @@ import 'react-photo-view/dist/react-photo-view.css';
 
 
 import generateTimeAgoString from "../../../../utils/timesAgo";
-import LikeDislike from "../../../../components/student/ContentWatch/LikeDislike";
+import LikeDislike from "../../../../components/student/contentWatch/LikeDislike";
 
 //icons
 import { PiChatCircleBold } from "react-icons/pi"
 import { TbPinnedFilled } from "react-icons/tb"
-import CommentSection from "../../../../components/student/ContentWatch/CommentSection";
+import CommentSection from "../../../../components/student/contentWatch/CommentSection";
 import { AiFillFlag } from "react-icons/ai";
 import { SlOptions, SlOptionsVertical } from "react-icons/sl";
 import { useEffect } from "react";

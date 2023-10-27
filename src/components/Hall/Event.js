@@ -70,17 +70,25 @@ function Event({ isOpen, onClose, event }) {
       <ModalOverlay />
       <ModalContent>
         <ModalHeader>
-          {isEditing ? "Edit Event Details" : event && event.title}
+          {isEditing ? "Edit Event Details" : (event && event.title) || "Event"}
         </ModalHeader>
         <ModalCloseButton />
         <ModalBody>
-          {isEditing && event && (
+          {isEditing && event ? (
             <Stack spacing={4}>
               <FormControl>
-                <FormLabel>Teacher</FormLabel>
+                <FormLabel>Hall No</FormLabel>
                 <Input
-                  name="teacher"
-                  value={updatedEvent.teacher}
+                  name="hall"
+                  value={updatedEvent.hall}
+                  onChange={handleInputChange}
+                />
+              </FormControl>
+              <FormControl>
+                <FormLabel>Teaching Medium</FormLabel>
+                <Input
+                  name="medium"
+                  value={updatedEvent.medium}
                   onChange={handleInputChange}
                 />
               </FormControl>
@@ -89,14 +97,6 @@ function Event({ isOpen, onClose, event }) {
                 <DatePicker
                   selected={new Date(updatedEvent.start)}
                   onChange={(date) => handleDateChange(date, "start")}
-                />
-              </FormControl>
-              <FormControl>
-                <FormLabel>Hall No</FormLabel>
-                <Input
-                  name="hall"
-                  value={updatedEvent.hall}
-                  onChange={handleInputChange}
                 />
               </FormControl>
 
@@ -125,34 +125,31 @@ function Event({ isOpen, onClose, event }) {
                 />
               </FormControl>
             </Stack>
-          )}
-
-          {!isEditing && event && (
+          ) : (
             <Stack spacing={4}>
               <FormControl>
-                <FormLabel>Teacher</FormLabel>
-                <Input value={event.teacher} isReadOnly />
+                <FormLabel>Hall No</FormLabel>
+                <Input value={event && event.hall} isReadOnly />
+              </FormControl>
+              <FormControl>
+                <FormLabel>Teaching Medium</FormLabel>
+                <Input value={event && event.medium} isReadOnly />
               </FormControl>
               <FormControl>
                 <FormLabel>Date</FormLabel>
-                <Input value={format(new Date(event.start), "MM/dd/yyyy")} isReadOnly />
+                <Input value={event && format(new Date(event.start), "MM/dd/yyyy")} isReadOnly />
               </FormControl>
-              <FormControl>
-                <FormLabel>Hall No</FormLabel>
-                <Input value={event.hall} isReadOnly />
-              </FormControl>
-
               <FormControl>
                 <FormLabel>Start Time</FormLabel>
                 <Input
-                  value={format(new Date(event.start), "HH:mm aa")}
+                  value={event && format(new Date(event.start), "HH:mm aa")}
                   isReadOnly
                 />
               </FormControl>
               <FormControl>
                 <FormLabel>End Time</FormLabel>
                 <Input
-                  value={format(new Date(event.end), "HH:mm aa")}
+                  value={event && format(new Date(event.end), "HH:mm aa")}
                   isReadOnly
                 />
               </FormControl>

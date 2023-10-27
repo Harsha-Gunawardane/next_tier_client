@@ -58,6 +58,16 @@ function ApproveClass() {
             : request
         );
       });
+         // Display a success toast
+         toast({
+          title: "Success",
+          description: "Class request approved successfully.",
+          status: "success",
+          duration: 3000,
+          isClosable: true,
+          position: "top-right",
+        });
+
       console.log("Course request approved:", response.data);
     } catch (error) {
       console.error("Error approving course request:", error);
@@ -86,6 +96,15 @@ function ApproveClass() {
             : request
         );
       });
+         // Display a success toast
+         toast({
+          title: "Error",
+          description: "Class Request Rejected.",
+          status: "error",
+          duration: 3000,
+          isClosable: true,
+          position: "top-right",
+        });
       console.log("Course request rejected:", response.data);
     } catch (error) {
       console.error("Error rejectinging course request:", error);
@@ -127,7 +146,7 @@ function ApproveClass() {
 `;
 
   return (
-    <Box width="100%"  >
+    <Box width="100%" backgroundColor="#F9F9F9" >
       <Flex
         direction={["column", "column", "row"]}
         justify="space-between"
@@ -166,10 +185,10 @@ function ApproveClass() {
             borderRadius="1px"
           />
           <TabPanels>
-            <TabPanel height="550px" overflowY="scroll" css={scrollbarStyles}>
+            <TabPanel height="520px" overflowY="scroll" css={scrollbarStyles}>
               <ViewTable data={classData} tableType="allRequests" />
             </TabPanel>
-            <TabPanel height="550px" overflowY="scroll" css={scrollbarStyles}>
+            <TabPanel height="520px" overflowY="scroll" css={scrollbarStyles}>
               <ViewTable
                 tableType="Approved"
                 data={classData.filter(
@@ -177,7 +196,7 @@ function ApproveClass() {
                 )}
               />
             </TabPanel>
-            <TabPanel height="550px" overflowY="scroll" css={scrollbarStyles}>
+            <TabPanel height="520px" overflowY="scroll" css={scrollbarStyles}>
               <Status
                 isOpen={isOpen}
                 onClose={() => setIsOpen(false)}
@@ -202,7 +221,7 @@ function ApproveClass() {
                 }}
               />
             </TabPanel>
-            <TabPanel height="550px" overflowY="scroll" css={scrollbarStyles}>
+            <TabPanel height="520px" overflowY="scroll" css={scrollbarStyles}>
               <ViewTable
                 tableType="Rejected"
                 data={classData.filter(

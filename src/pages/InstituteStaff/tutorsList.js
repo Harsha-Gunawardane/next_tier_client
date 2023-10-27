@@ -19,11 +19,10 @@ import {
   Switch,
   useToast,
 } from "@chakra-ui/react";
-// import data from "./data/data.json";
 import { NavLink, useNavigate, useLocation } from "react-router-dom";
 import { SmallAddIcon } from "@chakra-ui/icons";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
-// const tutorData = data.Tutors;
+import StatusChange from "./StatusChange";
 
 const TutorsList = () => {
   const axiosPrivate = useAxiosPrivate();
@@ -32,6 +31,8 @@ const TutorsList = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [sortBy, setSortBy] = useState("fName");
   const [sortOrder, setSortOrder] = useState("asc");
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [tutorToChangeStatus, setTutorToChangeStatus] = useState(null);
 
   // Inside your component
   const location = useLocation();
@@ -115,6 +116,12 @@ const TutorsList = () => {
 
   const buttonSize = useBreakpointValue({ base: "xs", md: "sm" });
 
+  // Function to handle opening the modal
+  const handleOpenModal = (tutor) => {
+    setTutorToChangeStatus(tutor);
+    setIsModalOpen(true);
+  };
+
   const handleSwitchChange = async (tutorId) => {
     try {
       const tutorToUpdate = tutorData.find((tutor) => tutor.tutor_id === tutorId);
@@ -136,7 +143,7 @@ const TutorsList = () => {
           status: "success",
           duration: 3000,
           isClosable: true,
-          position: "top",
+          position: "top-right",
         });
       } else {
         toast({
@@ -145,7 +152,7 @@ const TutorsList = () => {
           status: "error",
           duration: 3000,
           isClosable: true,
-          position: "top",
+          position: "top-right",
         });
       }
     } catch (error) {
@@ -321,7 +328,7 @@ const TutorsList = () => {
                   <Switch
                     colorScheme="green"
                     size="md"
-                    onChange={() => handleSwitchChange(tutor.tutor_id)}
+                    onChange={() => handleOpenModal(tutor)}
                     isChecked={tutor.active}
                   />
                 </Td>
@@ -330,6 +337,12 @@ const TutorsList = () => {
           </Tbody>
         </Table>
       </Box>
+      <StatusChange
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        tutor={tutorToChangeStatus}
+        onSwitchChange={handleSwitchChange}
+      />
     </Box>
   );
 };

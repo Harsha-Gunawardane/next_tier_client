@@ -124,25 +124,7 @@ const closeModal = () => {
 
   const DragAndDropCalendar = withDragAndDrop(Calendar);
 
-  // const handleEventDrop = ({ event, start, end }) => {
-  //   const eventIndex = events.findIndex((e) => e.id === event.id);
-
-  //   if (eventIndex !== -1) {
-  //     const updatedEvent = {
-  //       ...event,
-  //       start,
-  //       end,
-  //     };
-
-  //     const updatedEvents = [
-  //       ...events.slice(0, eventIndex),
-  //       updatedEvent,
-  //       ...events.slice(eventIndex + 1),
-  //     ];
-
-  //     setEvents(updatedEvents);
-  //   }
-  // };
+ 
   const handleEventDrop = ({ event, start, end }) => {
     const eventIndex = events.findIndex((e) => e.id === event.id);
   
@@ -153,6 +135,15 @@ const closeModal = () => {
         end,
       };
   
+      // Get the new date and day values based on the start date
+      const newDate = moment(start).toISOString(); // Convert to ISO format
+      const newDay = moment(start).format("dddd");
+  
+      updatedEvent.hall_id = event.hall_id; 
+      updatedEvent.day = event.day; 
+      updatedEvent.start_time = event.start_time; 
+      updatedEvent.end_time = event.end_time; 
+
       const updatedEvents = [
         ...events.slice(0, eventIndex),
         updatedEvent,
@@ -160,21 +151,23 @@ const closeModal = () => {
       ];
   
       // Update the event in the database
-      updateEventDetails(updatedEvent);
+      updateEventDetails(updatedEvent, newDate, newDay);
   
       // Update the local state with the updated events
       setEvents(updatedEvents);
     }
   };
   
-  const updateEventDetails = (updatedEvent) => {
-   
+  const updateEventDetails = (updatedEvent, newDate, newDay) => {
     // Perform an authenticated API request to update the event data in the database
     axiosPrivate
-      .put(`/staff/schedule/${updatedEvent.id}`, {
-        // date: updatedEvent.date,
-        // ... other event properties you want to update ...
-      })
+      .put(
+        `/staff/schedule/${updatedEvent.hall_id}/${updatedEvent.day}/${updatedEvent.start_time}/${updatedEvent.end_time}`,
+        {
+          newDate,
+          newDay,
+        }
+      )
       .then((response) => {
         console.log("Event updated successfully:", response.data);
       })
@@ -185,14 +178,14 @@ const closeModal = () => {
   };
   
   return (
-    <Box width="100%" mx={{ base: "10", md: "10" }} >
+    <Box width="100%"  >
       <Flex
         direction={["column", "row"]}
         justify="space-between"
         align="center"
         mt="5"
         ml={["0", "2"]}
-        mr={["0", "25px"]}
+        mr={["0", "10px"]}
       >
         <Heading
           fontSize={{ base: 20, md: 20 }}
@@ -217,7 +210,7 @@ const closeModal = () => {
         <Schedule isOpen={isModalOpen} onClose={closeModal} />
       </Flex>
 
-      <Box mt="5" display="flex" justifyContent="center" mr={20}>
+      <Box mt="5" display="flex" justifyContent="center" mr={5}>
         <DragAndDropCalendar
           localizer={localizer}
           events={events}
