@@ -11,11 +11,11 @@ import {
   AccordionPanel,
   HStack,
   SimpleGrid,
-  Button,Link,
+  Button,
+  Link,
 } from "@chakra-ui/react";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import { useLocation } from "react-router-dom";
-
 
 import Addcontent from "../../components/tutor/coursepackage/Addmonth.js";
 import Remove from "../../components/tutor/coursepackage/Contentremove";
@@ -27,7 +27,7 @@ import Fetch from "../../hooks/fetchTitle";
 import Fetcht from "../../hooks/fetchThumb";
 import FetchQuiz from "../../hooks/fetchQuiz";
 import Removecontent from "../../components/tutor/coursepackage/Remove";
-import { Show, Hide } from '@chakra-ui/react'
+import { Show, Hide } from "@chakra-ui/react";
 
 const Coursepackcontent = () => {
   const [selectedId, setSelectedId] = useState(null);
@@ -69,19 +69,21 @@ const Coursepackcontent = () => {
   useEffect(() => {
     if (contentIdsData && contentIdsData.length > 0) {
       let firstAvailableId = null;
-  
+
       // Generate the part order based on available parts in contentIdsData
-      const partOrder = contentIdsData.map(item => Object.keys(item)[0]);
-  
+      const partOrder = contentIdsData.map((item) => Object.keys(item)[0]);
+
       for (const part of partOrder) {
-        const weekData = contentIdsData.find(item => Object.keys(item)[0] === part);
+        const weekData = contentIdsData.find(
+          (item) => Object.keys(item)[0] === part
+        );
         if (weekData) {
           const weekContent = weekData[part];
-  
+
           if (weekContent) {
             const videoId = weekContent.video_id[0];
             const tuteId = weekContent.tute_id[0];
-  
+
             if (videoId || tuteId) {
               firstAvailableId = videoId || tuteId;
               break;
@@ -89,14 +91,16 @@ const Coursepackcontent = () => {
           }
         }
       }
-  
+
       if (firstAvailableId) {
         setSelectedId(firstAvailableId);
         setLoading(true);
-  
+
         const fetchContentDetails = async (contentId) => {
           try {
-            const response = await axiosPrivate.get(`/tutor/content/${contentId}`);
+            const response = await axiosPrivate.get(
+              `/tutor/content/${contentId}`
+            );
             if (response.data.title) {
               setSelectedTitle(response.data.title);
               setSelectedImage(response.data.thumbnail);
@@ -108,14 +112,11 @@ const Coursepackcontent = () => {
             setLoading(false);
           }
         };
-  
+
         fetchContentDetails(firstAvailableId);
       }
     }
   }, [contentIdsData, axiosPrivate]);
-  
-  
-  
 
   const handleViewClick = async (item) => {
     setSelectedId(item.video);
@@ -173,7 +174,6 @@ const Coursepackcontent = () => {
     }
   };
 
-
   // const handleAddMonth = () => {
   //   // Create a new month entry with initial empty content
   //   const newMonth = {
@@ -183,13 +183,12 @@ const Coursepackcontent = () => {
   //       quiz_id: [],
   //     },
   //   };
-  
+
   //   // Update the contentIdsData state by adding the new month
   //   setContentIdsData([...contentIdsData, newMonth]);
   // };
 
-
-   const handleRemoveMonth = (month) => {
+  const handleRemoveMonth = (month) => {
     // Create a copy of the contentIdsData array and filter out the month to be removed
     const updatedContentIdsData = contentIdsData.filter(
       (weekData) => Object.keys(weekData)[0] !== month
@@ -198,8 +197,6 @@ const Coursepackcontent = () => {
     // Update the state with the modified contentIdsData array
     setContentIdsData(updatedContentIdsData);
   };
-
-  
 
   const handleVideoAdded = (newContentIdsData) => {
     // Update the contentIdsData state with the new data
@@ -216,8 +213,6 @@ const Coursepackcontent = () => {
     setContentIdsData(newContentIdsData);
   };
 
-
-
   const handleContentRemove = (month, contentId) => {
     // Create a copy of the contentIdsData array and filter out the deleted content
     const updatedContentIdsData = contentIdsData.map((weekData) => {
@@ -226,16 +221,30 @@ const Coursepackcontent = () => {
       if (weekKey === month) {
         const weekContent = updatedWeekData[weekKey];
         if (weekContent) {
-          if (weekContent.video_id && weekContent.video_id.includes(contentId)) {
+          if (
+            weekContent.video_id &&
+            weekContent.video_id.includes(contentId)
+          ) {
             // Remove the deleted content from video_id
-            weekContent.video_id = weekContent.video_id.filter((id) => id !== contentId);
-          } else if (weekContent.tute_id && weekContent.tute_id.includes(contentId)) {
+            weekContent.video_id = weekContent.video_id.filter(
+              (id) => id !== contentId
+            );
+          } else if (
+            weekContent.tute_id &&
+            weekContent.tute_id.includes(contentId)
+          ) {
             // Remove the deleted content from tute_id
-            weekContent.tute_id = weekContent.tute_id.filter((id) => id !== contentId);
-          }
-          else if (weekContent.quiz_id && weekContent.quiz_id.includes(contentId)) {
+            weekContent.tute_id = weekContent.tute_id.filter(
+              (id) => id !== contentId
+            );
+          } else if (
+            weekContent.quiz_id &&
+            weekContent.quiz_id.includes(contentId)
+          ) {
             // Remove the deleted content from tute_id
-            weekContent.quiz_id = weekContent.quiz_id.filter((id) => id !== contentId);
+            weekContent.quiz_id = weekContent.quiz_id.filter(
+              (id) => id !== contentId
+            );
           }
         }
       }
@@ -254,28 +263,51 @@ const Coursepackcontent = () => {
     <Box width="100%">
       <SimpleGrid spacing={20} minChildWidth="250px" mt="20px">
         <Box mt="20px">
+          {studypackdata && (
+            <Heading fontSize="30px" mb="30px" ml="10px" fontWeight="xl">
+              {studypackdata.title}
+            </Heading>
+          )}
           {selectedImage && (
-            <Box width="110%" bg="white" position="sticky" top="20" zIndex="1" ml='20px'>
-              {studypackdata && (
+            <Box
+              width="110%"
+              bg="white"
+              position="sticky"
+              top="20"
+              zIndex="1"
+              ml="20px"
+            >
+              {/* {studypackdata && (
                 <Heading fontSize="30px" mb="30px" ml='10px' fontWeight='xl'>
                   {studypackdata.title}
                 </Heading>
-              )}
+              )} */}
               <Link>
-              <Image
-                boxSize="60%"
-                width={{base:420,xl:700}}
-                height={{base:250,xl:350}}
-                objectFit="cover"
-                src={selectedImage}
-                alt="Course Image"
-                ml='10px'
-              />
+                <Image
+                  boxSize="60%"
+                  width={{ base: 420, xl: 700 }}
+                  height={{ base: 250, xl: 350 }}
+                  objectFit="cover"
+                  src={selectedImage}
+                  alt="Course Image"
+                  ml="10px"
+                />
               </Link>
-               {/* <Button fontSize="15px" ml='40px' width='80%'mt='40px' colorScheme="blue">View</Button> */}
-              <Heading mt='30px' ml='15px'>{selectedTitle}</Heading>
-              <Text fontSize="15px" mt='10px' ml='15px'>{selectedDiscription}</Text>
-             
+              <Button
+                fontSize="15px"
+                ml="40px"
+                width="80%"
+                mt="40px"
+                colorScheme="blue"
+              >
+                View
+              </Button>
+              <Heading mt="30px" ml="15px">
+                {selectedTitle}
+              </Heading>
+              <Text fontSize="15px" mt="10px" ml="15px">
+                {selectedDiscription}
+              </Text>
             </Box>
           )}
 
@@ -288,11 +320,17 @@ const Coursepackcontent = () => {
           )}
         </Box>
 
-        <Box w="75%" bg="white" p={10} ml={{base:0,xl:120}} mt={{base:-20,xl:0}}>
-        <Hide below='md'>
-          <Box mt={{base:-20,xl:35}}>
-            <TutorDetails></TutorDetails>
-          </Box>
+        <Box
+          w="75%"
+          bg="white"
+          p={10}
+          ml={{ base: 0, xl: 120 }}
+          mt={{ base: -20, xl: 0 }}
+        >
+          <Hide below="md">
+            <Box mt={{ base: -20, xl: 35 }}>
+              <TutorDetails></TutorDetails>
+            </Box>
           </Hide>
           <Heading fontSize="20px" mt="20px" mb="20px">
             Course Content
@@ -303,7 +341,7 @@ const Coursepackcontent = () => {
             const weekContent = weekData[weekKey];
 
             if (weekContent) {
-              const formattedWeekKey = weekKey.replace(/%20/g, ' ');
+              const formattedWeekKey = weekKey.replace(/%20/g, " ");
               return (
                 <Accordion allowToggle key={index}>
                   <AccordionItem width={{ base: 400, xl: 400 }}>
@@ -314,13 +352,16 @@ const Coursepackcontent = () => {
                         borderRadius="5px"
                         height="50px"
                       >
-                       
                         <Box as="span" flex="1" textAlign="left" height="30px">
                           <Heading p={1} ml="20px" fontSize="15px">
                             {weekKey}
                           </Heading>
                         </Box>
-                        <Remove  course={id} month={weekKey} onMonthRemove={handleRemoveMonth}></Remove>
+                        <Remove
+                          course={id}
+                          month={weekKey}
+                          onMonthRemove={handleRemoveMonth}
+                        ></Remove>
                         <AccordionIcon />
                       </AccordionButton>
                     </h2>
@@ -331,14 +372,17 @@ const Coursepackcontent = () => {
                         <Text fontSize="15px">Video Content</Text>
                         <Box>
                           {" "}
-                          <Addcoursecontent dynamicWeek={weekKey} studypackId={id}  onVideoAdded={handleVideoAdded}/>
+                          <Addcoursecontent
+                            dynamicWeek={weekKey}
+                            studypackId={id}
+                            onVideoAdded={handleVideoAdded}
+                          />
                         </Box>
                       </HStack>
 
                       {weekContent.video_id &&
                         weekContent.video_id.map((videoId, videoIndex) => (
-                          <Box   bg="gray.100"
-                          p="10px" mt="4px" className="box1">
+                          <Box bg="gray.100" p="10px" mt="4px" className="box1">
                             <HStack spacing="40px">
                               <Box p={2} width="210px">
                                 <HStack>
@@ -367,7 +411,9 @@ const Coursepackcontent = () => {
                                     View
                                   </Button>{" "}
                                   <Removecontent
-                                    contentId={videoId}  month={weekKey}  onContentRemove={handleContentRemove} 
+                                    contentId={videoId}
+                                    month={weekKey}
+                                    onContentRemove={handleContentRemove}
                                   ></Removecontent>
                                 </HStack>
                               </Box>
@@ -379,14 +425,17 @@ const Coursepackcontent = () => {
                         <Text fontSize="15px">Tute Content</Text>
                         <Box>
                           {" "}
-                          <Addcoursedoccontent  dynamicWeek={weekKey} studypackId={id} onDocAdded={handleDocAdded} ></Addcoursedoccontent>
+                          <Addcoursedoccontent
+                            dynamicWeek={weekKey}
+                            studypackId={id}
+                            onDocAdded={handleDocAdded}
+                          ></Addcoursedoccontent>
                         </Box>
                       </HStack>
                       {weekContent.tute_id &&
                         weekContent.tute_id.map((tuteId, tuteIndex) => (
-                          <Box   bg="gray.100"
-                          p="10px" mt="4px" className="box1">
-                            <HStack spacing="50px">
+                          <Box bg="gray.100" p="10px" mt="4px" className="box1">
+                            <HStack spacing="40px">
                               <Box p={2} width="210px">
                                 <HStack>
                                   <Fetcht videoId={tuteId} />
@@ -414,7 +463,9 @@ const Coursepackcontent = () => {
                                     View
                                   </Button>{" "}
                                   <Removecontent
-                                    contentId={tuteId}  month={decodeURIComponent(weekKey)} onContentRemove={handleContentRemove}
+                                    contentId={tuteId}
+                                    month={decodeURIComponent(weekKey)}
+                                    onContentRemove={handleContentRemove}
                                   ></Removecontent>
                                 </HStack>
                               </Box>
@@ -426,14 +477,17 @@ const Coursepackcontent = () => {
                         <Text fontSize="15px">Quiz Content</Text>
                         <Box>
                           {" "}
-                          <Addcoursequiz  dynamicWeek={weekKey} studypackId={id} onQuizAdded={handleQuizAdded}></Addcoursequiz>
+                          <Addcoursequiz
+                            dynamicWeek={weekKey}
+                            studypackId={id}
+                            onQuizAdded={handleQuizAdded}
+                          ></Addcoursequiz>
                         </Box>
                       </HStack>
                       {weekContent.quiz_id &&
                         weekContent.quiz_id.map((quizId, tuteIndex) => (
-                          <Box   bg="gray.100"
-                          p="10px" mt="4px" className="box1">
-                            <HStack spacing="50px">
+                          <Box bg="gray.100" p="10px" mt="4px" className="box1">
+                            <HStack spacing="40px">
                               <Box p={2} width="210px">
                                 <HStack>
                                   {/* <Fetcht videoId={quizId} /> */}
@@ -461,7 +515,9 @@ const Coursepackcontent = () => {
                                     Attempt
                                   </Button>{" "}
                                   <Removecontent
-                                    contentId={quizId}  month={decodeURIComponent(weekKey)} onContentRemove={handleContentRemove}
+                                    contentId={quizId}
+                                    month={decodeURIComponent(weekKey)}
+                                    onContentRemove={handleContentRemove}
                                   ></Removecontent>
                                 </HStack>
                               </Box>
@@ -478,7 +534,10 @@ const Coursepackcontent = () => {
             }
             return null;
           })}
-          <Addcontent  contentIdsData={contentIdsData} setContentIdsData={setContentIdsData}  ></Addcontent>
+          <Addcontent
+            contentIdsData={contentIdsData}
+            setContentIdsData={setContentIdsData}
+          ></Addcontent>
         </Box>
       </SimpleGrid>
     </Box>

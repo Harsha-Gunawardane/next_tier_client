@@ -7,12 +7,11 @@ import {
   ModalBody,
   ModalCloseButton,
   Button,
-  
   SimpleGrid,
   Box,
   Checkbox,
-
-  IconButton,useToast,
+  IconButton,
+  useToast,
 } from "@chakra-ui/react";
 import { SmallAddIcon } from "@chakra-ui/icons";
 import React, { useEffect, useState } from "react";
@@ -38,7 +37,6 @@ const Addweekquizcontent = ({ studypackId, dynamicWeek }) => {
           signal: controller.signal,
         });
         setcontentData(response.data);
-       
       } catch (error) {
         console.log(error);
       }
@@ -46,10 +44,7 @@ const Addweekquizcontent = ({ studypackId, dynamicWeek }) => {
     getCourses();
   }, [axiosPrivate]);
 
-
-
   const [selectedItems, setSelectedItems] = useState([]);
-
 
   const handleCheckboxChange = (index) => {
     if (selectedItems.includes(index)) {
@@ -94,7 +89,7 @@ const Addweekquizcontent = ({ studypackId, dynamicWeek }) => {
   const [selectedPrice, setSelectedPrice] = useState(price);
 
   const handleSave = async (event) => {
-     event.preventDefault();
+    event.preventDefault();
 
     try {
       // Fetch the existing content_ids structure
@@ -129,23 +124,21 @@ const Addweekquizcontent = ({ studypackId, dynamicWeek }) => {
       await axiosPrivate.put(`/tutor/weekstudypack/${studypackId}`, {
         content_ids: existingContentIds,
         price: price,
-        expire_date:expire_date,
+        expire_date: expire_date,
       });
 
-
       toast({
-        title: 'Quiz Added',
-        description: 'The Quiz has been successfully Added.',
-        status: 'success',
+        title: "Quiz Added",
+        description: "The Quiz has been successfully Added.",
+        status: "success",
         duration: 1000,
         isClosable: true,
-        position: 'top',
+        position: "top",
         onCloseComplete: () => {
-         
           window.location.reload();
         },
       });
-      onClose(); 
+      onClose();
       // window.location.reload();// Close the modal after saving
     } catch (error) {
       console.log(error);

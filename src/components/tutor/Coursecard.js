@@ -113,17 +113,14 @@ const Coursecard = (props) => {
                 return null; // Don't render this course
               }
             })
-          ) : null /* Remove the message here */
+          ) :    <Heading fontSize="25px" color='black'>
+          {/* No Course Packages Available */}
+        </Heading> /* Remove the message here */
           }
         </SimpleGrid>
 
-        {coursesdata != null && coursesdata.length === 0 && (
-          <Box mt="150px">
-            {/* <Heading fontSize="25px" ml="400px" color='black'>
-              No Course Packages Available
-            </Heading> */}
-          </Box>
-        )}
+
+      
       </ChakraProvider>
     </>
   );

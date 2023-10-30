@@ -76,6 +76,7 @@ import PaperclassContent from "./pages/tutor/paperclasscontent";
 import Complaints from "./pages/tutor/complaints";
 import Profile from "./pages/tutor/profile";
 import Poll from "./pages/tutor/poll";
+import MyContent from "./pages/tutor/content/MyContent";
 
 import TutorStaffs from "./pages/tutor/TutorStaffs";
 import McqsByCategory from "./pages/tutor/McqsByCategory";
@@ -99,7 +100,6 @@ import SidebarAndHeader from "./layouts/SidebarAndHeader";
 import { Routes, Route } from "react-router-dom";
 import { ROLES } from "./config/roles";
 import Test from "./pages/common/Test";
-import MyContent from "./pages/tutor/content/MyContent";
 import TutorProfileForStudent from "./pages/common/TutorProfileForStudent";
 import ViewContent from "./pages/tutor/content/ViewContent";
 
@@ -166,39 +166,22 @@ function App() {
             </Route>
           </Route>
 
-          <Route element={<RequireAuth allowedRoles={[ROLES.Tutor]} />}>
-            <Route
-              path="tutor"
-              element={<SidebarAndHeader userRole={"tutor"} />}
-            >
+          {/* <Route element={<RequireAuth allowedRoles={[ROLES.Tutor]} />}>
+            <Route path='tutor' element={<SidebarAndHeader userRole={"tutor"} />}>
               <Route path="dashboard" element={<TDashboard />} />
               <Route path="content" element={<MyContent />} />
               <Route path="content/:contentId" element={<ViewContent />} />
               <Route path="courses/add" element={<Addcourse />} />
-              <Route path="courses" element={<TCourses />}></Route>
-              <Route
-                path="courses/content/:courseid"
-                element={<Coursecontent />}
-              ></Route>
-              <Route
-                path="courses/paperclasscontent"
-                element={<PaperclassContent />}
-              ></Route>
-              <Route
-                path="courses/details/:courseid"
-                element={<Courseedit />}
-              ></Route>
-              <Route
-                path="courses/studypackcontent/:courseid"
-                element={<Studypackcontent />}
-              ></Route>
-              <Route
-                path="courses/studypackdetails/:courseid"
-                element={<Studypackedit />}
-              ></Route>
-              <Route path="courses/addstudypack" element={<Addstudypack />} />
-            </Route>
-          </Route>
+              <Route path="courses" element={<TCourses />} ></Route>
+              <Route path='courses/content/:courseid' element={<Coursecontent />} ></Route>
+              <Route path='courses/paperclasscontent' element={<PaperclassContent />} ></Route>
+              <Route path='courses/details/:courseid' element={<Courseedit />} ></Route>
+              <Route path='courses/studypackcontent/:courseid' element={<Studypackcontent />} ></Route>
+              <Route path='courses/studypackdetails/:courseid' element={<Studypackedit />} ></Route>
+              <Route path="courses/addstudypack" element={<Addstudypack/>} />
+           </Route>
+          
+          </Route> */}
 
           <Route element={<RequireAuth allowedRoles={[ROLES.Admin]} />}>
             <Route
@@ -282,32 +265,82 @@ function App() {
             </Route>
           </Route>
 
-          {/* </Route> */}
-        </Route>
-        <Route element={<RequireAuth allowedRoles={[ROLES.Staff]} />}>
           <Route
-            path="staff"
-            element={<SidebarAndHeader userRole={"InstituteStaff"} />}
+            element={<RequireAuth allowedRoles={[ROLES.TutorSupportStaff]} />}
           >
-            <Route path="dashboard" element={<InstStaffDashboard />} />
-            <Route path="my-profile" element={<MyProfile />} />
-            {/* <Route path="teacher" element={<ViewTeacher />} /> */}
-            <Route path="tutors-list/add" element={<AddTeacher />} />
-            <Route path="class" element={<ApproveClass />} />
-            <Route path="profile/:id" element={<InstStaffProfile />} />
-            <Route path="complaints" element={<InstStaffComplaintsList />} />
-            <Route path="hall" element={<HallSchedule />} />
-            <Route path="hall/view" element={<HallList />} />
-            <Route path="stu-payment" element={<InstStaffStuPayment />} />
-            <Route path="staff-list" element={<InstStaffList />} />
-            <Route path="payment-history" element={<ViewPaymentHistory />} />
-            <Route path="cash-receipt" element={<CashReceipt />} />
-            <Route path="online-receipt" element={<OnlineReceipt />} />
-            <Route path="stu-list" element={<StudentsList />} />
-            <Route path="stu-profile/:id" element={<StudentProfile />} />
-            <Route path="staff-list" element={<InstStaffList />} />
-            <Route path="tutors-list" element={<TutorsList />} />
-            <Route path="tutor-profile/:id" element={<TutorProfile />} />
+            <Route
+              path="tutor"
+              element={<SidebarAndHeader userRole={"tutor"} />}
+            >
+              <Route path="dashboard" element={<TDashboard />} />
+              <Route path="courses/add" element={<Addcourse />} />
+              <Route path="courses" element={<TCourses />}></Route>
+              <Route path="complaints" element={<Complaints />}></Route>
+              <Route path="profile" element={<Profile />}></Route>
+              <Route path="poll" element={<Poll />}></Route>
+              <Route
+                path="courses/content/:courseid"
+                element={<Coursecontent />}
+              ></Route>
+              <Route
+                path="courses/details/:courseid"
+                element={<Courseedit />}
+              ></Route>
+              <Route
+                path="courses/content/analyze/:studypackid"
+                element={<PaperAnalyze />}
+              ></Route>
+              <Route
+                path="courses/studypackcontent/:courseid"
+                element={<Studypackcontent />}
+              ></Route>
+              <Route
+                path="courses/studypackdetails/:courseid"
+                element={<Studypackedit />}
+              ></Route>
+              <Route path="courses/addstudypack" element={<Addstudypack />} />
+
+              <Route path="papers">
+                <Route index element={<TutorPapers />} />
+                <Route path=":paperId" element={<PaperMarking />} />
+              </Route>
+
+              <Route path="quizzes">
+                <Route index element={<TutorQuizzes />} />
+                <Route path=":quizId" element={<TutorQuiz />} />
+                <Route
+                  path="category/:categoryId"
+                  element={<McqsByCategory />}
+                ></Route>
+              </Route>
+
+              {/* <Route path="complaints" element={<TutorComplaintsListView />} /> */}
+              <Route path="attendance" element={<StudentAttedance />} />
+              <Route
+                path="attendance/marking"
+                element={<StudentAttendanceMarking />}
+              />
+            </Route>
+          </Route>
+
+          <Route
+            element={<RequireAuth allowedRoles={[ROLES.TutorPaperStaff]} />}
+          >
+            <Route
+              path="tutor"
+              element={<SidebarAndHeader userRole={"tutor"} />}
+            >
+              <Route path="dashboard" element={<TDashboard />} />
+              <Route path="papers">
+                <Route index element={<TutorPapers />} />
+                <Route path=":paperId" element={<PaperMarking />} />
+              </Route>
+            </Route>
+          </Route>
+
+          {/* </Route> */}
+
+          <Route element={<RequireAuth allowedRoles={[ROLES.Staff]} />}>
             <Route
               path="staff"
               element={<SidebarAndHeader userRole={"InstituteStaff"} />}
@@ -321,25 +354,12 @@ function App() {
               <Route path="complaints" element={<InstStaffComplaintsList />} />
               <Route path="hall" element={<HallSchedule />} />
               <Route path="hall/view" element={<HallList />} />
-              <Route path="stu-payment/:username" element={<InstStaffStuPayment />} />
+              <Route
+                path="stu-payment/:username"
+                element={<InstStaffStuPayment />}
+              />
               <Route path="staff-list" element={<InstStaffList />} />
               <Route path="payment-history/:id" element={<ViewPaymentHistory />} />
-              <Route path="physical-payment-receipt/:id" element={<CashReceipt />} />
-              <Route path="online-payment-receipt/:id" element={<OnlineReceipt />} />
-              <Route path="stu-list" element={<StudentsList />} />
-              <Route path="stu-profile/:id" element={<StudentProfile />} />
-              <Route path="staff-list" element={<InstStaffList />} />
-              <Route path="tutors-list" element={<TutorsList />} />
-              <Route path="tutor-profile/:id" element={<TutorProfile />} />
-              <Route
-                path="course/:id"
-                element={<CourseProfile />}
-              />
-              <Route path="staff-list" element={<InstStaffList />} />
-              <Route
-                path="payment-history/:id"
-                element={<ViewPaymentHistory />}
-              />
               <Route
                 path="physical-payment-receipt/:id"
                 element={<CashReceipt />}
@@ -353,19 +373,18 @@ function App() {
               <Route path="staff-list" element={<InstStaffList />} />
               <Route path="tutors-list" element={<TutorsList />} />
               <Route path="tutor-profile/:id" element={<TutorProfile />} />
-              <Route path="course/:id" element={<CourseProfile />} />
+              <Route
+                path="course/:id"
+                element={<CourseProfile />}
+              />
             </Route>
           </Route>
-
-
-
-        </Route >
-
+        </Route>
 
         {/* catch all */}
         <Route path="*" element={<Missing />} />
-      </Route >
-    </Routes >
+      </Route>
+    </Routes>
   );
 }
 

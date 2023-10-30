@@ -7,7 +7,8 @@ import {
   Text,
   Heading,
   Image,
-  HStack,Button,
+  HStack,
+  Button,
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 // import {  Image, Text, Badge, Button, Group } from '@mantine/core';
@@ -28,15 +29,13 @@ import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 function Dashboard() {
   const customColors = ["red", "green", "blue", "purple", "black"];
 
-
   const [coursesdata, setCoursesData] = useState(null);
   const [studypackdata, setstudypackData] = useState(null);
   const [staffdata, setstaffData] = useState(null);
   const [contentdata, setcontentData] = useState(null);
+  const [latestcontentdata, setLatestcontent] = useState(null);
 
   const axiosPrivate = useAxiosPrivate();
-
-
 
   useEffect(() => {
     // Fetch the courses data
@@ -54,10 +53,9 @@ function Dashboard() {
 
     // Call the function to fetch courses data
     getCourses();
-  }, []); 
+  }, []);
 
   const totalCourses = coursesdata ? coursesdata.length : 0;
-
 
   useEffect(() => {
     // Fetch the study pack data
@@ -67,7 +65,9 @@ function Dashboard() {
         const response = await axiosPrivate.get(`/tutor/studypack`, {
           signal: controller.signal,
         });
-        const paidCourses = response.data.filter((course) => course.type === "PAID");
+        const paidCourses = response.data.filter(
+          (course) => course.type === "PAID"
+        );
         setstudypackData(paidCourses);
       } catch (error) {
         console.log(error);
@@ -76,10 +76,9 @@ function Dashboard() {
 
     // Call the function to fetch study pack data
     getStudypack();
-  }, []); 
- 
-  const totalstudypack = studypackdata ? studypackdata.length : 0;
+  }, []);
 
+  const totalstudypack = studypackdata ? studypackdata.length : 0;
 
   useEffect(() => {
     // Fetch the staff data
@@ -98,10 +97,25 @@ function Dashboard() {
     // Call the function to fetch staff data
     getStaff();
   }, []);
- 
+
   const totalstaff = staffdata ? staffdata.length : 0;
 
+  // useEffect(() => {
+  //   const getCourses = async () => {
+  //     const controller = new AbortController();
+  //     try {
+  //       const response = await axiosPrivate.get(`/tutor/content`, {
+  //         signal: controller.signal,
+  //       });
+  //       setcontentData(response.data);
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   };
+  //   getCourses();
+  // }, [axiosPrivate]);
 
+  // const currentDate = new Date();
 
   useEffect(() => {
     const getCourses = async () => {
@@ -111,6 +125,15 @@ function Dashboard() {
           signal: controller.signal,
         });
         setcontentData(response.data);
+
+        // Sort the contentData array by uploaded_at in descending order
+        const sortedContent = response.data.sort((a, b) => {
+          return new Date(b.uploaded_at) - new Date(a.uploaded_at);
+        });
+
+        // Get the latest 3 content items
+        const latestContent = sortedContent.slice(0, 3);
+        setLatestcontent(latestContent); // Assuming you have a state variable to store the latest content
       } catch (error) {
         console.log(error);
       }
@@ -118,13 +141,12 @@ function Dashboard() {
     getCourses();
   }, [axiosPrivate]);
 
-
-  
   return (
     <Box bg="#F9F9F9" width="100%" p={5}>
-      <Heading ml='15px' fontSize='26px'>Tutor Dashboard</Heading>
-     <SimpleGrid minChildWidth='120px' spacing='40px'>
-        
+      <Heading ml="15px" fontSize="26px">
+        Tutor Dashboard
+      </Heading>
+      <SimpleGrid minChildWidth="120px" spacing="40px">
         <Box width="850px" height="700px">
           <SimpleGrid minChildWidth="120px" spacing="40px" mt="10px" p={5}>
             <Box>
@@ -166,7 +188,7 @@ function Dashboard() {
                         {" "}
                         Study Packs
                         <br />
-                       {totalstudypack}
+                        {totalstudypack}
                       </Text>
                     </Flex>
                   </CardHeader>
@@ -189,7 +211,8 @@ function Dashboard() {
                       <Text fontSize="18px" fontWeight="bold" ml={6}>
                         {" "}
                         Supporting Staff
-                        <br />{totalstaff}{" "}
+                        <br />
+                        {totalstaff}{" "}
                       </Text>
                     </Flex>
                   </CardHeader>
@@ -198,7 +221,13 @@ function Dashboard() {
             </Box>
           </SimpleGrid>
 
-          <Text fontWeight={"400"} ml="40px" fontSize="25px" mt="10px" mb='10px'>
+          <Text
+            fontWeight={"400"}
+            ml="40px"
+            fontSize="25px"
+            mt="10px"
+            mb="10px"
+          >
             {" "}
             Classes Summary
           </Text>
@@ -211,53 +240,83 @@ function Dashboard() {
             borderRadius="1%"
             ml="20px"
           >
-         <Tabs variant='soft-rounded' colorScheme='blue'>
+            <Tabs variant="soft-rounded" colorScheme="blue">
               <TabList mb="1em">
                 <Tab>Today</Tab>
                 <Tab>Upcoming</Tab>
               </TabList>
               <TabPanels>
-                <TabPanel mb='-20px'>
-                      <Coursecard></Coursecard>
-                
-         
-                  
-               
+                <TabPanel mb="-20px">
+                  <Coursecard></Coursecard>
                 </TabPanel>
-                <TabPanel  mb='-20px'>
-                <Coursecard2></Coursecard2>
+                <TabPanel mb="-20px">
+                  <Coursecard2></Coursecard2>
                 </TabPanel>
               </TabPanels>
             </Tabs>
           </Box>
         </Box>
 
-        <Box bg="white" width="330px" height="680px" mt={5} ml='250px'>
-          <Box mt='20px'>
+        <Box bg="white" width="330px" height="680px" mt={5} ml="250px">
+          <Box mt="20px">
+            {/* <Calendar value={currentDate} /> */}
             <Calander></Calander>
           </Box>
-          <Text fontWeight={"400"} ml="10px" fontSize="20px" mt="30px" mb='25px'>
+          <Text
+            fontWeight={"400"}
+            ml="10px"
+            fontSize="20px"
+            mt="30px"
+            mb="25px"
+          >
             {" "}
-           Recently Uploaded Contents
+            Recently Uploaded Contents
           </Text>
 
+          {latestcontentdata &&
+            latestcontentdata.map((content, index) => (
+              <Box
+                key={index}
+                bg="white"
+                mt="15px"
+                mb="5px"
+                p={2}
+                width={{ base: 350, xl: 300 }}
+                ml="10px"
+                borderRadius={"5px"}
+                boxShadow="0 3px 10px rgb(0 0 0 / 0.2)"
+              >
+                <HStack mt="5px" spacing="30px">
+                  <Image
+                    src={content.thumbnail}
+                    alt={content.title}
+                    width="75px"
+                    height="55px"
+                  />
+                  <Box>
+                    <Text fontSize="16px" color="black">
+                      {content.title}
+                    </Text>
+                    <Text fontSize="12px" color="grey">
+                      {content.uploaded_at}
+                    </Text>
+                    <Button
+                      fontSize="10px"
+                      mt="2px"
+                      height="16px"
+                      colorScheme="blue"
+                    >
+                      View
+                    </Button>
+                  </Box>
+                </HStack>
 
-          {contentdata && contentdata.slice(0, 3).map((content, index) => (
-          <Box key={index} bg='white' mt="15px" mb='5px' p={4} width={{base:350,xl:300}}   borderLeft='6px solid #00b0e6'  ml='10px'  borderRadius={'5px'} boxShadow='0 3px 10px rgb(0 0 0 / 0.2)'>
-            <HStack mt='5px' spacing='30px'>
-                <Image src={content.thumbnail} alt={content.title} width="70px" height="50px" />
-                <Box>
-            <Text fontSize='16px' color='grey'>{content.title}</Text>
-            <Button fontSize='10px' mt='2px' height='14px'>View</Button>
-            </Box>
-            </HStack>
-           
-            {/* <HStack mt='8px' spacing='30px'>
+                {/* <HStack mt='8px' spacing='30px'>
               <Text fontSize='12px'  color='grey'>{content.date}</Text>
               <Text fontSize='12px'  color='grey'>{content.time}</Text>
             </HStack> */}
-          </Box>
-        ))}
+              </Box>
+            ))}
 
           {/* <Box bg='#e6f9ff' mt='40px' width={{base:350,xl:300}} p={2}  borderLeft='6px solid #00b0e6' ml='15px'>
         <Text fontSize='16px' color='grey'>Assignment on Physics 2024 Theory</Text>
@@ -280,9 +339,6 @@ function Dashboard() {
           <Text fontSize='12px'  color='grey'>08.00 P.M.</Text>
         </HStack>
       </Box> */}
-
-  
-    
         </Box>
       </SimpleGrid>
     </Box>
