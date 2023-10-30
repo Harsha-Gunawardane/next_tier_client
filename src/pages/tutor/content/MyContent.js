@@ -73,46 +73,6 @@ function MyContent() {
         navigate(`/stu/courses`);
     }
 
-    // const fetchvideos = async (skip, limit, search, grade, subject) => {
-    //     let isMounted = true;
-    //     const controller = new AbortController();
-
-    //     try {
-    //         const videos_FETCH_URL = `/stu/videos?skip=${skip}&limit=${limit}`;
-    //         if (search) {
-    //             videos_FETCH_URL += `&search=${search}`
-    //         }
-    //         if (grade) {
-    //             videos_FETCH_URL += `&grade=${grade}`
-    //         }
-    //         if (subject) {
-    //             videos_FETCH_URL += `&subject=${subject}`
-    //         }
-    //         const response = await axiosPrivate.get(`${videos_FETCH_URL}`, {
-    //             headers: {
-    //                 "Content-Type": "multipart/form-data",
-    //             },
-    //             signal: controller.signal
-    //         })
-    //         console.log(response.data)
-    //         const studyPacks = response.data;
-    //         console.log(studyPacks)
-    //         setSkip(skip + (studyPacks.length))
-    //         if (isMounted) {
-    //             setVideos((prevState) => {
-    //                 const newState = [...prevState, ...studyPacks]
-    //                 console.log(newState)
-    //                 return newState
-    //             })
-    //             setVideosLoading(false)
-
-    //         }
-    //     } catch (error) {
-    //         setVideosLoading(false)
-
-    //     }
-    // }
-
     const fetchMyVideos = async (skip, limit, search, grade, subject) => {
         let isMounted = true;
         const controller = new AbortController();
@@ -195,7 +155,7 @@ function MyContent() {
                 }
             </Box>
             <UploadModal isOpen={isUploadOpen} onClose={onUploadClose} onOpenDetails={onDetailsOpen} />
-            <DetailsModal isOpen={isDetailsOpen} onClose={onDetailsClose} />
+            <DetailsModal isOpen={isDetailsOpen} onClose={onDetailsClose} setVideos={setVideos} />
         </Box >
 
     );

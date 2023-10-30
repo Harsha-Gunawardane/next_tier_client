@@ -336,7 +336,7 @@ const ContentPage = (props) => {
 
 const VideoCard = (props) => {
     const { videoDetails, ...rest } = props
-
+    console.log(videoDetails)
     return (
         <Box w="100%" h="100%" borderRadius={"10px"} {...rest} _hover={{ cursor: "pointer" }} >
             <Link to={`/stu/content/watch/${videoDetails.id}`} >
@@ -350,7 +350,7 @@ const VideoCard = (props) => {
                 </Box>
                 <SimpleGrid w="100%" gap="5px" position={"relative"} columns={12} templateColumns={"max-content repeat(11, 1fr)"} mt="5px">
                     <GridItem colSpan={1} w="max-content">
-                        <Avatar h="36px" w="36px" name="Dan Abrahmov" src="https://bit.ly/dan-abramov" mt="5px" />
+                        <Avatar h="36px" w="36px" name="Dan Abrahmov" src={videoDetails.user.profile_picture} mt="5px" />
                     </GridItem>
                     <GridItem colSpan={11} px="5px">
                         <Flex w="100%" justifyContent={"space-between"} alignItems={"flex-start"} mt="5px" direction={"column"}>

@@ -332,6 +332,7 @@ const CourseContent = ({ course }) => {
                                             <Button
                                               fontSize="12px"
                                               height="20px"
+                                              colorScheme="blue"
                                             >
                                               View
                                             </Button>{" "}
@@ -405,7 +406,7 @@ const CourseContent = ({ course }) => {
 
                                   <Box width="90px" ml="5px" mt="-5px">
                                     <HStack>
-                                      <Button fontSize="12px" height="20px">
+                                      <Button fontSize="12px" height="20px" colorScheme="blue">
                                         View
                                       </Button>{" "}
                                       <Remove
@@ -467,7 +468,7 @@ const CourseContent = ({ course }) => {
 
                                   <Box width="90px" ml="5px" mt="-5px">
                                     <HStack>
-                                      <Button fontSize="12px" height="20px">
+                                      <Button fontSize="12px" height="20px" colorScheme="blue">
                                         View
                                       </Button>{" "}
                                       <Remove

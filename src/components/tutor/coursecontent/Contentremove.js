@@ -28,19 +28,21 @@ const Contentremove = ({ course,studypackid, onStudyPackRemoved }) => {
     axiosPrivate
       .delete(`/tutor/course/${id}/${studypackid}`)
       .then((response) => {
-        // Show success toast message
-        // toast({
-        //   title: 'Study Pack Removed',
-        //   description: 'The study pack has been successfully removed.',
-        //   status: 'success',
-        //   duration: 5000,
-        //   isClosable: true,
-        //   position: 'top',
-        // });
-
-        // Persist success message before reloading the window
-        window.location.reload();
-        localStorage.setItem('studyPackRemoved', 'true');
+        toast({
+          title: 'Studypack Removed',
+          description: 'Studypack has been successfully Added.',
+          status: 'success',
+          duration: 1000,
+          isClosable: true,
+          position: 'top',
+          onCloseComplete: () => {
+            // Reload the page after the toast is manually closed
+            window.location.reload();
+          },
+        });
+        onClose();
+       
+        // localStorage.setItem('studyPackRemoved', 'true');
 
         
         // onStudyPackRemoved(studypackid);
@@ -55,21 +57,21 @@ const Contentremove = ({ course,studypackid, onStudyPackRemoved }) => {
       });
   };
 
-  useEffect(() => {
-    // Check if a study pack was removed and show the toast accordingly
-    const isStudyPackRemoved = localStorage.getItem('studyPackRemoved');
-    if (isStudyPackRemoved) {
-      localStorage.removeItem('studyPackRemoved');
-      toast({
-        title: 'Study Pack Removed',
-        description: 'The study pack has been successfully removed.',
-        status: 'success',
-        duration: 5000,
-        isClosable: true,
-        position: 'top',
-      });
-    }
-  }, [toast]);
+  // useEffect(() => {
+  //   // Check if a study pack was removed and show the toast accordingly
+  //   const isStudyPackRemoved = localStorage.getItem('studyPackRemoved');
+  //   if (isStudyPackRemoved) {
+  //     localStorage.removeItem('studyPackRemoved');
+  //     toast({
+  //       title: 'Study Pack Removed',
+  //       description: 'The study pack has been successfully removed.',
+  //       status: 'success',
+  //       duration: 5000,
+  //       isClosable: true,
+  //       position: 'top',
+  //     });
+  //   }
+  // }, [toast]);
 
   return (
     <>

@@ -91,7 +91,10 @@ const LikeDislike = (props) => {
 
 
 
-            const response = await axiosPrivate.post(REACTION_API, formData, {
+            const response = await axiosPrivate.post(REACTION_API, {
+                isLike: reaction
+            }, {
+                contentType: "Application/json",
                 signal: controller.signal,
             })
 

@@ -24,13 +24,14 @@ const Schedule = ({ isOpen, onClose, onSchedule }) => {
   const axiosPrivate = useAxiosPrivate();
   const [hallOptions, setHallOptions] = useState([]);
   const [courseOptions, setCourseOptions] = useState([]);
-
-  // Fetch hall names and IDs from the backend
+  const [isSuccess, setIsSuccess] = useState(false);
+  
+  // Fetch hall names from the backend
   useEffect(() => {
     const fetchHallOptions = async () => {
       try {
         const response = await axiosPrivate.get("/staff/hall");
-        setHallOptions(response.data); // Assuming the data is an array of objects with hall_id and hall_name
+        setHallOptions(response.data); 
       } catch (error) {
         console.error("Error fetching hall options:", error);
       }
@@ -39,12 +40,12 @@ const Schedule = ({ isOpen, onClose, onSchedule }) => {
     fetchHallOptions();
   }, [toast, axiosPrivate]);
 
-  // Fetch hall names and IDs from the backend
+  // Fetch class titles from the backend
   useEffect(() => {
     const fetchCourseOptions = async () => {
       try {
         const response = await axiosPrivate.get("/staff/class");
-        setCourseOptions(response.data); // Assuming the data is an array of objects with hall_id and hall_name
+        setCourseOptions(response.data); 
       } catch (error) {
         console.error("Error fetching hall options:", error);
       }
@@ -66,6 +67,7 @@ const Schedule = ({ isOpen, onClose, onSchedule }) => {
       position: "top",
     });
     onSchedule(values);
+    setIsSuccess(true);
     onClose();
     resetForm();
   } catch (error) {
@@ -96,7 +98,7 @@ const Schedule = ({ isOpen, onClose, onSchedule }) => {
   const buttonSize = useBreakpointValue({ base: "sm", md: "md" });
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} size={modalSize}>
+    <Modal isOpen={isOpen} onClose={onClose} size={modalSize} mb={15}>
       <ModalOverlay />
       <ModalContent>
         <ModalHeader>Schedule Hall</ModalHeader>

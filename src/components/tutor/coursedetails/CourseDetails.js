@@ -1,32 +1,30 @@
 import React, { useEffect, useState } from "react";
-import { MdCheckCircle} from '@chakra-ui/icons'
-import { ListItem,UnorderedList,Button,ButtonGroupStackDivider,Stack,Input,List,ListIcon } from '@chakra-ui/react'
+import { MdCheckCircle } from "@chakra-ui/icons";
+import {
+  ListItem,
+  UnorderedList,
+  Button,
+  ButtonGroupStackDivider,
+  Stack,
+  Input,
+  List,
+  ListIcon,
+} from "@chakra-ui/react";
 
 const Coursedetails = () => {
-
-
   return (
     <div>
-
-<UnorderedList spacing={3} mb='10px'>
-  <ListItem mt='10px'>Lorem ipsum dolor sit amet</ListItem>
-  <ListItem>Consectetur adipiscing elit</ListItem>
-  <ListItem>Integer molestie lorem at massa</ListItem>
-  <ListItem>Facilisis in pretium nisl aliquet</ListItem>
-</UnorderedList>
-  
+      <UnorderedList spacing={3} mb="10px">
+        <ListItem mt="10px">Lorem ipsum dolor sit amet</ListItem>
+        <ListItem>Consectetur adipiscing elit</ListItem>
+        <ListItem>Integer molestie lorem at massa</ListItem>
+        <ListItem>Facilisis in pretium nisl aliquet</ListItem>
+      </UnorderedList>
     </div>
   );
 };
 
 export default Coursedetails;
-
-
-
-
-
-
-
 
 // import React, { useEffect, useState } from "react";
 // import axios from "axios";
@@ -48,8 +46,6 @@ export default Coursedetails;
 //     })
 // }, [])
 
-
-
 //   const Removefunction = (id) => {
 //     if (window.confirm('Do you want to remove?')) {
 //         fetch("http://localhost:8000/data/" + id, {
@@ -63,15 +59,12 @@ export default Coursedetails;
 //     }
 // }
 
-
-
 //   const[name,namechange]=useState("");
 //   const[validation,valchange]=useState(false);
 
 //   const handlesubmit=(e)=>{
 //     e.preventDefault();
 //     const empdata={name};
-    
 
 //     fetch("http://localhost:8000/data",{
 //       method:"POST",
@@ -88,19 +81,16 @@ export default Coursedetails;
 //   return (
 //     <div>
 
-
 // <UnorderedList p={2} spacing='10px'>
 //     {itemdata &&
 //         itemdata.map(item => (
 
-        
 //        <ListItem key={item.id}>
 //       <Text fontSize='15px'> {item.name}   <button onClick={() => Removefunction(item.id)}>
 //       <FaMinus />
 //     </button>
 //       </Text>
 //       </ListItem>
- 
 
 // ))}
 
@@ -113,13 +103,13 @@ export default Coursedetails;
 //           value={name}
 //           onChange={(e) => namechange(e.target.value)}
 //           placeholder="New Detail"
-//            onMouseDown={e=>valchange(true)} 
+//            onMouseDown={e=>valchange(true)}
 //         />
 //         <button type="submit">
 //          <FaPlus />
 //         </button>
 //       </form>
-  
+
 //     </div>
 //   );
 // };

@@ -360,7 +360,7 @@ const Coursepackedit = () => {
               </FormControl>
 
 
-
+{/* 
               <FormControl>
   <FormLabel fontSize="15px">Current Exp Date</FormLabel>
   <Input
@@ -373,11 +373,11 @@ const Coursepackedit = () => {
  
   />
 
-</FormControl>
+</FormControl> */}
 
  
 
-<FormControl mt={4} isRequired      isInvalid={expireDate < new Date()} >
+{/* <FormControl mt={4} isRequired      isInvalid={expireDate < new Date()} >
   <FormLabel fontSize="15px">Update Exp Date</FormLabel>
   <DatePicker
     selected={expireDate}
@@ -392,7 +392,7 @@ const Coursepackedit = () => {
 
     <FormErrorMessage>Expiration date cannot be before today</FormErrorMessage>
   
-</FormControl> 
+</FormControl>  */}
          
             </ModalBody>
 

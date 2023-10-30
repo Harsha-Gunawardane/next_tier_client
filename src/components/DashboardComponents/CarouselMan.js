@@ -7,12 +7,15 @@ import {
   Flex,
   AspectRatio,
 } from '@chakra-ui/react';
+import _ from 'lodash';
 
 // icons
 
 
 
-export default function CarouselMan() {
+export default function CarouselMan(props) {
+
+  const { content, ...rest } = props;
 
   const stylesCarousel = {
     root: {
@@ -100,8 +103,9 @@ export default function CarouselMan() {
       slideGap="md"
       initialSlide={0}
     >
+      {console.log(content)}
       {
-        cards.map((card, index) => (
+        content.map((card, index) => (
           <Carousel.Slide>
             <Flex
               key={index}
@@ -110,14 +114,14 @@ export default function CarouselMan() {
             >
               <Flex h="100%" w="100%" flexDirection={"column"} justifyContent={"center"} alignItems={"center"} gap="5px" py="5px">
                 <AspectRatio minW="100%" height="auto" ratio={16 / 9} overflow={"hidden"} borderRadius={"10px"}>
-                  <Image src={card.image} alt="image" objectFit={"cover"} />
+                  <Image src={card.thumbnail} alt="image" objectFit={"cover"} />
                 </AspectRatio>
                 <Flex w="100%" flexDirection={"column"} justifyContent={"center"} alignItems={"center"} gap="0px" py="5px">
                   <Text fontSize={{ base: '0.8rem', md: '0.8rem', lg: '1.1rem' }} fontWeight={"bold"} fontStyle={"Roboto"} color={"#3f3f3f"}>
                     {card.title}
                   </Text>
                   <Text fontSize={{ base: '0.7rem', md: '0.7rem', lg: '0.8rem' }} fontStyle={"Roboto"} color={"gray.400"} fontWeight={600}>
-                    {card.tutor}
+                    {card.user.name}
                   </Text>
                 </Flex>
               </Flex>

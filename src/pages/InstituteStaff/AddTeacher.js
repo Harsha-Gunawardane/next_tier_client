@@ -143,7 +143,7 @@ function AddTeacher() {
     },
   });
 
-  const location = useLocation();
+const location = useLocation();
 const queryParams = new URLSearchParams(location.search);
 
 // Check if the "success" query parameter is present
@@ -161,6 +161,7 @@ useEffect(() => {
     });
   }
 }, [isSuccess]);
+
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -179,7 +180,7 @@ useEffect(() => {
   };
 
   return (
-    <Box mx={5} width="100%">
+    <Box  width="100%">
       <Box display="flex" alignItems="center">
         <Link to="/staff/tutors-list">
           <BiArrowBack style={{ marginRight: "20px", cursor: "pointer" }} />

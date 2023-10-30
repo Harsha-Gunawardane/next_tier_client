@@ -15,10 +15,21 @@ import MyTag from '../components/MyTag'
 
 //icons
 import { TbPinnedFilled } from "react-icons/tb"
+import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
 
 export default function TutorCard(props) {
 
     const { tutor } = props;
+
+    useEffect(() => {
+        console.log(tutor);
+    })
+
+    const navigate = useNavigate();
+    const navigateToTutorProfile = (id) => {
+        navigate(`/stu/tutors/${id}`)
+    }
 
     return (
         <Center >
@@ -121,7 +132,9 @@ export default function TutorCard(props) {
                         _hover={{
                             transform: 'translateY(-2px)',
                             boxShadow: 'lg',
-                        }}>
+                        }}
+                        onClick={() => navigateToTutorProfile(tutor.tutor_id)}
+                    >
                         View Classes & StudyPacks
                     </Button>
                 </Box>

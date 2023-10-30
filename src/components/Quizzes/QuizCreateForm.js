@@ -31,7 +31,7 @@ export default function QuizCreateForm({ onClose, quizzes, setQuizzes }) {
       subject: "",
       subject_areas: [],
       question_ids: [],
-      number_of_questions:0,
+      number_of_questions: 0,
     },
 
     validate: (values) => {
@@ -51,12 +51,12 @@ export default function QuizCreateForm({ onClose, quizzes, setQuizzes }) {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-       console.log(form.values);
+    console.log(form.values);
 
 
     if (!form.validate().hasErrors) {
       try {
-    console.log("here");
+        console.log("here");
 
         console.log(form.values);
 
@@ -86,14 +86,14 @@ export default function QuizCreateForm({ onClose, quizzes, setQuizzes }) {
         navigate(`/tutor/quizzes/${response.data.id}`);
 
         onClose();
-        
+
 
       } catch (error) {
         console.error("Error sending data:", error);
       }
     }
-    
-    
+
+
   }
 
   return (
