@@ -6,7 +6,7 @@ import { MdSchedule } from "react-icons/md";
 import { Link, useNavigate } from "react-router-dom";
 import periodString from "../../../utils/periodString";
 
-function StudyPackCard({ studyPack }) {
+function StudyPackCard({ studyPack, type }) {
 
     const navigate = useNavigate();
 
@@ -40,13 +40,16 @@ function StudyPackCard({ studyPack }) {
                         </Text>
                     </Flex>
                 </Box>
-                <Flex width={"100%"} justifyContent={"space-between"} alignItems={"center"} direction={"row"} mt="5px" gap="10px">
-                    <Avatar h="34px" w="34px" name='Ryan Florence' src={studyPack.tutor.user.profile_picture} />
-                    <Flex width={"100%"} justifyContent={"center"} alignItems={"flex-start"} direction={"column"} gap="0px">
-                        <Text fontWeight={"semibold"} fontSize={"14px"} color="gray.600" noOfLines={1}>Mr. {studyPack.tutor.user.first_name} {studyPack.tutor.user.last_name}</Text>
-                        <Text fontWeight={"medium"} fontSize={"12px"} color="gray.600" noOfLines={1}>{studyPack.tutor.qualifications[0]}</Text>
+                {type !== "noTutor" ?
+                    <Flex width={"100%"} justifyContent={"space-between"} alignItems={"center"} direction={"row"} mt="5px" gap="10px">
+                        <Avatar h="34px" w="34px" name='Ryan Florence' src={studyPack.tutor.user.profile_picture} />
+                        <Flex width={"100%"} justifyContent={"center"} alignItems={"flex-start"} direction={"column"} gap="0px">
+                            <Text fontWeight={"semibold"} fontSize={"14px"} color="gray.600" noOfLines={1}>Mr. {studyPack.tutor.user.first_name} {studyPack.tutor.user.last_name}</Text>
+                            <Text fontWeight={"medium"} fontSize={"12px"} color="gray.600" noOfLines={1}>{studyPack.tutor.qualifications[0]}</Text>
+                        </Flex>
                     </Flex>
-                </Flex>
+                    : null
+                }
                 <Flex mt={2.5} justifyContent={"space-around"} alignItems={"center"} direction={"row"} gap={4} color="gray.600">
                     <Flex alignItems={"center"} gap={1} justifyContent={"flex-start"}>
                         <FaMoneyBill color="gray.400" fontSize={20} />

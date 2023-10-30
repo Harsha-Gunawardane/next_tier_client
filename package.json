@@ -107,7 +107,7 @@
     "videojs-contrib-hls": "^5.15.0",
     "yup": "^1.2.0",
     "zlib": "^1.0.5",
-    "zustand": "^4.3.9"
+    "zustand": "^4.4.4"
   },
   "scripts": {
     "start": "react-scripts start",

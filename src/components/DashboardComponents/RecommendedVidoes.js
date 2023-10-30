@@ -2,7 +2,7 @@ import { Box, GridItem, SimpleGrid } from "@chakra-ui/react";
 import Card from "../Card/Card";
 import VideoList from "./VideoList";
 
-const RecommendedVideos = ({ ...rest }) => {
+const RecommendedVideos = ({ content, ...rest }) => {
 
 	const videos = [
 		{
@@ -38,7 +38,7 @@ const RecommendedVideos = ({ ...rest }) => {
 	return (
 		<Card p="5px" h={{ base: "max-content", md: "300px", lg: "350px" }} {...rest}>
 			<Box w="100%" h={"100%"} overflow={"auto"} >
-				<VideoList videos={videos} />
+				<VideoList videos={videos} content={content} />
 			</Box>
 		</Card>
 	);

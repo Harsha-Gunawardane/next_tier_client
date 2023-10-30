@@ -7,6 +7,5 @@ export default axios.create({
 
 export const axiosPrivate = axios.create({
     baseURL: BASE_URL,
-    contentType: "multipart/form-data",
     withCredentials: true
 });

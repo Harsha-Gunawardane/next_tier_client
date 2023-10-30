@@ -29,6 +29,8 @@ import ContentWatch from "./pages/student/ContentWatch";
 import ContentPage from "./pages/student/content/ContentPage";
 import StarredTutes from "./pages/student/StarredTutes";
 import ArchivedTutes from "./pages/student/ArchivedTutes";
+import StudentCourses from "./pages/student/Courses";
+
 
 // instituteStaff components
 import InstStaffDashboard from "./pages/InstituteStaff/Dashboard";
@@ -98,6 +100,8 @@ import { Routes, Route } from "react-router-dom";
 import { ROLES } from "./config/roles";
 import Test from "./pages/common/Test";
 import MyContent from "./pages/tutor/content/MyContent";
+import TutorProfileForStudent from "./pages/common/TutorProfileForStudent";
+import ViewContent from "./pages/tutor/content/ViewContent";
 
 function App() {
   return (
@@ -121,8 +125,7 @@ function App() {
               element={<SidebarAndHeader userRole={"student"} />}
             >
               <Route path="dashboard" element={<Dashboard />} />
-              {/* <Route path="courses" element={<StudentCourses />} /> */}
-              <Route path="courses/:id/content" element={<Coursecontent />} />
+              <Route path="courses" element={<StudentCourses />} />
               <Route path="content" element={<ContentPage />} />
               <Route path="quizzes" element={<QuizDashboard />} />
               <Route path="quizzes/:subject" element={<QuizDashboard />} />
@@ -159,6 +162,7 @@ function App() {
               </Route>
               <Route path="settings" element={<Settings />} />
               <Route path="tutors" element={<Tutors />} />
+              <Route path="tutors/:tutorId" element={<TutorProfileForStudent />} />
             </Route>
           </Route>
 
@@ -169,6 +173,7 @@ function App() {
             >
               <Route path="dashboard" element={<TDashboard />} />
               <Route path="content" element={<MyContent />} />
+              <Route path="content/:contentId" element={<ViewContent />} />
               <Route path="courses/add" element={<Addcourse />} />
               <Route path="courses" element={<TCourses />}></Route>
               <Route
