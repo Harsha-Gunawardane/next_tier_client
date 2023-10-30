@@ -16,6 +16,7 @@ import useAxiosPrivate from '../../../../hooks/useAxiosPrivate';
 import _ from 'lodash';
 import { Loader } from '@mantine/core';
 import { is } from 'date-fns/locale';
+import { initializeQuizById } from "../../../../hooks/reduxReducers/fetchQuestions";
 
 //icons
 import { IoPlay } from 'react-icons/io5';
@@ -25,9 +26,11 @@ import { MdOndemandVideo, MdOutlineQuiz } from 'react-icons/md';
 import { AiOutlineEye } from 'react-icons/ai';
 import { BiSolidLockAlt } from 'react-icons/bi';
 import { FcSurvey } from 'react-icons/fc';
+import { useDispatch } from 'react-redux';
 
 const AccordionContentPanel = (props) => {
 
+    const dispatch = useDispatch();
     const {
         studyPackId,
         contentIDs,
@@ -43,6 +46,7 @@ const AccordionContentPanel = (props) => {
     const [content, setContent] = useState({});
     const [isContentLoading, setIsContentLoading] = useState(true);
     const axiosPrivate = useAxiosPrivate();
+
 
     useEffect(() => {
         if (isOpen && isContentLoading && !studyPackType) {
@@ -77,24 +81,12 @@ const AccordionContentPanel = (props) => {
         }
     };
 
-    const handleAttemtQuiz = async (quizId) => {
+    const handleAttemtQuiz = (quizId) => {
         console.log(quizId);
-        const controller = new AbortController();
 
-        try {
-            const response = await axiosPrivate.get(`/stu/attempt_quiz`, {
-                signal: controller.signal
-            });
+        console.log("here");
+        dispatch(initializeQuizById(quizId));
 
-            const data = response.data;
-
-            console.log(data);
-
-
-
-        } catch (error) {
-            console.log(error);
-        }
 
     }
 
