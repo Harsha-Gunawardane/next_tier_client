@@ -12,7 +12,15 @@ function getColor() {
 
 function TuteCardList({ tuteList }) {
   return (
-    <Box mt={5} ml={5} w={730}>
+    <Box
+      mt={5}
+      ml={5}
+      w={{
+        sm: "100vw - 440px",
+        md: "100vw - 360px",
+        lg: 730,
+      }}
+    >
       <Carousel
         withIndicators
         height={322}

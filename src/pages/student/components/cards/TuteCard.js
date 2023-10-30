@@ -20,7 +20,7 @@ function TuteCard({ id, title, content, time, icon, bg }) {
         {title}
       </Text>
 
-      <Box h={200} p={2}>
+      <Box h={180} p={2}>
         <Text fontSize={14}>{content}</Text>
       </Box>
       <Flex

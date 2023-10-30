@@ -27,7 +27,6 @@ import {
 } from "../../hooks/reduxReducers/fetchReviewQuestions";
 import ResultCard from "./components/cards/ResultCard";
 import Loading from "../../components/skeleton/Loading";
-import SearchBar from "./components/SearchBar";
 
 function formatQuizName(str) {
   // Check if the input string starts with a number followed by a hyphen

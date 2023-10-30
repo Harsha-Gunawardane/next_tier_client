@@ -9,6 +9,8 @@ import { MdDeleteOutline } from "react-icons/md";
 import "../../../../assests/css/pdfView.css";
 import useAxiosPrivate from "../../../../hooks/useAxiosPrivate";
 import ModalLayout from "../../../../components/ModalLayout";
+import { useStarredTutes } from "../../../../store/student/useStarredTutes";
+import { useArchivedTutes } from "../../../../store/student/useArchivedTutes";
 
 const TUTE_URL = "/stu/tute";
 
@@ -16,9 +18,13 @@ const PDFView = () => {
   const axiosPrivate = useAxiosPrivate();
   const { id } = useParams();
   const navigate = useNavigate();
+  const { addNewStarredTute, removeStarredTute } = useStarredTutes();
+  const { addNewArchivedTute, removeArchivedTute } = useArchivedTutes();
 
   const [tute, setTute] = useState("");
   const [heading, setHeading] = useState("");
+  const [description, setDescription] = useState("");
+  const [recentActivity, setRecentActivity] = useState("");
   const [starred, setStarred] = useState(false);
   const [archived, setArchived] = useState(false);
 
@@ -26,7 +32,23 @@ const PDFView = () => {
     const tempStarred = starred;
     setStarred(!starred);
 
+    console.log(tempStarred);
+
     try {
+      if (!tempStarred === true) {
+        const newStarredTute = {
+          id: id,
+          name: heading,
+          description: description,
+          recent_activity: recentActivity,
+          starred: true,
+        };
+        addNewStarredTute(newStarredTute);
+
+        console.log(newStarredTute);
+      } else {
+        removeStarredTute(id);
+      }
       await axiosPrivate.put(`${TUTE_URL}/star`, {
         id,
         starred: !tempStarred,
@@ -40,6 +62,20 @@ const PDFView = () => {
     setArchived(!archived);
 
     try {
+      if (!tempArchived === true) {
+        const newArchivedTute = {
+          id: id,
+          name: heading,
+          description: description,
+          recent_activity: recentActivity,
+          archived: true,
+        };
+
+        addNewArchivedTute(newArchivedTute);
+        console.log(newArchivedTute);
+      } else {
+        removeArchivedTute(id);
+      }
       await axiosPrivate.put(`${TUTE_URL}/archive`, {
         id,
         archived: !tempArchived,
@@ -81,7 +117,6 @@ const PDFView = () => {
   );
 
   const queryString = new URLSearchParams({ id: id }).toString();
-  console.log(id);
 
   useEffect(() => {
     const fetchPdf = async () => {
@@ -89,6 +124,8 @@ const PDFView = () => {
         const response = await axiosPrivate.get(`${TUTE_URL}?${queryString}`);
         setTute(response.data?.tute?.content);
         setHeading(response.data?.tute?.name);
+        setDescription(response.data?.tute?.description);
+        setRecentActivity(response.data?.tute?.recent_activity);
         setStarred(response.data?.tute?.starred);
         setArchived(response.data?.tute?.archived);
 
@@ -98,7 +135,7 @@ const PDFView = () => {
       }
     };
     fetchPdf();
-  }, [axiosPrivate, queryString]);
+  }, [queryString]);
 
   const renderedContent = (
     <div dangerouslySetInnerHTML={{ __html: tute }}></div>

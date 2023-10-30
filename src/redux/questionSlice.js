@@ -10,6 +10,7 @@ export const questionReducer = createSlice({
     queue: [],
     answers: [],
     trace: 0,
+    // courseRelated: false,
   },
   reducers: {
     startQuiz: (state, action) => {
@@ -19,13 +20,13 @@ export const questionReducer = createSlice({
       };
     },
     initializeQuiz: (state, action) => {
-      const { noOfQuestions, subject, mcqName } = action.payload
+      const { noOfQuestions, subject, mcqName } = action.payload;
       return {
         ...state,
         noOfQuestions: noOfQuestions,
         subject: subject,
         mcqName: mcqName,
-      }
+      };
     },
     moveNext: (state) => {
       return {
@@ -39,6 +40,12 @@ export const questionReducer = createSlice({
         trace: state.trace - 1,
       };
     },
+    // setCourseRelatedQuiz: (state) => {
+    //   return {
+    //     ...state,
+    //     courseRelated: true,
+    //   };
+    // },
     reset: () => {
       return {
         noOfQuestions: 0,
@@ -52,6 +59,13 @@ export const questionReducer = createSlice({
   },
 });
 
-export const { startQuiz, initializeQuiz, moveNext, movePrev, reset } = questionReducer.actions;
+export const {
+  startQuiz,
+  initializeQuiz,
+  moveNext,
+  movePrev,
+  reset,
+  // setCourseRelatedQuiz,
+} = questionReducer.actions;
 
 export default questionReducer.reducer;
