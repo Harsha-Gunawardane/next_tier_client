@@ -5,10 +5,12 @@ import useAxiosPrivate from "../useAxiosPrivate";
 
 // redux actions
 import * as Action from "../../redux/questionSlice";
+import * as ResultAction from "../../redux/resultSlice";
 
 const STUDENT_QUIZ_URL = "/stu/quiz";
+const STUDENT_ATTEMPT_QUIZ_URL = "/stu/attempt_quiz";
 
-export const useFetchQuestions = () => {
+export const useFetchQuestions = (quizId = null) => {
   const axiosPrivate = useAxiosPrivate();
 
   const subject = useSelector((state) => state.questions.subject);
@@ -23,13 +25,19 @@ export const useFetchQuestions = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      console.log("I need " + value + " questions from " + subject);
       setData((prev) => ({ ...prev, isLoading: true }));
       try {
-        const response = await axiosPrivate.post(STUDENT_QUIZ_URL, {
-          subject,
-          value,
-        });
+        let response;
+        if (quizId) {
+          response = await axiosPrivate.post(STUDENT_ATTEMPT_QUIZ_URL, {
+            quizId,
+          });
+        } else {
+          response = await axiosPrivate.post(STUDENT_QUIZ_URL, {
+            subject,
+            value,
+          });
+        }
 
         console.log(response.data.response.questions);
         const questions = response?.data?.response?.questions;
@@ -77,6 +85,27 @@ export const initializeQuiz =
     }
   };
 
+export const initializeQuizById = (quizId) => async (dispatch) => {
+  const axiosPrivate = useAxiosPrivate();
+  const queryString = new URLSearchParams({
+    quizId,
+  }).toString();
+
+  try {
+    const response = await axiosPrivate.get(
+      `${STUDENT_ATTEMPT_QUIZ_URL}?${queryString}`
+    );
+
+    console.log(response.data);
+    const { noOfQuestions, subject, mcqName } = response.data.data;
+    await dispatch(Action.initializeQuiz({ noOfQuestions, subject, mcqName }));
+
+    // await dispatch(Action.setCourseRelatedQuiz());
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const moveNextQuestion = () => (dispatch) => {
   dispatch(Action.moveNext());
 };
@@ -87,4 +116,5 @@ export const movePrevQuestion = () => (dispatch) => {
 
 export const resetQuiz = () => (dispatch) => {
   dispatch(Action.reset());
+  dispatch(ResultAction.reset());
 };

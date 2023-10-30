@@ -1,5 +1,4 @@
-import { Box, Text, Flex } from "@chakra-ui/react";
-import { useState } from "react";
+import { Flex } from "@chakra-ui/react";
 import FilterTab from "./tabs/FilterTab";
 
 function SubjectFilterTabsHeader({
