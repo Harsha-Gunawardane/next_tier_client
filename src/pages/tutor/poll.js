@@ -1,134 +1,213 @@
-import React, { useEffect, useState } from "react";
+
+import React, { useState, useEffect } from "react";
 import {
-  Heading,
-  ChakraProvider,
-  Stack,
-  Radio,
-  RadioGroup,
   Button,
-  Progress,
+  Drawer,
+  DrawerBody,
+  DrawerContent,
+  DrawerCloseButton,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerOverlay,
+  Heading,
   Box,
+  Progress,
+  Input,
+  Textarea,
+  FormControl,
+  FormErrorMessage,
+  AlertDialog,
+  AlertDialogOverlay,
+  AlertDialogContent,
+  AlertDialogHeader,
+  AlertDialogBody,
+  AlertDialogFooter,
 } from "@chakra-ui/react";
-import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
+import { useLocation } from "react-router-dom";
+import { useToast } from "@chakra-ui/react";
 
-const Course = (props) => {
-  const [pollData, setPollData] = useState([]);
-  const [selectedOption, setSelectedOption] = useState("");
-  const [votes, setVotes] = useState({});
-  const [loading, setLoading] = useState(true);
-  const [hasVoted, setHasVoted] = useState(false); // Track if the user has voted
-
-  const navigate = useNavigate();
+const Addpoll = () => {
   const axiosPrivate = useAxiosPrivate();
+  const location = useLocation();
+  const id = location.pathname.split("/").pop();
+  const toast = useToast();
 
-  const LoadDetail = (id) => {
-    navigate("/tutor/courses/details/" + id);
-  };
+  const [isOpen, setIsOpen] = useState(false);
+  const [pollData, setPollData] = useState(null);
+  const [votes, setVotes] = useState({});
+  const [userId, setUserId] = useState("");
+  const [voteCounts, setVoteCounts] = useState({});
 
-  const Coursecontent = (id) => {
-    navigate("/tutor/courses/content/" + id);
-  };
+ 
+
+  const onOpen = () => setIsOpen(true);
+  const onClose = () => setIsOpen(false);
+ 
+
+
 
   const getPollData = async () => {
     try {
-      const response = await axiosPrivate.get(`/tutor/courses/poll`);
-      setPollData(response.data);
-      setLoading(false);
+      const response = await axiosPrivate.get(`/tutor/courses/poll/9ae4acf6-c8a1-456b-be55-c03bd6b1a234`);
+      setPollData(response.data.poll);
+      setUserId(response.data.userId);
+
+      const initialVoteCounts = {};
+      pollData.forEach((poll) => {
+        initialVoteCounts[poll.id] = poll.votes;
+      });
+      setVoteCounts(initialVoteCounts);
+
     } catch (error) {
-      console.error("Error fetching poll data: ", error);
-    }
-  };
-
-  const handleOptionChange = (value) => {
-    if (!hasVoted) {
-      setSelectedOption(value);
-    }
-  };
-
-  const handleVote = () => {
-    if (selectedOption) {
-      setVotes((prevVotes) => ({
-        ...prevVotes,
-        [selectedOption]: (prevVotes[selectedOption] || 0) + 1,
-      }));
-      setSelectedOption("");
-      setHasVoted(true);
+      console.log("Error fetching poll data:", error);
     }
   };
 
   useEffect(() => {
     getPollData();
-  }, [axiosPrivate]);
+  }, [axiosPrivate, id]);
+
+
+  const sendVote = async (pollId, selectedOption) => {
+    try {
+      await axiosPrivate.put(`/tutor/courses/poll/${pollId}/${selectedOption}`);
+
+      const updatedCounts = { ...voteCounts };
+      updatedCounts[pollId][selectedOption]++;
+
+      setVoteCounts(updatedCounts);
+    
+      toast({
+        title: "Vote Submitted",
+        description: `You voted for: ${selectedOption}`,
+        status: "success",
+        duration: 3000, // Adjust the duration as needed
+        isClosable: true,
+        position:"top",
+      });
+      // Optionally, you can handle success or display a message to the user.
+    } catch (error) {
+      console.error("Error sending the vote:", error);
+    }
+  };
+
+
+
 
   return (
     <>
-      <ChakraProvider>
-        <Heading>hhhhhh</Heading>
+      <Button
+        onClick={onOpen}
+        width="60%"
+        height="35px"
+        mb="10px"
+        ml="130px"
+        mt="25px"
+        fontSize="12px"
+        colorScheme="blue"
+      >
+   
+      </Button>
+      <Drawer isOpen={isOpen} placement="right" onClose={onClose} size="sm">
+        <DrawerOverlay />
+        <DrawerContent p={5}>
+          <DrawerCloseButton />
+          <DrawerHeader fontSize="20px">Poll</DrawerHeader>
 
-        {loading ? (
-          <div>Loading courses...</div>
-        ) : pollData.length > 0 ? (
-          <div>
-            <Heading fontSize="25px">Poll Data</Heading>
-            <ul>
-              {pollData.map((poll) => (
-                <li key={poll.id}>
-                  <p>{poll.question}</p>
-                  <RadioGroup
-                    value={selectedOption}
-                    onChange={(value) => handleOptionChange(value)}
-                  >
-                    <Stack spacing={2}>
-                      {poll.options.map((option) => (
-                        <Radio
-                          key={option}
-                          value={option}
-                          isDisabled={hasVoted}
-                        >
-                          {option}
-                        </Radio>
-                      ))}
-                    </Stack>
-                  </RadioGroup>
-                  {!hasVoted ? (
-                    <Button onClick={handleVote} colorScheme="teal" mt={2}>
-                      Vote
-                    </Button>
-                  ) : (
-                    <Box mt={2}>
-                      <Progress
-                        value={
-                          (votes[poll.options[0]] /
-                            (votes[poll.options[0]] +
-                              votes[poll.options[1]] +
-                              votes[poll.options[2]] +
-                              votes[poll.options[3]] +
-                              votes[poll.options[4]])) *
-                          100
+          <DrawerBody>
+        
+
+            <Heading mt="10px" mb="5px" fontSize="20px">
+             Polls
+            </Heading>
+            {pollData && pollData.length > 0 ? (
+              pollData.map((poll, index) => (
+                <Box
+                  key={index}
+                  borderWidth="1px"
+                  borderRadius="lg"
+                  p={4}
+                  mb={4}
+                  mt="10px"
+                >
+                  <Heading fontSize="15px">Question: {poll.question}</Heading>
+
+                  
+                  <form>
+            {poll.options && poll.options.length > 0 && (
+              <Heading fontSize="15px" mt="20px">
+                Options:
+              </Heading>
+            )}
+            {poll.options && poll.options.length > 0 && (
+              <Box>
+                {poll.options.map((option, optionIndex) => (
+                  <div key={optionIndex}>
+                    <Button
+                      colorScheme="blue" 
+                      variant="outline" 
+                      size="sm" 
+                      mt="5px" 
+                      onClick={() => {
+                    
+                        if (poll.user_id.includes(userId)) {
+                        
+                          return;
                         }
-                        colorScheme="teal"
-                        hasStripe
-                        isAnimated
-                      />
-                      {Object.keys(votes).map((option) => (
-                        <div key={option}>
-                          {option}: {votes[option]}
-                        </div>
-                      ))}
-                    </Box>
-                  )}
-                </li>
-              ))}
-            </ul>
-          </div>
-        ) : (
-          <Heading fontSize="25px">No Poll Data Available</Heading>
-        )}
-      </ChakraProvider>
+                      
+                        sendVote(poll.id, option);
+                      }}
+                      isDisabled={poll.user_id.includes(userId)}
+                    >
+                      {option}
+                    </Button>
+                     
+                  </div>
+                ))}
+              </Box>
+            )}
+          </form>
+
+                  <Heading fontSize="15px" mt="20px">
+                    Votes:
+                  </Heading>
+                 
+                  <Box>
+                    {Object.entries(poll.votes).map(([option, count]) => (
+                      <div key={option}>
+                        <p>
+                          {option}: {count}
+                        </p>
+                        <Progress
+                          value={count}
+                          colorScheme="teal"
+                          mt={2}
+                          size="sm"
+                        />
+                      </div>
+                    ))}
+                  </Box>
+                
+                
+                </Box>
+              ))
+            ) : (
+              <Heading fontSize="15px" mt="20px">
+                No Poll Data Available
+              </Heading>
+            )}
+
+          
+          </DrawerBody>
+
+          <DrawerFooter></DrawerFooter>
+        </DrawerContent>
+      </Drawer>
     </>
   );
 };
 
-export default Course;
+export default Addpoll;
+

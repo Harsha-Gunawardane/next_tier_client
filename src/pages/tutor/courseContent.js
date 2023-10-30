@@ -133,6 +133,7 @@ const Coursecontent = () => {
           <br></br>
 
           <Forum></Forum>
+          <br></br>
           <Poll></Poll>
         </Box>
       </SimpleGrid>

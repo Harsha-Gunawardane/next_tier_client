@@ -150,16 +150,16 @@ function App() {
               <Route path="content/watch/:id" element={<ContentWatch />} />
               <Route path="quizzes/:subject/:mcqname" element={<Quiz />} />
               <Route path="tutes" element={<TuteLayout />}>
-                <Route index element={<TuteDashboard />} />
+                 <Route index element={<TuteDashboard />} />
                 <Route path="new/:id" element={<NewTute />} />
                 <Route path="edit/:id" element={<NewTute />} />
                 <Route path="view/:id" element={<PdfView />} />
                 <Route path=":id" element={<TuteView />} />
                 <Route path="starred" element={<StarredTutes />} />
-                <Route path="archived" element={<ArchivedTutes />} />
+                <Route path="archived" element={<ArchivedTutes />} /> 
               </Route>
-              <Route path="settings" element={<Settings />} />
-              <Route path="tutors" element={<Tutors />} />
+               <Route path="settings" element={<Settings />} /> 
+               <Route path="tutors" element={<Tutors />} /> 
             </Route>
           </Route>
 
@@ -207,6 +207,7 @@ function App() {
               element={<SidebarAndHeader userRole={"tutor"} />}
             >
               <Route path="dashboard" element={<TDashboard />} />
+              <Route path="content" element={<MyContent />} />
               <Route path="courses/add" element={<Addcourse />} />
               <Route path="courses" element={<TCourses />}></Route>
               <Route path="complaints" element={<Complaints />}></Route>
@@ -233,6 +234,12 @@ function App() {
                 element={<Studypackedit />}
               ></Route>
               <Route path="courses/addstudypack" element={<Addstudypack />} />
+
+              <Route path="papers/:paperid" element={<PaperMarking></PaperMarking>}>
+
+              
+           
+              </Route>
 
               <Route path="staffs">
                 <Route index element={<TutorStaffs />} />
@@ -341,29 +348,29 @@ function App() {
             path="staff"
             element={<SidebarAndHeader userRole={"InstituteStaff"} />}
           >
-            <Route path="dashboard" element={<InstStaffDashboard />} />
-            <Route path="my-profile" element={<MyProfile />} />
+             <Route path="dashboard" element={<InstStaffDashboard />} />
+            <Route path="my-profile" element={<MyProfile />} /> 
             {/* <Route path="teacher" element={<ViewTeacher />} /> */}
-            <Route path="tutors-list/add" element={<AddTeacher />} />
+             <Route path="tutors-list/add" element={<AddTeacher />} />
             <Route path="class" element={<ApproveClass />} />
             <Route path="profile/:id" element={<InstStaffProfile />} />
             <Route path="complaints" element={<InstStaffComplaintsList />} />
             <Route path="hall" element={<HallSchedule />} />
-            <Route path="hall/view" element={<HallList />} />
-            <Route
+            <Route path="hall/view" element={<HallList />} /> 
+             <Route
               path="stu-payment/:username"
               element={<InstStaffStuPayment />}
-            />
-            <Route path="staff-list" element={<InstStaffList />} />
+            /> 
+             <Route path="staff-list" element={<InstStaffList />} />
             <Route path="payment-history/:id" element={<ViewPaymentHistory />} />
             <Route
               path="physical-payment-receipt/:id"
               element={<CashReceipt />}
-            />
+            /> 
             <Route
               path="online-payment-receipt/:id"
               element={<OnlineReceipt />}
-            />
+            /> 
             <Route path="stu-list" element={<StudentsList />} />
             <Route path="stu-profile/:id" element={<StudentProfile />} />
             <Route path="staff-list" element={<InstStaffList />} />
@@ -372,7 +379,7 @@ function App() {
             <Route
                   path="course/:id"
                   element={<CourseProfile />}
-                />
+                /> 
           </Route>
         </Route>
         </Route>

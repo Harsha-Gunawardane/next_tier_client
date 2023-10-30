@@ -2,7 +2,7 @@ import React from "react";
 import { Flex,AccordionPanel,Text,Accordion,AccordionButton,AccordionIcon,AccordionItem,HStack,Heading, Img} from '@chakra-ui/react'
 import { SmallAddIcon} from '@chakra-ui/icons'
 import { ChakraProvider,Button } from '@chakra-ui/react'
-import { Tabs, TabList, TabPanels, Tab, TabPanel,Box,Image } from '@chakra-ui/react'
+import { Box,Image } from '@chakra-ui/react'
 
 import Addcoursecontent from "./coursepackage/Addvideo";
 import Addcoursedoccontent from "./coursepackage/Adddoc";

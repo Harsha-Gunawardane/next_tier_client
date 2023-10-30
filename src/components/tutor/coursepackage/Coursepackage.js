@@ -106,6 +106,8 @@ const Coursepackage = (props) => {
                         <Text color="black" fontSize="13px" ml='5px'>
                          Rs. {item.price}
                         </Text>
+
+                      
                     
                
                    

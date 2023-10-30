@@ -15,7 +15,7 @@ import {
   Link,
 } from "@chakra-ui/react";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
-import { useLocation } from "react-router-dom";
+import { useLocation,useNavigate } from "react-router-dom";
 
 import Addcontent from "../../components/tutor/coursepackage/Addmonth.js";
 import Remove from "../../components/tutor/coursepackage/Contentremove";
@@ -41,6 +41,11 @@ const Coursepackcontent = () => {
   let id = location.pathname.split("/").pop();
   const [contentIdsData, setContentIdsData] = useState([]);
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+
+  const LoadDetail = (id) => {
+    navigate("/tutor/quiz/" + id);
+  };
 
   useEffect(() => {
     const getCourses = async () => {
@@ -261,70 +266,48 @@ const Coursepackcontent = () => {
 
   return (
     <Box width="100%">
-      <SimpleGrid spacing={20} minChildWidth="250px" mt="20px">
+      <SimpleGrid spacing={10} minChildWidth="250px" mt="20px">
         <Box mt="20px">
           {studypackdata && (
             <Heading fontSize="30px" mb="30px" ml="10px" fontWeight="xl">
               {studypackdata.title}
             </Heading>
-          )}
-          {selectedImage && (
-            <Box
-              width="110%"
-              bg="white"
-              position="sticky"
-              top="20"
-              zIndex="1"
-              ml="20px"
-            >
-              {/* {studypackdata && (
-                <Heading fontSize="30px" mb="30px" ml='10px' fontWeight='xl'>
-                  {studypackdata.title}
-                </Heading>
-              )} */}
-              <Link>
-                <Image
-                  boxSize="60%"
-                  width={{ base: 420, xl: 700 }}
-                  height={{ base: 250, xl: 350 }}
-                  objectFit="cover"
-                  src={selectedImage}
-                  alt="Course Image"
-                  ml="10px"
-                />
-              </Link>
-              <Button
-                fontSize="15px"
-                ml="40px"
-                width="80%"
-                mt="40px"
-                colorScheme="blue"
-              >
-                View
-              </Button>
-              <Heading mt="30px" ml="15px">
-                {selectedTitle}
-              </Heading>
-              <Text fontSize="15px" mt="10px" ml="15px">
-                {selectedDiscription}
-              </Text>
-            </Box>
+            
+            
           )}
 
-          {!selectedImage && selectedDoc && (
-            <Box width="110%" bg="white" position="fixed" top="0">
-              <Text fontSize="15px">{selectedTitle}</Text>
-              <Text fontSize="15px">{selectedDiscription}</Text>
-              <Button fontSize="15px">View</Button>
-            </Box>
+          {studypackdata && (
+                <Image
+                boxSize="60%"
+                width={{ base: 340, xl: 700 }}
+                height={{ base: 300, xl: 350 }}
+                ml='10px'
+                objectFit="cover"
+                src={studypackdata.thumbnail}
+                alt="Dan Abramov"
+              />
+            
+            
+         
+            
           )}
+
+{studypackdata && (
+            <Heading fontSize="17px" mt="25px" ml="10px" fontWeight="xl">
+              {studypackdata.description}
+            </Heading>  
+            
+          )}
+ 
+
+     
         </Box>
 
         <Box
           w="75%"
           bg="white"
           p={10}
-          ml={{ base: 0, xl: 120 }}
+          ml={{ base: 0, xl: 110 }}
           mt={{ base: -20, xl: 0 }}
         >
           <Hide below="md">
@@ -368,8 +351,9 @@ const Coursepackcontent = () => {
                     <AccordionPanel pb={4} bg="white">
                       <br />
 
-                      <HStack spacing={{ base: 220, xl: 290 }}>
-                        <Text fontSize="15px">Video Content</Text>
+                      <HStack spacing={{ base: 220, xl: 250 }}>
+                        <Box bg='white' width='200px'><Text fontSize="15px">Video Content</Text></Box>
+                        
                         <Box>
                           {" "}
                           <Addcoursecontent
@@ -399,14 +383,8 @@ const Coursepackcontent = () => {
                                   <Button
                                     fontSize="10px"
                                     height="20px"
-                                    onClick={() =>
-                                      handleViewClick({
-                                        video: videoId,
-                                        videotitle: ` ${videoId}`,
-                                        videothumbnail: ` ${videoId}`,
-                                        videodiscription: ` ${videoId}`,
-                                      })
-                                    }
+                                    colorScheme="blue"
+                              
                                   >
                                     View
                                   </Button>{" "}
@@ -421,8 +399,8 @@ const Coursepackcontent = () => {
                           </Box>
                         ))}
 
-                      <HStack spacing={{ base: 220, xl: 290 }}>
-                        <Text fontSize="15px">Tute Content</Text>
+                      <HStack spacing={{ base: 220, xl: 250 }} mt='5px'>
+                        <Text fontSize="15px" width='200px'>Tute Content</Text>
                         <Box>
                           {" "}
                           <Addcoursedoccontent
@@ -438,7 +416,7 @@ const Coursepackcontent = () => {
                             <HStack spacing="40px">
                               <Box p={2} width="210px">
                                 <HStack>
-                                  <Fetcht videoId={tuteId} />
+                                  {/* <Fetcht videoId={tuteId} /> */}
                                   <Box>
                                     <Text fontSize="14px" className="box2">
                                       <Fetch videoId={tuteId} />
@@ -451,6 +429,8 @@ const Coursepackcontent = () => {
                                   <Button
                                     fontSize="10px"
                                     height="20px"
+                                
+                                    colorScheme="blue"
                                     onClick={() =>
                                       handleViewClickdoc({
                                         tute: tuteId,
@@ -473,8 +453,8 @@ const Coursepackcontent = () => {
                           </Box>
                         ))}
 
-                      <HStack spacing={{ base: 220, xl: 290 }}>
-                        <Text fontSize="15px">Quiz Content</Text>
+                      <HStack spacing={{ base: 220, xl: 250 }} mt='5px'>
+                        <Text fontSize="15px" width='200px'>Quiz Content</Text>
                         <Box>
                           {" "}
                           <Addcoursequiz
@@ -503,6 +483,7 @@ const Coursepackcontent = () => {
                                   <Button
                                     fontSize="10px"
                                     height="20px"
+                                    colorScheme="blue"
                                     // onClick={() =>
                                     //   handleViewClickdoc({
                                     //     tute: quizId,
@@ -511,6 +492,9 @@ const Coursepackcontent = () => {
                                     //     tutediscription: `${quizId}`,
                                     //   })
                                     // }
+                                    onClick={() => {
+                                      LoadDetail(quizId);
+                                    }}
                                   >
                                     Attempt
                                   </Button>{" "}

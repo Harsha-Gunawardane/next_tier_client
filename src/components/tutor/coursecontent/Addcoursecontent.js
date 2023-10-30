@@ -39,7 +39,7 @@ const Addcoursecontent = ({ studypackId, onContentAdded }) => {
     const getCourses = async () => {
       const controller = new AbortController();
       try {
-        const response = await axiosPrivate.get(`/tutor/courses/paper/${id}`, {
+        const response = await axiosPrivate.get(`/tutor/papers/`, {
           signal: controller.signal,
         });
         setcontentData(response.data);

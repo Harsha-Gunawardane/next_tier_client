@@ -8,7 +8,7 @@ import {
   Box,
   Heading,
   Textarea,
-  Select,
+  Select,useToast,
 } from '@chakra-ui/react';
 import useAxiosPrivate from '../../../hooks/useAxiosPrivate';
 
@@ -16,12 +16,13 @@ const AddContent = ({ studypackId ,dynamicWeek, }) => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [subject, setSubject] = useState('');
-  const [thumbnail, setThumbnail] = useState('');
-  const [type, setType] = useState('');
+  const [files, setFiles] = useState('');
+  const [type, setType] = useState('TUTE');
   const [subjectAreas, setSubjectAreas] = useState([]);
   const [status, setStatus] = useState('');
   const [formSubmitted, setFormSubmitted] = useState(false);
   const axiosPrivate = useAxiosPrivate();
+  const toast = useToast();
 
   const handleAddContent = async (e) => {
     e.preventDefault();
@@ -32,15 +33,18 @@ const AddContent = ({ studypackId ,dynamicWeek, }) => {
     }
 
     try {
-      const response = await axiosPrivate.post('/tutor/content', {
-        title,
-        description,
-        subject,
-        thumbnail,
-        type,
-        subject_areas: subjectAreas,
-        status,
-      });
+const response = await axiosPrivate.post('/tutor/content', { 
+  files, 
+  title, 
+  description, 
+  subject, 
+  type, 
+  subject_areas: subjectAreas, 
+  status 
+}, {
+  headers: { "Content-Type": "multipart/form-data" }
+});
+
       const newContentId = response.data.id;
   
       const response2 = await axiosPrivate.get(`/tutor/weekstudypack/${studypackId}`);
@@ -73,7 +77,19 @@ const AddContent = ({ studypackId ,dynamicWeek, }) => {
 
       // onNewContentAdded(newContentInfo);
     //   onClose(); 
-      window.location.reload();
+      // window.location.reload();
+      toast({
+        title: "Studypack Details Updated",
+        description: "The Studypack details have been updated successfully.",
+        status: "success",
+        duration: 3000,
+        isClosable: true,
+        position: "top",
+        onCloseComplete: () => {
+          // Reload the page after the toast is manually closed
+          window.location.reload();
+        },
+      });
    
 
 
@@ -137,29 +153,18 @@ const AddContent = ({ studypackId ,dynamicWeek, }) => {
         </FormControl>
 
         <FormControl>
-          <FormLabel fontSize='15px'>Thumbnail URL</FormLabel>
-          <Input
-            fontSize='15px'
-            height='40px'
-            placeholder='Thumbnail URL'
-            value={thumbnail}
-            onChange={(e) => setThumbnail(e.target.value)}
-          />
+          <FormLabel fontSize='15px'>Add File</FormLabel>
+      <Input
+      fontSize='15px'
+      height='40px'
+      type='file'
+      placeholder='Thumbnail URL'
+      onChange={(e) => setFiles(e.target.files[0])}
+    />
+    
         </FormControl>
 
-        <FormControl isRequired>
-          <FormLabel fontSize='15px'>Type</FormLabel>
-          <Select
-            fontSize='15px'
-            height='40px'
-            placeholder='Select Type'
-            value={type}
-            onChange={(e) => setType(e.target.value)}
-          >
-            <option value='TUTE'>TUTE</option>
-          
-          </Select>
-        </FormControl>
+
 
         <FormControl>
           <FormLabel fontSize='15px'>Subject Areas</FormLabel>
@@ -186,7 +191,7 @@ const AddContent = ({ studypackId ,dynamicWeek, }) => {
           </Select>
         </FormControl>
 
-        <Button colorScheme='blue' mr={3} fontSize='14px' height='30px' type='submit' mt='10px'>
+        <Button colorScheme='blue' mr={3} fontSize='14px' ml='820px' height='30px' type='submit' mt='20px'>
           Save
         </Button>
       </form>

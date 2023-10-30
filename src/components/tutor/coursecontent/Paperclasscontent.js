@@ -38,6 +38,10 @@ const CourseContent = () => {
   const [studyPackDetails, setStudyPackDetails] = useState({});
   const [contentDetails, setContentDetails] = useState([]);
 
+  const LoadDetail = (id) => {
+    navigate("/tutor/papers/" + id);
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -100,9 +104,7 @@ const CourseContent = () => {
   //   return content ? content.thumbnail : ""; // Replace with actual property name
   // };
 
-  const LoadDetail = (id) => {
-    navigate("/tutor/courses/content/analyze/" + id);
-  };
+  
 
   const handleContentRemoval = (contentId) => {
     // Shallow copy the contentDetails state
@@ -219,6 +221,9 @@ const CourseContent = () => {
                                 fontSize="12px"
                                 height="20px"
                                 colorScheme="blue"
+                                onClick={() => {
+                                  LoadDetail(contentId);
+                                }}
                               >
                                 View
                               </Button>{" "}

@@ -80,7 +80,7 @@ const Coursecard = (props) => {
           <GridItem colSpan={3}> </GridItem>
           {latestTwoCourses.length > 0 ? (
             latestTwoCourses.map((item) => (
-              <Card key={item.id} shadow="sm" padding="lg" radius="md" withBorder>
+              <Card key={item.id} shadow="sm" padding="lg" radius="md" withBorder >
                 <Card.Section>
                   <Image
                     src={item.thumbnail}
@@ -89,7 +89,7 @@ const Coursecard = (props) => {
                   />
                 </Card.Section>
                 <Group position="apart" mt="md" mb="xs">
-                  <Text fontWeight={600} fontSize='15px'>{item.title}</Text>
+                  <Text fontWeight={600} fontSize='12px'>{item.title}</Text>
                   {/* You can use the first day from the schedule */}
                   <Badge color="blue" variant="light">
                     {item.schedule[0].day}
@@ -98,7 +98,8 @@ const Coursecard = (props) => {
                 <HStack spacing="24px" mt="20px">
                   <Box w="50%" h="30px" bg="white">
                     <Text color="grey" fontSize="10px" mt="-0px">
-                      <TimeIcon mr='5px' />8.00 a.m. - 12.00 p.m. 
+                      <TimeIcon mr='5px' /> {item.schedule[0].start_time} -{" "}
+                    {item.schedule[0].end_time}
                     </Text>
                   </Box>
                   <Box w="50%" h="30px" bg="white">

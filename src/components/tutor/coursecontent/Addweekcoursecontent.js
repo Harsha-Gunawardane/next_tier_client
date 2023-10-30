@@ -25,6 +25,7 @@ import { useDisclosure } from "@chakra-ui/react";
 import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
 import { useNavigate } from "react-router-dom";
 import Addnewvideo from "./Addnewvideo";
+import Addnewvideos from "./components/DetailsModal";
 
 const Addcoursecontent = ({ studypackId, dynamicWeek, onNewContentAdded }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -184,14 +185,14 @@ const Addcoursecontent = ({ studypackId, dynamicWeek, onNewContentAdded }) => {
           <ModalHeader>Add Video Content</ModalHeader>
           <ModalCloseButton />
 
-          <Tabs isFitted variant="enclosed">
+          {/* <Tabs isFitted variant="enclosed">
             <TabList mb="1em">
               <Tab fontSize="15px">Add existing content</Tab>
               <Tab fontSize="15px">Add new content</Tab>
             </TabList>
-            <TabPanels>
+            <TabPanels> */}
               <form onSubmit={handleSave}>
-                <TabPanel>
+                {/* <TabPanel> */}
                   <ModalBody pb={6} height="350px" overflowY="scroll">
                     <SimpleGrid columns={4} spacing={4}>
                       {videoContent.map((content, index) => (
@@ -231,18 +232,18 @@ const Addcoursecontent = ({ studypackId, dynamicWeek, onNewContentAdded }) => {
                       Cancel
                     </Button>
                   </ModalFooter>
-                </TabPanel>
+                {/* </TabPanel> */}
               </form>
-              <TabPanel>
+              {/* <TabPanel>
                 <ModalBody pb={6} height="350px" overflowY="scroll">
-                  <Addnewvideo
+                  <Addnewvideos
                     studypackId={studypackId}
                     dynamicWeek={dynamicWeek}
-                  ></Addnewvideo>
+                  ></Addnewvideos>
                 </ModalBody>
               </TabPanel>
-            </TabPanels>
-          </Tabs>
+            </TabPanels> */}
+          {/* </Tabs> */}
         </ModalContent>
       </Modal>
     </>

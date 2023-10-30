@@ -117,8 +117,8 @@ const Studypackedit = ({ course}) => {
   const [selectedCourseId, setSelectedCourseId] = useState("");
 
   // Step 2: Find the course title based on the selected course ID
-  const selectedCourseTitle =
-  coursesdata && coursesdata.find((course) => course.id === selectedCourseId)?.title || "";
+  // const selectedCourseTitle =
+  // coursesdata && coursesdata.find((course) => course.id === selectedCourseId)?.title || "";
 
   useEffect(() => {
     if (coursesdata && coursesdata.length > 0) {
@@ -144,7 +144,7 @@ const Studypackedit = ({ course}) => {
     // expireDate >= new Date();
 
   if (!isFormValid) {
-    alert("Please fill in all the required fields correctly.");
+    // alert("Please fill in all the required fields correctly.");
     return;
   }
 
@@ -168,9 +168,13 @@ const Studypackedit = ({ course}) => {
           title: "Studypack Details Updated",
           description: "The Studypack details have been updated successfully.",
           status: "success",
-          duration: 5000,
+          duration: 3000,
           isClosable: true,
           position: "top",
+          onCloseComplete: () => {
+            // Reload the page after the toast is manually closed
+            window.location.reload();
+          },
         });
         onClose();
        
@@ -215,7 +219,7 @@ const Studypackedit = ({ course}) => {
           <form onSubmit={handlesubmit}>
             <ModalHeader>Update Study Pack Details</ModalHeader>
             <ModalCloseButton />
-            <ModalBody pb={6} height='500px' overflowY="scroll">
+            <ModalBody pb={6} height='450px' overflowY="scroll">
               <FormControl isRequired isInvalid={title.trim().length === 0}>
                 <FormLabel fontSize="15px">Title</FormLabel>
                 <Input

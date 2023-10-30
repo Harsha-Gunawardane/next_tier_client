@@ -298,7 +298,9 @@ function Dashboard() {
                       {content.title}
                     </Text>
                     <Text fontSize="12px" color="grey">
-                      {content.uploaded_at}
+                      {/* {content.uploaded_at} */}
+                      {new Date(content.uploaded_at).toLocaleDateString()}{" "}
+                      {new Date(content.uploaded_at).toLocaleTimeString()}
                     </Text>
                     <Button
                       fontSize="10px"

@@ -16,8 +16,8 @@ import {
 } from "@chakra-ui/react";
 import { TimeIcon, CalendarIcon } from "@chakra-ui/icons";
 
-import CourseInclude from "../../components/tutor/coursepackage/CoursepackInclude";
-import CourseDetails from "../../components/tutor/coursepackage/CoursepackDetails";
+// import CourseInclude from "../../components/tutor/coursepackage/CoursepackInclude";
+// import CourseDetails from "../../components/tutor/coursepackage/CoursepackDetails";
 import TutorDetails from "../../components/tutor/Tutordetails";
 import Courseeditbutton from "../../components/tutor/coursepackage/Coursepackageedit";
 import Courseremove from "../../components/tutor/coursepackage/Coursepackremove";
@@ -163,7 +163,7 @@ const Coursepackedit = () => {
               </ListItem>
               <ListItem>
                 {" "}
-                <Text fontSize="15px">Medium-Sinhala</Text>
+                <Text fontSize="15px">Medium-{studypackdata.medium}</Text>
               </ListItem>
               <ListItem>
                 {" "}
