@@ -6,7 +6,6 @@ import {
   Box,
   Flex,
   Image,
-  useToast,
   Input,
   FormLabel,
 } from "@chakra-ui/react";
@@ -34,9 +33,6 @@ function Settings() {
     phoneNo,
     address,
     college,
-    stream,
-    medium,
-    dob,
     profile,
     setFName,
     setLName,
@@ -188,7 +184,6 @@ function Settings() {
 
   useEffect(() => {
     const getUserInfo = async () => {
-      let isMounted = true;
       const controller = new AbortController();
       try {
         const response = await axiosPrivate.get(`${STUDENT_INFO_URL}`, {

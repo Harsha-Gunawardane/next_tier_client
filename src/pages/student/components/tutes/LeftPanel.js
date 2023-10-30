@@ -2,7 +2,6 @@ import { Box, Divider, Flex, Text } from "@chakra-ui/react";
 import {
   BsFillPlusCircleFill,
   BsArchiveFill,
-  BsFillTrashFill,
 } from "react-icons/bs";
 import { AiFillFolderOpen, AiFillStar, AiFillHome } from "react-icons/ai";
 import { useState } from "react";
@@ -10,9 +9,7 @@ import { useState } from "react";
 import LeftPanelTab from "./LeftPanelTab";
 import NewTuteModal from "../modals/NewTuteModal";
 import TutePageList from "./TutePageList";
-import truncateString from "../../../../utils/truncateString";
 import FolderList from "./FolderList";
-import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import NewFolderModal from "../modals/NewFolderModal";
 import { useFoldersInfo } from "../../../../store/student/useFoldersInfo";

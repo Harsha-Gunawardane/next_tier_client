@@ -38,7 +38,7 @@ function StartQuizModal({ isOpen, handleCloseModal, subject }) {
     setTime(value * 2);
   }, [value]);
 
-  const modalheader = "Physics  >  Quiz";
+  const modalheader = subject + "  >  Quiz";
 
   const modalbody = (
     <Box mr={isMobile ? 2 : 5} ml={isMobile ? 2 : 5}>

@@ -2,6 +2,11 @@ import { Flex, Text, Box } from "@chakra-ui/react";
 import PreviousQuizCard from "../cards/PreviousQuizCard";
 
 function PreviousQuizList({ previousQuizzes }) {
+  console.log(previousQuizzes)
+  if (previousQuizzes) previousQuizzes = previousQuizzes.reverse();
+  console.log(previousQuizzes)
+
+
   return (
     <Flex
       justifyContent="center"

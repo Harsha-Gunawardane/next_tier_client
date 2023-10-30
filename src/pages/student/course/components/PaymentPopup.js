@@ -270,7 +270,6 @@ function PaymentPopup(props) {
                                                         <Text fontWeight={"semibold"} fontSize={"1rem"} color={"gray.800"}>Rs. {item.price}</Text>
                                                     </Flex>
                                                 ))
-
                                             }
                                         </VStack>
                                     </Flex>

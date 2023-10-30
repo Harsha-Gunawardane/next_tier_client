@@ -19,7 +19,6 @@ function Quiz() {
 
   const [isOpen, setIsOpen] = useState(false);
   const [errMsg, setErrMsg] = useState("");
-  const [errTitle, setErrTitle] = useState("");
 
   const state = useSelector((state) => state);
   const question = useSelector(
@@ -49,18 +48,18 @@ function Quiz() {
     navigate(-1); // Use `navigate` directly without setting it as state
   };
 
-  const handleOpenModal = () => {
-    setIsOpen(true);
-    return (
-      <QuizErrorModal
-        message={errMsg}
-        quizname={quizname}
-        handleGoBack={handleGoBack}
-        handleCloseModal={handleCloseModal}
-        isOpen={isOpen}
-      />
-    );
-  };
+  // const handleOpenModal = () => {
+  //   setIsOpen(true);
+  //   return (
+  //     <QuizErrorModal
+  //       message={errMsg}
+  //       quizname={quizname}
+  //       handleGoBack={handleGoBack}
+  //       handleCloseModal={handleCloseModal}
+  //       isOpen={isOpen}
+  //     />
+  //   );
+  // };
 
   useEffect(() => {
     if (serverError) {

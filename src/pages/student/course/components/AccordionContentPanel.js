@@ -16,6 +16,7 @@ import useAxiosPrivate from '../../../../hooks/useAxiosPrivate';
 import _ from 'lodash';
 import { Loader } from '@mantine/core';
 import { is } from 'date-fns/locale';
+import { initializeQuizById } from "../../../../hooks/reduxReducers/fetchQuestions";
 
 //icons
 import { IoPlay } from 'react-icons/io5';
@@ -25,9 +26,11 @@ import { MdOndemandVideo, MdOutlineQuiz } from 'react-icons/md';
 import { AiOutlineEye } from 'react-icons/ai';
 import { BiSolidLockAlt } from 'react-icons/bi';
 import { FcSurvey } from 'react-icons/fc';
+import { useDispatch } from 'react-redux';
 
 const AccordionContentPanel = (props) => {
 
+    const dispatch = useDispatch();
     const {
         studyPackId,
         contentIDs,
@@ -43,6 +46,7 @@ const AccordionContentPanel = (props) => {
     const [content, setContent] = useState({});
     const [isContentLoading, setIsContentLoading] = useState(true);
     const axiosPrivate = useAxiosPrivate();
+
 
     useEffect(() => {
         if (isOpen && isContentLoading && !studyPackType) {
@@ -65,6 +69,7 @@ const AccordionContentPanel = (props) => {
             });
 
             const data = response.data;
+            console.log(data);
 
             if (isMounted) {
                 setContent(data);
@@ -75,6 +80,15 @@ const AccordionContentPanel = (props) => {
             console.log(error);
         }
     };
+
+    const handleAttemtQuiz = (quizId) => {
+        console.log(quizId);
+
+        console.log("here");
+        dispatch(initializeQuizById(quizId));
+
+
+    }
 
 
 
@@ -258,8 +272,10 @@ const AccordionContentPanel = (props) => {
                                                     size={"sm"}
                                                     color={"white"}
                                                     bg={"blue.500"}
+                                                    onClick={() => handleAttemtQuiz(quizId)}
+                                                    isDisabled={!content[quizId].available}
                                                 >
-                                                    Attempt
+                                                    {content[quizId].available ? "Attempt" : "Not Available"}
                                                 </Button> :
                                                 <IconButton
                                                     variant={"ghost"}

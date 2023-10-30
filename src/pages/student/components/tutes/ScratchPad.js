@@ -58,6 +58,11 @@ function ScratchPad() {
       bg={"#F2F2F2"}
       h={420}
       overFlowY={"auto"}
+      display={{
+        sm: "none",
+        md: "none",
+        lg: "block",
+      }}
     >
       <Flex justifyContent={"space-between"} alignItems={"center"} pr={3}>
         <Text

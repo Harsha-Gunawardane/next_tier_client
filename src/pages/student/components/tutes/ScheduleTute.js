@@ -57,7 +57,15 @@ function ScheduleTute() {
 
   return (
     <>
-      <Flex w={392} justifyContent={"center"}>
+      <Flex
+        w={392}
+        justifyContent={"center"}
+        display={{
+          sm: "none",
+          md: "none",
+          lg: "flex",
+        }}
+      >
         <Box mt={5}>
           <Flex
             justifyContent={"space-between"}

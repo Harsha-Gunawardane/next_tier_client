@@ -3,11 +3,11 @@
 export const lineChartDataGrades = [
 	{
 		name: "Physics",
-		data: [50, 64, 48, 66, 49, 68, 60, 70, 80],
+		data: [0, 64, 40, 42, 30, 70, 80, 60, 40],
 	},
 	{
 		name: "Chemistry",
-		data: [30, 40, 24, 46, 20, 46, 30, 40, 50],
+		data: [30, 0, 44, 46, 28, 46, 20, 60, 50],
 	},
 ];
 

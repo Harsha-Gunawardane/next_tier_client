@@ -26,7 +26,7 @@ import { BiListUl, BiSolidDashboard } from "react-icons/bi";
 import { IoIosPaper } from "react-icons/io";
 import { faListCheck } from "@fortawesome/free-solid-svg-icons";
 
-const SidebarAndHeader = ({ userRole }) => {
+const SidebarAndHeader = ({ userRole, subRole }) => {
   //get width of sidebar component and set to state
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [hidden, setHidden] = useState(isOpen);
@@ -57,6 +57,10 @@ const SidebarAndHeader = ({ userRole }) => {
     ["stu/courses/:courseId/forum", "courses"],
     ["stu/quizzes", "quizzes"],
     ["stu/tutes", "tutes"],
+    ["stu/mycourses", "mycourses"],
+    ["stu/mycourses/:courseId", "mycourses"],
+    ["stu/courses/:courseId", "mycourses"],
+
 
     // More routes and active tabs...
 

@@ -33,7 +33,7 @@ const VideoView = (props) => {
     return (
         <Flex width={"100%"} height={"max-content"} justifyContent={"flex-start"} alignItems={"flex-start"} direction={"column"}>
             <AspectRatio minW="100%" w="100%" ratio={16 / 9} overflow={"hidden"} position={"relative"} borderRadius={"10px"}>
-                <ReactVideoPlayer videoUrl={videoUrl} />
+                <ReactVideoPlayer videoUrl={videoUrl} thumbnail={videoDetails.thumbnail} />
             </AspectRatio>
 
             <Flex w={"100%"} mt="5px" px="5px" color={"#3f3f3f"}>

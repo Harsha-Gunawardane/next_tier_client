@@ -91,9 +91,10 @@ function FeesPayment({ totalFee, setTotalFee }) {
     }
 
     setSelectedPackIds(newSelectedPackIds);
-
     setCheckedPacks(newCheckedPacks);
+    
     console.log(fee);
+    console.log(selectedPackIds)
   };
 
   return (

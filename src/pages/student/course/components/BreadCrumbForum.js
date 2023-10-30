@@ -5,10 +5,11 @@ import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import capsFirst from "../../../../utils/capsFirst";
+import _ from "lodash";
 
 const BreadCrumbForum = (props) => {
 
-    const { courseTitle, studyPack, ...rest } = props;
+    const { id, title, courseTitle, studyPack, ...rest } = props;
 
 
 
@@ -28,7 +29,11 @@ const BreadCrumbForum = (props) => {
     if (studyPack) {
         routeArr = getRouteArr(params, ["stu"], [{ from: ":studypackId", to: courseTitle }]);
     } else {
-        routeArr = getRouteArr(params, ["stu"], [{ from: ":courseId", to: courseTitle }]);
+        if (_.isEmpty(title) && _.isEmpty(id)) {
+            routeArr = getRouteArr(params, ["stu"], [{ from: ":courseId", to: courseTitle }]);
+        } else {
+            routeArr = getRouteArr(params, ["stu"], [{ from: ":" + id, to: title }]);
+        }
     }
     var href = "/stu";
 
