@@ -65,6 +65,7 @@ const AccordionContentPanel = (props) => {
             });
 
             const data = response.data;
+            console.log(data);
 
             if (isMounted) {
                 setContent(data);
@@ -75,6 +76,27 @@ const AccordionContentPanel = (props) => {
             console.log(error);
         }
     };
+
+    const handleAttemtQuiz = async (quizId) => {
+        console.log(quizId);
+        const controller = new AbortController();
+
+        try {
+            const response = await axiosPrivate.get(`/stu/attempt_quiz`, {
+                signal: controller.signal
+            });
+
+            const data = response.data;
+
+            console.log(data);
+
+
+
+        } catch (error) {
+            console.log(error);
+        }
+
+    }
 
 
 
@@ -258,8 +280,10 @@ const AccordionContentPanel = (props) => {
                                                     size={"sm"}
                                                     color={"white"}
                                                     bg={"blue.500"}
+                                                    onClick={() => handleAttemtQuiz(quizId)}
+                                                    isDisabled={!content[quizId].available}
                                                 >
-                                                    Attempt
+                                                    {content[quizId].available ? "Attempt" : "Not Available"}
                                                 </Button> :
                                                 <IconButton
                                                     variant={"ghost"}

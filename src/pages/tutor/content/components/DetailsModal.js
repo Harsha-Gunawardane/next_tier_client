@@ -19,7 +19,8 @@ import {
     SimpleGrid,
     GridItem,
     useToast,
-    HStack
+    HStack,
+    Progress
 } from "@chakra-ui/react"
 
 import _ from "lodash"
@@ -61,6 +62,7 @@ function DetailsModal(props) {
     const [uploading, setUploading] = useState("NOT_STARTED");
     const [uploadedVideos, setUploadedVideos] = useState([])
     const [uploadSuccess, setUploadSuccess] = useState(false)
+    const [uploadError, setUploadError] = useState(false)
 
     //get users first name and last name from zustand
     const { fName, lName } = useUserInfo
@@ -213,7 +215,6 @@ function DetailsModal(props) {
             const formData = new FormData();
             formData.append('title', form.values.files.name);
             formData.append('description', 'description');
-            // single file
             formData.append('files', form.values.files);
 
 
@@ -518,8 +519,8 @@ function DetailsModal(props) {
                                         uploading === "UPLOADING" ?
                                             // uploading with progress bar
                                             <Flex w={"100%"} justifyContent={"space-between"} alignItems={"center"}>
-
                                                 <Text fontSize={"0.9rem"} fontWeight={"semi-bold"} color={"gray.400"} textAlign={"center"}>Uploading</Text>
+                                                <Progress size="sm" value={progress} />
                                             </Flex>
                                             :
                                             <></>

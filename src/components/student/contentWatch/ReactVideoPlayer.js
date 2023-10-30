@@ -47,7 +47,14 @@ function formatTime(seconds) {
 }
 
 
-const ReactVideoPlayer = ({ videoUrl, thumbnail }) => {
+const ReactVideoPlayer = (props) => {
+
+    const {
+        videoUrl,
+        thumbnail,
+        miniPlayer = false
+    } = props;
+
     const [videoState, setVideoState] = useState({
         playing: false,
         muted: false,
