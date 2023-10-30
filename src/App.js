@@ -262,6 +262,8 @@ function App() {
                 path="attendance/marking"
                 element={<StudentAttendanceMarking />}
               />
+              <Route path="content" element={<MyContent />} />
+              <Route path="content/:contentId" element={<ViewContent />} />
             </Route>
           </Route>
 
