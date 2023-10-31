@@ -116,7 +116,6 @@ function Dashboard() {
   // }, [axiosPrivate]);
 
   // const currentDate = new Date();
-
   useEffect(() => {
     const getCourses = async () => {
       const controller = new AbortController();
@@ -125,21 +124,25 @@ function Dashboard() {
           signal: controller.signal,
         });
         setcontentData(response.data);
-
+  
         // Sort the contentData array by uploaded_at in descending order
         const sortedContent = response.data.sort((a, b) => {
           return new Date(b.uploaded_at) - new Date(a.uploaded_at);
         });
-
-        // Get the latest 3 content items
-        const latestContent = sortedContent.slice(0, 3);
-        setLatestcontent(latestContent); // Assuming you have a state variable to store the latest content
+  
+        // Filter the sorted content to get only items with type "VIDEO"
+        const videoContent = sortedContent.filter(item => item.type === "VIDEO");
+  
+        // Get the latest 3 video content items
+        const latestVideoContent = videoContent.slice(0, 3);
+        setLatestcontent(latestVideoContent); // Assuming you have a state variable to store the latest video content
       } catch (error) {
         console.log(error);
       }
     };
     getCourses();
   }, [axiosPrivate]);
+  
 
   return (
     <Box bg="#F9F9F9" width="100%" p={5}>

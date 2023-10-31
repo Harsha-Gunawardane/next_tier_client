@@ -96,6 +96,7 @@ const CourseContent = ({ course }) => {
         title: content.title,
         thumbnail: content.thumbnail,
         videoId: content.id,
+        file_path: content.file_path,
     
       };
     } catch (error) {
@@ -409,6 +410,7 @@ const CourseContent = ({ course }) => {
                                 <HStack spacing={{ base: 90, xl: 300 }}>
                                   <Box p={2} width="210px">
                                     <HStack>
+                                  
                                       {/* <Image
                                         boxSize="50%"
                                         width={{ base: 70, xl: 70 }}
@@ -421,6 +423,7 @@ const CourseContent = ({ course }) => {
                                       <Box>
                                         <Text fontSize="14px" className="box2">
                                           {tuteInfo.title}
+                                        
                                         </Text>
                                       </Box>
                                     </HStack>
@@ -428,11 +431,10 @@ const CourseContent = ({ course }) => {
 
                                   <Box width="90px" ml="5px" mt="-5px">
                                     <HStack>
-                                      <Button fontSize="12px" height="20px" colorScheme="blue"   onClick={() => {
-    if (tuteInfo.file_path) {
-      window.open(tuteInfo.file_path, '_blank');
-    }
-  }}>
+                                      <Button fontSize="12px" height="20px" colorScheme="blue"     onClick={() => {
+    const fileUrl = tuteInfo.file_path;
+    window.open(fileUrl, '_blank');
+  }} >
                                         View
                                       </Button>{" "}
                                       <Remove

@@ -25,9 +25,11 @@ import Addcoursecontent from "../../components/tutor/coursepackage/Addvideo";
 import TutorDetails from "../../components/tutor/TutorDetails2";
 import Fetch from "../../hooks/fetchTitle";
 import Fetcht from "../../hooks/fetchThumb";
+import Fetchfile from "../../hooks/fetchFilepath";
 import FetchQuiz from "../../hooks/fetchQuiz";
 import Removecontent from "../../components/tutor/coursepackage/Remove";
 import { Show, Hide } from "@chakra-ui/react";
+import { FaFileAlt } from "react-icons/fa";
 
 const Coursepackcontent = () => {
   const [selectedId, setSelectedId] = useState(null);
@@ -44,7 +46,7 @@ const Coursepackcontent = () => {
   const navigate = useNavigate();
 
   const LoadDetail = (id) => {
-    navigate("/tutor/quiz/" + id);
+    navigate("/tutor/quizzes/" + id);
   };
 
   useEffect(() => {
@@ -417,9 +419,11 @@ const Coursepackcontent = () => {
                               <Box p={2} width="210px">
                                 <HStack>
                                   {/* <Fetcht videoId={tuteId} /> */}
+                                      {/* <Text><Fetchfile videoId={tuteId} /></Text>   */}
                                   <Box>
                                     <Text fontSize="14px" className="box2">
-                                      <Fetch videoId={tuteId} />
+                                      <HStack> <FaFileAlt/>  <Text> <Fetch videoId={tuteId} /></Text></HStack>
+                                   
                                     </Text>
                                   </Box>
                                 </HStack>
@@ -431,15 +435,16 @@ const Coursepackcontent = () => {
                                     height="20px"
                                 
                                     colorScheme="blue"
-                                    onClick={() =>
-                                      handleViewClickdoc({
-                                        tute: tuteId,
-                                        tutetitle: `${tuteId}`,
-                                        tutethumbnail: `${tuteId}`,
-                                        tutediscription: `${tuteId}`,
-                                      })
-                                    }
-                                  >
+                                    onClick={async () => {
+                                      try {
+                                        const response = await Fetchfile({ videoId: tuteId });
+                                        const fileUrl = response.fileUrl;
+                                        window.open(fileUrl, '_blank');
+                                      } catch (error) {
+                                        console.error("Error fetching the file URL:", error);
+                                      }
+                                    }}>
+                                  
                                     View
                                   </Button>{" "}
                                   <Removecontent
@@ -496,7 +501,7 @@ const Coursepackcontent = () => {
                                       LoadDetail(quizId);
                                     }}
                                   >
-                                    Attempt
+                                    View
                                   </Button>{" "}
                                   <Removecontent
                                     contentId={quizId}
