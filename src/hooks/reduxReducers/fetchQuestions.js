@@ -8,9 +8,9 @@ import * as Action from "../../redux/questionSlice";
 import * as ResultAction from "../../redux/resultSlice";
 
 const STUDENT_QUIZ_URL = "/stu/quiz";
-const STUDENT_ATTEMPT_QUIZ_URL = "/stu/attempt_quiz";
+const STUDENT_ATTEMPT_QUIZ_URL = "/stu/quiz/attempt";
 
-export const useFetchQuestions = (quizId = null) => {
+export const useFetchQuestions = () => {
   const axiosPrivate = useAxiosPrivate();
 
   const subject = useSelector((state) => state.questions.subject);
@@ -23,12 +23,15 @@ export const useFetchQuestions = (quizId = null) => {
     serverError: null,
   });
 
+  const quizId = useSelector((state) => state.questions.quizId);
+  const courseRelated = useSelector((state) => state.questions.courseRelated);
+
   useEffect(() => {
     const fetchData = async () => {
       setData((prev) => ({ ...prev, isLoading: true }));
       try {
         let response;
-        if (quizId) {
+        if (courseRelated) {
           response = await axiosPrivate.post(STUDENT_ATTEMPT_QUIZ_URL, {
             quizId,
           });
@@ -69,7 +72,7 @@ export const useFetchQuestions = (quizId = null) => {
       }
     };
     fetchData();
-  }, [dispatch]);
+  }, [axiosPrivate, courseRelated, dispatch, quizId, subject, value]);
 
   return data;
 };
@@ -85,8 +88,7 @@ export const initializeQuiz =
     }
   };
 
-export const initializeQuizById = (quizId) => async (dispatch) => {
-  const axiosPrivate = useAxiosPrivate();
+export const initializeQuizById = (quizId, axiosPrivate) => async (dispatch) => {
   const queryString = new URLSearchParams({
     quizId,
   }).toString();
@@ -95,15 +97,17 @@ export const initializeQuizById = (quizId) => async (dispatch) => {
     const response = await axiosPrivate.get(
       `${STUDENT_ATTEMPT_QUIZ_URL}?${queryString}`
     );
-
     console.log(response.data);
     const { noOfQuestions, subject, mcqName } = response.data.data;
-    await dispatch(Action.initializeQuiz({ noOfQuestions, subject, mcqName }));
+    dispatch(Action.initializeQuiz({ noOfQuestions, subject, mcqName }));
+    dispatch(Action.setCourseRelatedQuiz());
+    dispatch(Action.setQuizId(quizId));
 
-    // await dispatch(Action.setCourseRelatedQuiz());
+    return subject;
   } catch (error) {
     console.log(error);
   }
+
 };
 
 export const moveNextQuestion = () => (dispatch) => {

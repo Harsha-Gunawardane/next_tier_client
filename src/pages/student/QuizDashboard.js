@@ -32,6 +32,7 @@ import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import ModalLayout from "../../components/ModalLayout";
 
 const QUIZ_REVISION_URL = "/stu/quiz-revision";
+const QUIZ_METADATA_URL = "/stu/quiz/meta";
 
 function searchQuizzes(quizzes, input) {
   const searchTerm = input.toLowerCase();
@@ -60,6 +61,26 @@ function Quizzes() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   // const [isAllQuizzes, setIsAllQuizzes] = useState("f");
+
+  const getMetaData = async (subject) => {
+    const queryString = new URLSearchParams({
+      subject,
+    }).toString();
+
+    try {
+      const response = await axiosPrivate.get(
+        `${QUIZ_METADATA_URL}?${queryString}`
+      );
+
+      console.log(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    getMetaData(subject);
+  }, [subject]);
 
   const getPreviousQuizzes = async (isAllQuizzes) => {
     const queryString = new URLSearchParams({
@@ -140,7 +161,7 @@ function Quizzes() {
 
   const handleSeeAllQuizzes = () => {
     // setIsAllQuizzes("t");
-    getPreviousQuizzes("t")
+    getPreviousQuizzes("t");
     // isMobile ? onOpen : handleModalOpen;
     if (isMobile) {
       onOpen();
