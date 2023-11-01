@@ -200,7 +200,6 @@ useEffect(() => {
 }, []);
 
 
-
   //Get mcqs in the quiz
   useEffect(() => {
     const getMcqsFromQuiz = async () => {

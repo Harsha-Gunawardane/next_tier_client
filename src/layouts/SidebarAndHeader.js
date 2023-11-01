@@ -3,10 +3,17 @@ import Header from "../components/Header/Header";
 import ResponsiveSidebar from "../components/Sidebar/ResponsiveSidebar";
 
 import { useState, useEffect, useRef } from "react";
-import { FaUsers, FaUserAlt, FaMoneyBillAlt } from "react-icons/fa";
+import {
+  FaUsers,
+  FaUserAlt,
+  FaMoneyBillAlt,
+  FaUserCheck,
+} from "react-icons/fa";
 
 import { Grid, GridItem, useDisclosure } from "@chakra-ui/react";
 import useSidebar from "../hooks/useSidebar";
+import { BiBook } from "react-icons/bi";
+
 
 //icons
 import GridViewRoundedIcon from "@mui/icons-material/GridViewRounded";
@@ -22,7 +29,12 @@ import ReportProblemIcon from "@mui/icons-material/ReportProblem";
 import { MdOutlineQuiz, MdQuiz, MdVideoLibrary } from "react-icons/md";
 import { PiNotebookFill } from "react-icons/pi";
 import { IoSchool, IoCompass } from "react-icons/io5";
-import { BiListUl, BiSolidDashboard } from "react-icons/bi";
+import {
+  BiListUl,
+  BiSolidDashboard,
+  BiUserCheck,
+  BiSolidUserCheck,
+} from "react-icons/bi";
 import { IoIosPaper } from "react-icons/io";
 import { faListCheck } from "@fortawesome/free-solid-svg-icons";
 
@@ -72,6 +84,10 @@ const SidebarAndHeader = ({ userRole }) => {
     ["courses/courses/addstudypack", "courses"],
     ["tutor/staffs", "staffs"],
     ["tutor/quizzes", "quizzes"],
+    ["tutor/attendance", "attendance"],
+    ["tutor/attendance/marking/:courseId", "attendance"],
+    // ["/tutor/papers","papers"]
+    
 
     ["staff/dashboard", "dashboard"],
     ["staff/class", "approveclass"],
@@ -170,7 +186,7 @@ const SidebarAndHeader = ({ userRole }) => {
       href: "/tutor/dashboard",
     },
     {
-      icon: TiDocumentText,
+      icon: BiBook,
       name: "Courses",
       value: "courses",
       href: "/tutor/courses",
@@ -188,14 +204,19 @@ const SidebarAndHeader = ({ userRole }) => {
       href: "/tutor/staffs",
     },
     {
+      icon: FaUserCheck,
+      name: "Attendance",
+      value: "attendance",
+      href: "attendance",
+    },
+    {
       icon: TiDocumentText,
       name: "Papers",
       value: "papers",
       href: "/tutor/papers",
     },
     {
-      icon: FaListAlt,
-      FaQuestionCircle,
+      icon: BiListUl,
       name: "Quizzes",
       value: "quizzes",
       href: "/tutor/quizzes",
@@ -259,38 +280,38 @@ const SidebarAndHeader = ({ userRole }) => {
       icon: GridViewRoundedIcon,
       name: "Dashboard",
       value: "dashboard",
-      href: "/tutor/dashboard",
+      href: "/supportstaff/dashboard",
     },
     {
       icon: TiDocumentText,
       name: "Courses",
       value: "courses",
-      href: "/tutor/courses",
+      href: "/supportstaff/courses",
     },
     {
       icon: MdVideoLibrary,
       name: "Contents",
       value: "contents",
-      href: "/tutor/content",
+      href: "/supportstaff/content",
     },
     {
       icon: TiDocumentText,
       name: "Papers",
       value: "papers",
-      href: "/tutor/papers",
+      href: "/supportstaff/papers",
     },
     {
       icon: FaListAlt,
       FaQuestionCircle,
       name: "Quizzes",
       value: "quizzes",
-      href: "/tutor/quizzes",
+      href: "/supportstaff/quizzes",
     },
     {
       icon: FaQuestionCircle,
       name: "Complaints",
       value: "complaints",
-      href: "/tutor/complaints",
+      href: "/supportstaff/complaints",
     },
   ];
 
@@ -299,13 +320,13 @@ const SidebarAndHeader = ({ userRole }) => {
       icon: GridViewRoundedIcon,
       name: "Dashboard",
       value: "dashboard",
-      href: "/tutor/dashboard",
+      href: "/paperstaff/dashboard",
     },
     {
       icon: TiDocumentText,
       name: "Papers",
       value: "papers",
-      href: "/tutor/papers",
+      href: "/paperstaff/papers",
     }
   ];
 

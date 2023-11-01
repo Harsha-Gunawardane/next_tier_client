@@ -6,7 +6,7 @@ export default function StudentAttedance(){
 
   //Here studentId should be equal to the particular student's id
   const [studentId, setStudentId] = useState(
-    "8dca2ee8-6c7f-4200-ba16-7b4ee0194cb7"
+    "5e49bb8b-f337-4db5-95c6-337761997a6b"
   );
   const [qrCode, setQrCode] = useState("");
 

@@ -14,8 +14,7 @@ import { FaUserFriends } from "react-icons/fa";
 
 
 
-export default function AttendanceHeaderBar({ search, setSearch}) {
-
+export default function AttendanceHeaderBar({ search, setSearch, filter, setFilter }) {
   return (
     <Grid
       margin={{ base: "5px 5px", sm: "20px auto" }}
@@ -81,10 +80,13 @@ export default function AttendanceHeaderBar({ search, setSearch}) {
               h={"35px"}
               size="sm"
               borderRadius={"5px"}
-              placeholder="All Students"
+              onChange={(e) => {
+                setFilter(e.target.value);
+              }}
             >
-              <option value="option1">Present</option>
-              <option value="option2">Absent</option>
+              <option value="All Students">All Students</option>
+              <option value="Present">Present Students</option>
+              <option value="Absent">Absent Students</option>
             </Input>
           </InputGroup>
         </FormControl>

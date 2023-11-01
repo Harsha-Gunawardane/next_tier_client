@@ -16,6 +16,7 @@ import PaperMarkingMarksAdding from "../../components/TutorStaff/PaperMarkingMar
 import PaperMarkingMarksAdded from "../../components/TutorStaff/PaperMarkingMarksAdded.js";
 const PaperMarking = () => {
   const { paperId } = useParams();
+  console.log(paperId);
 
   const axiosPrivate = useAxiosPrivate();
 
@@ -24,6 +25,49 @@ const PaperMarking = () => {
   const [marksAddedStudents, setMarksAddedStudents] = useState([]);
   const [paper, setPaper] = useState("");
   const [search, setSearch] = useState("");
+
+  //For column chart
+  const [No_of_studnts_got_A, setNo_of_studnts_got_A] = useState(0);
+  const [No_of_studnts_got_B, setNo_of_studnts_got_B] = useState(0);
+  const [No_of_studnts_got_C, setNo_of_studnts_got_C] = useState(0);
+  const [No_of_studnts_got_S, setNo_of_studnts_got_S] = useState(0);
+  const [No_of_studnts_got_F, setNo_of_studnts_got_F] = useState(0);
+
+  const columnChartOptions = {
+    chart: {
+      type: "bar",
+    },
+    colors: ["#0dbfe5", "#19fc56", "#05ec94", "#f9ad12", "#fc1454"],
+
+    plotOptions: {
+      bar: {
+        columnWidth: "40%",
+        distributed: true,
+      },
+    },
+    dataLabels: {
+      enabled: false,
+    },
+    legend: {
+      show: false,
+    },
+    xaxis: {
+      categories: [
+        "A: Excellent",
+        "B: Good",
+        "C: Satisfactory",
+        "S: Pass",
+        "F: Fail",
+      ],
+      labels: {
+        style: {
+          colors: ["#0dbfe5", "#19fc56", "#05ec94", "#f9ad12", "#fc1454"],
+
+          fontSize: "12px",
+        },
+      },
+    },
+  };
 
   const {
     isOpen: isEditPaperPopupOpen,
@@ -77,8 +121,6 @@ const PaperMarking = () => {
           `/stu/students/marks/${paperId}`
         );
         setStudents(response.data);
-
-
       } catch (error) {
         if (error.response && error.response.data) {
           console.log(error.response.data);
@@ -92,7 +134,28 @@ const PaperMarking = () => {
   }, []);
 
   console.log(students);
-  
+
+  useEffect(() => {
+    if (students) {
+      students.map((student) => {
+        console.log(student.marks[0]);
+
+        if (student.marks[0] > 75) {
+          console.log("A");
+          setNo_of_studnts_got_A((prevCount) => prevCount + 1);
+        } else if (student.marks[0] > 65) {
+          setNo_of_studnts_got_B((prevCount) => prevCount + 1);
+        } else if (student.marks[0] > 55) {
+          setNo_of_studnts_got_C((prevCount) => prevCount + 1);
+        } else if (student.marks[0] > 35) {
+          setNo_of_studnts_got_S((prevCount) => prevCount + 1);
+        } else {
+          setNo_of_studnts_got_F((prevCount) => prevCount + 1);
+        }
+      });
+    }
+  }, [students, marksNotAddedStudents, marksAddedStudents]);
+
   useEffect(() => {
     if (students !== null) {
       students.map((student) => {
@@ -111,7 +174,6 @@ const PaperMarking = () => {
     }
   }, [students]);
 
-
   useEffect(() => {
     const getPaper = async () => {
       try {
@@ -127,6 +189,41 @@ const PaperMarking = () => {
     };
 
     getPaper();
+  }, []);
+
+  // const [columnChartData, setColumnChartData] = useState([]);
+
+  const [columnChartData, setColumnChartData] = useState([
+    {
+      name: "No.of Students",
+      data: [
+        5,
+        10,
+        15,
+        20,
+        10,
+      ],
+    },
+  ]);
+
+  console.log(columnChartData);
+
+
+  useEffect(() => {
+      console.log("Here");
+
+      setColumnChartData([
+        {
+          name: "No.of Students",
+          data: [
+            No_of_studnts_got_A,
+            No_of_studnts_got_B,
+            No_of_studnts_got_C,
+            No_of_studnts_got_S,
+            No_of_studnts_got_F,
+          ],
+        },
+      ]);
   }, []);
 
   return (
@@ -175,7 +272,10 @@ const PaperMarking = () => {
             height={{ base: "80px", md: "147px" }}
             display={{ base: "none", md: "block" }}
           >
-            <PaperColumnChart />
+            <PaperColumnChart
+              chartData={columnChartData}
+              chartOptions={columnChartOptions}
+            />
           </Card>
         </GridItem>
         <GridItem colSpan={{ base: 3, md: 3 }} rowSpan={1}>

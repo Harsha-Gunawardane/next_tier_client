@@ -14,6 +14,8 @@ import {
 import backgroundTemplate4 from "../../components/mcq/assests/backgroundTemplate4.jpg";
 import { DeleteIcon, DownloadIcon } from "@chakra-ui/icons";
 import { FaPen } from "react-icons/fa";
+import { HiOutlineUpload, HiUpload } from "react-icons/hi";
+import { FileUploadOutlined } from "@mui/icons-material";
 
 export default function PaperMarkingInsideCard({ paper, handleDelete, handleEdit }) {
   
@@ -39,7 +41,11 @@ export default function PaperMarkingInsideCard({ paper, handleDelete, handleEdit
               {/* <Text color="gray" fontSize="14px">
                 Paper
               </Text> */}
-              <Heading fontSize={{ base: "16px", md: "16px" }} mb="4px" mt="4px">
+              <Heading
+                fontSize={{ base: "16px", md: "16px" }}
+                mb="4px"
+                mt="4px"
+              >
                 {paper.title}
               </Heading>
               <HStack>
@@ -93,7 +99,7 @@ export default function PaperMarkingInsideCard({ paper, handleDelete, handleEdit
                 </Text>
 
                 <Button
-                  leftIcon={<DownloadIcon />}
+                  leftIcon={<FileUploadOutlined fontSize="small" />}
                   colorScheme="gray"
                   variant="outline"
                   size="sm"

@@ -12,7 +12,7 @@ import Logout from "./pages/auth/Logout";
 import PersistLogin from "./features/auth/PersistLogin";
 import RequireAuth from "./features/auth/RequireAuth";
 
-// student components
+// // student components
 import Settings from "./pages/student/Settings";
 import Dashboard from "./pages/student/Dashboard";
 import QuizDashboard from "./pages/student/QuizDashboard";
@@ -30,7 +30,7 @@ import ContentPage from "./pages/student/content/ContentPage";
 import StarredTutes from "./pages/student/StarredTutes";
 import ArchivedTutes from "./pages/student/ArchivedTutes";
 
-// instituteStaff components
+// // instituteStaff components
 import InstStaffDashboard from "./pages/InstituteStaff/Dashboard";
 import AddTeacher from "./pages/InstituteStaff/AddTeacher";
 import InstStaffProfile from "./pages/InstituteStaff/StaffProfile";
@@ -98,6 +98,8 @@ import { Routes, Route } from "react-router-dom";
 import { ROLES } from "./config/roles";
 import Test from "./pages/common/Test";
 import MyContent from "./pages/tutor/content/MyContent";
+import SelectAttendance from "./pages/tutor/SelectAttendance";
+import SelectPaperClass from "./pages/tutor/SelectPaperClass";
 
 function App() {
   return (
@@ -121,7 +123,7 @@ function App() {
               element={<SidebarAndHeader userRole={"student"} />}
             >
               <Route path="dashboard" element={<Dashboard />} />
-              {/* <Route path="courses" element={<StudentCourses />} /> */}
+              <Route path="courses" element={<StudentCourses />} />
               <Route path="courses/:id/content" element={<Coursecontent />} />
               <Route path="content" element={<ContentPage />} />
               <Route path="quizzes" element={<QuizDashboard />} />
@@ -212,7 +214,7 @@ function App() {
               element={<SidebarAndHeader userRole={"parent"} />}
             >
               <Route path="dashboard" element={<ParentDashboard />} />
-              {/* <Route path="info" element={<AdminsInfo />} /> */}
+              <Route path="info" element={<AdminsInfo />} />
               <Route path="settings" element={<ParentSettings />} />
             </Route>
           </Route>
@@ -255,8 +257,9 @@ function App() {
               </Route>
 
               <Route path="papers">
-                <Route index element={<TutorPapers />} />
-                <Route path=":paperId" element={<PaperMarking />} />
+                <Route index element={<SelectPaperClass />} />
+                <Route path="course/:courseId" element={<TutorPapers />}/>
+                <Route path="paper/:paperId" element={<PaperMarking />} />
               </Route>
 
               <Route path="quizzes">
@@ -268,12 +271,13 @@ function App() {
                 ></Route>
               </Route>
 
-              {/* <Route path="complaints" element={<TutorComplaintsListView />} /> */}
-              <Route path="attendance" element={<StudentAttedance />} />
-              <Route
-                path="attendance/marking"
-                element={<StudentAttendanceMarking />}
-              />
+              <Route path="attendance">
+                <Route index element={<SelectAttendance />} />
+                <Route
+                  path="marking/:courseId"
+                  element={<StudentAttendanceMarking />}
+                />
+              </Route>
             </Route>
           </Route>
 
@@ -281,11 +285,11 @@ function App() {
             element={<RequireAuth allowedRoles={[ROLES.TutorSupportStaff]} />}
           >
             <Route
-              path="tutor"
-              element={<SidebarAndHeader userRole={"tutor"} />}
+              path="supportstaff"
+              element={<SidebarAndHeader userRole={"tutorSupportStaff"} />}
             >
               <Route path="dashboard" element={<TDashboard />} />
-              <Route path="courses/add" element={<Addcourse />} />
+          <Route path="courses/add" element={<Addcourse />} />
               <Route path="courses" element={<TCourses />}></Route>
               <Route path="complaints" element={<Complaints />}></Route>
               <Route path="profile" element={<Profile />}></Route>
@@ -326,7 +330,6 @@ function App() {
                 ></Route>
               </Route>
 
-              {/* <Route path="complaints" element={<TutorComplaintsListView />} /> */}
               <Route path="attendance" element={<StudentAttedance />} />
               <Route
                 path="attendance/marking"
@@ -339,8 +342,8 @@ function App() {
             element={<RequireAuth allowedRoles={[ROLES.TutorPaperStaff]} />}
           >
             <Route
-              path="tutor"
-              element={<SidebarAndHeader userRole={"tutor"} />}
+              path="paperstaff"
+              element={<SidebarAndHeader userRole={"tutorPaperStaff"} />}
             >
               <Route path="dashboard" element={<TDashboard />} />
               <Route path="papers">
@@ -350,16 +353,13 @@ function App() {
             </Route>
           </Route>
 
-          {/* </Route> */}
-        </Route>
-        <Route element={<RequireAuth allowedRoles={[ROLES.Staff]} />}>
+          <Route element={<RequireAuth allowedRoles={[ROLES.Staff]} />}>
           <Route
             path="staff"
             element={<SidebarAndHeader userRole={"InstituteStaff"} />}
           >
             <Route path="dashboard" element={<InstStaffDashboard />} />
             <Route path="my-profile" element={<MyProfile />} />
-            {/* <Route path="teacher" element={<ViewTeacher />} /> */}
             <Route path="tutors-list/add" element={<AddTeacher />} />
             <Route path="class" element={<ApproveClass />} />
             <Route path="profile/:id" element={<InstStaffProfile />} />
@@ -382,7 +382,6 @@ function App() {
             >
               <Route path="dashboard" element={<InstStaffDashboard />} />
               <Route path="my-profile" element={<MyProfile />} />
-              {/* <Route path="teacher" element={<ViewTeacher />} /> */}
               <Route path="tutors-list/add" element={<AddTeacher />} />
               <Route path="class" element={<ApproveClass />} />
               <Route path="profile/:id" element={<InstStaffProfile />} />

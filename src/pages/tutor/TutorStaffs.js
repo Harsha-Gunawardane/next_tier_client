@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { Box, useDisclosure } from "@chakra-ui/react";
 import { Skeleton } from "@mantine/core";
 
-
 //Imported Components
 import StaffTable from "../../components/TutorStaff/StaffTable.js";
 import StaffHeaderBar from "../../components/TutorStaff/StaffHeaderBar.js";
@@ -13,11 +12,43 @@ import EditStaffForm from "../../components/TutorStaff/EditStaffForm.js";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate.js";
 
 const TutorStaffs = () => {
+  const axiosPrivate = useAxiosPrivate();
+
   const [staffIdToDelete, setStaffIdToDelete] = useState(null);
   const [staffIdToEdit, setStaffIdToEdit] = useState(null);
   const [staffs, setStaffs] = useState([]);
+  const [search, setSearch] = useState("");
+  const [filter, setFilter] = useState(null);
+  const [filteredStaffs, setFilteredStaffs] = useState([]);
 
-  const axiosPrivate = useAxiosPrivate();
+  useEffect(() => {
+    const getStaffs = async () => {
+      try {
+        const response = await axiosPrivate.get("/tutor/staffs");
+        setStaffs(response.data);
+      } catch (error) {
+        if (error.response && error.response.data) {
+          console.log(error.response.data);
+        } else {
+          console.log("An error occurred:", error.message);
+        }
+      }
+    };
+
+    getStaffs();
+  }, []);
+
+  useEffect(() => {
+    if (filter !== null) {
+      if (filter === "All Staff") {
+        setFilteredStaffs(staffs);
+      } else {
+        setFilteredStaffs(
+          staffs.filter((staff) => staff.staff_title === filter)
+        );
+      }
+    }
+  }, [staffs, filter]);
 
   const {
     isOpen: isNewStaffPopupOpen,
@@ -37,57 +68,34 @@ const TutorStaffs = () => {
     onClose: onStaffDeleteAlertDialogClose,
   } = useDisclosure();
 
-  const [search, setSearch] = useState("");
-
-
-  useEffect(() => {
-    const getStaffs = async () => {
+  const handleDelete = (id) => {
     try {
-      const response = await axiosPrivate.get("/tutor/staffs");
-      setStaffs(response.data);
-    } catch (error) {
-     if (error.response && error.response.data) {
-       console.log(error.response.data);
-     } else {
-       console.log("An error occurred:", error.message);
-     }
+      setStaffIdToDelete(id);
+    } catch (err) {
+      console.log(`Error: ${err.message}`);
     }
   };
 
-  getStaffs();
+  const handleEdit = async (id) => {
+    try {
+      setStaffIdToEdit(id);
+    } catch (err) {
+      console.log(`Error: ${err.message}`);
+    }
+  };
 
-  }, []);
+  useEffect(() => {
+    if (staffIdToDelete !== null) {
+      onStaffDeleteAlertDialogOpen();
+    }
+  }, [staffIdToDelete]);
 
- 
-
-    const handleDelete = (id) => {
-      try {
-        setStaffIdToDelete(id);
-      } catch (err) {
-        console.log(`Error: ${err.message}`);
-      }
-    };
-
-    const handleEdit = async (id) => {
-      try {
-        setStaffIdToEdit(id);
-      } catch (err) {
-        console.log(`Error: ${err.message}`);
-      }
-    };
-
-    useEffect(() => {
-      if (staffIdToDelete !== null) {
-        onStaffDeleteAlertDialogOpen();
-      }
-    }, [staffIdToDelete]);
-
-    useEffect(() => {
-      if (staffIdToEdit !== null) {
-        onEditStaffPopupOpen();
-        console.log(staffIdToEdit);
-      }
-    }, [staffIdToEdit]);
+  useEffect(() => {
+    if (staffIdToEdit !== null) {
+      onEditStaffPopupOpen();
+      console.log(staffIdToEdit);
+    }
+  }, [staffIdToEdit]);
 
   return (
     <Box width="100%">
@@ -132,20 +140,31 @@ const TutorStaffs = () => {
       <StaffHeaderBar
         search={search}
         setSearch={setSearch}
+        filter={filter}
+        setFilter={setFilter}
         onOpen={onNewStaffPopupOpen}
       />
 
       {staffs.length > 0 ? (
-        <StaffTable
-          staffs={staffs.filter((staff) =>
-            staff.first_name.toLowerCase().includes(search.toLowerCase())
-          )}
-          handleDelete={handleDelete}
-          handleEdit={handleEdit}
-        />
+        filteredStaffs.length > 0 && filter !== "All Staff" ? (
+          <StaffTable
+            staffs={filteredStaffs.filter((staff) =>
+              staff.first_name.toLowerCase().includes(search.toLowerCase())
+            )}
+            handleDelete={handleDelete}
+            handleEdit={handleEdit}
+          />
+        ) : (
+          <StaffTable
+            staffs={staffs.filter((staff) =>
+              staff.first_name.toLowerCase().includes(search.toLowerCase())
+            )}
+            handleDelete={handleDelete}
+            handleEdit={handleEdit}
+          />
+        )
       ) : (
-        <>
-        </>
+        <></>
       )}
     </Box>
   );

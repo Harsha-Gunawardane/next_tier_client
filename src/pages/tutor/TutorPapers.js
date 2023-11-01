@@ -9,36 +9,21 @@ import PapersHeaderBar from "../../components/TutorStaff/PapersHeaderBar";
 import { NavLink } from "react-router-dom";
 import PaperCard from "../../components/TutorStaff/PaperCard";
 import { PaperStatsGroup } from "../../components/TutorStaff/PaperStatsGroup";
+import { useParams } from "react-router-dom";
+
 
 export default function TutorPapers() {
-  const tabFontSize = "17px";
 
-  // const papers = [
-  //   {
-  //     title: "2023/11/08 - ST003",
-  //     type: "Structured Paper",
-  //     date: "2023/11/08",
-  //     subject_areas:["Inorganic","Organic","Calculation"]
-
-  //   },
-  //   {
-  //     title: "2023/11/08 - ST003",
-  //     type: "Structured Paper",
-  //     date: "2023/11/08",
-  //     subject_areas:["Inorganic","Organic","Calculation"]
-  //   },
-  //   {
-  //     title: "2023/11/08 - ST003",
-  //     type: "Structured Paper",
-  //     date: "2023/11/08",
-  //     subject_areas:["Inorganic","Organic","Calculation"]
-  //   },
-  // ];
+  const { courseId } = useParams();
 
   const axiosPrivate = useAxiosPrivate();
 
   const [papers, setPapers] = useState([]);
+  const [paperCount, setPaperCount] = useState(0);
   const [searchPaper, setSearchPaper] = useState("");
+
+  const [averageMarksMcq, setAverageMarksMcq] = useState(0);
+  const [averageMarksStructure, setAverageMarksStructure] = useState(0);
 
   const {
     isOpen: isNewPaperPopupOpen,
@@ -49,8 +34,9 @@ export default function TutorPapers() {
   useEffect(() => {
     const getPapers = async () => {
       try {
-        const response = await axiosPrivate.get("/tutor/papers");
+        const response = await axiosPrivate.get(`/tutor/papers/course/${courseId}`);
         setPapers(response.data);
+        setPaperCount(response.data.length);
       } catch (error) {
         if (error.response && error.response.data) {
           console.log(error.response.data);
@@ -65,6 +51,15 @@ export default function TutorPapers() {
 
   console.log(papers);
 
+  // useEffect(() => {
+  //   if (papers) {
+  //     papers.map((paper)=>{
+  //       if(paper.)
+
+  //     })
+  //   }
+  // },[papers])
+
   return (
     <Box w="100%">
       <Text
@@ -75,7 +70,9 @@ export default function TutorPapers() {
       >
         Overview
       </Text>
-      <PaperStatsGroup />
+
+      <PaperStatsGroup paperCount={paperCount} />
+
       <ModalPopupCommon
         isOpen={isNewPaperPopupOpen}
         onOpen={onNewPaperPopupOpen}
@@ -86,6 +83,7 @@ export default function TutorPapers() {
             onClose={onNewPaperPopupClose}
             papers={papers}
             setPapers={setPapers}
+            courseId={courseId}
           />
         }
         size={"2xl"}
@@ -109,7 +107,7 @@ export default function TutorPapers() {
         spacing={5}
         minChildWidth={{ base: "320px", sm: "400px" }}
         overflowY="auto"
-        maxH={{ base: "230px", sm: "260px" }}
+        maxH={{ base: "230px", sm: "250px" }}
         margin="2px auto"
       >
         {papers
@@ -117,7 +115,10 @@ export default function TutorPapers() {
             paper.title.toLowerCase().includes(searchPaper.toLowerCase())
           )
           .map((paper) => (
-            <NavLink key={paper.paper_id} to={`${paper.paper_id}`}>
+            <NavLink
+              key={paper.paper_id}
+              to={`/tutor/papers/paper/${paper.paper_id}`}
+            >
               <PaperCard paper={paper} />
             </NavLink>
           ))}

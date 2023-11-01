@@ -9,7 +9,7 @@ import { AiOutlineFileDone } from "react-icons/ai";
 import PapersDonutChartStats from "./PapersDonutChartStats";
 
 
-export function PaperStatsGroup() {
+export function PaperStatsGroup({ paperCount }) {
   return (
     <div>
       <Grid
@@ -48,7 +48,7 @@ export function PaperStatsGroup() {
         <GridItem rowSpan={1} colSpan={2}>
           <MiniStat
             name="Total Papers"
-            value="08"
+            value={paperCount}
             endContent={
               <MiniStatCardIcon
                 bg={"accentFaded"}
