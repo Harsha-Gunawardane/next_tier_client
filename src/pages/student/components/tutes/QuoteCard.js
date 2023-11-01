@@ -9,9 +9,9 @@ function QuoteCard() {
 
   useEffect(() => {
     try {
-      fetch('https://type.fit/api/quotes')
-      .then((response) => response.json())
-      .then((data) => setQuotes(data));
+      fetch("https://type.fit/api/quotes")
+        .then((response) => response.json())
+        .then((data) => setQuotes(data));
     } catch (error) {
       console.log(error);
     }
@@ -28,7 +28,14 @@ function QuoteCard() {
   }, [quotes]);
 
   return (
-    <Box w={770} mt={5}>
+    <Box
+      w={{
+        sm: "100vw - 360px",
+        md: "100vw - 320px",
+        lg: 770,
+      }}
+      mt={5}
+    >
       <Text
         ml={3}
         fontSize={18}
@@ -57,10 +64,14 @@ function QuoteCard() {
         <Flex alignItems={"center"}>
           <Box>
             <Text fontSize={15} color={"#444444"}>
-              {quotes[quoteIndex] ? quotes[quoteIndex].text : "Our greatest fear should not be of failure, but of succeeding at things in life that don’t really matter."}
+              {quotes[quoteIndex]
+                ? quotes[quoteIndex].text
+                : "Our greatest fear should not be of failure, but of succeeding at things in life that don’t really matter."}
             </Text>
             <Text fontSize={12} color={"#666666"}>
-              {quotes[quoteIndex] ? quotes[quoteIndex].author : "– Francis Chan"}
+              {quotes[quoteIndex]
+                ? quotes[quoteIndex].author
+                : "– Francis Chan"}
             </Text>
           </Box>
         </Flex>

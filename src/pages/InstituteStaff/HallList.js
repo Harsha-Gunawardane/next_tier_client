@@ -64,7 +64,7 @@ function HallList() {
     };
 
     fetchHallDetails();
-  }, [toast]);
+  }, [toast, axiosPrivate]);
 
  
 
@@ -120,7 +120,7 @@ function HallList() {
 `;
 
   return (
-    <Box width="100%" marginX={5}>
+    <Box  marginX={5}>
       <Box display="flex" alignItems="center">
         <Link to="/staff/hall">
           <BiArrowBack style={{ marginRight: "20px", cursor: "pointer" }} />

@@ -2,7 +2,7 @@ import { Button, Flex } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 
 function FeedbackFilters({ setFilter }) {
-  const [focusedTab, setFocusedTab] = useState("New");
+  const [focusedTab, setFocusedTab] = useState("All");
 
   const tabs = [
     { value: "New", label: "New" },

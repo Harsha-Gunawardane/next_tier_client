@@ -19,6 +19,7 @@ import { Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react'
 import React,{useEffect,useState} from "react";
 import { useDisclosure } from '@chakra-ui/react'
 import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
+import { FaFileAlt } from "react-icons/fa";
 
 
 
@@ -160,17 +161,12 @@ return (
     <Modal initialFocusRef={initialRef} finalFocusRef={finalRef} isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
       <ModalContent size='2xl' maxW='60vw'>
-        <ModalHeader>Add Video Content</ModalHeader>
+        <ModalHeader>Add Tute Content</ModalHeader>
         <ModalCloseButton />
 
-        <Tabs isFitted variant='enclosed'>
-          <TabList mb='1em'>
-            <Tab fontSize='15px'>Add existing content</Tab>
-            <Tab fontSize='15px'>Add new content</Tab>
-          </TabList>
-          <TabPanels>
+     
           <form onSubmit={handleSave}>
-            <TabPanel>
+       
               <ModalBody pb={6}>
               <SimpleGrid columns={4} spacing={4}>
                   {tuteContent.map((content, index) => (
@@ -179,8 +175,9 @@ return (
                         isChecked={selectedItems.includes(index)}
                         onChange={() => handleCheckboxChange(index)}
                       />
-                      <Image src={content.thumbnail} alt={`Thumbnail ${index}`} />
-                      <p>{content.title}</p>
+                      {/* <Image src={content.thumbnail} alt={`Thumbnail ${index}`}  height="100px"
+                            width="100%"/> */}
+                        <FaFileAlt/> <p>{content.title}</p>
                     </Box>
                   ))}
                 </SimpleGrid>
@@ -194,15 +191,9 @@ return (
                   Cancel
                 </Button>
               </ModalFooter>
-            </TabPanel>
+     
             </form>
-            <TabPanel>
-           
-              {/* Add new content form */}
-              {/* ... (rest of the code remains the same) */}
-            </TabPanel>
-          </TabPanels>
-        </Tabs>
+        
       </ModalContent>
     </Modal>
   </>

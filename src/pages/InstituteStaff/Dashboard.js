@@ -113,7 +113,7 @@ function Dashboard() {
         </GridItem>
         <GridItem colSpan={{ base: 1, md: 1, lg: 1 }}>
           <MiniStat
-            name="Current Staff"
+            name="Institute Staff"
             // value="110"
             value={availableStaffCount !== null ? availableStaffCount : (
               <span style={{ fontSize: '16px' }}>Loading...</span>

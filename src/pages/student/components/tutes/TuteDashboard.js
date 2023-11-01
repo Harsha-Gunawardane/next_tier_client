@@ -1,19 +1,44 @@
 import React, { useEffect } from "react";
 import { Flex, Box, Text } from "@chakra-ui/react";
-// import { useOutletContext } from 'react-router-dom';
 
 import RecentTutes from "./RecentTutes";
 import ScratchPad from "./ScratchPad";
 import ScheduleTute from "./ScheduleTute";
 import QuoteCard from "./QuoteCard";
+import useAxiosPrivate from "../../../../hooks/useAxiosPrivate";
+import { useStarredTutes } from "../../../../store/student/useStarredTutes";
+import { useArchivedTutes } from "../../../../store/student/useArchivedTutes";
 
+const TUTE_URL = "/stu/tute";
 function TuteDashboard() {
-  // const [minimizeButtonRef] = useOutletContext();
+  const axiosPrivate = useAxiosPrivate();
+  const { setStarredTutes } = useStarredTutes();
+  const { setArchivedTutes } = useArchivedTutes();
 
+  const getStarredTutes = async () => {
+    try {
+      const response = await axiosPrivate.get(`${TUTE_URL}/star`);
+      console.log(response.data);
+      setStarredTutes(response.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
-  // useEffect(() => {
-  //   minimizeButtonRef.current.click();
-  // }, [])
+  const getArchivedTutes = async () => {
+    try {
+      const response = await axiosPrivate.get(`${TUTE_URL}/archive`);
+      console.log(response.data);
+      setArchivedTutes(response.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    getStarredTutes();
+    getArchivedTutes();
+  }, []);
 
   return (
     <Box h={"calc(100vh - 65px)"}>
@@ -36,7 +61,6 @@ function TuteDashboard() {
         <RecentTutes />
         <ScratchPad />
       </Flex>
-
     </Box>
   );
 }

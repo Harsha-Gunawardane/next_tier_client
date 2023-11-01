@@ -28,7 +28,7 @@ function CountdownTimer({ time }) {
     currentTime = currentTime.toISOString();
 
     try {
-      const response = await axiosPrivate.patch(STUDENT_QUIZ_DONE_URL, {
+      await axiosPrivate.patch(STUDENT_QUIZ_DONE_URL, {
         subject,
         quizName: mcqName,
         result,

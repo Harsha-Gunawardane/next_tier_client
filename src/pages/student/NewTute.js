@@ -1,4 +1,3 @@
-import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import { RichTextEditor } from "@mantine/tiptap";
 import { useEditor } from "@tiptap/react";
@@ -18,13 +17,11 @@ import { Loader } from "@mantine/core";
 import { useNavigate } from "react-router-dom";
 
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
-import { createTute } from "../../hooks/reduxReducers/tuteReducer";
 const TUTE_URL = "/stu/tute";
 
 function NewTute() {
   const axiosPrivate = useAxiosPrivate();
   const toast = useToast();
-  const dispatch = useDispatch();
   const navigate = useNavigate();
   const { id } = useParams();
 
@@ -79,7 +76,7 @@ function NewTute() {
     if (editor) {
       setUploading(true);
       try {
-        const response = await axiosPrivate.put(TUTE_URL, {
+        await axiosPrivate.put(TUTE_URL, {
           id,
           content: editor.getHTML(),
         });

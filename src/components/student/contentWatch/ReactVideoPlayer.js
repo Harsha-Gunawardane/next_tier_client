@@ -47,7 +47,14 @@ function formatTime(seconds) {
 }
 
 
-const ReactVideoPlayer = ({ videoUrl }) => {
+const ReactVideoPlayer = (props) => {
+
+    const {
+        videoUrl,
+        thumbnail,
+        miniPlayer = false
+    } = props;
+
     const [videoState, setVideoState] = useState({
         playing: false,
         muted: false,
@@ -61,15 +68,10 @@ const ReactVideoPlayer = ({ videoUrl }) => {
         selectedBandwidth: -1,
         playbackRate: 1
     });
+    const [buffering, setBuffering] = useState(true);
 
     const handleFS = useFullScreenHandle();
 
-
-    useEffect(() => {
-        console.log("loaded", videoState.loaded)
-        console.log("played", videoState.played)
-    }
-        , [videoState])
 
     const {
         playing,
@@ -123,13 +125,7 @@ const ReactVideoPlayer = ({ videoUrl }) => {
     };
 
     const bufferHandler = (state) => {
-        console.log("bufferHandler", state)
-
         setVideoState({ ...videoState, ...state });
-        console.log("vidState", videoState)
-        console.log(videoPlayerRef.current.getInternalPlayer('hls').levels)
-        console.log(videoPlayerRef.current.getInternalPlayer('hls').currentLevel)
-
     };
 
     const mouseMoveHandler = () => {
@@ -193,13 +189,16 @@ const ReactVideoPlayer = ({ videoUrl }) => {
     );
 
     const bufferStartHandler = (state) => {
-        console.log("bufferStartHandler")
-        console.log("state", state)
+        setVideoState({ ...videoState, buffer: true });
+    };
+
+    const onBufferHandler = (state) => {
+        console.log("onBufferHandler")
+        console.log(state)
         setVideoState({ ...videoState, buffer: true });
     };
 
     const bufferEndHandler = () => {
-        console.log("bufferEndHandler")
         setVideoState({ ...videoState, buffer: false });
     };
 
@@ -255,6 +254,12 @@ const ReactVideoPlayer = ({ videoUrl }) => {
                         console.log("onEnded")
                         setVideoState({ ...videoState, playing: false });
                     }}
+                    light={thumbnail}
+                    onBuffer={() => {
+                        console.log("onBuffer")
+                        setVideoState({ ...videoState, buffer: true });
+                    }}
+
                 // controls={true}
                 />
                 <Flex

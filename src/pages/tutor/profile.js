@@ -88,7 +88,7 @@ function Profile() {
         title: "Profile updated successfully",
         status: "success",
         isClosable: true,
-        position:"top-right"
+        position: "top-right",
       });
       setIsEditing(false); // Exit edit mode
     } catch (error) {
@@ -96,7 +96,7 @@ function Profile() {
         title: "An error occurred",
         status: "error",
         isClosable: true,
-        position:"top-right"
+        position: "top-right",
       });
     }
   };
@@ -133,11 +133,11 @@ function Profile() {
             alignItems="center"
             mt={3}
           >
-            <Avatar width={200} height={200} mt={4} src={ imageUrl }></Avatar>
+            <Avatar width={200} height={200} mt={4} src={imageUrl}></Avatar>
             <Text fontWeight="bold" fontSize={20} mt={3}>
               {profileInfo.first_name} {profileInfo.last_name}
             </Text>
-        
+
             <Text fontSize={13} mt={1}>
               Joined Date: {profileInfo.join_date}
             </Text>
@@ -181,13 +181,20 @@ function Profile() {
                   initialValues={{
                     first_name: profileInfo.first_name,
                     last_name: profileInfo.last_name,
-                    DOB: profileInfo.DOB ? new Date(profileInfo.DOB).toLocaleDateString() : '',
+                    DOB: profileInfo.DOB
+                      ? new Date(profileInfo.DOB).toLocaleDateString()
+                      : "",
                     NIC: profileInfo.NIC,
                     phone_number: profileInfo.phone_number,
                     address: profileInfo.address,
-                    description: profileInfo.tutor && profileInfo.tutor[0] ? profileInfo.tutor[0].description : '',
-                    qualifications: profileInfo.tutor && profileInfo.tutor[0] ? profileInfo.tutor[0].qualifications.join(', ') : '',
-                    
+                    description:
+                      profileInfo.tutor && profileInfo.tutor[0]
+                        ? profileInfo.tutor[0].description
+                        : "",
+                    qualifications:
+                      profileInfo.tutor && profileInfo.tutor[0]
+                        ? profileInfo.tutor[0].qualifications.join(", ")
+                        : "",
                   }}
                   onSubmit={onSave}
                   validationSchema={validationSchema}
@@ -232,8 +239,6 @@ function Profile() {
                             </div>
                           </FormControl>
 
-                    
-                       
                           <FormControl>
                             <FormLabel fontSize="small" mt={3}>
                               Phone Number
@@ -265,50 +270,47 @@ function Profile() {
                                   as={Input}
                                   fontSize="small"
                                   readOnly
-                                
                                   bg="white"
                                 />
                               </InputGroup>
                             </FormControl>
                           )}
 
+                          <FormControl>
+                            <FormLabel fontSize="small" mt={3}>
+                              Description
+                            </FormLabel>
+                            <Field
+                              type="text"
+                              name="description"
+                              as={Input}
+                              fontSize="small"
+                              readOnly={!isEditing} // Read-only unless editing
+                              bg="white"
+                            />
+                            <div style={{ color: "red", fontSize: "12px" }}>
+                              {formikProps.errors.description}
+                            </div>
+                          </FormControl>
 
-<FormControl>
-            <FormLabel fontSize="small" mt={3}>
-              Description
-            </FormLabel>
-            <Field
-              type="text"
-              name="description"
-              as={Input}
-              fontSize="small"
-              readOnly={!isEditing} // Read-only unless editing
-              bg="white"
-            />
-            <div style={{ color: "red", fontSize: "12px" }}>
-              {formikProps.errors.description}
-            </div>
-          </FormControl>
+                          <FormControl>
+                            <FormLabel fontSize="small" mt={3}>
+                              Qualifications:
+                            </FormLabel>
+                            <Field
+                              type="text"
+                              name="qualifications"
+                              as={Input}
+                              fontSize="small"
+                              readOnly={!isEditing}
+                              bg="white"
+                            />
+                            <div style={{ color: "red", fontSize: "12px" }}>
+                              {formikProps.errors.qualifications}
+                            </div>
+                          </FormControl>
 
-          <FormControl>
-            <FormLabel fontSize="small" mt={3}>
-              Qualifications:
-            </FormLabel>
-            <Field
-              type="text"
-              name="qualifications"
-              as={Input}
-              fontSize="small"
-              readOnly={!isEditing}
-              bg="white"
-            />
-            <div style={{ color: "red", fontSize: "12px" }}>
-              {formikProps.errors.qualifications}
-            </div>
-          </FormControl>
-
-          
-{/*  
+                          {/*  
                             <FormControl>
                             <FormLabel fontSize="small" mt={3}>
                               Description
@@ -355,11 +357,6 @@ function Profile() {
                                 }
                               />
                             </FormControl> */}
-
-                   
-                        
-
-                      
                         </SimpleGrid>
 
                         {isEditing ? ( // Show Save and Cancel buttons when editing
@@ -369,7 +366,7 @@ function Profile() {
                               colorScheme="blue"
                               size="md"
                               type="submit"
-                              onClick={() => onSave(formikProps.values)} 
+                              onClick={() => onSave(formikProps.values)}
                             >
                               Save
                             </Button>
@@ -410,30 +407,6 @@ function Profile() {
 }
 
 export default Profile;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // import React, { useEffect, useState } from "react";
 // import useAxiosPrivate from "../../hooks/useAxiosPrivate";
@@ -573,7 +546,7 @@ export default Profile;
 //             <Text fontWeight="bold" fontSize={20} mt={3}>
 //               {profileInfo.first_name} {profileInfo.last_name}
 //             </Text>
-        
+
 //             <Text fontSize={13} mt={1}>
 //               Joined Date: {profileInfo.join_date}
 //             </Text>
@@ -666,7 +639,6 @@ export default Profile;
 //                             </div>
 //                           </FormControl>
 
-
 //                           <FormControl>
 //                             <FormLabel fontSize="small" mt={3}>
 //                               Phone Number
@@ -695,11 +667,11 @@ export default Profile;
 //                                 <Field
 //                                   type="text"
 //                                   name="email"
-                                
+
 //                                   as={Input}
 //                                   fontSize="small"
 //                                   readOnly
-                                
+
 //                                   bg="white"
 //                                 />
 //                               </InputGroup>
@@ -724,7 +696,7 @@ export default Profile;
 //                             </div>
 //                           </FormControl> */}
 
-// {/*                        
+// {/*
 //                             <FormControl>
 //                               <FormLabel fontSize="small" mt={3}>
 //                                 Qualifications:
@@ -752,8 +724,6 @@ export default Profile;
 //                                 }
 //                               />
 //                             </FormControl>  */}
-                
-
 
 //                             {/* <FormControl>
 //                               <FormLabel fontSize="small" mt={3}>
@@ -764,16 +734,14 @@ export default Profile;
 //                                   type="text"
 //                                   name="description"
 //                                 readOnly={!isEditing}
-                                
+
 //                                   fontSize="small"
-                                 
-                                
+
 //                                   bg="white"
-                                
-                         
+
 //                               />
 //                             </FormControl> */}
-                         
+
 //                         </SimpleGrid>
 
 //                         {isEditing ? ( // Show Save and Cancel buttons when editing

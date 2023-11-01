@@ -5,7 +5,7 @@ import { FaMoneyBill } from "react-icons/fa";
 import { MdSchedule } from "react-icons/md";
 import { Link, useNavigate } from "react-router-dom";
 
-function CourseCard({ course, enrolled }) {
+function CourseCard({ course, enrolled, type }) {
 
   const navigate = useNavigate();
 
@@ -43,13 +43,16 @@ function CourseCard({ course, enrolled }) {
             </Text>
           </Flex>
         </Box>
-        <Flex width={"100%"} justifyContent={"space-between"} alignItems={"center"} direction={"row"} mt="5px" gap="10px">
-          <Avatar h="34px" w="34px" name='Ryan Florence' src={course.tutor.user.profile_picture} />
-          <Flex width={"100%"} justifyContent={"center"} alignItems={"flex-start"} direction={"column"} gap="0px">
-            <Text fontWeight={"semibold"} fontSize={"14px"} color="gray.600" noOfLines={1}>Mr. {course.tutor.user.first_name} {course.tutor.user.last_name}</Text>
-            <Text fontWeight={"medium"} fontSize={"12px"} color="gray.600" noOfLines={1}>{course.tutor.qualifications[0]}</Text>
+        {type !== "noTutor" ?
+          <Flex width={"100%"} justifyContent={"space-between"} alignItems={"center"} direction={"row"} mt="5px" gap="10px">
+            <Avatar h="34px" w="34px" name='Ryan Florence' src={course.tutor.user.profile_picture} />
+            <Flex width={"100%"} justifyContent={"center"} alignItems={"flex-start"} direction={"column"} gap="0px">
+              <Text fontWeight={"semibold"} fontSize={"14px"} color="gray.600" noOfLines={1}>Mr. {course.tutor.user.first_name} {course.tutor.user.last_name}</Text>
+              <Text fontWeight={"medium"} fontSize={"12px"} color="gray.600" noOfLines={1}>{course.tutor.qualifications[0]}</Text>
+            </Flex>
           </Flex>
-        </Flex>
+          : null
+        }
         <Flex mt={2.5} justifyContent={"flex-start"} alignItems={"center"} direction={"row"} gap={8} color="gray.600">
           <Flex alignItems={"center"} gap={1} justifyContent={"flex-start"} >
             <MdSchedule color="gray.400" fontSize={20} />

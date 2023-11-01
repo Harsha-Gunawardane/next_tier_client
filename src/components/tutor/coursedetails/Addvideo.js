@@ -77,6 +77,7 @@ useEffect(() => {
     try {
       const response = await axiosPrivate.get(`/tutor/course/${studypackId}`);
       const contentIds = response.data.content_ids;
+    
 
       // Extract video_ids from content_ids array
       const videoIds = contentIds.map((item) => item.video_id).flat();
@@ -109,6 +110,8 @@ const handleSave = async (event) => {
     // Fetch the existing content_ids structure
     const response = await axiosPrivate.get(`/tutor/course/${studypackId}`);
     const existingContentIds = response.data.content_ids;
+    const price = response.data.monthly_fee;
+    
 
     // Modify the existing content_ids structure with the updated video IDs
     const updatedContentIds = [

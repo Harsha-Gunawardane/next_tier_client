@@ -299,7 +299,7 @@ const PostCreateModal = (props) => {
             });
 
             if (isMounted) {
-                console.log(response.data)
+                console.log(response.data);
                 setPosts((prev) => {
                     const newPosts = [response.data.data, ...prev]
                     return newPosts

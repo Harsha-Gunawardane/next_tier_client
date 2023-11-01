@@ -15,7 +15,7 @@ const STUDENT_QUIZ_DONE_URL = '/stu/quiz'
 
 const getNoOfMissedQuestions = (result, noOfQuestions) => {
   // if thers is no any one answer then return count of all questions
-  if (result.length == 0) return noOfQuestions;
+  if (result.length === 0) return noOfQuestions;
 
   // count undefined answers
   let count = result.filter((answer) => typeof answer === "undefined").length;
@@ -38,7 +38,7 @@ function QuizFooter() {
     currentTime = currentTime.toISOString()
 
     try {
-      const response = await axiosPrivate.patch(STUDENT_QUIZ_DONE_URL, {
+      await axiosPrivate.patch(STUDENT_QUIZ_DONE_URL, {
         subject,
         quizName: mcqName,
         result,

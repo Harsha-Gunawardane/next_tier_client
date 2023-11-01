@@ -98,19 +98,18 @@ const Coursepackage = (props) => {
                       width="100%"
                     />
                     <Stack mt="6" spacing="3">
-                    <HStack mt="-10px" spacing='160px'>
-                      <Heading color="black" fontSize="l" ml='5px'>
+                
+                      <Heading color="black" fontSize="16px" ml='5px'>
                         {item.title}
                       </Heading>
-                      {/* {item.schedule && item.schedule.length > 0 ? (
-                        <Text color="black" fontSize="12px">
-                          <CalendarIcon /> {item.schedule[0].day}
+                      <HStack mt="-10px" spacing='175px'>
+                        <Text color="black" fontSize="13px" ml='5px'>
+                         Rs. {item.price}
                         </Text>
-                      ) : (
-                        <Text color="black" fontSize="12px" mt="-0px">
-                          <TimeIcon /> No Date Available
-                        </Text>
-                      )} */}
+
+                      
+                    
+               
                    
                      
                         <Box width="100px">

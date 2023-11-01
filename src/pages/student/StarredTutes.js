@@ -1,31 +1,20 @@
 import { Box, Text, SimpleGrid } from "@chakra-ui/react";
 import React from "react";
-import TuteCard from "./components/cards/TuteCard";
 import { useEffect, useState } from "react";
-import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import { AiFillStar } from "react-icons/ai";
 
 import timesAgo from "../../utils/timesAgo";
+import { useStarredTutes } from "../../store/student/useStarredTutes";
+import TuteCard from "./components/cards/TuteCard";
 
-const TUTE_URL = "/stu/tute";
 function StarredTutes() {
-  const axiosPrivate = useAxiosPrivate();
 
-  const [starredTutes, setStarredTutes] = useState([]);
+  const [staredTutes, setStaredTutes] = useState([]);
 
-  const getStarredTutes = async () => {
-    try {
-      const response = await axiosPrivate.get(`${TUTE_URL}/star`);
-      console.log(response.data);
-      setStarredTutes(response.data);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
+  const { starredTutes } = useStarredTutes();
   useEffect(() => {
-    getStarredTutes();
-  }, []);
+    setStaredTutes(starredTutes);
+  }, [starredTutes]);
 
   return (
     <Box w={"100%"}>
@@ -34,7 +23,7 @@ function StarredTutes() {
       </Text>
       <Box w={"100%"} p={5}>
         <SimpleGrid minChildWidth="200px" spacing="40px">
-          {starredTutes.map((tute) => {
+          {staredTutes.map((tute) => {
             return (
               <TuteCard
                 key={tute.id}

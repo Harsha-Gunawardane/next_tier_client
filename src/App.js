@@ -29,6 +29,8 @@ import ContentWatch from "./pages/student/ContentWatch";
 import ContentPage from "./pages/student/content/ContentPage";
 import StarredTutes from "./pages/student/StarredTutes";
 import ArchivedTutes from "./pages/student/ArchivedTutes";
+import StudentCourses from "./pages/student/Courses";
+
 
 // // instituteStaff components
 import InstStaffDashboard from "./pages/InstituteStaff/Dashboard";
@@ -74,6 +76,7 @@ import PaperclassContent from "./pages/tutor/paperclasscontent";
 import Complaints from "./pages/tutor/complaints";
 import Profile from "./pages/tutor/profile";
 import Poll from "./pages/tutor/poll";
+import MyContent from "./pages/tutor/content/MyContent";
 
 import TutorStaffs from "./pages/tutor/TutorStaffs";
 import McqsByCategory from "./pages/tutor/McqsByCategory";
@@ -97,9 +100,11 @@ import SidebarAndHeader from "./layouts/SidebarAndHeader";
 import { Routes, Route } from "react-router-dom";
 import { ROLES } from "./config/roles";
 import Test from "./pages/common/Test";
-import MyContent from "./pages/tutor/content/MyContent";
+// import MyContent from "./pages/tutor/content/MyContent";
 import SelectAttendance from "./pages/tutor/SelectAttendance";
 import SelectPaperClass from "./pages/tutor/SelectPaperClass";
+import TutorProfileForStudent from "./pages/common/TutorProfileForStudent";
+import ViewContent from "./pages/tutor/content/ViewContent";
 
 function App() {
   return (
@@ -151,51 +156,36 @@ function App() {
               <Route path="content/watch/:id" element={<ContentWatch />} />
               <Route path="quizzes/:subject/:mcqname" element={<Quiz />} />
               <Route path="tutes" element={<TuteLayout />}>
-                <Route index element={<TuteDashboard />} />
+                 <Route index element={<TuteDashboard />} />
                 <Route path="new/:id" element={<NewTute />} />
                 <Route path="edit/:id" element={<NewTute />} />
                 <Route path="view/:id" element={<PdfView />} />
                 <Route path=":id" element={<TuteView />} />
                 <Route path="starred" element={<StarredTutes />} />
-                <Route path="archived" element={<ArchivedTutes />} />
+                <Route path="archived" element={<ArchivedTutes />} /> 
               </Route>
               <Route path="settings" element={<Settings />} />
               <Route path="tutors" element={<Tutors />} />
+              <Route path="tutors/:tutorId" element={<TutorProfileForStudent />} />
             </Route>
           </Route>
 
-          <Route element={<RequireAuth allowedRoles={[ROLES.Tutor]} />}>
-            <Route
-              path="tutor"
-              element={<SidebarAndHeader userRole={"tutor"} />}
-            >
+          {/* <Route element={<RequireAuth allowedRoles={[ROLES.Tutor]} />}>
+            <Route path='tutor' element={<SidebarAndHeader userRole={"tutor"} />}>
               <Route path="dashboard" element={<TDashboard />} />
               <Route path="content" element={<MyContent />} />
+              <Route path="content/:contentId" element={<ViewContent />} />
               <Route path="courses/add" element={<Addcourse />} />
-              <Route path="courses" element={<TCourses />}></Route>
-              <Route
-                path="courses/content/:courseid"
-                element={<Coursecontent />}
-              ></Route>
-              <Route
-                path="courses/paperclasscontent"
-                element={<PaperclassContent />}
-              ></Route>
-              <Route
-                path="courses/details/:courseid"
-                element={<Courseedit />}
-              ></Route>
-              <Route
-                path="courses/studypackcontent/:courseid"
-                element={<Studypackcontent />}
-              ></Route>
-              <Route
-                path="courses/studypackdetails/:courseid"
-                element={<Studypackedit />}
-              ></Route>
-              <Route path="courses/addstudypack" element={<Addstudypack />} />
-            </Route>
-          </Route>
+              <Route path="courses" element={<TCourses />} ></Route>
+              <Route path='courses/content/:courseid' element={<Coursecontent />} ></Route>
+              <Route path='courses/paperclasscontent' element={<PaperclassContent />} ></Route>
+              <Route path='courses/details/:courseid' element={<Courseedit />} ></Route>
+              <Route path='courses/studypackcontent/:courseid' element={<Studypackcontent />} ></Route>
+              <Route path='courses/studypackdetails/:courseid' element={<Studypackedit />} ></Route>
+              <Route path="courses/addstudypack" element={<Addstudypack/>} />
+           </Route>
+          
+          </Route> */}
 
           <Route element={<RequireAuth allowedRoles={[ROLES.Admin]} />}>
             <Route
@@ -225,6 +215,7 @@ function App() {
               element={<SidebarAndHeader userRole={"tutor"} />}
             >
               <Route path="dashboard" element={<TDashboard />} />
+              <Route path="content" element={<MyContent />} />
               <Route path="courses/add" element={<Addcourse />} />
               <Route path="courses" element={<TCourses />}></Route>
               <Route path="complaints" element={<Complaints />}></Route>
@@ -252,6 +243,12 @@ function App() {
               ></Route>
               <Route path="courses/addstudypack" element={<Addstudypack />} />
 
+              <Route path="papers/:paperid" element={<PaperMarking></PaperMarking>}>
+
+              
+           
+              </Route>
+
               <Route path="staffs">
                 <Route index element={<TutorStaffs />} />
               </Route>
@@ -271,13 +268,14 @@ function App() {
                 ></Route>
               </Route>
 
-              <Route path="attendance">
-                <Route index element={<SelectAttendance />} />
-                <Route
-                  path="marking/:courseId"
-                  element={<StudentAttendanceMarking />}
-                />
-              </Route>
+              {/* <Route path="complaints" element={<TutorComplaintsListView />} /> */}
+              <Route path="attendance" element={<StudentAttedance />} />
+              <Route
+                path="attendance/marking"
+                element={<StudentAttendanceMarking />}
+              />
+              <Route path="content" element={<MyContent />} />
+              <Route path="content/:contentId" element={<ViewContent />} />
             </Route>
           </Route>
 
@@ -353,29 +351,9 @@ function App() {
             </Route>
           </Route>
 
+          {/* </Route> */}
+
           <Route element={<RequireAuth allowedRoles={[ROLES.Staff]} />}>
-          <Route
-            path="staff"
-            element={<SidebarAndHeader userRole={"InstituteStaff"} />}
-          >
-            <Route path="dashboard" element={<InstStaffDashboard />} />
-            <Route path="my-profile" element={<MyProfile />} />
-            <Route path="tutors-list/add" element={<AddTeacher />} />
-            <Route path="class" element={<ApproveClass />} />
-            <Route path="profile/:id" element={<InstStaffProfile />} />
-            <Route path="complaints" element={<InstStaffComplaintsList />} />
-            <Route path="hall" element={<HallSchedule />} />
-            <Route path="hall/view" element={<HallList />} />
-            <Route path="stu-payment" element={<InstStaffStuPayment />} />
-            <Route path="staff-list" element={<InstStaffList />} />
-            <Route path="payment-history" element={<ViewPaymentHistory />} />
-            <Route path="cash-receipt" element={<CashReceipt />} />
-            <Route path="online-receipt" element={<OnlineReceipt />} />
-            <Route path="stu-list" element={<StudentsList />} />
-            <Route path="stu-profile/:id" element={<StudentProfile />} />
-            <Route path="staff-list" element={<InstStaffList />} />
-            <Route path="tutors-list" element={<TutorsList />} />
-            <Route path="tutor-profile/:id" element={<TutorProfile />} />
             <Route
               path="staff"
               element={<SidebarAndHeader userRole={"InstituteStaff"} />}
@@ -393,10 +371,7 @@ function App() {
                 element={<InstStaffStuPayment />}
               />
               <Route path="staff-list" element={<InstStaffList />} />
-              <Route
-                path="payment-history/:id"
-                element={<ViewPaymentHistory />}
-              />
+              <Route path="payment-history/:id" element={<ViewPaymentHistory />} />
               <Route
                 path="physical-payment-receipt/:id"
                 element={<CashReceipt />}
@@ -410,26 +385,10 @@ function App() {
               <Route path="staff-list" element={<InstStaffList />} />
               <Route path="tutors-list" element={<TutorsList />} />
               <Route path="tutor-profile/:id" element={<TutorProfile />} />
-              <Route path="course/:id" element={<CourseProfile />} />
-              <Route path="staff-list" element={<InstStaffList />} />
               <Route
-                path="payment-history/:id"
-                element={<ViewPaymentHistory />}
+                path="course/:id"
+                element={<CourseProfile />}
               />
-              <Route
-                path="physical-payment-receipt/:id"
-                element={<CashReceipt />}
-              />
-              <Route
-                path="online-payment-receipt/:id"
-                element={<OnlineReceipt />}
-              />
-              <Route path="stu-list" element={<StudentsList />} />
-              <Route path="stu-profile/:id" element={<StudentProfile />} />
-              <Route path="staff-list" element={<InstStaffList />} />
-              <Route path="tutors-list" element={<TutorsList />} />
-              <Route path="tutor-profile/:id" element={<TutorProfile />} />
-              <Route path="course/:id" element={<CourseProfile />} />
             </Route>
           </Route>
         </Route>

@@ -16,8 +16,8 @@ import {
 } from "@chakra-ui/react";
 import { TimeIcon, CalendarIcon } from "@chakra-ui/icons";
 
-import CourseInclude from "../../components/tutor/coursepackage/CoursepackInclude";
-import CourseDetails from "../../components/tutor/coursepackage/CoursepackDetails";
+// import CourseInclude from "../../components/tutor/coursepackage/CoursepackInclude";
+// import CourseDetails from "../../components/tutor/coursepackage/CoursepackDetails";
 import TutorDetails from "../../components/tutor/Tutordetails";
 import Courseeditbutton from "../../components/tutor/coursepackage/Coursepackageedit";
 import Courseremove from "../../components/tutor/coursepackage/Coursepackremove";
@@ -56,13 +56,13 @@ const Coursepackedit = () => {
     let totalVideoIds = 0;
     let totalTuteIds = 0;
     let totalQuizIds = 0;
-  
+
     if (studypackdata.content_ids && Array.isArray(studypackdata.content_ids)) {
       studypackdata.content_ids.forEach((part) => {
         // Iterate through the dynamic keys (e.g., "Part-1")
         Object.keys(part).forEach((key) => {
           const subPart = part[key];
-  
+
           if (subPart.video_id && Array.isArray(subPart.video_id)) {
             totalVideoIds += subPart.video_id.length;
           }
@@ -75,7 +75,6 @@ const Coursepackedit = () => {
         });
       });
     }
-  
 
     return {
       totalVideoIds,
@@ -152,38 +151,44 @@ const Coursepackedit = () => {
               Study Pack Details
             </Heading>
             <UnorderedList spacing={3} mb="10px">
-              <ListItem mt="10px">
+              {/* <ListItem mt="10px">
                 {" "}
                 <Text ml="" fontSize="15px">
                   20h 20 min Course
                 </Text>
-              </ListItem>
-              <ListItem>
+              </ListItem> */}
+              <ListItem mt='10px'>
                 {" "}
                 <Text fontSize="15px">Rs.{studypackdata.price}</Text>
               </ListItem>
               <ListItem>
                 {" "}
-                <Text fontSize="15px">Medium-Sinhala</Text>
-              </ListItem>
-                   <ListItem>
-                {" "}
-                <Text fontSize="15px">  Total Videos: {totalIds.totalVideoIds}</Text>
-              </ListItem>
-                   <ListItem>
-                {" "}
-                <Text fontSize="15px">Total Tutes: {totalIds.totalTuteIds}</Text>
+                <Text fontSize="15px">Medium-{studypackdata.medium}</Text>
               </ListItem>
               <ListItem>
                 {" "}
-                <Text fontSize="15px">Total Quizs: {totalIds.totalQuizIds}</Text>
+                <Text fontSize="15px">
+                  {" "}
+                  Total Videos: {totalIds.totalVideoIds}
+                </Text>
+              </ListItem>
+              <ListItem>
+                {" "}
+                <Text fontSize="15px">
+                  Total Tutes: {totalIds.totalTuteIds}
+                </Text>
+              </ListItem>
+              <ListItem>
+                {" "}
+                <Text fontSize="15px">
+                  Total Quizs: {totalIds.totalQuizIds}
+                </Text>
               </ListItem>
             </UnorderedList>
 
             <br></br>
-        
-{/* <CourseInclude></CourseInclude> */}
-          
+
+            {/* <CourseInclude></CourseInclude> */}
 
             <HStack spacing="30px" mt="20px">
               <Courseeditbutton></Courseeditbutton>
@@ -191,9 +196,8 @@ const Coursepackedit = () => {
 
               <FormControl display="flex" alignItems="center" mt={2}>
                 <FormLabel htmlFor="course-visibility" mb="0" mr={2}>
-                {studypackdata.visibility}
+                  {studypackdata.visibility}
                 </FormLabel>
-               
               </FormControl>
             </HStack>
           </Box>

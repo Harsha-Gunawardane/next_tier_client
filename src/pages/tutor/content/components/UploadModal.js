@@ -152,65 +152,12 @@ function UploadModal(props) {
         document.getElementById("files").click()
     }
 
-    //send the post to the backend
-    // const handleSubmit = async () => {
-    //     const isMounted = true
-    //     const controller = new AbortController()
 
-
-    //     // return;
-    //     const formData = new FormData();
-
-    //     formData.append('title', form.values.title);
-    //     formData.append('message', form.values.message);
-    //     form.values.files.forEach((file) => {
-    //         formData.append('files', file);
-    //     });
-
-
-    //     try {
-
-    //         const URL = `/forum/${courseId}/posts`
-
-    //         const response = await axiosPrivate.post(URL, formData, {
-    //             headers: { "Content-Type": "multipart/form-data" },
-    //         });
-
-    //         if (isMounted) {
-    //             console.log(response.data)
-    //             setPosts((prev) => {
-    //                 const newPosts = [response.data.data, ...prev]
-    //                 return newPosts
-    //             })
-
-    //             onClose()
-    //             toast({
-    //                 title: "Post created",
-    //                 description: "Your post has been created",
-    //                 status: "success",
-    //                 duration: 5000,
-    //                 isClosable: true,
-    //             })
-    //         }
-
-    //     } catch (error) {
-    //         if (isMounted) {
-    //             console.log(error)
-    //             toast({
-    //                 title: "Error",
-    //                 description: "Something went wrong",
-    //                 status: "error",
-    //                 duration: 5000,
-    //                 isClosable: true,
-    //             })
-    //         }
-
-    //     }
-    // }
 
     const handleSubmit = async () => {
         const isMounted = true
         const controller = new AbortController()
+        console.log("HEREEEEEEE")
 
         try {
             const URL = `content/upload`
@@ -220,8 +167,7 @@ function UploadModal(props) {
 
             // single file
             formData.append('video', form.values.files[0]);
-
-
+            console.log(URL)
             const response = await axiosPrivate.post(URL, formData, {
                 headers: { "Content-Type": "multipart/form-data" },
                 onUploadProgress: (progressEvent) => {
@@ -344,7 +290,7 @@ function UploadModal(props) {
                 </ModalBody>
                 <ModalFooter>
                     <Button variant="ghost" colorScheme="gray" color={"gray.500"} mr={3} onClick={onClose}> Cancel </Button>
-                    <Button colorScheme="blue" onClick={handleSubmit}>Upload & Continue</Button>
+                    <Button colorScheme="green" onClick={() => { console.log("clicked") }}>Upload & Continue</Button>
                 </ModalFooter>
             </ModalContent>
         </Modal >

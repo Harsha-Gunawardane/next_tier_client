@@ -26,6 +26,7 @@ import "../../../index.css";
 import { useEffect, useState } from "react";
 import useAxiosPrivate from "../../../hooks/useAxiosPrivate.js";
 import Addpaper from "../../../pages/tutor/addpaper";
+import { FaFileAlt } from "react-icons/fa";
 
 const CourseContent = () => {
   const [coursesdata, setCoursesData] = useState(null);
@@ -37,6 +38,10 @@ const CourseContent = () => {
   const [monthToDelete, setMonthToDelete] = useState("");
   const [studyPackDetails, setStudyPackDetails] = useState({});
   const [contentDetails, setContentDetails] = useState([]);
+
+  const LoadDetail = (id) => {
+    navigate("/tutor/papers/" + id);
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -76,7 +81,6 @@ const CourseContent = () => {
               );
               // console.log(contentResponse.data);
               return contentResponse.data;
-             
             })
           );
 
@@ -84,7 +88,6 @@ const CourseContent = () => {
           setContentDetails(allContentDetails);
           // console.log(allContentDetails);
         }
-
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -102,26 +105,23 @@ const CourseContent = () => {
   //   return content ? content.thumbnail : ""; // Replace with actual property name
   // };
 
-  const LoadDetail = (id) => {
-    navigate("/tutor/courses/content/analyze/" + id);
-  };
+  
 
   const handleContentRemoval = (contentId) => {
     // Shallow copy the contentDetails state
     const updatedContentDetails = [...contentDetails];
-  
+
     // Remove the content from the copied state
     const indexToRemove = updatedContentDetails.findIndex(
       (content) => content.id === contentId
     );
-  
+
     if (indexToRemove !== -1) {
       updatedContentDetails.splice(indexToRemove, 1);
     }
-  
+
     setContentDetails(updatedContentDetails);
   };
-
 
   const handleStudyPackRemoved = (studyPackId) => {
     setStudyPackDetails((prevDetails) => {
@@ -135,7 +135,6 @@ const CourseContent = () => {
   //   setStudyPackDetails((prevStudyPacks) => [...prevStudyPacks, studyPackId]);
   // };
 
-
   const [contentList, setContentList] = useState([]); // State to hold content
 
   const handleContentAdded = (newContentIds) => {
@@ -143,14 +142,14 @@ const CourseContent = () => {
     const updatedContentList = [...contentList, ...newContentIds];
     setContentDetails(updatedContentList);
   };
- 
 
   const getContentTitle = (contentId) => {
-    const content = contentDetails.find((content) => content.paper_id === contentId);
+    const content = contentDetails.find(
+      (content) => content.paper_id === contentId
+    );
     console.log(content);
     return content ? content.title : "";
   };
-
 
   return (
     <ChakraProvider>
@@ -196,9 +195,7 @@ const CourseContent = () => {
                   <Box>
                     <Addcoursecontent
                       studypackId={studyPack.id}
-                      onContentAdded={handleContentAdded} 
-                    
-                   
+                      onContentAdded={handleContentAdded}
                     ></Addcoursecontent>
                   </Box>
                 </HStack>
@@ -206,34 +203,40 @@ const CourseContent = () => {
                 {studyPack.content_ids && studyPack.content_ids.length > 0 && (
                   <Box mt="10px">
                     {studyPack.content_ids.map((contentId, contentIndex) => (
-                      
                       <Box
-                      bg="gray.100"
-                      p="10px"
+                        bg="gray.100"
+                        p="10px"
                         mt="4px"
                         className="box1"
                         key={contentIndex}
                       >
                         <HStack spacing={{ base: 90, xl: 330 }}>
                           <Box p={2} width="210px">
-                          
-                                <Text fontSize="14px" className="box2">
-                                {getContentTitle(contentId)}
-                                </Text>
-                              </Box>
-                              <Box width="90px" ml="5px" mt="-5px" >
-                                <HStack>
-                                  <Button fontSize="12px" height="20px">
-                                    View
-                                  </Button>{" "}
-                                  <Remove
-                                    contentId={contentId}
-                                    part={studyPack.id}
-                                    onContentRemoved={handleContentRemoval}
-                                  ></Remove>
-                                </HStack>
-                              </Box>
-                        
+                            <Text fontSize="14px" className="box2">
+                              <HStack> <FaFileAlt/> <Text> {getContentTitle(contentId)}</Text></HStack>
+                           
+                            </Text>
+                          </Box>
+                          <Box width="90px" ml="5px" mt="-5px">
+                            <HStack>
+                              <Button
+                                fontSize="12px"
+                                height="20px"
+                                colorScheme="blue"
+                                onClick={() => {
+                                  LoadDetail(contentId);
+                                }}
+                              >
+                                View
+                              </Button>{" "}
+                              <Remove
+                                contentId={contentId}
+                                part={studyPack.id}
+                                onContentRemoved={handleContentRemoval}
+                              ></Remove>
+                            </HStack>
+                          </Box>
+
                           {/* ... (rest of your code) */}
                         </HStack>
                       </Box>

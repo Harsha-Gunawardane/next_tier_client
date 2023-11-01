@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import {
   Button,
   Drawer,
@@ -21,19 +21,21 @@ import {
   AlertDialogHeader,
   AlertDialogBody,
   AlertDialogFooter,
-} from '@chakra-ui/react';
-import axios from 'axios';
-import useAxiosPrivate from '../../../hooks/useAxiosPrivate';
-import { useLocation } from 'react-router-dom';
+} from "@chakra-ui/react";
+import axios from "axios";
+import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
+import { useLocation } from "react-router-dom";
+import { useToast } from "@chakra-ui/react";
 
 const Addpoll = () => {
   const axiosPrivate = useAxiosPrivate();
   const location = useLocation();
-  const id = location.pathname.split('/').pop();
+  const id = location.pathname.split("/").pop();
+  const toast = useToast();
 
   const [isOpen, setIsOpen] = useState(false);
   const [pollData, setPollData] = useState(null);
-  const [question, setQuestion] = useState('');
+  const [question, setQuestion] = useState("");
   const [options, setOptions] = useState([]);
   const [courseId, setCourseId] = useState([]);
   const [formSubmitted, setFormSubmitted] = useState(false);
@@ -57,9 +59,9 @@ const Addpoll = () => {
   const getPollData = async () => {
     try {
       const response = await axiosPrivate.get(`/tutor/courses/poll/${id}`);
-      setPollData(response.data);
+      setPollData(response.data.poll);
     } catch (error) {
-      console.log('Error fetching poll data:', error);
+      console.log("Error fetching poll data:", error);
     }
   };
 
@@ -71,7 +73,11 @@ const Addpoll = () => {
     e.preventDefault();
     setFormSubmitted(true);
 
-    if (question.trim() === '' ||  question.length > 1000|| options.length < 2) {
+    if (
+      question.trim() === "" ||
+      question.length > 1000 ||
+      options.length < 2
+    ) {
       return;
     }
 
@@ -84,12 +90,22 @@ const Addpoll = () => {
     try {
       await axiosPrivate.post(`/tutor/courses/poll`, newPoll);
       getPollData();
-      setQuestion('');
+      setQuestion("");
       setOptions([]);
       onClose();
       setFormSubmitted(false);
+
+      toast({
+        title: "New Poll Added",
+        description: "The new poll has been added successfully!",
+        status: "success",
+        duration: 5000, // Adjust the duration as needed
+        isClosable: true,
+        position:"top",
+      });
+
     } catch (error) {
-      console.error('Error adding new poll:', error);
+      console.error("Error adding new poll:", error);
     }
   };
 
@@ -99,7 +115,7 @@ const Addpoll = () => {
       getPollData();
       closeConfirmation();
     } catch (error) {
-      console.error('Error removing poll:', error);
+      console.error("Error removing poll:", error);
     }
   };
 
@@ -107,65 +123,89 @@ const Addpoll = () => {
     <>
       <Button
         onClick={onOpen}
-        width='60%'
-        height='35px'
-        mb='10px'
-        ml='130px'
-        mt='25px'
-        fontSize='12px'
-        colorScheme='blue'
+        width="60%"
+        height="35px"
+        mb="10px"
+        ml="130px"
+        mt="25px"
+        fontSize="12px"
+        colorScheme="blue"
       >
         Create Poll
       </Button>
-      <Drawer isOpen={isOpen} placement='right' onClose={onClose} size='sm'>
+      <Drawer isOpen={isOpen} placement="right" onClose={onClose} size="sm">
         <DrawerOverlay />
         <DrawerContent p={5}>
           <DrawerCloseButton />
-          <DrawerHeader fontSize='20px'>Poll</DrawerHeader>
+          <DrawerHeader fontSize="20px">Poll</DrawerHeader>
 
           <DrawerBody>
             <form onSubmit={handleAddPoll}>
-              <FormControl isRequired isInvalid={formSubmitted && question.trim().length === 0}>
-                <Heading fontSize='15px'>Poll Question</Heading>
+              <FormControl
+                isRequired
+                isInvalid={formSubmitted && question.trim().length === 0}
+              >
+                <Heading fontSize="15px">Poll Question</Heading>
                 <Input
-                  fontSize='15px'
-                  height='40px'
-                  placeholder='Enter your poll question'
+                  fontSize="15px"
+                  height="40px"
+                  placeholder="Enter your poll question"
                   value={question}
                   onChange={(e) => setQuestion(e.target.value)}
                 />
                 <FormErrorMessage>Poll question is required</FormErrorMessage>
               </FormControl>
 
-              <FormControl isRequired isInvalid={formSubmitted && options.length < 2}>
-                <Heading fontSize='15px' mt='20px'>Poll Options</Heading>
+              <FormControl
+                isRequired
+                isInvalid={formSubmitted && options.length < 2}
+              >
+                <Heading fontSize="15px" mt="20px">
+                  Poll Options
+                </Heading>
                 <Textarea
-                  fontSize='15px'
-                  height='80px'
-                  placeholder='Enter your poll options (separated by line breaks)'
-                  value={options.join('\n')}
-                  onChange={(e) => setOptions(e.target.value.split('\n'))}
+                  fontSize="15px"
+                  height="80px"
+                  placeholder="Enter your poll options (separated by line breaks)"
+                  value={options.join("\n")}
+                  onChange={(e) => setOptions(e.target.value.split("\n"))}
                 />
-                <FormErrorMessage>At least two poll options are required</FormErrorMessage>
+                <FormErrorMessage>
+                  At least two poll options are required
+                </FormErrorMessage>
               </FormControl>
 
-              <Button colorScheme='blue' mr={3} fontSize='14px' height='30px' type='submit' mt='10px'>
+              <Button
+                colorScheme="blue"
+                mr={3}
+                fontSize="14px"
+                height="30px"
+                type="submit"
+                mt="10px"
+              >
                 Add Poll
               </Button>
-              <Button onClick={onClose} fontSize='14px' height='30px' mt='10px'>
+              <Button onClick={onClose} fontSize="14px" height="30px" mt="10px">
                 Cancel
               </Button>
             </form>
 
-<Heading mt='10px' mb='5px' fontSize='20px'>Previously created polls </Heading>
+            <Heading mt="10px" mb="5px" fontSize="20px">
+              Previously created polls{" "}
+            </Heading>
             {pollData && pollData.length > 0 ? (
               pollData.map((poll, index) => (
-                <Box key={index} borderWidth='1px' borderRadius='lg' p={4} mb={4} mt='10px'>
-                  <Heading fontSize='15px'>
-                    Question: {poll.question}
-                  </Heading>
+                <Box
+                  key={index}
+                  borderWidth="1px"
+                  borderRadius="lg"
+                  p={4}
+                  mb={4}
+                  mt="10px"
+                >
+                  <Heading fontSize="15px">Question: {poll.question}</Heading>
                   {poll.options && poll.options.length > 0 && (
-                    <Heading fontSize='15px' mt='20px'>
+                    <Heading fontSize="15px" mt="20px">
                       Options:
                     </Heading>
                   )}
@@ -178,7 +218,7 @@ const Addpoll = () => {
                       ))}
                     </Box>
                   )}
-                  <Heading fontSize='15px' mt='20px'>
+                  <Heading fontSize="15px" mt="20px">
                     Votes:
                   </Heading>
                   <Box>
@@ -189,26 +229,26 @@ const Addpoll = () => {
                         </p>
                         <Progress
                           value={count}
-                          colorScheme='teal'
+                          colorScheme="teal"
                           mt={2}
-                          size='sm'
+                          size="sm"
                         />
                       </div>
                     ))}
                   </Box>
                   <Button
-                    colorScheme='red'
-                    fontSize='14px'
-                    height='30px'
+                    colorScheme="red"
+                    fontSize="14px"
+                    height="30px"
                     onClick={() => openConfirmation(poll.id)}
-                    mt='10px'
+                    mt="10px"
                   >
                     Remove
                   </Button>
                 </Box>
               ))
             ) : (
-              <Heading fontSize='15px' mt='20px'>
+              <Heading fontSize="15px" mt="20px">
                 No Poll Data Available
               </Heading>
             )}
@@ -220,7 +260,7 @@ const Addpoll = () => {
             >
               <AlertDialogOverlay>
                 <AlertDialogContent>
-                  <AlertDialogHeader fontSize='lg' fontWeight='bold'>
+                  <AlertDialogHeader fontSize="lg" fontWeight="bold">
                     Confirm Remove
                   </AlertDialogHeader>
 
@@ -231,14 +271,14 @@ const Addpoll = () => {
                   <AlertDialogFooter>
                     <Button
                       onClick={() => handleRemovePoll()}
-                      colorScheme='red'
+                      colorScheme="red"
                       ml={3}
                     >
                       Confirm
                     </Button>
                     <Button
                       onClick={closeConfirmation}
-                      colorScheme='blue'
+                      colorScheme="blue"
                       ml={3}
                     >
                       Cancel

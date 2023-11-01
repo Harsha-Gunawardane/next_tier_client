@@ -44,7 +44,7 @@ const Addcourse = () => {
       subject: "",
       medium: "",
       grade: "",
-      thumbnail: "",
+      files: "",
       day: "",
       end_time: "",
       start_time: "",
@@ -101,7 +101,7 @@ const Addcourse = () => {
         start_date:
         values.day.length < 1
           ? "Start Date is Required"
-          : new Date(values.day) < new Date().setHours(0, 0, 0, 0)
+          : new Date(values.day) <= new Date()
           ? "Start Date must be greater than today's date"
           : null,
 
@@ -152,7 +152,6 @@ const Addcourse = () => {
 
   const handleThumbnailChange = (files) => {
     setThumbnailFile(files[0]);
-    
   };
 
 
@@ -177,18 +176,16 @@ const Addcourse = () => {
 
     if (!form.validate().hasErrors) {
       try {
-        // console.log(form.values);
-        // console.log(thumbnailFile);
+        console.log(form.values);
 
-        const { grade, type, subject,thumbnail } = form.values;
+        const { grade, type, subject } = form.values;
         const title = `${subject} ${grade} ${type}`;
-        
         // Create a new object containing all form values and the schedule
         const updatedFormValues = {
           ...form.values,
           title: title,
+          // monthly_fee:parseInt(form.values.monthly_fee),
           start_date: startDate.toISOString(),
-          // thumbnail: thumbnailFile.name,
           schedule: {
             day: form.values.day,
             start_time: form.values.start_time,
@@ -211,10 +208,9 @@ const Addcourse = () => {
           // content_ids: form.values.content_ids,
         };
 
-        const response = await axiosPrivate.post(
-          "/tutor/course",
-          finalFormValues
-        );
+        const response = await axiosPrivate.post( "/tutor/course",finalFormValues,{
+          headers: { "Content-Type": "multipart/form-data" },
+        });
 
         console.log("Form data submitted successfully!");
         const newCourseId = response.data.id;
@@ -334,7 +330,7 @@ const Addcourse = () => {
                 }}
               />
 
-               <FileInput
+               {/* <TextInput
                 {...form.getInputProps("thumbnail")}
                 defaultValue={18}
                 placeholder="Thumbnail"
@@ -355,13 +351,13 @@ const Addcourse = () => {
                     marginBottom: "5px",
                   },
                 }}
-              /> 
+              />  */}
 
-              {/* <FileInput
+              <FileInput
                 label="Thumbnail"
-                // accept="image/*" // Specify the accepted file types (here, images)
+                accept="image/*" // Specify the accepted file types (here, images)
                 onChange={handleThumbnailChange}
-                {...form.getInputProps("thumbnail")} // Set the selected thumbnail file to state
+                {...form.getInputProps("files")} // Set the selected thumbnail file to state
                 styles={{
                   input: {
                     // Styles for the input element
@@ -377,7 +373,7 @@ const Addcourse = () => {
                     marginBottom: "5px",
                   },
                 }}
-              /> */}
+              />
 
               <Radio.Group
                 mt="10px"
@@ -418,12 +414,18 @@ const Addcourse = () => {
             }} />  */}
             </Stepper.Step>
 
-            <Stepper.Step label="Final step" description="Social media">
+            <Stepper.Step label="Final step" description="Days">
               <NumberInput
                 {...form.getInputProps("monthly_fee")}
                 defaultValue={18}
                 placeholder="Monthly Fee"
                 label="Monthly Fee"
+                onKeyPress={(event) => {
+                  const isNumber = /[0-9]/.test(event.key);
+                  if (!isNumber) {
+                    event.preventDefault();
+                  }
+                }}
                 styles={{
                   input: {
                     // Styles for the input element

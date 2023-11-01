@@ -1,10 +1,7 @@
 import { Box, Text, Flex } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import { AiFillStar } from "react-icons/ai";
 
 import FilterTab from "../tabs/FilterTab";
-import TuteCard from "../cards/TuteCard";
-import truncate from "../../../../utils/truncateString";
 import TuteCardList from "./TuteCardList";
 import useAxiosPrivate from "../../../../hooks/useAxiosPrivate";
 

@@ -13,13 +13,14 @@ import MyTag from "../../../common/components/MyTag";
 //icons
 import { RiDeleteBin6Line } from "react-icons/ri";
 import countToString from "../../../../utils/countToString";
+import _ from "lodash";
 
 function VideoCard({ video }) {
 
     const navigate = useNavigate();
 
     const navigateTovideo = () => {
-        navigate(`/tutor/videos/${video.id}`);
+        navigate(`/tutor/content/${video.id}`);
     }
 
     return (
@@ -60,8 +61,8 @@ function VideoCard({ video }) {
 
                     }}
                 >
-                    <MyTag tagLabel={video.subject} color={"blue"} />
-                    {
+                    {video.subject && <MyTag tagLabel={video.subject} color={"blue"} />}
+                    {!_.isEmpty(video.subject_areas) &&
                         video.subject_areas.map((subject_area) => {
                             return (
                                 <MyTag tagLabel={subject_area} color={"green"} />
@@ -77,25 +78,25 @@ function VideoCard({ video }) {
                     <Flex direction={"row"} alignItems={"center"} gap={1} justifyContent={"flex-start"}>
                         <BiLike color="gray.400" fontSize={18} />
                         <Text fontSize={"0.8rem"} fontWeight={"bold"}>
-                            {video._count.content_reactions}
+                            {video._count ? video._count.content_reactions : 0}
                         </Text>
                     </Flex>
                     <Flex direction={"row"} alignItems={"center"} gap={1} justifyContent={"flex-start"}>
                         <BiDislike color="gray.400" fontSize={18} />
                         <Text fontSize={"0.8rem"} fontWeight={"semibold"} noOfLines={1}>
-                            {video._count.dislikes}
+                            {video._count ? video._count.dislikes : 0}
                         </Text>
                     </Flex>
                     <Flex direction={"row"} alignItems={"center"} gap={1} justifyContent={"flex-start"}>
                         <PiChatCircleTextBold color="gray.400" fontSize={18} />
                         <Text fontSize={"0.8rem"} fontWeight={"bold"}>
-                            {video._count.comments}
+                            {video._count ? video._count.comments : 0}
                         </Text>
                     </Flex>
                     <Flex direction={"row"} alignItems={"center"} gap={1} justifyContent={"flex-start"}>
                         <AiOutlineEye color="gray.400" fontSize={18} />
                         <Text fontSize={"0.8rem"} fontWeight={"semibold"} noOfLines={1}>
-                            {countToString(video._count.content_views)}
+                            {video._count ? countToString(video._count.content_views) : 0}
                         </Text>
                     </Flex>
                 </Flex>

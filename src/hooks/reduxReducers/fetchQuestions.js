@@ -5,8 +5,10 @@ import useAxiosPrivate from "../useAxiosPrivate";
 
 // redux actions
 import * as Action from "../../redux/questionSlice";
+import * as ResultAction from "../../redux/resultSlice";
 
 const STUDENT_QUIZ_URL = "/stu/quiz";
+const STUDENT_ATTEMPT_QUIZ_URL = "/stu/quiz/attempt";
 
 export const useFetchQuestions = () => {
   const axiosPrivate = useAxiosPrivate();
@@ -21,15 +23,24 @@ export const useFetchQuestions = () => {
     serverError: null,
   });
 
+  const quizId = useSelector((state) => state.questions.quizId);
+  const courseRelated = useSelector((state) => state.questions.courseRelated);
+
   useEffect(() => {
     const fetchData = async () => {
-      console.log("I need " + value + " questions from " + subject);
       setData((prev) => ({ ...prev, isLoading: true }));
       try {
-        const response = await axiosPrivate.post(STUDENT_QUIZ_URL, {
-          subject,
-          value,
-        });
+        let response;
+        if (courseRelated) {
+          response = await axiosPrivate.post(STUDENT_ATTEMPT_QUIZ_URL, {
+            quizId,
+          });
+        } else {
+          response = await axiosPrivate.post(STUDENT_QUIZ_URL, {
+            subject,
+            value,
+          });
+        }
 
         console.log(response.data.response.questions);
         const questions = response?.data?.response?.questions;
@@ -61,7 +72,7 @@ export const useFetchQuestions = () => {
       }
     };
     fetchData();
-  }, [dispatch]);
+  }, [axiosPrivate, courseRelated, dispatch, quizId, subject, value]);
 
   return data;
 };
@@ -77,6 +88,28 @@ export const initializeQuiz =
     }
   };
 
+export const initializeQuizById = (quizId, axiosPrivate) => async (dispatch) => {
+  const queryString = new URLSearchParams({
+    quizId,
+  }).toString();
+
+  try {
+    const response = await axiosPrivate.get(
+      `${STUDENT_ATTEMPT_QUIZ_URL}?${queryString}`
+    );
+    console.log(response.data);
+    const { noOfQuestions, subject, mcqName } = response.data.data;
+    dispatch(Action.initializeQuiz({ noOfQuestions, subject, mcqName }));
+    dispatch(Action.setCourseRelatedQuiz());
+    dispatch(Action.setQuizId(quizId));
+
+    return subject;
+  } catch (error) {
+    console.log(error);
+  }
+
+};
+
 export const moveNextQuestion = () => (dispatch) => {
   dispatch(Action.moveNext());
 };
@@ -87,4 +120,5 @@ export const movePrevQuestion = () => (dispatch) => {
 
 export const resetQuiz = () => (dispatch) => {
   dispatch(Action.reset());
+  dispatch(ResultAction.reset());
 };

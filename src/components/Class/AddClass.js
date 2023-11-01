@@ -38,18 +38,7 @@ const ButtonStyles = {
 
 const validationSchema = Yup.object().shape({
   tutor_id: Yup.string().required("Teacher Name is required"),
-  title: Yup.string()
-    .required('Class Title is required')
-    .test('title-format', 'Invalid title format', (value) => {
-      if (!value) {
-        return true;
-      }
-
-      // Regular expression to match the format "Subject Year Grade"
-      const regex = /^[A-Z][A-Z]+ [0-9]{4} (?:A\/L|O\/L) Theory$/;
-
-      return regex.test(value);
-    }),
+  title: Yup.string().required( "Teaching Medium is required"),
   medium: Yup.array().min(1, "Teaching Medium is required"),
   subject: Yup.string().required("Subject is required"),
   grade: Yup.string().required("Grade is required"),
@@ -96,15 +85,17 @@ function AddClass({ onAddClass }) {
       try {
         const response = await axiosPrivate.post("/staff/class", values);
         onAddClass(response.data);
+        const classTitle = values.title;
         toast({
           title: "Success",
-          description: "New Class Registered Successfully!",
+          description:  `New Class "${classTitle}" Registered Successfully!`,
           status: "success",
           duration: 3000,
           isClosable: true,
           position: "top",
         });
         formik.resetForm();
+        onClose();
       } catch (error) {
         toast({
           title: "Error",
@@ -165,7 +156,7 @@ function AddClass({ onAddClass }) {
 
   return (
     <>
-      <Button size="md" sx={ButtonStyles} mb="4" onClick={onOpen}>
+      <Button size="md" sx={ButtonStyles} my="4" onClick={onOpen}>
         Add a New Class
       </Button>
 
