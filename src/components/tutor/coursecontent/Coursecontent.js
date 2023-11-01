@@ -24,6 +24,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import "../../../index.css";
 import { useEffect, useState } from "react";
 import useAxiosPrivate from "../../../hooks/useAxiosPrivate.js";
+import { FaFileAlt } from "react-icons/fa";
 
 
 const CourseContent = ({ course }) => {
@@ -38,7 +39,9 @@ const CourseContent = ({ course }) => {
   const [studyPackDetails, setStudyPackDetails] = useState({});
   const [videoInfoArray, setVideoInfoArray] = useState([]);
 
-
+  const LoadDetail = (id) => {
+    navigate("/tutor/quizzes/" + id);
+  };
 
   useEffect(() => {
     const getCourses = async () => {
@@ -93,6 +96,7 @@ const CourseContent = ({ course }) => {
         title: content.title,
         thumbnail: content.thumbnail,
         videoId: content.id,
+        file_path: content.file_path,
     
       };
     } catch (error) {
@@ -112,10 +116,25 @@ const CourseContent = ({ course }) => {
       const contentResponse = await axiosPrivate.get(`/tutor/quizzes/${contentId}`);
       const content = contentResponse.data;
       
+      const startTime = new Date(content.start_time);
 
+      // Extract date and time components
+      const startDate = startTime.toLocaleDateString(); // Date in the format "MM/DD/YYYY"
+      const startTimeString = startTime.toLocaleTimeString();
+
+      const endTime = new Date(content.end_time);
+
+      // Extract date and time components
+      const endDate = startTime.toLocaleDateString(); // Date in the format "MM/DD/YYYY"
+      const endTimeString = startTime.toLocaleTimeString();
   
       return {
         title: content.title,
+        // start_time: content.start_time,
+        start_date: startDate, // Display date separately
+      start_time: startTimeString,
+        end_time:  endTimeString,
+        end_date:  endDate,
        
         videoId: content.id,
       
@@ -124,6 +143,8 @@ const CourseContent = ({ course }) => {
       console.error("Error fetching content details:", error);
       return {
         title: "",
+        start_time: "",
+        end_time: "",
         // thumbnail: "",
         videoId: "",
         // quizzes: "",
@@ -389,16 +410,20 @@ const CourseContent = ({ course }) => {
                                 <HStack spacing={{ base: 90, xl: 300 }}>
                                   <Box p={2} width="210px">
                                     <HStack>
-                                      <Image
+                                  
+                                      {/* <Image
                                         boxSize="50%"
                                         width={{ base: 70, xl: 70 }}
                                         height="50px"
                                         objectFit="cover"
                                         src={tuteInfo.thumbnail}
-                                      />
+                                      /> */}
+                                      <FaFileAlt/>
+                                      
                                       <Box>
                                         <Text fontSize="14px" className="box2">
                                           {tuteInfo.title}
+                                        
                                         </Text>
                                       </Box>
                                     </HStack>
@@ -406,7 +431,10 @@ const CourseContent = ({ course }) => {
 
                                   <Box width="90px" ml="5px" mt="-5px">
                                     <HStack>
-                                      <Button fontSize="12px" height="20px" colorScheme="blue">
+                                      <Button fontSize="12px" height="20px" colorScheme="blue"     onClick={() => {
+    const fileUrl = tuteInfo.file_path;
+    window.open(fileUrl, '_blank');
+  }} >
                                         View
                                       </Button>{" "}
                                       <Remove
@@ -447,13 +475,13 @@ const CourseContent = ({ course }) => {
                             return (
                               <Box
                                  bg="gray.100"
-                                      p="10px"
+                                  p="10px"
                                 mt="4px"
                                 className="box1"
                                 key={quizIndex}
                               >
-                                <HStack spacing={{ base: 90, xl: 300 }}>
-                                  <Box p={2} width="210px">
+                                <HStack spacing={{ base: 90, xl: 232 }}>
+                                  <Box p={2} width="280px">
                                     <HStack>
                                       
                                     
@@ -461,6 +489,16 @@ const CourseContent = ({ course }) => {
                                       <Box>
                                         <Text fontSize="14px" className="box2">
                                           {quizInfo.title}
+                                    
+                                        </Text>
+                                        <Text fontSize="14px" className="box2" ml='8px'>
+                                      
+                                          Start Time - {quizInfo.start_date} {quizInfo.start_time}
+                                         
+                                        </Text>
+                                        <Text fontSize="14px" className="box2"  ml='8px'>
+                                       
+                                          End Time - {quizInfo.end_date} {quizInfo.end_time}
                                         </Text>
                                       </Box>
                                     </HStack>
@@ -468,7 +506,9 @@ const CourseContent = ({ course }) => {
 
                                   <Box width="90px" ml="5px" mt="-5px">
                                     <HStack>
-                                      <Button fontSize="12px" height="20px" colorScheme="blue">
+                                      <Button fontSize="12px" height="20px" colorScheme="blue"   onClick={() => {
+                                  LoadDetail(quizId);
+                                }}>
                                         View
                                       </Button>{" "}
                                       <Remove

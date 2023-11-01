@@ -122,8 +122,10 @@ const Addstudypack = () => {
           values.price.length < 1
             ? "Price is Required"
             : values.price >= 50000
-            ? "Price must be less than 50000"
-            : null,
+            ? "Price must be less than 50000":
+            values.price <= 0
+            ? "Price must be greater than 0"
+           : null,
 
         // days: values.days.length < 1
         // ? "Day is Required"

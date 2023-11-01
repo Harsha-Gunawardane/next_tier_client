@@ -54,13 +54,22 @@ const Coursecard = (props) => {
 
   const currentDay = getCurrentDay();
 
+
+  const filteredCourses =
+    coursesdata &&
+    coursesdata
+      .filter((item) => item.schedule.some((schedule) => schedule.day === currentDay))
+      .sort((a, b) => b.timestamp - a.timestamp) // Replace 'timestamp' with your actual timestamp field
+      .slice(0, 2);
+
+
   return (
     <>
       <ChakraProvider>
         <SimpleGrid minChildWidth="300px" spacing="40px" mt='-40px'>
           <GridItem colSpan={3}> </GridItem>
-          {coursesdata != null && coursesdata.length > 0 ? (
-            coursesdata.map((item) => {
+          {filteredCourses != null && filteredCourses.length > 0 ? (
+            filteredCourses.map((item) => {
               const courseHasCurrentDay = item.schedule && item.schedule.some(schedule => schedule.day === currentDay);
 
               if (courseHasCurrentDay) {
@@ -74,7 +83,7 @@ const Coursecard = (props) => {
                       />
                     </Card.Section>
                     <Group position="apart" mt="md" mb="xs">
-                      <Text weight={600} fontSize='15px'>{item.title}</Text>
+                      <Text weight={600} fontSize='13px'>{item.title}</Text>
                       <Badge color="blue" variant="light">
                         Today
                       </Badge>

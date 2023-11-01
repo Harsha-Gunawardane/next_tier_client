@@ -12,22 +12,16 @@ import {
   FileInput,
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
-import {
-  Box,
-  Text,
-  Heading,
-  HStack,
-  UnorderedList,
-  ListItem,
-} from "@chakra-ui/react";
+import { Box, Text, Heading, HStack,UnorderedList,ListItem } from "@chakra-ui/react";
 import { Link, useNavigate } from "react-router-dom";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 
 import { TimeInput } from "@mantine/dates";
 
-import { DateInput } from "@mantine/dates";
 
-import { CheckCircleIcon } from "@chakra-ui/icons";
+import { DateInput } from "@mantine/dates";
+ 
+import { CheckCircleIcon } from '@chakra-ui/icons'
 
 const Addcourse = () => {
   const navigate = useNavigate();
@@ -50,7 +44,7 @@ const Addcourse = () => {
       subject: "",
       medium: "",
       grade: "",
-      thumbnail: "",
+      files: "",
       day: "",
       end_time: "",
       start_time: "",
@@ -63,6 +57,7 @@ const Addcourse = () => {
       //     video_id: [],
       //   },
       // ],
+ 
     },
 
     validate: (values) => {
@@ -95,17 +90,20 @@ const Addcourse = () => {
               ? "Grade must be 4 digits followed by 2 letters"
               : null,
 
+          
+    
+
           medium: values.medium.trim().length < 1 ? "Medium is Required" : null,
         };
       }
 
       return {
         start_date:
-          values.day.length < 1
-            ? "Start Date is Required"
-            : new Date(values.day) < new Date().setHours(0, 0, 0, 0)
-            ? "Start Date must be greater than today's date"
-            : null,
+        values.day.length < 1
+          ? "Start Date is Required"
+          : new Date(values.day) <= new Date()
+          ? "Start Date must be greater than today's date"
+          : null,
 
         day: values.day.trim().length < 1 ? "Day is Required" : null,
 
@@ -115,11 +113,8 @@ const Addcourse = () => {
         end_time: values.end_time.length < 1 ? "End time is Required" : null,
 
         monthly_fee:
-          values.monthly_fee.length < 1
-            ? "Monthlyfee is Required"
-            : values.monthly_fee < 0 || values.monthly_fee > 1000000
-            ? "Monthly fee must be between 0 and 1,000,000"
-            : null,
+          values.monthly_fee.length < 1 ? "Monthlyfee is Required" :  values.monthly_fee < 0 || values.monthly_fee > 1000000
+          ? "Monthly fee must be between 0 and 1,000,000":null,
       };
     },
   });
@@ -148,12 +143,21 @@ const Addcourse = () => {
     setGeneratedTitle(title);
   };
 
+
+
+
+  
+
   const [thumbnailFile, setThumbnailFile] = useState(null);
 
   const handleThumbnailChange = (files) => {
     setThumbnailFile(files[0]);
   };
 
+
+
+
+  
   const [startDate, setStartDate] = useState(new Date()); // Initialize with the current date
 
   // Function to handle changes in the DateInput component
@@ -161,24 +165,27 @@ const Addcourse = () => {
     setStartDate(date); // Update the startDate state with the selected date
   };
 
+
+
+
+
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     const controller = new AbortController();
 
     if (!form.validate().hasErrors) {
       try {
-        // console.log(form.values);
-        // console.log(thumbnailFile);
+        console.log(form.values);
 
-        const { grade, type, subject, thumbnail } = form.values;
+        const { grade, type, subject } = form.values;
         const title = `${subject} ${grade} ${type}`;
-
         // Create a new object containing all form values and the schedule
         const updatedFormValues = {
           ...form.values,
           title: title,
+          // monthly_fee:parseInt(form.values.monthly_fee),
           start_date: startDate.toISOString(),
-          // thumbnail: thumbnailFile.name,
           schedule: {
             day: form.values.day,
             start_time: form.values.start_time,
@@ -195,15 +202,15 @@ const Addcourse = () => {
         //   }
         // ];
 
+
         const finalFormValues = {
           ...updatedFormValues,
           // content_ids: form.values.content_ids,
         };
 
-        const response = await axiosPrivate.post(
-          "/tutor/course",
-          finalFormValues
-        );
+        const response = await axiosPrivate.post( "/tutor/course",finalFormValues,{
+          headers: { "Content-Type": "multipart/form-data" },
+        });
 
         console.log("Form data submitted successfully!");
         const newCourseId = response.data.id;
@@ -323,7 +330,7 @@ const Addcourse = () => {
                 }}
               />
 
-              <FileInput
+               {/* <TextInput
                 {...form.getInputProps("thumbnail")}
                 defaultValue={18}
                 placeholder="Thumbnail"
@@ -344,13 +351,13 @@ const Addcourse = () => {
                     marginBottom: "5px",
                   },
                 }}
-              />
+              />  */}
 
-              {/* <FileInput
+              <FileInput
                 label="Thumbnail"
-                // accept="image/*" // Specify the accepted file types (here, images)
+                accept="image/*" // Specify the accepted file types (here, images)
                 onChange={handleThumbnailChange}
-                {...form.getInputProps("thumbnail")} // Set the selected thumbnail file to state
+                {...form.getInputProps("files")} // Set the selected thumbnail file to state
                 styles={{
                   input: {
                     // Styles for the input element
@@ -366,7 +373,7 @@ const Addcourse = () => {
                     marginBottom: "5px",
                   },
                 }}
-              /> */}
+              />
 
               <Radio.Group
                 mt="10px"
@@ -407,12 +414,18 @@ const Addcourse = () => {
             }} />  */}
             </Stepper.Step>
 
-            <Stepper.Step label="Final step" description="Social media">
+            <Stepper.Step label="Final step" description="Days">
               <NumberInput
                 {...form.getInputProps("monthly_fee")}
                 defaultValue={18}
                 placeholder="Monthly Fee"
                 label="Monthly Fee"
+                onKeyPress={(event) => {
+                  const isNumber = /[0-9]/.test(event.key);
+                  if (!isNumber) {
+                    event.preventDefault();
+                  }
+                }}
                 styles={{
                   input: {
                     // Styles for the input element
@@ -430,28 +443,28 @@ const Addcourse = () => {
                   },
                 }}
               />
-              <DateInput
-                {...form.getInputProps("start_date")}
-                label="Start date"
-                placeholder="Start Date"
-                value={startDate} // Set the value of DateInput to startDate
-                onChange={handleStartDateChange} // Handle changes to update startDate
-                styles={{
-                  // Styles for the input element
-                  input: {
-                    color: "black",
-                    borderRadius: "8px",
-                    padding: "10px",
-                    height: "60px",
-                  },
-                  label: {
-                    // Styles for the label element
-                    fontSize: "16px",
-                    fontWeight: "bold",
-                    marginBottom: "5px",
-                  },
-                }}
-              />
+    <DateInput
+      {...form.getInputProps("start_date")}
+      label="Start date"
+      placeholder="Start Date"
+      value={startDate} // Set the value of DateInput to startDate
+      onChange={handleStartDateChange} // Handle changes to update startDate
+      styles={{
+        // Styles for the input element
+        input: {
+          color: "black",
+          borderRadius: "8px",
+          padding: "10px",
+          height: "60px",
+        },
+        label: {
+          // Styles for the label element
+          fontSize: "16px",
+          fontWeight: "bold",
+          marginBottom: "5px",
+        },
+      }}
+    />
 
               <Select
                 label="Day"
@@ -557,126 +570,130 @@ const Addcourse = () => {
                   mb="20px"
                 ></Heading>
                 <Box>
-                  <UnorderedList>
-                    <ListItem>
-                      <HStack spacing="100px">
-                        <Box width="150px">
-                          <Text>Title:</Text>
-                        </Box>
-                        <Box width="200px">
-                          <Text color="grey">
-                            {" "}
-                            {form.values.subject} {form.values.grade}{" "}
-                            {form.values.type}
-                          </Text>
-                        </Box>
-                      </HStack>
-                    </ListItem>
+                <UnorderedList>
+                <ListItem>
+                  <HStack spacing="100px">
+                  <Box width="150px">
+                      <Text>Title:</Text>
+                    </Box>
+                    <Box width="200px">
+                      <Text  color='grey'>
+                        {" "}
+                        {form.values.subject} {form.values.grade}{" "}
+                        {form.values.type}
+                      </Text>
+                    </Box>
+                  </HStack>
+                  </ListItem>
 
-                    <ListItem>
-                      <HStack spacing="100px" mt="10px">
-                        <Box width="150px">
-                          <Text>Description:</Text>
-                        </Box>
-                        <Box width="500px">
-                          <Text color="grey"> {form.values.description}</Text>
-                        </Box>
-                      </HStack>
-                    </ListItem>
+                  <ListItem>
+                  <HStack spacing="100px" mt='10px'>
+                  <Box width="150px">
+                      <Text>Description:</Text>
+                    </Box>
+                    <Box width="500px">
+                      <Text  color='grey'> {form.values.description}</Text>
+                    </Box>
+                  </HStack>
+                  </ListItem>
 
-                    <ListItem>
-                      <HStack spacing="100px" mt="10px">
-                        <Box width="150px">
-                          <Text>Subject:</Text>
-                        </Box>
-                        <Box width="200px">
-                          <Text color="grey"> {form.values.subject}</Text>
-                        </Box>
-                      </HStack>
-                    </ListItem>
+                  <ListItem>
+                  <HStack spacing="100px" mt='10px'>
+                  <Box width="150px">
+                      <Text>Subject:</Text>
+                    </Box>
+                    <Box width="200px">
+                      <Text  color='grey'> {form.values.subject}</Text>
+                    </Box>
+                  </HStack>
+                  </ListItem>
 
-                    <ListItem>
-                      <HStack spacing="100px" mt="10px">
-                        <Box width="150px">
-                          <Text>Grade:</Text>
-                        </Box>
-                        <Box width="200px">
-                          <Text color="grey"> {form.values.grade}</Text>
-                        </Box>
-                      </HStack>
-                    </ListItem>
+                  <ListItem>
+                  <HStack spacing="100px" mt='10px'>
+                  <Box width="150px">
+                      <Text>Grade:</Text>
+                    </Box>
+                    <Box width="200px">
+                      <Text color='grey' > {form.values.grade}</Text>
+                    </Box>
+                  </HStack>
+                  </ListItem>
 
-                    <ListItem>
-                      <HStack spacing="100px" mt="10px">
-                        <Box width="150px">
-                          <Text>Medium:</Text>
-                        </Box>
-                        <Box width="200px">
-                          <Text color="grey"> {form.values.medium}</Text>
-                        </Box>
-                      </HStack>
-                    </ListItem>
 
-                    <ListItem>
-                      <HStack spacing="100px" mt="10px">
-                        <Box width="150px">
-                          <Text>Monthly fee:</Text>
-                        </Box>
-                        <Box width="200px">
-                          <Text color="grey"> {form.values.monthly_fee}</Text>
-                        </Box>
-                      </HStack>
-                    </ListItem>
+                  <ListItem>
+                  <HStack spacing="100px" mt='10px'>
+                  <Box width="150px">
+                      <Text>Medium:</Text>
+                    </Box>
+                    <Box width="200px">
+                      <Text color='grey'> {form.values.medium}</Text>
+                    </Box>
+                  </HStack>
+                  </ListItem>
 
-                    <ListItem>
-                      <HStack spacing="100px" mt="10px">
-                        <Box width="150px">
-                          <Text>Day</Text>
-                        </Box>
-                        <Box width="200px">
-                          <Text color="grey"> {form.values.day}</Text>
-                        </Box>
-                      </HStack>
-                    </ListItem>
+                  <ListItem>
+                  <HStack spacing="100px" mt='10px'>
+                  <Box width="150px">
+                      <Text>Monthly fee:</Text>
+                    </Box>
+                    <Box width="200px">
+                      <Text color='grey'> {form.values.monthly_fee}</Text>
+                    </Box>
+                  </HStack>
+                  </ListItem>
 
-                    <ListItem>
-                      <HStack spacing="100px" mt="10px">
-                        <Box width="150px">
-                          <Text>Start Time:</Text>
-                        </Box>
-                        <Box width="200px">
-                          <Text color="grey"> {form.values.start_time}</Text>
-                        </Box>
-                      </HStack>
-                    </ListItem>
+                  <ListItem>
 
-                    <ListItem>
-                      <HStack spacing="100px" mt="10px">
-                        <Box width="150px">
-                          <Text>End Time:</Text>
-                        </Box>
-                        <Box width="200px">
-                          <Text color="grey"> {form.values.end_time}</Text>
-                        </Box>
-                      </HStack>
-                    </ListItem>
+                  <HStack spacing="100px" mt='10px'>
+                  <Box width="150px">
+                      <Text>Day</Text>
+                    </Box>
+                    <Box width="200px">
+                      <Text color='grey' > {form.values.day}</Text>
+                    </Box>
+                  </HStack>
+                  </ListItem>
 
-                    <ListItem>
-                      <HStack spacing="100px" mt="10px">
-                        <Box width="150px">
-                          <Text>Start Date:</Text>
-                        </Box>
-                        <Box width="200px">
-                          {/* Format and display the start_date */}
-                          <Text color="grey">
-                            {" "}
-                            {startDate.toLocaleDateString()}
-                          </Text>
-                        </Box>
-                      </HStack>
-                    </ListItem>
-                  </UnorderedList>
+
+                  <ListItem>
+                  <HStack spacing="100px" mt='10px'>
+                  <Box width="150px">
+                      <Text>Start Time:</Text>
+                    </Box>
+                    <Box width="200px">
+                      <Text color='grey'  > {form.values.start_time}</Text>
+                    </Box>
+                  </HStack>
+                  </ListItem>
+
+
+
+                  <ListItem>
+                  <HStack spacing="100px" mt='10px'>
+                  <Box width="150px">
+                      <Text>End Time:</Text>
+                    </Box>
+                    <Box width="200px">
+                      <Text  color='grey'> {form.values.end_time}</Text>
+                    </Box>
+                  </HStack>
+                  </ListItem>
+
+
+                  <ListItem>
+                  <HStack spacing="100px" mt='10px'>
+        <Box width="150px">
+          <Text>Start Date:</Text>
+        </Box>
+        <Box width="200px">
+          {/* Format and display the start_date */}
+          <Text color='grey'> {startDate.toLocaleDateString()}</Text>
+        </Box>
+      </HStack>
+      </ListItem>
+      </UnorderedList>
                 </Box>
+                
               </Box>
             </Stepper.Completed>
           </Stepper>

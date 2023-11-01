@@ -210,47 +210,15 @@ const SidebarAndHeader = ({ userRole, subRole }) => {
       value: "complaints",
       href: "/tutor/complaints",
     },
-  ];
-  // const TeacherOptions = [
-  // 	{
-  // 		icon: GridViewRoundedIcon,
-  // 		name: "Dashboard",
-  // 		value: "dashboard",
-  // 		href: "/tutor/dashboard",
-  // 	},
-  // 	{
-  // 		icon: TiDocumentText,
-  // 		name: "Courses",
-  // 		value: "courses",
-  // 		href: "/tutor/courses",
-  // 	},
-  // 	{
-  // 		icon: FaCompass,
-  // 		name: "Contents",
-  // 		value: "contents",
-  // 		href: "/tutor/content",
-  // 	},
-  // 	{
-  // 		icon: FaUserFriends,
-  // 		name: "Staff",
-  // 		value: "staffs",
-  // 		href: "/tutor/staffs",
-  // 	},
-  // 	{
-  // 		icon: FaListAlt,
-  // 		FaQuestionCircle,
-  // 		name: "Quizzes",
-  // 		value: "quizzes",
-  // 		href: "/tutor/quizzes",
-  // 	},
-  // 	{
-  // 		icon: FaQuestionCircle,
-  // 		name: "Complaints",
-  // 		value: "complaints",
-  // 		href: "/tutor/complaints",
-  // 	},
 
-  // ];
+    {
+      icon: AccountCircleIcon,
+      name: "Settings",
+      value: "profile",
+      href: "/tutor/profile",
+    },
+  ];
+
 
   const InstStaffOptions = [
     {
@@ -336,6 +304,8 @@ const SidebarAndHeader = ({ userRole, subRole }) => {
       value: "complaints",
       href: "/tutor/complaints",
     },
+
+  
   ];
 
   const TeacherPaperStaffOptions = [
