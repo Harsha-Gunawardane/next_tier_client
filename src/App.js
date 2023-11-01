@@ -129,7 +129,6 @@ function App() {
             >
               <Route path="dashboard" element={<Dashboard />} />
               <Route path="courses" element={<StudentCourses />} />
-              <Route path="courses/:id/content" element={<Coursecontent />} />
               <Route path="content" element={<ContentPage />} />
               <Route path="quizzes" element={<QuizDashboard />} />
               <Route path="quizzes/:subject" element={<QuizDashboard />} />
@@ -268,14 +267,13 @@ function App() {
                 ></Route>
               </Route>
 
-              {/* <Route path="complaints" element={<TutorComplaintsListView />} /> */}
-              <Route path="attendance" element={<StudentAttedance />} />
-              <Route
-                path="attendance/marking"
-                element={<StudentAttendanceMarking />}
-              />
-              <Route path="content" element={<MyContent />} />
-              <Route path="content/:contentId" element={<ViewContent />} />
+              <Route path="attendance">
+                <Route index element={<SelectAttendance />} />
+                <Route
+                  path="marking/:courseId"
+                  element={<StudentAttendanceMarking />}
+                />
+              </Route>
             </Route>
           </Route>
 
