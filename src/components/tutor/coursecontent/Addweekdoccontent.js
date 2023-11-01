@@ -174,7 +174,7 @@ const Addweekdoccontent = ({ studypackId, dynamicWeek }) => {
       >
         <ModalOverlay />
         <ModalContent size="2xl" maxW="60vw">
-          <ModalHeader>Add Video Content</ModalHeader>
+          <ModalHeader>Add Document Content</ModalHeader>
           <ModalCloseButton />
 
           <Tabs isFitted variant="enclosed">

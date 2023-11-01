@@ -49,6 +49,10 @@ const Coursepackcontent = () => {
     navigate("/tutor/quizzes/" + id);
   };
 
+  const LoadDetail2 = (id) => {
+    navigate("/tutor/content/" + id);
+  };
+
   useEffect(() => {
     const getCourses = async () => {
       const controller = new AbortController();
@@ -386,6 +390,9 @@ const Coursepackcontent = () => {
                                     fontSize="10px"
                                     height="20px"
                                     colorScheme="blue"
+                                    onClick={() => {
+                                      LoadDetail2(videoId);
+                                    }}
                               
                                   >
                                     View
@@ -430,23 +437,7 @@ const Coursepackcontent = () => {
                               </Box>
                               <Box width="60px" ml="10px" mt="-5px">
                                 <HStack>
-                                  <Button
-                                    fontSize="10px"
-                                    height="20px"
-                                
-                                    colorScheme="blue"
-                                    onClick={async () => {
-                                      try {
-                                        const response = await Fetchfile({ videoId: tuteId });
-                                        const fileUrl = response.fileUrl;
-                                        window.open(fileUrl, '_blank');
-                                      } catch (error) {
-                                        console.error("Error fetching the file URL:", error);
-                                      }
-                                    }}>
-                                  
-                                    View
-                                  </Button>{" "}
+                                <Fetchfile videoId={tuteId} />
                                   <Removecontent
                                     contentId={tuteId}
                                     month={decodeURIComponent(weekKey)}

@@ -132,7 +132,7 @@ const Coursecontent = () => {
 
           <br></br>
 
-          <Forum></Forum>
+          <Forum courseId={id} ></Forum>
           <br></br>
           <Poll></Poll>
         </Box>

@@ -68,8 +68,8 @@ const Addcoursepack = () => {
           description:
             values.description.trim().length < 1
               ? "Language is Required"
-              : values.description.length > 800
-              ? "Description must be less than 800 characters"
+              : values.description.length > 1000
+              ? "Description must be less than 1000 characters"
               : null,
 
               medium:

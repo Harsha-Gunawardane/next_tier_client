@@ -12,7 +12,7 @@ import { useDisclosure } from '@chakra-ui/react';
 import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
 
 
-const Coursecontentremove = ({ studypackId, contentId,part,onContentRemoved }) => {
+const CoursecontentremoveTute = ({ studypackId, contentId,part,onContentRemoved }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const cancelRef = React.useRef();
   const axiosPrivate = useAxiosPrivate();
@@ -24,7 +24,7 @@ const Coursecontentremove = ({ studypackId, contentId,part,onContentRemoved }) =
     event.preventDefault();
     try {
     axiosPrivate
-      .delete(`/tutor/studypack/removecontent/${studypackId}/${part}/${contentId}`)
+      .delete(`/tutor/studypack/removecontenttute/${studypackId}/${part}/${contentId}`)
       .then((response) => {
         console.log(`Content ID ${contentId} removed successfully from study pack!`);
         onClose();
@@ -83,4 +83,4 @@ const Coursecontentremove = ({ studypackId, contentId,part,onContentRemoved }) =
   );
 };
 
-export default Coursecontentremove;
+export default CoursecontentremoveTute;

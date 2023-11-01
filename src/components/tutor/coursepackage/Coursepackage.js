@@ -102,7 +102,7 @@ const Coursepackage = (props) => {
                       <Heading color="black" fontSize="16px" ml='5px'>
                         {item.title}
                       </Heading>
-                      <HStack mt="-10px" spacing='175px'>
+                      <HStack mt="-10px" spacing='182px'>
                         <Text color="black" fontSize="13px" ml='5px'>
                          Rs. {item.price}
                         </Text>

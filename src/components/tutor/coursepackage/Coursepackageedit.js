@@ -131,7 +131,7 @@ const Coursepackedit = () => {
     const isFormValid =
     title.trim().length !== 0 &&
     description.trim().length !== 0 &&
-    description.length <= 200 &&
+    description.length <= 1000 &&
     price.trim().length !== 0 &&
     !isNaN(price) &&
     parseFloat(price) >= 0 &&
@@ -160,7 +160,19 @@ const Coursepackedit = () => {
       .put(`/tutor/studypack/${Studypackid}`, coursedata)
       .then((response) => {
         
-        localStorage.setItem("courseUpdated", "true");
+        // localStorage.setItem("courseUpdated", "true");
+        toast({
+          title: "Studypack Details Updated",
+          description: "The Studypack details have been updated successfully.",
+          status: "success",
+          duration: 3000,
+          isClosable: true,
+          position: "top",
+          onCloseComplete: () => {
+            // Reload the page after the toast is manually closed
+            window.location.reload();
+          },
+        });
         onClose();
         // window.location.reload();
       })
@@ -233,7 +245,7 @@ const Coursepackedit = () => {
                 mt={4}
                 isRequired
                 isInvalid={
-                  description.trim().length === 0 || description.length > 200 
+                  description.trim().length === 0 || description.length > 1000 
                 }
               >
                 <FormLabel fontSize="15px">Description</FormLabel>
@@ -249,8 +261,8 @@ const Coursepackedit = () => {
            <FormErrorMessage>
            {description.trim().length === 0
       ? "Description is required"
-      : description.length > 200
-      ? "Description should be 200 characters or less"
+      : description.length > 1000
+      ? "Description should be 1000 characters or less"
       : null}
                 </FormErrorMessage>
               </FormControl>
