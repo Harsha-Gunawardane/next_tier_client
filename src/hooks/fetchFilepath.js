@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Text } from "@chakra-ui/react";
+import { Text,Button } from "@chakra-ui/react";
 import useAxiosPrivate from "./useAxiosPrivate";// Make sure to import your axios instance
 
 const FetchContentDetailsAndShowTitle = ({ videoId }) => {
@@ -21,7 +21,23 @@ const FetchContentDetailsAndShowTitle = ({ videoId }) => {
     fetchContentDetails();
   }, [videoId]);
 
-  return <Text fontSize="14px" className="box2">{filepath}</Text>;
+  return(
+    <>
+        <Button
+    fontSize="10px"
+    height="20px"
+    colorScheme="blue"
+    onClick={() => {
+      const fileUrl = filepath;
+      window.open(fileUrl, '_blank');
+    }} 
+  >
+    View
+  </Button>
+    </>
+
+  
+   )
 };
 
 export default FetchContentDetailsAndShowTitle;

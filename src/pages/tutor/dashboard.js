@@ -25,6 +25,7 @@ import Calander from "../../components/tutor/Calander";
 import Classes from "../../components/tutor/Classes";
 import { Calendar } from "@mantine/dates";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
+import { useLocation,useNavigate } from "react-router-dom";
 
 function Dashboard() {
   const customColors = ["red", "green", "blue", "purple", "black"];
@@ -34,6 +35,7 @@ function Dashboard() {
   const [staffdata, setstaffData] = useState(null);
   const [contentdata, setcontentData] = useState(null);
   const [latestcontentdata, setLatestcontent] = useState(null);
+  const navigate = useNavigate();
 
   const axiosPrivate = useAxiosPrivate();
 
@@ -142,6 +144,10 @@ function Dashboard() {
     };
     getCourses();
   }, [axiosPrivate]);
+
+  const LoadDetail2 = (id) => {
+    navigate("/tutor/content/" + id);
+  };
   
 
   return (
@@ -310,6 +316,9 @@ function Dashboard() {
                       mt="2px"
                       height="16px"
                       colorScheme="blue"
+                      onClick={() => {
+                        LoadDetail2(content.id);
+                      }}
                     >
                       View
                     </Button>
