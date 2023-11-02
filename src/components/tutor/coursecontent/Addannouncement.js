@@ -245,9 +245,10 @@ const Addannouncement = ({ setannouncementData }) => {
                     onClick={() => handleRemoveAnnouncement(index)}
                     size="sm"
                     colorScheme="red"
-                    width="48px"
-                    height="18px"
-                    fontSize="10px"
+                    width="58px"
+                    fontSize="12px"
+                    height="30px"
+                    mt='10px'
                   >
                     Remove
                   </Button>

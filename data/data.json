@@ -76,56 +76,6 @@
       "noofmcqs": 12
     }
   ],
-  "mcqs": [
-    {
-      "id": 1,
-      "question": "Which of the following elements is not a noble gas?",
-      "points": 2,
-      "choice1": "a) Helium (He)",
-      "choice2": "b) Neon (Ne)",
-      "choice3": "c) Argon (Ar)",
-      "choice4": "d) Krypton (Kr)",
-      "choice5": "e) Nitrogen (N)",
-      "answer": "e) Nitrogen (N)",
-      "explanation": "Noble gases are a group of elements in the periodic table known for their low reactivity and full outer electron shells. These elements include helium (He), neon (Ne), argon (Ar), krypton (Kr), xenon (Xe), and radon (Rn). Nitrogen (N) is not a noble gas because it does not belong to the group of elements with full outer electron shells and low reactivity. Nitrogen is a diatomic molecule composed of two nitrogen atoms (N2) and is commonly found in the Earth's atmosphere. It is an important element for various biological processes and is widely used in the production of fertilizers, explosives, and other chemical compounds."
-    },
-    {
-      "id": 2,
-      "question": "Which of the following compounds is an example of an ionic compound?",
-      "points": 2,
-      "choice1": "a) Methane (CH4)",
-      "choice2": "b) Ethanol (C2H5OH)",
-      "choice3": "c) Sodium chloride (NaCl)",
-      "choice4": "Carbon dioxide (CO2)",
-      "choice5": "e) Hydrogen peroxide (H2O2)",
-      "answer": "c) Sodium chloride (NaCl)",
-      "explanation": "Ionic compounds are formed when there is a strong electrostatic attraction between positively charged ions (cations) and negatively charged ions (anions). In the case of sodium chloride (NaCl), it is an example of an ionic compound. Sodium (Na) is a metal and tends to lose one electron, forming a sodium cation (Na+). Chlorine (Cl) is a nonmetal and tends to gain one electron, forming a chloride anion (Cl-). The electrostatic attraction between the sodium cation and chloride anion leads to the formation of sodium chloride (NaCl), which is commonly known as table salt."
-    },
-    {
-      "id": 3,
-      "question": "What are the ...................",
-      "points": 2,
-      "choice1": "A. Answer1",
-      "choice2": "B. Answer2",
-      "choice3": "C. Answer3",
-      "choice4": "D. Answer4",
-      "choice5": "E. Answer5",
-      "answer": "C. Answer3",
-      "explanation": "            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut"
-    },
-    {
-      "id": 5,
-      "question": "What are the ...................",
-      "points": 2,
-      "choice1": "A. Answer1",
-      "choice2": "B. Answer2",
-      "choice3": "C. Answer3",
-      "choice4": "D. Answer4",
-      "choice5": "E. Answer5",
-      "answer": "C. Answer3",
-      "explanation": "            aliquip ex ea commodo consequat."
-    }
-  ],
   "quizzes": [
     {
       "id": 1,
@@ -202,6 +152,57 @@
         "Calculation"
       ],
       "number_of_questions": 25,
+      "question_ids": [
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    {
+      "id": 2,
+      "title": "2023/08/07 - Morning Quiz (Theory Class)",
+      "subject": "Chemistry",
+      "subject_areas": [
+        "Inorganic",
+        "Organic",
+        "Calculation"
+      ],
+      "number_of_questions": 20,
+      "question_ids": [
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    {
+      "id": 2,
+      "title": "2023/08/07 - Morning Quiz (Theory Class)",
+      "subject": "Chemistry",
+      "subject_areas": [
+        "Inorganic",
+        "Organic",
+        "Calculation"
+      ],
+      "number_of_questions": 20,
+      "question_ids": [
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    {
+      "id": 2,
+      "title": "2023/08/07 - Morning Quiz (Theory Class)",
+      "subject": "Chemistry",
+      "subject_areas": [
+        "Inorganic",
+        "Organic",
+        "Calculation"
+      ],
+      "number_of_questions": 20,
       "question_ids": [
         1,
         2,

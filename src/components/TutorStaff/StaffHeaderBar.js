@@ -14,13 +14,10 @@ import { IoCloseCircleSharp } from "react-icons/io5";
 import { IconSearch } from "@tabler/icons-react";
 import { IoIosAddCircleOutline } from "react-icons/io";
 
-// import SearchBarOne from "../SearchBars/SearchBarOne";
 
-// import { Form } from "react-router-dom";
 
-export default function StaffHeaderBar({ search, setSearch, onOpen}) {
+export default function StaffHeaderBar({ search, setSearch, filter, setFilter, onOpen}) {
 
-  // const staffs = useStaffStore((state) => state.staffs);
 
   return (
     <Grid
@@ -78,7 +75,6 @@ export default function StaffHeaderBar({ search, setSearch, onOpen}) {
 
             <Input
               as={Select}
-              placeholder="All Staff"
               variant="outline"
               color="gray"
               paddingLeft="40px"
@@ -86,9 +82,15 @@ export default function StaffHeaderBar({ search, setSearch, onOpen}) {
               h={"40px"}
               size="sm"
               borderRadius={"5px"}
+              onChange={(e) => {
+                setFilter(e.target.value);
+              }}
             >
-              <option value="option1">Paper Marking Staff</option>
-              <option value="option2">Class Supporting Staff</option>
+              <option value="All Staff">All Staff</option>
+              <option value="Paper Marking Staff">Paper Marking Staff</option>
+              <option value="Cls Supporting Staff">
+                Class Supporting Staff
+              </option>
             </Input>
           </InputGroup>
         </FormControl>

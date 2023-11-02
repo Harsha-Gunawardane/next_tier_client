@@ -37,10 +37,12 @@ const Addcoursepack = () => {
       subject: "",
       title: "",
       description: "",
-      thumbnail: "",
+      files: "",
       price: "",
+      medium:"",
       access_period: "",
       type: "PAID",
+      // medium: "",
 
       subject_area_1: "",
       subject_area_2: "",
@@ -66,14 +68,21 @@ const Addcoursepack = () => {
           description:
             values.description.trim().length < 1
               ? "Language is Required"
-              : values.description.length > 800
-              ? "Description must be less than 800 characters"
+              : values.description.length > 1000
+              ? "Description must be less than 1000 characters"
               : null,
+
+              medium:
+              values.medium.trim().length < 1
+                ? "medium is Required"
+                : null,
 
           course_id:
             values.course_id.trim().length < 1
               ? "Course Type is Required"
               : null,
+
+              // medium: values.medium.trim().length < 1 ? "Medium is Required" : null,
         };
       }
 
@@ -92,14 +101,14 @@ const Addcoursepack = () => {
             ? "Price must be less than 50000"
             : null,
 
-        thumbnail:
-          values.thumbnail.trim().length < 1 ? "Course Type is Required" : null,
+        // thumbnail:
+        //   values.thumbnail.trim().length < 1 ? "Course Type is Required" : null,
 
         days:
           values.days.length < 1
             ? "Day is Required"
-            : parseInt(values.days) >= 365
-            ? "Days must be less than 366 days"
+            : parseInt(values.days) >= 2000
+            ? "Days must be less than 2000 days"
             : null,
 
         // months: values.months.length < 1
@@ -174,9 +183,9 @@ const Addcoursepack = () => {
 
         console.log(updatedFormValues);
 
-        const response = await axiosPrivate.post(
-          "/tutor/studypack",
-          updatedFormValues
+        const response = await axiosPrivate.post("/tutor/studypack", updatedFormValues,{
+          headers: { "Content-Type": "multipart/form-data" },
+        }
         );
 
         console.log("Form data submitted successfully!");
@@ -278,6 +287,29 @@ const Addcoursepack = () => {
                   },
                 }}
               />
+
+
+<Radio.Group
+                mt="10px"
+                {...form.getInputProps("medium")}
+                name="favoriteFramework"
+                label="Medium"
+                withAsterisk
+                styles={{
+                  label: {
+                    // Styles for the label element
+                    fontSize: "16px",
+                    fontWeight: "bold",
+                    marginBottom: "5px",
+                  },
+                }}
+              >
+                <Group mt="xs">
+                  <Radio value="Sinhala" label="Sinhala" />
+                  <Radio value="English" label="English" />
+                </Group>
+              </Radio.Group>
+
             </Stepper.Step>
 
             <Stepper.Step
@@ -414,11 +446,11 @@ const Addcoursepack = () => {
               </HStack>
             </Stepper.Step>
 
-            <Stepper.Step label="Final step" description="Social media">
+            <Stepper.Step label="Final step" description="Final Step">
               <FileInput
                 label="Thumbnail"
                 placeholder="Thumbnail"
-                {...form.getInputProps("thumbnail")}
+                {...form.getInputProps("files")}
                 h="50px"
                 mb="60px"
                 styles={{
@@ -525,6 +557,12 @@ const Addcoursepack = () => {
                 placeholder="Days"
                 label="Access Period"
                 mt="30px"
+                onKeyPress={(event) => {
+                  const isNumber = /[0-9]/.test(event.key);
+                  if (!isNumber) {
+                    event.preventDefault();
+                  }
+                }}
                 styles={{
                   input: {
                     // Styles for the input element
@@ -584,6 +622,17 @@ const Addcoursepack = () => {
                         </Box>
                         <Box width="200px">
                           <Text color="grey"> {form.values.subject}</Text>
+                        </Box>
+                      </HStack>
+                    </ListItem>
+
+                    <ListItem>
+                      <HStack spacing="100px" mt="10px">
+                        <Box width="150px">
+                          <Text>Medium:</Text>
+                        </Box>
+                        <Box width="200px">
+                          <Text color="grey"> {form.values.medium}</Text>
                         </Box>
                       </HStack>
                     </ListItem>

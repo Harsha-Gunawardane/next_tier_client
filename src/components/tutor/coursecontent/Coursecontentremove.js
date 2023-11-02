@@ -6,21 +6,23 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogContent,
-  AlertDialogOverlay,
+  AlertDialogOverlay,useToast
 } from '@chakra-ui/react';
-import axios from 'axios';
 import { useDisclosure } from '@chakra-ui/react';
 import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
-import { useLocation } from "react-router-dom";
+
 
 const Coursecontentremove = ({ studypackId, contentId,part,onContentRemoved }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const cancelRef = React.useRef();
   const axiosPrivate = useAxiosPrivate();
+  const toast = useToast();
 
 
 
-  const handleDelete = () => {
+  const handleDelete = (event) => {
+    event.preventDefault();
+    try {
     axiosPrivate
       .delete(`/tutor/studypack/removecontent/${studypackId}/${part}/${contentId}`)
       .then((response) => {
@@ -30,9 +32,23 @@ const Coursecontentremove = ({ studypackId, contentId,part,onContentRemoved }) =
         // Notify parent component about content removal
         // onContentRemoved(contentId); // Pass the removed contentId
       })
-      .catch((error) => {
-        console.error('Error removing content:', error);
+      
+      toast({
+        title: "Content Removed",
+        description: "The Content has been removed successfully.",
+        status: "success",
+        duration: 1000,
+        isClosable: true,
+        position: "top",
+        onCloseComplete: () => {
+          window.location.reload();
+        },
       });
+      onClose();
+      
+    }catch (error) {
+      console.log(error);
+    }
   };
 
   return (

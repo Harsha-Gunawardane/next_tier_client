@@ -9,7 +9,7 @@ import {
   Button,FormControl,
   SimpleGrid,
   Box,
-  Checkbox,
+  Checkbox,Image,
   FormLabel,Input, IconButton
 } from '@chakra-ui/react'
 import { SmallAddIcon} from '@chakra-ui/icons'
@@ -155,14 +155,9 @@ return (
         <ModalHeader>Add Video Content</ModalHeader>
         <ModalCloseButton />
 
-        <Tabs isFitted variant='enclosed'>
-          <TabList mb='1em'>
-            <Tab fontSize='15px'>Add existing content</Tab>
-            <Tab fontSize='15px'>Add new content</Tab>
-          </TabList>
-          <TabPanels>
+    
           <form onSubmit={handleSave}>
-            <TabPanel>
+          
               <ModalBody pb={6}>
               <SimpleGrid columns={4} spacing={4}>
                   {videoContent.map((content, index) => (
@@ -171,7 +166,8 @@ return (
                         isChecked={selectedItems.includes(index)}
                         onChange={() => handleCheckboxChange(index)}
                       />
-                      <img src={content.thumbnail} alt={`Thumbnail ${index}`} />
+                      <Image src={content.thumbnail} alt={`Thumbnail ${index}`}   height="100px"
+                            width="100%" />
                       <p>{content.title}</p>
                     </Box>
                   ))}
@@ -186,15 +182,11 @@ return (
                   Cancel
                 </Button>
               </ModalFooter>
-            </TabPanel>
+          
             </form>
-            <TabPanel>
-           
-              {/* Add new content form */}
-              {/* ... (rest of the code remains the same) */}
-            </TabPanel>
-          </TabPanels>
-        </Tabs>
+        
+   
+       
       </ModalContent>
     </Modal>
   </>

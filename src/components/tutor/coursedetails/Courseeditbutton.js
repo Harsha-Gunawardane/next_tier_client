@@ -169,7 +169,19 @@ const Courseeditbutton = () => {
     axiosPrivate
       .put(`/tutor/course/${courseid}`, coursedata)
       .then((response) => {
-        localStorage.setItem("courseUpdated", "true");
+        // localStorage.setItem("courseUpdated", "true");
+        toast({
+          title: "Studypack Details Updated",
+          description: "The Studypack details have been updated successfully.",
+          status: "success",
+          duration: 3000,
+          isClosable: true,
+          position: "top",
+          onCloseComplete: () => {
+            // Reload the page after the toast is manually closed
+            window.location.reload();
+          },
+        });
         onClose();
         // Reload the window
         // window.location.reload();
@@ -190,6 +202,10 @@ const Courseeditbutton = () => {
       duration: 5000,
       isClosable: true,
       position: "top",
+      onCloseComplete: () => {
+        // Reload the page after the toast is manually closed
+        window.location.reload();
+      },
     });
   };
 

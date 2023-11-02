@@ -26,6 +26,7 @@ import "../../../index.css";
 import { useEffect, useState } from "react";
 import useAxiosPrivate from "../../../hooks/useAxiosPrivate.js";
 import Addpaper from "../../../pages/tutor/addpaper";
+import { FaFileAlt } from "react-icons/fa";
 
 const CourseContent = () => {
   const [coursesdata, setCoursesData] = useState(null);
@@ -37,6 +38,10 @@ const CourseContent = () => {
   const [monthToDelete, setMonthToDelete] = useState("");
   const [studyPackDetails, setStudyPackDetails] = useState({});
   const [contentDetails, setContentDetails] = useState([]);
+
+  const LoadDetail = (id) => {
+    navigate("/tutor/papers/" + id);
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -100,9 +105,7 @@ const CourseContent = () => {
   //   return content ? content.thumbnail : ""; // Replace with actual property name
   // };
 
-  const LoadDetail = (id) => {
-    navigate("/tutor/courses/content/analyze/" + id);
-  };
+  
 
   const handleContentRemoval = (contentId) => {
     // Shallow copy the contentDetails state
@@ -210,7 +213,8 @@ const CourseContent = () => {
                         <HStack spacing={{ base: 90, xl: 330 }}>
                           <Box p={2} width="210px">
                             <Text fontSize="14px" className="box2">
-                              {getContentTitle(contentId)}
+                              <HStack> <FaFileAlt/> <Text> {getContentTitle(contentId)}</Text></HStack>
+                           
                             </Text>
                           </Box>
                           <Box width="90px" ml="5px" mt="-5px">
@@ -219,6 +223,9 @@ const CourseContent = () => {
                                 fontSize="12px"
                                 height="20px"
                                 colorScheme="blue"
+                                onClick={() => {
+                                  LoadDetail(contentId);
+                                }}
                               >
                                 View
                               </Button>{" "}

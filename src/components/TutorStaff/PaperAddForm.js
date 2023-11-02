@@ -11,17 +11,20 @@ import { useState } from "react";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import { DateInput } from "@mantine/dates";
 import { useToast } from "@chakra-ui/react";
+import { useNavigate } from "react-router-dom";
 
 
-export default function PaperAddForm({ onClose, papers, setPapers }) {
+export default function PaperAddForm({ onClose, papers, setPapers, courseId }) {
   const axiosPrivate = useAxiosPrivate();
+  const navigate = useNavigate();
+
 
   const toast = useToast();
 
-
   const [subjectAreas, setSubjectAreas] = useState([
-    { value: "Inorganic", label: "Inorganic" },
-    { value: "Calculation", label: "Calculation" },
+    { value: "Mechanics", label: "Mechanics" },
+    { value: "Electromagnetism", label: "Electromagnetism" },
+    { value: "Particle Physics", label: "Particle Physics" },
   ]);
 
   const [type, setType] = useState([
@@ -35,12 +38,11 @@ export default function PaperAddForm({ onClose, papers, setPapers }) {
     { value: "Physics", label: "Physics" },
   ]);
 
-  
   const form = useForm({
     initialValues: {
       title: "",
       type: "",
-      date:"",
+      date: "",
       subject: "",
       subject_areas: [],
     },
@@ -62,12 +64,12 @@ export default function PaperAddForm({ onClose, papers, setPapers }) {
 
     if (!form.validate().hasErrors) {
       try {
-
         console.log(form.values);
 
         const response = await axiosPrivate.post(
           "/tutor/papers",
           JSON.stringify({
+            course_id: courseId,
             title: form.values.title,
             type: form.values.type,
             date: form.values.date,
@@ -84,7 +86,6 @@ export default function PaperAddForm({ onClose, papers, setPapers }) {
 
         //Added to state
         setPapers([...papers, form.values]);
-        
 
         toast({
           title: "Paper added.",
@@ -93,10 +94,11 @@ export default function PaperAddForm({ onClose, papers, setPapers }) {
           duration: 9000,
           isClosable: true,
           position: "top-right",
-
         });
 
         console.log("Form data submitted successfully!");
+
+        navigate(`/tutor/papers/paper/${response.data.paper_id}`);
 
         onClose();
       } catch (error) {
@@ -163,7 +165,6 @@ export default function PaperAddForm({ onClose, papers, setPapers }) {
             }}
             {...form.getInputProps("subject_areas")}
           />
-            
         </SimpleGrid>
 
         <Group position="right" mt="md">

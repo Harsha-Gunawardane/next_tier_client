@@ -24,6 +24,8 @@ import React, { useEffect, useState } from "react";
 import { useDisclosure } from "@chakra-ui/react";
 import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
 import Addnewtute from "./Addnewtute";
+import { FaFileAlt } from "react-icons/fa";
+
 
 const Addweekdoccontent = ({ studypackId, dynamicWeek }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -172,7 +174,7 @@ const Addweekdoccontent = ({ studypackId, dynamicWeek }) => {
       >
         <ModalOverlay />
         <ModalContent size="2xl" maxW="60vw">
-          <ModalHeader>Add Video Content</ModalHeader>
+          <ModalHeader>Add Document Content</ModalHeader>
           <ModalCloseButton />
 
           <Tabs isFitted variant="enclosed">
@@ -196,13 +198,13 @@ const Addweekdoccontent = ({ studypackId, dynamicWeek }) => {
                             isChecked={selectedItems.includes(index)}
                             onChange={() => handleCheckboxChange(index)}
                           />
-                          <Image
+                          {/* <Image
                             src={content.thumbnail}
                             alt={`Thumbnail ${index}`}
                             height="100px"
                             width="100%"
-                          />
-                          <p>{content.title}</p>
+                          /> */}
+                           <FaFileAlt/> <p>{content.title}</p>
                         </Box>
                       ))}
                     </SimpleGrid>

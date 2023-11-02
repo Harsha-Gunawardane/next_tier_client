@@ -25,11 +25,13 @@ import {
 import axios from "axios";
 import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
 import { useLocation } from "react-router-dom";
+import { useToast } from "@chakra-ui/react";
 
 const Addpoll = () => {
   const axiosPrivate = useAxiosPrivate();
   const location = useLocation();
   const id = location.pathname.split("/").pop();
+  const toast = useToast();
 
   const [isOpen, setIsOpen] = useState(false);
   const [pollData, setPollData] = useState(null);
@@ -57,7 +59,7 @@ const Addpoll = () => {
   const getPollData = async () => {
     try {
       const response = await axiosPrivate.get(`/tutor/courses/poll/${id}`);
-      setPollData(response.data);
+      setPollData(response.data.poll);
     } catch (error) {
       console.log("Error fetching poll data:", error);
     }
@@ -92,6 +94,16 @@ const Addpoll = () => {
       setOptions([]);
       onClose();
       setFormSubmitted(false);
+
+      toast({
+        title: "New Poll Added",
+        description: "The new poll has been added successfully!",
+        status: "success",
+        duration: 5000, // Adjust the duration as needed
+        isClosable: true,
+        position:"top",
+      });
+
     } catch (error) {
       console.error("Error adding new poll:", error);
     }

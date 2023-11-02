@@ -50,7 +50,6 @@ function ScheduleTute() {
     }
   };
 
-  console.log(reminders[days[4]]);
   useEffect(() => {
     getReminders();
   }, []);

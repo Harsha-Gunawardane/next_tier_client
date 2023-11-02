@@ -89,9 +89,9 @@ const Login = () => {
         } else if (roles.includes(ROLES.Parent)) {
           navigate("/parent/dashboard");
         } else if (roles.includes(ROLES.TutorSupportStaff)) {
-          navigate("/tutor/dashboard");
+          navigate("/supportstaff/dashboard");
         } else if (roles.includes(ROLES.TutorPaperStaff)) {
-          navigate("/tutor/dashboard");
+          navigate("/paperstaff/dashboard");
         }
       } else {
         navigate(from, { replace: true });

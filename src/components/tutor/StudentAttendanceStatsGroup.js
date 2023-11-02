@@ -9,9 +9,13 @@ import { TbPackages } from "react-icons/tb";
 import { MdOutlineVideoLibrary } from "react-icons/md";
 import { AiOutlineFileDone } from "react-icons/ai";
 import DonutChart from "../mcq/DonutChartStats";
+import { FaUserCheck, FaUserMinus } from "react-icons/fa";
 
 
-export function StudentAttendanceStatsGroup() {
+export function StudentAttendanceStatsGroup({
+  No_of_PresentStudents,
+  No_of_AbsentStudents,
+}) {
   return (
     <div>
       <SimpleGrid
@@ -27,12 +31,12 @@ export function StudentAttendanceStatsGroup() {
         <Box>
           <MiniStat
             name="Total Present Students"
-            value="08"
+            value={No_of_PresentStudents}
             endContent={
               <MiniStatCardIcon
                 bg={"accentFaded"}
-                color={"blue"}
-                icon={BiBook}
+                color={"green"}
+                icon={FaUserCheck}
               />
             }
           />
@@ -41,17 +45,16 @@ export function StudentAttendanceStatsGroup() {
         <Box>
           <MiniStat
             name="Total Absent Students"
-            value="200"
+            value={No_of_AbsentStudents}
             endContent={
               <MiniStatCardIcon
                 bg={"successFaded"}
-                color={"green"}
-                icon={AiOutlineFileDone}
+                color={"red"}
+                icon={FaUserMinus}
               />
             }
           />
         </Box>
-
       </SimpleGrid>
     </div>
   );

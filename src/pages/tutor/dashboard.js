@@ -25,6 +25,7 @@ import Calander from "../../components/tutor/Calander";
 import Classes from "../../components/tutor/Classes";
 import { Calendar } from "@mantine/dates";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
+import { useLocation,useNavigate } from "react-router-dom";
 
 function Dashboard() {
   const customColors = ["red", "green", "blue", "purple", "black"];
@@ -34,6 +35,7 @@ function Dashboard() {
   const [staffdata, setstaffData] = useState(null);
   const [contentdata, setcontentData] = useState(null);
   const [latestcontentdata, setLatestcontent] = useState(null);
+  const navigate = useNavigate();
 
   const axiosPrivate = useAxiosPrivate();
 
@@ -116,7 +118,6 @@ function Dashboard() {
   // }, [axiosPrivate]);
 
   // const currentDate = new Date();
-
   useEffect(() => {
     const getCourses = async () => {
       const controller = new AbortController();
@@ -125,21 +126,29 @@ function Dashboard() {
           signal: controller.signal,
         });
         setcontentData(response.data);
-
+  
         // Sort the contentData array by uploaded_at in descending order
         const sortedContent = response.data.sort((a, b) => {
           return new Date(b.uploaded_at) - new Date(a.uploaded_at);
         });
-
-        // Get the latest 3 content items
-        const latestContent = sortedContent.slice(0, 3);
-        setLatestcontent(latestContent); // Assuming you have a state variable to store the latest content
+  
+        // Filter the sorted content to get only items with type "VIDEO"
+        const videoContent = sortedContent.filter(item => item.type === "VIDEO");
+  
+        // Get the latest 3 video content items
+        const latestVideoContent = videoContent.slice(0, 3);
+        setLatestcontent(latestVideoContent); // Assuming you have a state variable to store the latest video content
       } catch (error) {
         console.log(error);
       }
     };
     getCourses();
   }, [axiosPrivate]);
+
+  const LoadDetail2 = (id) => {
+    navigate("/tutor/content/" + id);
+  };
+  
 
   return (
     <Box bg="#F9F9F9" width="100%" p={5}>
@@ -298,13 +307,18 @@ function Dashboard() {
                       {content.title}
                     </Text>
                     <Text fontSize="12px" color="grey">
-                      {content.uploaded_at}
+                      {/* {content.uploaded_at} */}
+                      {new Date(content.uploaded_at).toLocaleDateString()}{" "}
+                      {new Date(content.uploaded_at).toLocaleTimeString()}
                     </Text>
                     <Button
                       fontSize="10px"
                       mt="2px"
                       height="16px"
                       colorScheme="blue"
+                      onClick={() => {
+                        LoadDetail2(content.id);
+                      }}
                     >
                       View
                     </Button>

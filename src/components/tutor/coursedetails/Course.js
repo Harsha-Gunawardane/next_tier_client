@@ -85,7 +85,7 @@ const Course = (props) => {
                 <Card maxW="lg" key={item.id}>
                   <CardBody>
                     <Image
-                      src={item.thumbnail}
+                      src={item.thumbnail} 
                       borderRadius="lg"
                       height="210px"
                       width="100%"

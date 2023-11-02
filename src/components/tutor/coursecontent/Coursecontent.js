@@ -1,6 +1,5 @@
 import React from "react";
 import {
-  Flex,
   AccordionPanel,
   Text,
   Accordion,
@@ -10,7 +9,7 @@ import {
   HStack,
   Heading,
 } from "@chakra-ui/react";
-import { SmallAddIcon } from "@chakra-ui/icons";
+
 import { ChakraProvider, Button, Image } from "@chakra-ui/react";
 import { Tabs, TabList, TabPanels, Tab, TabPanel, Box } from "@chakra-ui/react";
 
@@ -24,7 +23,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import "../../../index.css";
 import { useEffect, useState } from "react";
 import useAxiosPrivate from "../../../hooks/useAxiosPrivate.js";
-
+import { FaFileAlt } from "react-icons/fa";
 
 const CourseContent = ({ course }) => {
   const [coursesdata, setCoursesData] = useState(null);
@@ -38,7 +37,13 @@ const CourseContent = ({ course }) => {
   const [studyPackDetails, setStudyPackDetails] = useState({});
   const [videoInfoArray, setVideoInfoArray] = useState([]);
 
+  const LoadDetail = (id) => {
+    navigate("/tutor/quizzes/" + id);
+  };
 
+  const LoadDetail2 = (id) => {
+    navigate("/tutor/content/" + id);
+  };
 
   useEffect(() => {
     const getCourses = async () => {
@@ -84,16 +89,16 @@ const CourseContent = ({ course }) => {
 
   const getContentInfo = async (contentId) => {
     try {
-      const contentResponse = await axiosPrivate.get(`/tutor/content/${contentId}`);
+      const contentResponse = await axiosPrivate.get(
+        `/tutor/content/${contentId}`
+      );
       const content = contentResponse.data;
-    
-  
-  
+
       return {
         title: content.title,
         thumbnail: content.thumbnail,
         videoId: content.id,
-    
+        file_path: content.file_path,
       };
     } catch (error) {
       console.error("Error fetching content details:", error);
@@ -101,47 +106,61 @@ const CourseContent = ({ course }) => {
         title: "",
         thumbnail: "",
         videoId: "",
-       
       };
     }
   };
 
-
   const getContentInfo2 = async (contentId) => {
     try {
-      const contentResponse = await axiosPrivate.get(`/tutor/quizzes/${contentId}`);
+      const contentResponse = await axiosPrivate.get(
+        `/tutor/quizzes/${contentId}`
+      );
       const content = contentResponse.data;
-      
 
-  
+      const startTime = new Date(content.start_time);
+
+      // Extract date and time components
+      const startDate = startTime.toLocaleDateString(); // Date in the format "MM/DD/YYYY"
+      const startTimeString = startTime.toLocaleTimeString();
+
+      const endTime = new Date(content.end_time);
+
+      // Extract date and time components
+      const endDate = startTime.toLocaleDateString(); // Date in the format "MM/DD/YYYY"
+      const endTimeString = startTime.toLocaleTimeString();
+
       return {
         title: content.title,
-       
+        // start_time: content.start_time,
+        start_date: startDate, // Display date separately
+        start_time: startTimeString,
+        end_time: endTimeString,
+        end_date: endDate,
+
         videoId: content.id,
-      
       };
     } catch (error) {
       console.error("Error fetching content details:", error);
       return {
         title: "",
+        start_time: "",
+        end_time: "",
         // thumbnail: "",
         videoId: "",
         // quizzes: "",
       };
     }
   };
-  
 
   useEffect(() => {
     const fetchVideoInfo = async (studyPack) => {
       const videoInfoArray = await Promise.all(
         studyPack.content_ids.flatMap((content) => {
-
           const videoInfoPromises = content[
             Object.keys(content)[0]
           ].video_id.map(async (videoId) => {
             const videoInfo = await getContentInfo(videoId);
-           
+
             return { ...videoInfo, type: "video" };
           });
 
@@ -197,8 +216,6 @@ const CourseContent = ({ course }) => {
     // Close the modal or perform any other necessary actions
   };
 
-
-
   const handleNewStudyPackAdded = (newStudyPackDetails) => {
     // Update studyPackDetails state by merging the new study pack details
     setStudyPackDetails((prevDetails) => ({
@@ -206,9 +223,6 @@ const CourseContent = ({ course }) => {
       [newStudyPackDetails.id]: newStudyPackDetails,
     }));
   };
-
-
-
 
   return (
     <ChakraProvider>
@@ -333,6 +347,9 @@ const CourseContent = ({ course }) => {
                                               fontSize="12px"
                                               height="20px"
                                               colorScheme="blue"
+                                              onClick={() => {
+                                                LoadDetail2(videoId);
+                                              }}
                                             >
                                               View
                                             </Button>{" "}
@@ -380,8 +397,8 @@ const CourseContent = ({ course }) => {
 
                             return (
                               <Box
-                              bg="gray.100"
-                              p="10px"
+                                bg="gray.100"
+                                p="10px"
                                 mt="4px"
                                 className="box1"
                                 key={tuteIndex}
@@ -389,13 +406,15 @@ const CourseContent = ({ course }) => {
                                 <HStack spacing={{ base: 90, xl: 300 }}>
                                   <Box p={2} width="210px">
                                     <HStack>
-                                      <Image
+                                      {/* <Image
                                         boxSize="50%"
                                         width={{ base: 70, xl: 70 }}
                                         height="50px"
                                         objectFit="cover"
                                         src={tuteInfo.thumbnail}
-                                      />
+                                      /> */}
+                                      <FaFileAlt />
+
                                       <Box>
                                         <Text fontSize="14px" className="box2">
                                           {tuteInfo.title}
@@ -406,7 +425,15 @@ const CourseContent = ({ course }) => {
 
                                   <Box width="90px" ml="5px" mt="-5px">
                                     <HStack>
-                                      <Button fontSize="12px" height="20px" colorScheme="blue">
+                                      <Button
+                                        fontSize="12px"
+                                        height="20px"
+                                        colorScheme="blue"
+                                        onClick={() => {
+                                          const fileUrl = tuteInfo.file_path;
+                                          window.open(fileUrl, "_blank");
+                                        }}
+                                      >
                                         View
                                       </Button>{" "}
                                       <Remove
@@ -430,9 +457,12 @@ const CourseContent = ({ course }) => {
                             <Text fontSize="15px">Quiz Content</Text>
                           </Box>
                           <Box>
-                             <Addcoursequiz   studypackId={studyPack.id}
-                              dynamicWeek={`week${selectedWeekTab}`} 
-                              onNewContentAdded={handleNewContentAdded}/> </Box>
+                            <Addcoursequiz
+                              studypackId={studyPack.id}
+                              dynamicWeek={`week${selectedWeekTab}`}
+                              onNewContentAdded={handleNewContentAdded}
+                            />{" "}
+                          </Box>
                         </HStack>
 
                         {content[Object.keys(content)[0]].quiz_id.map(
@@ -446,21 +476,34 @@ const CourseContent = ({ course }) => {
 
                             return (
                               <Box
-                                 bg="gray.100"
-                                      p="10px"
+                                bg="gray.100"
+                                p="10px"
                                 mt="4px"
                                 className="box1"
                                 key={quizIndex}
                               >
-                                <HStack spacing={{ base: 90, xl: 300 }}>
-                                  <Box p={2} width="210px">
+                                <HStack spacing={{ base: 90, xl: 232 }}>
+                                  <Box p={2} width="280px">
                                     <HStack>
-                                      
-                                    
-                                      
                                       <Box>
                                         <Text fontSize="14px" className="box2">
                                           {quizInfo.title}
+                                        </Text>
+                                        <Text
+                                          fontSize="14px"
+                                          className="box2"
+                                          ml="8px"
+                                        >
+                                          Start Time - {quizInfo.start_date}{" "}
+                                          {quizInfo.start_time}
+                                        </Text>
+                                        <Text
+                                          fontSize="14px"
+                                          className="box2"
+                                          ml="8px"
+                                        >
+                                          End Time - {quizInfo.end_date}{" "}
+                                          {quizInfo.end_time}
                                         </Text>
                                       </Box>
                                     </HStack>
@@ -468,7 +511,14 @@ const CourseContent = ({ course }) => {
 
                                   <Box width="90px" ml="5px" mt="-5px">
                                     <HStack>
-                                      <Button fontSize="12px" height="20px" colorScheme="blue">
+                                      <Button
+                                        fontSize="12px"
+                                        height="20px"
+                                        colorScheme="blue"
+                                        onClick={() => {
+                                          LoadDetail(quizId);
+                                        }}
+                                      >
                                         View
                                       </Button>{" "}
                                       <Remove
@@ -483,7 +533,7 @@ const CourseContent = ({ course }) => {
                               </Box>
                             );
                           }
-                        )} 
+                        )}
                       </TabPanel>
                     ))}
                   </TabPanels>

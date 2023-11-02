@@ -163,7 +163,7 @@ const Addweekquizcontent = ({ studypackId, dynamicWeek }) => {
       >
         <ModalOverlay />
         <ModalContent size="2xl" maxW="60vw">
-          <ModalHeader>Add quiz_id Content</ModalHeader>
+          <ModalHeader>Add Quizzes</ModalHeader>
           <ModalCloseButton />
 
           <form onSubmit={handleSave}>
