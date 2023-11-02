@@ -23,11 +23,13 @@ import SearchBar from "../../../components/SearchBar";
 //icons
 import { IoChevronBackSharp } from "react-icons/io5";
 import { axiosPrivate } from "../../../api/axios";
-import { Loader } from "@mantine/core";
+import { Loader, rem } from "@mantine/core";
 import VideoList from "./components/VideoList";
 import { MdCloudUpload } from "react-icons/md";
 import DetailsModal from "./components/DetailsModal";
 import UploadModal from "./components/UploadModal";
+import { notifications } from "@mantine/notifications";
+import { IconCheck } from "@tabler/icons-react";
 
 
 // content db structure
@@ -112,6 +114,9 @@ function MyContent() {
         }
     }
 
+
+
+
     return (
         <Box>
             <Box position={"sticky"} top={"64px"} backdropBlur={"20px"} bg={"white"} zIndex={2} >
@@ -154,7 +159,6 @@ function MyContent() {
                     <VideoList videos={videos} />
                 }
             </Box>
-            <UploadModal isOpen={isUploadOpen} onClose={onUploadClose} onOpenDetails={onDetailsOpen} />
             <DetailsModal isOpen={isDetailsOpen} onClose={onDetailsClose} setVideos={setVideos} />
         </Box >
 

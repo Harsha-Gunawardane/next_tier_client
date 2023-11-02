@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import useSidebar from "../../hooks/useSidebar";
-import { Flex, Box, SimpleGrid, GridItem, Text, Skeleton, Button } from '@chakra-ui/react';
+import { Flex, Box, SimpleGrid, GridItem, Text, Skeleton, Button, Image } from '@chakra-ui/react';
 import VideoList from '../../components/DashboardComponents/VideoList';
 import CommentSection from '../../components/student/contentWatch/CommentSection';
 import { useOutletContext } from 'react-router-dom';
@@ -10,6 +10,9 @@ import { useOutletContext } from 'react-router-dom';
 import SearchBar from '../../components/SearchBar';
 import VideoView from '../../components/student/contentWatch/VideoView';
 import { axiosPrivate } from '../../api/axios';
+
+//image from assests
+import NoAccess from '../../assests/images/NoAccess.png'
 
 //back end api endpoints
 
@@ -60,6 +63,8 @@ const ContentWatch = () => {
     const [videoDetails, setVideoDetails] = useState();
     const [isLoaded, setIsLoaded] = useState(false);
     const { minimizeButtonRef } = useOutletContext();
+    const [access, setAccess] = useState(true);
+    const [errorFetch, setErrorFetch] = useState(false);
 
 
     const { id } = useParams();
@@ -82,17 +87,28 @@ const ContentWatch = () => {
                 signal: controller.signal,
             })
 
-            // const contentInfo = response.data;
-            if (isMounted) {
+
+            if (response.status === 200) {
                 setVideoDetails(response.data);
+                setAccess(true);
                 setIsLoaded(true);
             }
 
         } catch (err) {
-            console.log(err);
+            if (!err?.response) {
+                setErrorFetch(true);
+            }
+            if (err?.response?.status === 403) {
+                setAccess(false);
+                setIsLoaded(true);
+            }
+
         }
 
     }
+
+
+
 
     return (
         <Box width="100%" height={"max-content"}>
@@ -104,12 +120,23 @@ const ContentWatch = () => {
 
                 <GridItem colSpan={{ base: 1, md: 12, lg: 8 }} h="max-content">
                     {isLoaded ?
-                        <>
-                            <VideoView videoDetails={videoDetails} />
-                            <CommentSection sectionId={videoDetails.id} comments={videoDetails.comments} commentCount={videoDetails.commentCount} setParentDetails={setVideoDetails} />
-                        </>
+                        access ?
 
-                        : <Skeleton height={"50px"} width={"100%"} />}
+                            <>
+                                <VideoView videoDetails={videoDetails} />
+                                <CommentSection sectionId={videoDetails.id} comments={videoDetails.comments} commentCount={videoDetails.commentCount} setParentDetails={setVideoDetails} />
+                            </>
+                            :
+                            <>
+                                <Flex width={"100%"} height={"100%"} justifyContent={"center"} alignItems={"center"} direction={"column"}>
+                                    <Image src={NoAccess} width={"50%"} height={"50%"} />
+                                    <Text fontSize={"1.8rem"} fontWeight={"bold"}>OOPS!</Text>
+                                    <Text fontSize={"1rem"} fontWeight={"semi bold"}>You don't have access to this content</Text>
+                                    <Button mt={"10px"} colorScheme={"blue"} onClick={() => { window.location.href = "/stu/content" }}>Explore More Content</Button>
+                                </Flex>
+                            </>
+                        :
+                        <Skeleton height={"50px"} width={"100%"} />}
 
 
                 </GridItem>

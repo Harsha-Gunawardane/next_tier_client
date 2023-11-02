@@ -22,7 +22,8 @@ export default function CheckoutForm({
     setCourseDetails,
     items,
     nextStep,
-    setPaymentSuccess
+    setPaymentSuccess,
+    order
 }) {
     const stripe = useStripe();
     const elements = useElements();
@@ -124,7 +125,8 @@ export default function CheckoutForm({
 
         try {
             const response = await axiosPrivate.post(`/stu/payment/confirmPayment`, {
-                items: items
+                items: items,
+                orderId: order.id
             }, {
                 signal: controller.signal
             });

@@ -10,6 +10,7 @@ import { Spoiler } from '@mantine/core';
 import VideoJS from './VideoPlayer'
 import videojs from 'video.js'
 import ReactVideoPlayer from './ReactVideoPlayer';
+import useAxiosPrivate from '../../../hooks/useAxiosPrivate';
 
 
 
@@ -17,18 +18,35 @@ import ReactVideoPlayer from './ReactVideoPlayer';
 const VideoView = (props) => {
 
     const { videoDetails, isLoaded, ...rest } = props;
+    const axiosPrivate = useAxiosPrivate();
 
-    const { isOpen, onToggle } = useDisclosure({ defaultIsOpen: false });
+
+
 
     useEffect(() => {
         console.log(videoDetails);
+        fetchVideoUrl();
     }, [])
+
+    const fetchVideoUrl = async () => {
+        const controller = new AbortController();
+        try {
+            const response = await axiosPrivate.get(`/content/${videoDetails.id}/url`, {
+                signal: controller.signal,
+            });
+            console.log(response.data);
+            return response.data;
+        } catch (error) {
+            console.log(error);
+        }
+
+    }
 
 
     const playerRef = React.useRef(null);
 
 
-    const videoUrl = "https://storage.googleapis.com/hls-streaming-gcp-processed-files-fluted-clock-395620/sample.mp4/manifest.m3u8"
+    const videoUrl = "https://storage.googleapis.com/hls-streaming-gcp-processed-files-fluted-clock-395620/2023-10-30_1_sample1.mp4/manifest.m3u8"
 
     return (
         <Flex width={"100%"} height={"max-content"} justifyContent={"flex-start"} alignItems={"flex-start"} direction={"column"}>

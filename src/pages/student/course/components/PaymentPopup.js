@@ -99,6 +99,8 @@ function PaymentPopup(props) {
     } = props;
     const [active, setActive] = useState(0);
     const [paymentSuccess, setPaymentSuccess] = useState(false);
+    const [totalPay, setTotalPay] = useState(0);
+    const [orderId, setOrderId] = useState('');
 
 
     useEffect(() => {
@@ -299,7 +301,7 @@ function PaymentPopup(props) {
                                                     <Flex direction={"column"} width={"70%"} gap="16px" zIndex={1} justifyContent={"space-between"}>
                                                         <Flex direction={"column"} gap={"5px"}>
                                                             <Text fontSize={"1.2rem"} color={"gray.600"}>Total to Pay</Text>
-                                                            <Text fontWeight={"bold"} fontSize={"1.5rem"} color={"gray.800"}>Rs. {totalPayment()}</Text>
+                                                            <Text fontWeight={"bold"} fontSize={"1.5rem"} color={"gray.800"}>Rs. {totalPay / 100}</Text>
                                                         </Flex>
                                                     </Flex>
                                                     {/* <Flex width={"40%"} overflow={"visible"} position={"relative"}> */}
@@ -308,7 +310,7 @@ function PaymentPopup(props) {
                                                 </Flex>
                                             </Card>
                                         </Box>
-                                        <Checkout active={active} prevStep={prevStep} studypack_id={form.values.studypack_id} setCourseDetails={setCourseDetails} nextStep={nextStep} setPaymentSuccess={setPaymentSuccess} />
+                                        <Checkout active={active} prevStep={prevStep} studypack_id={form.values.studypack_id} setCourseDetails={setCourseDetails} nextStep={nextStep} setPaymentSuccess={setPaymentSuccess} setTotalPay={setTotalPay} />
                                         {/* </form> */}
                                     </Flex>
                                 </Stepper.Step>

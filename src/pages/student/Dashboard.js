@@ -18,6 +18,7 @@ import { FaRegCircleCheck } from "react-icons/fa6";
 import { PiNotebookBold } from "react-icons/pi";
 
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
+import Announcements from "../../components/DashboardComponents/Announcements";
 
 const Dashboard = () => {
 	const sectionTitleFontSize = "16px"
@@ -74,13 +75,13 @@ const Dashboard = () => {
 						</Text>
 					</GridItem>
 					<GridItem colSpan={{ base: 1, md: 1, lg: 1 }} >
-						<MiniStat name="Courses in Progress" value="03" endContent={<MiniStatCardIcon color={"blue"} icon={BiBook} />} />
+						<MiniStat name="Courses in Progress" value="01" endContent={<MiniStatCardIcon color={"blue"} icon={BiBook} />} />
 					</GridItem>
 					<GridItem colSpan={{ base: 1, md: 1, lg: 1 }} >
 						<MiniStat name="Completed Courses" value="00" endContent={<MiniStatCardIcon color={"green"} icon={FaRegCircleCheck} />} />
 					</GridItem>
 					<GridItem colSpan={{ base: 1, md: 1, lg: 1 }} >
-						<MiniStat name="WatchTime" value="0h" endContent={<MiniStatCardIcon color={"red"} icon={MdOutlineVideoLibrary} />} />
+						<MiniStat name="WatchTime" value="1h" endContent={<MiniStatCardIcon color={"red"} icon={MdOutlineVideoLibrary} />} />
 					</GridItem>
 					<GridItem colSpan={{ base: 1, md: 1, lg: 1 }} >
 						<MiniStat name="My Study Packs" value="01" endContent={<MiniStatCardIcon color={"purple"} icon={TbPackages} />} />
@@ -96,12 +97,12 @@ const Dashboard = () => {
 						</Text>
 						<GradeAnalysis />
 					</GridItem>
-					{/* <GridItem colSpan={{ base: 1, md: 2, lg: 1 }} >
+					<GridItem colSpan={{ base: 1, md: 2, lg: 1 }} >
 						<Text fontSize={sectionTitleFontSize} fontWeight={"600"} mb="10px">
-							Upcoming Classes
+							Class Announcements
 						</Text>
-						<UpcommingClasses />
-					</GridItem> */}
+						<Announcements />
+					</GridItem>
 				</SimpleGrid>
 				<SimpleGrid columns={{ base: 1, md: 2, lg: 2 }} gap="20px" mt="10px" px={"5px"} gridRowGap={"10px"} >
 					<GridItem colSpan={{ base: 1, md: 1, lg: 1 }} mb="10px">

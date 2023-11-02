@@ -250,7 +250,6 @@ function UploadModal(props) {
                             </Button>
                         </Flex>
                     </Flex>
-                    {console.log(form.values.files)}
                     <Text fontSize={"0.9rem"} fontWeight={"semi-bold"} color={"gray.400"} textAlign={"center"} mt={"10px"}>Selected Files</Text>
                     <Flex direction="column" w="100%" mt={"10px"} gap={"10px"} border={"1px solid"} borderColor={"gray.200"} borderRadius={"5px"} p={"10px"}>
                         {form.values.files.length > 0 ?

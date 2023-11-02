@@ -11,13 +11,10 @@ import {
     Box,
     Flex,
     Text,
-    Avatar,
     Button,
     Image,
     Center,
     IconButton,
-    SimpleGrid,
-    GridItem,
     useToast,
     HStack,
     Progress
@@ -27,11 +24,8 @@ import _ from "lodash"
 
 //icons
 import { IoCloseSharp } from "react-icons/io5";
-import { MyRichTextEditor } from '../../../student/course/components/Modals';
-import { Code, FileInput, RingProgress, Stepper, TextInput } from '@mantine/core';
+import { FileInput, Stepper, TextInput, rem } from '@mantine/core';
 import { useForm } from '@mantine/form';
-import { useParams } from 'react-router-dom';
-import { useUserInfo } from '../../../../store/user/useUserInfo';
 import { axiosPrivate } from '../../../../api/axios';
 
 ///images
@@ -40,6 +34,8 @@ import upload from "../../../../assests/images/upload2.png"
 
 import { Textarea, Select, MultiSelect } from '@mantine/core';
 import Success from '../../../student/course/components/Success';
+import { notifications } from '@mantine/notifications';
+import { IconCheck } from '@tabler/icons-react';
 
 
 
@@ -52,21 +48,22 @@ function DetailsModal(props) {
     const {
         isOpen,
         onClose,
-        post,
-        onLoadMore,
-        setVideos
+        setVideos,
+
     } = props
 
     const [active, setActive] = useState(0);
     const [progress, setProgress] = useState(0);
-    const [uploading, setUploading] = useState("NOT_STARTED");
-    const [uploadedVideos, setUploadedVideos] = useState([])
+    const [uploading, setUploading] = useState(null);
     const [uploadSuccess, setUploadSuccess] = useState(false)
     const [uploadError, setUploadError] = useState(false)
+    const [contentId, setContentId] = useState(null)
+    const [contentDetails, setContentDetails] = useState({})
+    const [notificationId, setNotificationId] = useState(null)
 
-    //get users first name and last name from zustand
-    const { fName, lName } = useUserInfo
-    const { courseId } = useParams()
+
+
+
 
     const toast = useToast()
 
@@ -79,12 +76,16 @@ function DetailsModal(props) {
 
 
         validate: (values) => {
+            console.log("validating")
+            console.log(values.files)
             if (active === 0) {
                 if (!values.files) {
+                    console.log("empty")
                     return { files: "Please select a file" };
                 }
 
                 if (values.files && !allowedFileTypes.includes(values.files.type)) {
+                    console.log("not allowed")
                     return { files: "Please select a valid file type" };
                 }
             }
@@ -120,6 +121,15 @@ function DetailsModal(props) {
             }
         }
     });
+
+    useEffect(() => {
+        form2.values.title = contentDetails.title
+        form2.values.description = contentDetails.description
+        form2.values.subject = contentDetails.subject
+        form2.values.subject_areas = contentDetails.subject_areas
+        form2.values.thumbnail = contentDetails.thumbnail
+        form2.values.status = contentDetails.status
+    }, [contentDetails])
 
 
 
@@ -158,6 +168,10 @@ function DetailsModal(props) {
 
 
     const handleFileChange = (event) => {
+        if (event.target.files.length > 0) {
+            form.setFieldValue("files", event.target.files[0])
+        }
+
         if (form.validateField("files").hasError) {
             form.values.files = null
         }
@@ -192,82 +206,199 @@ function DetailsModal(props) {
     }
 
 
+    const createContent = async () => {
+        const isMounted = true
+        const controller = new AbortController()
+
+
+        console.log(form.validate())
+        console.log(form.validate().hasErrors)
+        console.log(form.errors)
+
+
+        if (form.validate().hasErrors) {
+            //toast
+            toast({
+                title: "Validation Error!",
+                description: form.errors.files,
+                status: "error",
+                duration: 3000,
+                isClosable: true,
+                position: "top"
+            })
+
+            return false;
+        }
+
+        try {
+            const URL = `content`
+            const formData = new FormData();
+
+            formData.append('title', form.values.files.name);
+            formData.append('description', "description");
+
+            const response = await axiosPrivate.post(URL, formData,
+                { headers: { "Content-Type": "multipart/form-data" } }
+            );
+
+            console.log(response)
+
+            return response
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+
     const handleSubmit = async () => {
         const isMounted = true
         const controller = new AbortController()
 
-        setUploading("UPLOADING")
+        const response = await createContent()
 
-        if (form.validate().hasErrors) {
-            toast({
-                title: "Please select a file",
-                status: "error",
-                duration: 3000,
-                isClosable: true,
-            });
+        console.log(response)
+        if (!response) {
+            console.log("error")
             return
         }
 
-        nextStep()
 
-        try {
-            const URL = `content/upload_direct`
-            const formData = new FormData();
-            formData.append('title', form.values.files.name);
-            formData.append('description', 'description');
-            formData.append('files', form.values.files);
+        if (response.status === 201) {
 
+            setContentDetails(response.data.data)
+            setContentId(response.data.data.id)
+            setVideos((prevState) => {
+                const newState = [...prevState, response.data.data]
+                return newState
+            })
 
-            const response = await axiosPrivate.post(URL, formData, {
-                headers: { "Content-Type": "multipart/form-data" },
-                onUploadProgress: (progressEvent) => {
-                    const { loaded, total } = progressEvent;
-                    const percent = Math.floor((loaded * 100) / total);
-                    console.log(`${loaded}kb of ${total}kb | ${percent}%`);
+            setUploading(true)
 
-                    if (percent < 100) {
-                        setProgress(percent)
-                        setUploading("UPLOADED")
-                    }
-                },
-                signal: controller.signal
-            });
-
-
-            if (response.status === 200) {
-                form.setFieldValue("files", null)
+            if (form.validate().hasErrors) {
                 toast({
-                    title: "Your file is currently uploading",
-                    status: "success",
-                    duration: 3000,
-                    isClosable: true,
-                });
-                setVideos((prevState) => {
-                    const newState = [...prevState, response.data]
-                    return newState
-                })
-                setUploadedVideos((prevState) => {
-                    const newState = [...prevState, response.data]
-                    return newState
-                })
-            }
-            else {
-                toast({
-                    title: "Upload failed",
-                    description: "Please try again",
+                    title: "Something went wrong",
                     status: "error",
                     duration: 3000,
                     isClosable: true,
                 });
-                form.setFieldValue("files", null)
+                return
             }
 
+            //create notification
+            const id = Math.random().toString(36).substr(2, 9);
+            notifications.show({
+                id,
+                loading: true,
+                title: 'Video Upload in Progress ... ' + progress + '%',
+                message: 'Your video is currently uploading. Please do not close this page',
+                autoClose: false,
+                withCloseButton: false,
+            });
 
-            if (isMounted) {
-                console.log(response.data)
+            nextStep()
+
+            try {
+                const URL = `content/upload_direct`
+                const formData = new FormData();
+                formData.append('title', form.values.files.name);
+                formData.append('description', 'description');
+                formData.append('files', form.values.files);
+                formData.append('contentId', response.data.data.id);
+
+                console.log(form.values.files)
+
+
+
+                const responseUpload = await axiosPrivate.post(URL, formData, {
+                    headers: { "Content-Type": "multipart/form-data" },
+                    onUploadProgress: (progressEvent) => {
+                        const { loaded, total } = progressEvent;
+                        const percent = Math.floor((loaded * 100) / total);
+                        console.log(`${loaded}kb of ${total}kb | ${percent}%`);
+
+                        if (percent < 100) {
+                            setProgress(percent)
+                            setUploading(true)
+                        } else {
+                            setProgress(percent)
+                        }
+
+                        notifications.update({
+                            id,
+                            loading: true,
+                            title: 'Video Upload in Progress ...',
+                            message: 'Your video is currently uploading. Please do not close this page',
+                            autoClose: false,
+                            withCloseButton: false,
+                        });
+                    },
+                    signal: controller.signal
+                });
+
+                console.log(responseUpload)
+
+
+                if (responseUpload.status === 200) {
+                    form.setFieldValue("files", null)
+                    setContentDetails(() => {
+                        return { ...contentDetails, ...responseUpload.data.data }
+                    })
+
+                    setVideos((prevState) => {
+                        const newState = prevState.filter((video) => {
+                            return video.id !== contentDetails.id
+                        })
+
+                        const newState2 = [...newState, responseUpload.data.data]
+                        return newState2
+                    })
+
+                    setUploading(false)
+
+                    notifications.update({
+                        id,
+                        color: 'teal',
+                        title: 'Successfully Uploaded',
+                        message: 'Your video has been uploaded successfully',
+                        icon: <IconCheck style={{ width: rem(18), height: rem(18) }} />,
+                        loading: false,
+                        autoClose: 2000,
+                    });
+
+                }
+                else {
+                    notifications.update({
+                        id,
+                        color: 'red',
+                        title: 'Upload Failed',
+                        message: 'Your video failed to upload. Please try again',
+                        icon: <IconCheck style={{ width: rem(18), height: rem(18) }} />,
+                        loading: false,
+                        autoClose: 2000,
+                    });
+
+
+                    form.setFieldValue("files", null)
+                }
+
+
+                if (isMounted) {
+                    console.log(responseUpload.data)
+                }
+
+            } catch (error) {
+                console.log(error)
             }
-        } catch (error) {
-            console.log(error)
+        } else {
+            toast({
+                title: "Upload failed!",
+                description: "Please try again",
+                status: "error",
+                duration: 3000,
+                isClosable: true,
+            });
+            form.setFieldValue("files", null)
+
         }
     }
 
@@ -280,13 +411,13 @@ function DetailsModal(props) {
             return
         }
 
-        console.log(uploadedVideos[0].data)
 
         try {
             const URL = `content`
             const formData = new FormData();
 
-            formData.append('content_id', uploadedVideos[0].data.id);
+            console.log("cid", contentId)
+            formData.append('content_id', contentId);
             formData.append('title', form2.values.title);
             formData.append('description', form2.values.description);
             formData.append('subject', form2.values.subject);
@@ -294,14 +425,8 @@ function DetailsModal(props) {
             formData.append('thumbnail', form2.values.thumbnail);
             formData.append('status', form2.values.status);
 
-            console.log(formData)
-            //console data in formdata
-            for (var pair of formData.entries()) {
-                console.log(pair[0] + ', ' + pair[1]);
-            }
 
-
-            const response = await axiosPrivate.post(URL, formData,
+            const response = await axiosPrivate.put(URL, formData,
                 { headers: { "Content-Type": "multipart/form-data" } }
             );
 
@@ -309,25 +434,42 @@ function DetailsModal(props) {
             if (response.status === 200) {
                 setUploadSuccess(true)
                 nextStep()
-                //update the main video list using setVideos but need to filter as it is already in the list using setVideo and we dont want to add it again
+                setContentDetails(response.data.data)
                 setVideos((prevState) => {
-
                     const newState = prevState.filter((video) => {
-                        return video.id !== uploadedVideos[0].data.id
+                        return video.id !== contentId
                     })
 
                     const newState2 = [...newState, response.data]
                     return newState2
                 })
 
+                //reset form values
+                form2.reset()
+                form.reset()
+                setActive(0)
+                setProgress(0)
+                setUploading(null)
+
             }
-
-
 
         } catch (error) {
             console.log(error)
+            toast({
+                title: "Something went wrong",
+                status: "error",
+                duration: 3000,
+                isClosable: true,
+            });
         }
     }
+
+
+
+
+    useEffect(() => {
+        console.log("notID", notificationId)
+    }, [notificationId])
 
 
     return (
@@ -392,7 +534,6 @@ function DetailsModal(props) {
                                 </Flex>
                                 <Text fontSize={"0.9rem"} fontWeight={"semi-bold"} color={"gray.400"} textAlign={"center"} mt={"10px"}>Selected Files</Text>
                                 <Flex direction="column" w="100%" mt={"10px"} gap={"10px"} border={"1px solid"} borderColor={"gray.200"} borderRadius={"5px"} p={"10px"}>
-                                    {console.log(form.values.files)}
                                     {form.values.files ?
                                         <Flex w="100%" h="100%" border="1px solid" borderColor={"gray.200"} borderRadius={"5px"} p={"10px"} position={"relative"}>
                                             <HStack
@@ -509,17 +650,17 @@ function DetailsModal(props) {
                         <Flex>
                             {
                                 active === 1 ?
-                                    uploading === "UPLOADED" ?
+                                    uploading === false ?
                                         // success fully uploaded with right icon
                                         <Flex w={"100%"} justifyContent={"space-between"} alignItems={"center"}>
                                             <Text fontSize={"0.9rem"} fontWeight={"semi-bold"} color={"gray.400"} textAlign={"center"}>Upload Successful</Text>
                                         </Flex>
 
                                         :
-                                        uploading === "UPLOADING" ?
+                                        uploading === true ?
                                             // uploading with progress bar
                                             <Flex w={"100%"} justifyContent={"space-between"} alignItems={"center"}>
-                                                <Text fontSize={"0.9rem"} fontWeight={"semi-bold"} color={"gray.400"} textAlign={"center"}>Uploading</Text>
+                                                <Text fontSize={"0.9rem"} fontWeight={"semi-bold"} color={"gray.400"} textAlign={"center"}>Uploading | {progress}%</Text>
                                                 <Progress size="sm" value={progress} />
                                             </Flex>
                                             :

@@ -19,10 +19,12 @@ export default function Checkout({
     studypack_id,
     setCourseDetails,
     nextStep,
-    setPaymentSuccess
+    setPaymentSuccess,
+    setTotalPay
 }) {
     const [clientSecret, setClientSecret] = useState("");
     const [items, setItems] = useState([]);
+    const [order, setOrder] = useState({});
     const axiosPrivate = useAxiosPrivate();
 
 
@@ -70,6 +72,8 @@ export default function Checkout({
             });
 
             const data = response.data;
+            setTotalPay(data.ammount)
+            setOrder(data.order)
 
             if (isMounted) {
                 setClientSecret(data.clientSecret);
@@ -94,7 +98,7 @@ export default function Checkout({
         <Box className="App" w="100%">
             {clientSecret && (
                 <Elements options={options} stripe={stripePromise}>
-                    <CheckoutForm active={active} prevStep={prevStep} studypack_id={studypack_id} setCourseDetails={setCourseDetails} items={items} nextStep={nextStep} setPaymentSuccess={setPaymentSuccess} />
+                    <CheckoutForm active={active} prevStep={prevStep} studypack_id={studypack_id} setCourseDetails={setCourseDetails} items={items} nextStep={nextStep} setPaymentSuccess={setPaymentSuccess} order={order} />
                 </Elements>
             )}
         </Box>

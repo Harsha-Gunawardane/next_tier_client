@@ -55,8 +55,15 @@ const ReactVideoPlayer = (props) => {
         miniPlayer = false
     } = props;
 
+    const [token, setToken] = useState("")
+
+    useEffect(() => {
+        console.log("videoUrl", videoUrl)
+        setToken(videoUrl.split("?")[1])
+    }, [])
+
     const [videoState, setVideoState] = useState({
-        playing: false,
+        playing: true,
         muted: false,
         volume: 0.5,
         played: 0,
@@ -243,7 +250,6 @@ const ReactVideoPlayer = (props) => {
                                 maxMaxBufferLength: 60,
                             },
                         },
-
                     }}
                     onReady={() => {
                         console.log("onReady")
@@ -474,7 +480,7 @@ const ReactVideoPlayer = (props) => {
                                             value={selectedBandwidth}
 
                                         >
-                                            {
+                                            {/* {
                                                 videoPlayerRef.current && videoPlayerRef.current.getInternalPlayer('hls').levels.map((level, index) => {
                                                     return (
                                                         <MenuItemOption
@@ -489,7 +495,7 @@ const ReactVideoPlayer = (props) => {
                                                         </MenuItemOption>
                                                     )
                                                 })
-                                            }
+                                            } */}
                                             <MenuItemOption
                                                 value={-1}
                                                 key={-1}

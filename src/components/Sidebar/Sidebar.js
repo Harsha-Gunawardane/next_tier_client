@@ -266,15 +266,14 @@ const Sidebar = (props) => {
         <IconButton
           as={motion.div}
           ref={minimizeButtonRef}
-          variant={"outline"}
+          variant={"ghost"}
           onClick={() => handleMinimizing()}
           // display={{ base: "flex", md: minimized.md ? "none" : "flex", lg: minimized.lg ? "none" : "flex" }}
           animate={animations}
           transition={{ duration: 0.5 }}
-          borderRadius={"50%"}
           size={"sm"}
-          color="gray.500"
-          icon={<MdOutlineKeyboardArrowLeft size={"23px"} />}
+          color="gray.600"
+          icon={<BiMenuAltRight size={"23px"} />}
         ></IconButton>
       </Flex>
 

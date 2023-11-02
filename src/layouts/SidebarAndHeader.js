@@ -59,7 +59,7 @@ const SidebarAndHeader = ({ userRole, subRole }) => {
     ["stu/tutes", "tutes"],
     ["stu/mycourses", "mycourses"],
     ["stu/mycourses/:courseId", "mycourses"],
-    ["stu/courses/:courseId", "mycourses"],
+    ["stu/courses/:courseId", "courses"],
 
 
     // More routes and active tabs...
@@ -84,6 +84,9 @@ const SidebarAndHeader = ({ userRole, subRole }) => {
     ["staff/staff-list", "stafflist"],
     ["staff/tutors-list", "stulist"],
     ["staff/my-profile", "profile"],
+
+    ["parent/dashboard", "dashboard"],
+    ["parent/settings", "parentsettings"]
   ]);
 
   function getRouteWithParams(params) {
@@ -353,6 +356,22 @@ const SidebarAndHeader = ({ userRole, subRole }) => {
     }
   ];
 
+  const parentOptions = [
+    {
+      icon: BiSolidDashboard,
+      name: "Dashboard",
+      value: "dashboard",
+      href: "/parent/dashboard",
+    },
+    {
+      icon: FaCompass,
+      name: "Settings",
+      value: "parentsettings",
+      href: "/parent/settings",
+    },
+  ]
+
+
   switch (userRole) {
     case "student":
       Options = StuOptions;
@@ -371,6 +390,9 @@ const SidebarAndHeader = ({ userRole, subRole }) => {
       break;
     case "tutorPaperStaff":
       Options = TeacherPaperStaffOptions;
+      break;
+    case "parent":
+      Options = parentOptions;
       break;
     default:
       Options = StuOptions;
