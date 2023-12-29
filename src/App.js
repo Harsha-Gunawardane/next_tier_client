@@ -108,7 +108,7 @@ import ViewContent from "./pages/tutor/content/ViewContent";
 
 function App() {
   return (
-    <Routes>
+    <Route>
       <Route path="/" element={<Layout />}>
         {/* public routes */}
 
@@ -395,7 +395,7 @@ function App() {
         {/* catch all */}
         <Route path="*" element={<Missing />} />
       </Route>
-    </Routes>
+    </Route
   );
 }
 
