@@ -31,7 +31,7 @@ const Coursecard = (props) => {
   };
 
   const getCurrentDay = () => {
-    const daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thurseday", "Friday", "Saturday"];
+    const daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
     const currentDayIndex = new Date().getDay();
     return daysOfWeek[currentDayIndex];
   };

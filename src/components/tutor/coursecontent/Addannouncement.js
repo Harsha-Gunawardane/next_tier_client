@@ -62,7 +62,7 @@ const Addannouncement = ({ setannouncementData }) => {
     getAnnouncementData();
   }, [axiosPrivate, id]);
 
-  const reversedAnnouncementData = [...announcementData].reverse();
+  const reversedAnnouncementData = [...announcementData];
 
   const handleAddAnnouncement = async (e) => {
     e.preventDefault();
@@ -217,7 +217,7 @@ const Addannouncement = ({ setannouncementData }) => {
             </Heading>
 
             {reversedAnnouncementData != null &&
-            reversedAnnouncementData.length > 0 ? (
+              reversedAnnouncementData.length > 0 ? (
               reversedAnnouncementData.map((item, index) => (
                 <Box
                   key={index}

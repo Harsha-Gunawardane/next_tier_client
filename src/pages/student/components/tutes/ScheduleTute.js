@@ -40,19 +40,19 @@ function ScheduleTute() {
 
   const [reminders, setReminders] = useState([]);
 
-  const getReminders = async () => {
-    try {
-      const response = await axiosPrivate.get(TUTE_SCHEDULE_URL);
-      console.log(response);
-      setReminders(response.data?.schedule);
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  // const getReminders = async () => {
+  //   try {
+  //     const response = await axiosPrivate.get(TUTE_SCHEDULE_URL);
+  //     console.log(response);
+  //     setReminders(response.data?.schedule);
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
 
-  useEffect(() => {
-    getReminders();
-  }, []);
+  // useEffect(() => {
+  //   getReminders();
+  // }, []);
 
   return (
     <>

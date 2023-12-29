@@ -11,7 +11,8 @@ import {
     Box,
     Button,
     Flex,
-    ModalFooter
+    ModalFooter,
+    useToast
 } from "@chakra-ui/react";
 import useAxiosPrivate from "../../../../hooks/useAxiosPrivate";
 
@@ -32,6 +33,8 @@ export default function CheckoutForm({
     const [email, setEmail] = useState('');
     const [message, setMessage] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
+
+    const toast = useToast()
 
     useEffect(() => {
         if (!stripe) {
@@ -134,18 +137,17 @@ export default function CheckoutForm({
             const data = response.data.data;
             console.log(data);
 
-            if (isMounted) {
-                setCourseDetails((prevState) => {
-                    const newCourseDetails = { ...prevState };
-                    newCourseDetails.study_pack.filter((pack) => {
-                        if (pack.id === data.pack_id) {
-                            pack.student_purchase_studypack = [...pack.student_purchase_studypack, data];
-                        }
-                    });
-                    console.log(newCourseDetails);
-                    return newCourseDetails;
-                })
-            };
+            if (response.code === 200) {
+                toast({
+                    title: "Payment Successfull",
+                    description: `Refresh the page to access the content`,
+                    status: "success",
+                    duration: 9000,
+                    isClosable: true,
+                    position: "top-right",
+                });
+
+            }
 
         } catch (error) {
             console.log(error);

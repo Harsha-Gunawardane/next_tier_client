@@ -51,8 +51,9 @@ function SingleAccordion({
 
 
     useEffect(() => {
-        const latestpayment = studyPack.student_purchase_studypack.filter((purchase) => purchase.status === "PAID").sort((a, b) => new Date(b.purchased_at) - new Date(a.purchased_at))[0]
-
+        const latestpayment = studyPack.student_purchase_studypack.sort((a, b) => new Date(b.purchased_at) - new Date(a.purchased_at))[0]
+        console.log("from accordion", studyPack)
+        console.log("from accordin2", latestpayment)
 
         if (latestpayment) {
             const today = new Date()

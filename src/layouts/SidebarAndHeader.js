@@ -94,8 +94,12 @@ const SidebarAndHeader = ({ userRole, subRole }) => {
     ["tutor/quizzes", "quizzes"],
     ["tutor/attendance", "attendance"],
     ["tutor/attendance/marking/:courseId", "attendance"],
+    ["tutor/papers", "papers"],
+    ["tutor/papers/course/:courseId", "papers"],
+    ["tutor/quizzes/:quizId", "quizzes"],
+    ["tutor/papers/paper/:paperId", "papers"],
     // ["/tutor/papers","papers"]
-    
+
 
     ["staff/dashboard", "dashboard"],
     ["staff/class", "approveclass"],
@@ -333,7 +337,7 @@ const SidebarAndHeader = ({ userRole, subRole }) => {
       href: "/supportstaff/complaints",
     },
 
-  
+
   ];
 
   const TeacherPaperStaffOptions = [

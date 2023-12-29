@@ -25,7 +25,7 @@ const Announcement = (props) => {
   }, [axiosPrivate, id]);
 
   // Sort the announcements by date and time and select the latest 2
-  const sortedAnnouncements = announcementData.slice().sort((a, b) => {
+  const sortedAnnouncements = announcementData.sort((a, b) => {
     // Compare by date and time
     const dateComparison = a.day.localeCompare(b.day);
     if (dateComparison === 0) {

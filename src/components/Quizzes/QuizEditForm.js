@@ -11,6 +11,7 @@ import { useForm } from "@mantine/form";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import { useState } from "react";
 import { useToast } from "@chakra-ui/react";
+import { TimeInput } from "@mantine/dates";
 
 export default function QuizEditForm({ quizId, quiz, setQuiz, onClose }) {
   const axiosPrivate = useAxiosPrivate();
@@ -123,6 +124,18 @@ export default function QuizEditForm({ quizId, quiz, setQuiz, onClose }) {
           }}
           defaultValue={subjectAreas}
           {...form.getInputProps("subject_areas")}
+        />
+        <TimeInput
+          {...form.getInputProps("start_time")}
+          label="Start Time"
+          withAsterisk
+        />
+
+        <TimeInput
+          {...form.getInputProps("end_time")}
+          label="End Time"
+          withAsterisk
+          description="Add 1 for A.M. and 2 for P.M."
         />
         <Group position="right" mt="md">
           <Button onClick={onClose}>Cancel</Button>

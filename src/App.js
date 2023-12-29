@@ -155,13 +155,13 @@ function App() {
               <Route path="content/watch/:id" element={<ContentWatch />} />
               <Route path="quizzes/:subject/:mcqname" element={<Quiz />} />
               <Route path="tutes" element={<TuteLayout />}>
-                 <Route index element={<TuteDashboard />} />
+                <Route index element={<TuteDashboard />} />
                 <Route path="new/:id" element={<NewTute />} />
                 <Route path="edit/:id" element={<NewTute />} />
                 <Route path="view/:id" element={<PdfView />} />
                 <Route path=":id" element={<TuteView />} />
                 <Route path="starred" element={<StarredTutes />} />
-                <Route path="archived" element={<ArchivedTutes />} /> 
+                <Route path="archived" element={<ArchivedTutes />} />
               </Route>
               <Route path="settings" element={<Settings />} />
               <Route path="tutors" element={<Tutors />} />
@@ -215,6 +215,7 @@ function App() {
             >
               <Route path="dashboard" element={<TDashboard />} />
               <Route path="content" element={<MyContent />} />
+              <Route path="content/:contentId" element={<ViewContent />} />
               <Route path="courses/add" element={<Addcourse />} />
               <Route path="courses" element={<TCourses />}></Route>
               <Route path="complaints" element={<Complaints />}></Route>
@@ -244,8 +245,8 @@ function App() {
 
               <Route path="papers/:paperid" element={<PaperMarking></PaperMarking>}>
 
-              
-           
+
+
               </Route>
 
               <Route path="staffs">
@@ -254,7 +255,7 @@ function App() {
 
               <Route path="papers">
                 <Route index element={<SelectPaperClass />} />
-                <Route path="course/:courseId" element={<TutorPapers />}/>
+                <Route path="course/:courseId" element={<TutorPapers />} />
                 <Route path="paper/:paperId" element={<PaperMarking />} />
               </Route>
 
@@ -285,7 +286,7 @@ function App() {
               element={<SidebarAndHeader userRole={"tutorSupportStaff"} />}
             >
               <Route path="dashboard" element={<TDashboard />} />
-          <Route path="courses/add" element={<Addcourse />} />
+              <Route path="courses/add" element={<Addcourse />} />
               <Route path="courses" element={<TCourses />}></Route>
               <Route path="complaints" element={<Complaints />}></Route>
               <Route path="profile" element={<Profile />}></Route>

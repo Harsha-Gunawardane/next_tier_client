@@ -19,7 +19,7 @@ import { SimpleGrid, Button } from "@chakra-ui/react";
 
 import CourseContent from "../../components/tutor/coursecontent/Coursecontent";
 import PaperContent from "../../components/tutor/coursecontent/Paperclasscontent";
-import Announcement from "../../components/tutor/coursecontent/Announcement";
+// import Announcement from "../../components/tutor/coursecontent/Announcement";
 import Poll from "../../components/tutor/coursecontent/Addpoll";
 import Forum from "../../components/tutor/coursecontent/Forum";
 import { Show, Hide } from "@chakra-ui/react";
@@ -128,7 +128,7 @@ const Coursecontent = () => {
 
           <br></br>
 
-          <Announcement></Announcement>
+          {/* <Announcement></Announcement> */}
 
           <br></br>
 

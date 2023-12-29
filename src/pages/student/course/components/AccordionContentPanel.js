@@ -80,9 +80,10 @@ const AccordionContentPanel = (props) => {
   };
 
   const handleAttemptQuiz = async (quizId) => {
+    console.log("quizzzz", quizId)
     const subject = await dispatch(initializeQuizById(quizId, axiosPrivate));
-
-    navigate(`/stu/quizzes/${subject}/quiz`);
+    console.log("subject", subject)
+    navigate(`/stu/quizzes/Mathematics/quiz`);
   };
 
   return (
@@ -256,12 +257,13 @@ const AccordionContentPanel = (props) => {
           </Box>
         </HStack>
 
+        {console.log(contentIDs.quiz_id)}
         {
           // first check if contentIDs.video_id is not empty
           contentIDs.quiz_id.length > 0 ? (
             //check if content is loaded
             !isContentLoading ? (
-              contentIDs.quiz_id.map((quizId, videoIndex) => {
+              contentIDs.quiz_id.map((quizId) => {
                 return (
                   <Flex
                     bg="gray.100"
@@ -279,28 +281,28 @@ const AccordionContentPanel = (props) => {
                     </Flex>
 
                     <Flex alignItems={"center"} gap={2}>
-                      {/* {enrolled && purchased === "Paid" ? */}
-                      <Button
-                        borderRadius={"md"}
-                        size={"sm"}
-                        color={"white"}
-                        bg={"blue.500"}
-                        onClick={() => handleAttemptQuiz(quizId)}
+                      {enrolled && purchased === "Paid" ?
+                        <Button
+                          borderRadius={"md"}
+                          size={"sm"}
+                          color={"white"}
+                          bg={"blue.500"}
+                          onClick={() => handleAttemptQuiz(quizId)}
                         // isDisabled={!content[quizId].available}
-                      >
-                        {content[quizId].available
-                          ? "Attempt"
-                          : "Not Available"}
-                      </Button>
-                      {/* :
-                                                <IconButton
-                                                    variant={"ghost"}
-                                                    borderRadius={"md"}
-                                                    size={"md"}
-                                                    icon={<BiSolidLockAlt />}
-                                                >
-                                                </IconButton> */}
-                      {/* } */}
+                        >
+                          {content[quizId].available
+                            ? "Attempt"
+                            : "Attempt"}
+                        </Button>
+                        :
+                        <IconButton
+                          variant={"ghost"}
+                          borderRadius={"md"}
+                          size={"md"}
+                          icon={<BiSolidLockAlt />}
+                        >
+                        </IconButton>
+                      }
                     </Flex>
                   </Flex>
                 );
