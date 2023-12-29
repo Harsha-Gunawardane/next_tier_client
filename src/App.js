@@ -399,9 +399,7 @@ function App() {
   );
 }
 
-<<<<<<< HEAD
 // helloooooooo
-=======
-// helloo
->>>>>>> e8bf7aaa758b0297870e9b305bc19b70c9e4b783
+//testing
+//ammend
 export default App;
